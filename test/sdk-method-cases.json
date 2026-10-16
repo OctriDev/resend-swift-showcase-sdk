@@ -1,0 +1,5835 @@
+{
+  "cases": [
+    {
+      "id": "apiKeysCreate:apiKeysCreate",
+      "operationId": "apiKeysCreate",
+      "methodName": "apiKeysCreate",
+      "namespace": [
+        "apiKeys"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "name": "Example Name",
+        "permission": "full_access",
+        "domainId": "domain-1"
+      },
+      "wireNames": {
+        "name": "name",
+        "permission": "permission",
+        "domainId": "domain_id"
+      },
+      "argumentOrder": [
+        "name",
+        "permission",
+        "domainId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "id-1",
+          "token": "token"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "apiKeysList:apiKeysList",
+      "operationId": "apiKeysList",
+      "methodName": "apiKeysList",
+      "namespace": [
+        "apiKeys"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "limit": 1,
+        "after": "after",
+        "before": "before"
+      },
+      "wireNames": {
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "id": "id-1",
+              "name": "Example Name",
+              "created_at": "2023-10-06 23:47:56.678+00",
+              "last_used_at": "2023-10-06 23:47:56.678+00"
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "apiKeysRemove:apiKeysRemove",
+      "operationId": "apiKeysRemove",
+      "methodName": "apiKeysRemove",
+      "namespace": [
+        "apiKeys"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "apiKeyId": "api_key-1"
+      },
+      "wireNames": {
+        "apiKeyId": "api_key_id"
+      },
+      "argumentOrder": [
+        "apiKeyId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "api_key",
+          "id": "id-1",
+          "deleted": true
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "apiKeysUpdate:apiKeysUpdate",
+      "operationId": "apiKeysUpdate",
+      "methodName": "apiKeysUpdate",
+      "namespace": [
+        "apiKeys"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "apiKeyId": "api_key-1",
+        "name": "Example Name"
+      },
+      "wireNames": {
+        "apiKeyId": "api_key_id",
+        "name": "name"
+      },
+      "argumentOrder": [
+        "apiKeyId",
+        "name"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "api_key",
+          "id": "id-1"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "audiencesCreate:audiencesCreate",
+      "operationId": "audiencesCreate",
+      "methodName": "audiencesCreate",
+      "namespace": [
+        "audiences"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "name": "Example Name"
+      },
+      "wireNames": {
+        "name": "name"
+      },
+      "argumentOrder": [
+        "name"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "78261eea-8f8b-4381-83c6-79fa7120f1cf",
+          "object": "audience",
+          "name": "Example Name"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "audiencesGet:audiencesGet",
+      "operationId": "audiencesGet",
+      "methodName": "audiencesGet",
+      "namespace": [
+        "audiences"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "id-1"
+      },
+      "wireNames": {
+        "id": "id"
+      },
+      "argumentOrder": [
+        "id"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "id-1",
+          "object": "audience",
+          "name": "Registered Users",
+          "created_at": "2023-10-06 22:59:55.977+00"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "audiencesList:audiencesList",
+      "operationId": "audiencesList",
+      "methodName": "audiencesList",
+      "namespace": [
+        "audiences"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {},
+      "wireNames": {},
+      "argumentOrder": [],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "data": [
+            {
+              "id": "78261eea-8f8b-4381-83c6-79fa7120f1cf",
+              "name": "Registered Users",
+              "created_at": "2023-10-06 22:59:55.977+00"
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "audiencesRemove:audiencesRemove",
+      "operationId": "audiencesRemove",
+      "methodName": "audiencesRemove",
+      "namespace": [
+        "audiences"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "id-1"
+      },
+      "wireNames": {
+        "id": "id"
+      },
+      "argumentOrder": [
+        "id"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "id-1",
+          "object": "audience",
+          "deleted": true
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "automationsCreate:automationsCreate",
+      "operationId": "automationsCreate",
+      "methodName": "automationsCreate",
+      "namespace": [
+        "automations"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "name": "Example Name",
+        "steps": [
+          {
+            "key": "key",
+            "type": "trigger",
+            "config": {}
+          }
+        ],
+        "connections": [
+          {
+            "from": "from",
+            "to": "to",
+            "type": "default"
+          }
+        ],
+        "status": "disabled"
+      },
+      "wireNames": {
+        "name": "name",
+        "steps": "steps",
+        "connections": "connections",
+        "status": "status"
+      },
+      "argumentOrder": [
+        "name",
+        "steps",
+        "connections",
+        "status"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "automation",
+          "id": "id-1"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "automationsDuplicate:automationsDuplicate",
+      "operationId": "automationsDuplicate",
+      "methodName": "automationsDuplicate",
+      "namespace": [
+        "automations"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "automationId": "00000000-0000-4000-8000-000000000000"
+      },
+      "wireNames": {
+        "automationId": "automation_id"
+      },
+      "argumentOrder": [
+        "automationId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "automation",
+          "id": "id-1"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "automationsGet:automationsGet",
+      "operationId": "automationsGet",
+      "methodName": "automationsGet",
+      "namespace": [
+        "automations"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "automationId": "00000000-0000-4000-8000-000000000000"
+      },
+      "wireNames": {
+        "automationId": "automation_id"
+      },
+      "argumentOrder": [
+        "automationId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "automation",
+          "id": "id-1",
+          "name": "Example Name",
+          "status": "enabled",
+          "created_at": "2023-10-06 23:47:56.678+00",
+          "updated_at": "2023-10-06 23:47:56.678+00",
+          "steps": [
+            {
+              "key": "key",
+              "type": "trigger",
+              "config": {}
+            }
+          ],
+          "connections": [
+            {
+              "from": "from",
+              "to": "to",
+              "type": "default"
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "automationsGetRun:automationsGetRun",
+      "operationId": "automationsGetRun",
+      "methodName": "automationsGetRun",
+      "namespace": [
+        "automations"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "automationId": "00000000-0000-4000-8000-000000000000",
+        "runId": "00000000-0000-4000-8000-000000000000"
+      },
+      "wireNames": {
+        "automationId": "automation_id",
+        "runId": "run_id"
+      },
+      "argumentOrder": [
+        "automationId",
+        "runId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "automation_run",
+          "id": "id-1",
+          "status": "running",
+          "started_at": "2023-10-06 23:47:56.678+00",
+          "completed_at": "2023-10-06 23:47:56.678+00",
+          "created_at": "2023-10-06 23:47:56.678+00",
+          "steps": [
+            {
+              "key": "key",
+              "type": "trigger",
+              "status": "active",
+              "started_at": "2023-10-06 23:47:56.678+00",
+              "completed_at": "2023-10-06 23:47:56.678+00",
+              "output": {},
+              "error": {},
+              "created_at": "2023-10-06 23:47:56.678+00"
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "automationsList:automationsList",
+      "operationId": "automationsList",
+      "methodName": "automationsList",
+      "namespace": [
+        "automations"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "status": "enabled",
+        "limit": 1,
+        "after": "after",
+        "before": "before"
+      },
+      "wireNames": {
+        "status": "status",
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "status",
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "id": "id-1",
+              "name": "Example Name",
+              "status": "enabled",
+              "created_at": "2023-10-06 23:47:56.678+00",
+              "updated_at": "2023-10-06 23:47:56.678+00"
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "automationsListRuns:automationsListRuns",
+      "operationId": "automationsListRuns",
+      "methodName": "automationsListRuns",
+      "namespace": [
+        "automations"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "automationId": "00000000-0000-4000-8000-000000000000",
+        "status": "active",
+        "limit": 1,
+        "after": "after",
+        "before": "before"
+      },
+      "wireNames": {
+        "automationId": "automation_id",
+        "status": "status",
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "automationId",
+        "status",
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "id": "id-1",
+              "status": "running",
+              "started_at": "2023-10-06 23:47:56.678+00",
+              "completed_at": "2023-10-06 23:47:56.678+00",
+              "created_at": "2023-10-06 23:47:56.678+00"
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "automationsRemove:automationsRemove",
+      "operationId": "automationsRemove",
+      "methodName": "automationsRemove",
+      "namespace": [
+        "automations"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "automationId": "00000000-0000-4000-8000-000000000000"
+      },
+      "wireNames": {
+        "automationId": "automation_id"
+      },
+      "argumentOrder": [
+        "automationId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "automation",
+          "id": "id-1",
+          "deleted": true
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "automationsStop:automationsStop",
+      "operationId": "automationsStop",
+      "methodName": "automationsStop",
+      "namespace": [
+        "automations"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "automationId": "00000000-0000-4000-8000-000000000000"
+      },
+      "wireNames": {
+        "automationId": "automation_id"
+      },
+      "argumentOrder": [
+        "automationId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "automation",
+          "id": "id-1",
+          "status": "disabled"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "automationsUpdate:automationsUpdate",
+      "operationId": "automationsUpdate",
+      "methodName": "automationsUpdate",
+      "namespace": [
+        "automations"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "automationId": "00000000-0000-4000-8000-000000000000",
+        "name": "Example Name",
+        "status": "enabled",
+        "steps": [
+          {
+            "key": "key",
+            "type": "trigger",
+            "config": {}
+          }
+        ],
+        "connections": [
+          {
+            "from": "from",
+            "to": "to",
+            "type": "default"
+          }
+        ]
+      },
+      "wireNames": {
+        "automationId": "automation_id",
+        "name": "name",
+        "status": "status",
+        "steps": "steps",
+        "connections": "connections"
+      },
+      "argumentOrder": [
+        "automationId",
+        "name",
+        "status",
+        "steps",
+        "connections"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "automation",
+          "id": "id-1"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "broadcastsCancel:broadcastsCancel",
+      "operationId": "broadcastsCancel",
+      "methodName": "broadcastsCancel",
+      "namespace": [
+        "broadcasts"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "00000000-0000-4000-8000-000000000000"
+      },
+      "wireNames": {
+        "id": "id"
+      },
+      "argumentOrder": [
+        "id"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "00000000-0000-4000-8000-000000000000",
+          "object": "broadcast"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "broadcastsCreate:broadcastsCreate",
+      "operationId": "broadcastsCreate",
+      "methodName": "broadcastsCreate",
+      "namespace": [
+        "broadcasts"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "segmentId": "segment-1",
+        "from": "from",
+        "subject": "subject",
+        "name": "Example Name",
+        "audienceId": "audience-1",
+        "replyTo": [
+          "reply_to"
+        ],
+        "previewText": "Here are our announcements",
+        "html": "html",
+        "text": "text",
+        "topicId": "topic-1",
+        "send": false,
+        "scheduledAt": "2024-01-01T00:00:00Z"
+      },
+      "wireNames": {
+        "segmentId": "segment_id",
+        "from": "from",
+        "subject": "subject",
+        "name": "name",
+        "audienceId": "audience_id",
+        "replyTo": "reply_to",
+        "previewText": "preview_text",
+        "html": "html",
+        "text": "text",
+        "topicId": "topic_id",
+        "send": "send",
+        "scheduledAt": "scheduled_at"
+      },
+      "argumentOrder": [
+        "segmentId",
+        "from",
+        "subject",
+        "name",
+        "audienceId",
+        "replyTo",
+        "previewText",
+        "html",
+        "text",
+        "topicId",
+        "send",
+        "scheduledAt"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "78261eea-8f8b-4381-83c6-79fa7120f1cf",
+          "object": "broadcast"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "broadcastsDuplicate:broadcastsDuplicate",
+      "operationId": "broadcastsDuplicate",
+      "methodName": "broadcastsDuplicate",
+      "namespace": [
+        "broadcasts"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "00000000-0000-4000-8000-000000000000"
+      },
+      "wireNames": {
+        "id": "id"
+      },
+      "argumentOrder": [
+        "id"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "00000000-0000-4000-8000-000000000000",
+          "object": "broadcast"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "broadcastsGet:broadcastsGet",
+      "operationId": "broadcastsGet",
+      "methodName": "broadcastsGet",
+      "namespace": [
+        "broadcasts"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "id-1"
+      },
+      "wireNames": {
+        "id": "id"
+      },
+      "argumentOrder": [
+        "id"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "id-1",
+          "name": "November announcements",
+          "audience_id": "audience-1",
+          "segment_id": "segment-1",
+          "from": "Acme <onboarding@resend.dev>",
+          "subject": "Hello World",
+          "reply_to": [
+            "reply_to"
+          ],
+          "preview_text": "Here are our announcements",
+          "status": "draft",
+          "created_at": "2023-10-06 22:59:55.977+00",
+          "scheduled_at": "2023-10-06 22:59:55.977+00",
+          "sent_at": "2023-10-06 22:59:55.977+00",
+          "text": "Hello {{{FIRST_NAME|there}}}!",
+          "html": "<p>Hello {{{FIRST_NAME|there}}}!</p>",
+          "topic_id": "b6d24b8e-af0b-4c3c-be0c-359bbd97381e"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "broadcastsList:broadcastsList",
+      "operationId": "broadcastsList",
+      "methodName": "broadcastsList",
+      "namespace": [
+        "broadcasts"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "limit": 1,
+        "after": "after",
+        "before": "before"
+      },
+      "wireNames": {
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "id": "e169aa45-1ecf-4183-9955-b1499d5701d3",
+              "name": "November announcements",
+              "audience_id": "78261eea-8f8b-4381-83c6-79fa7120f1cf",
+              "segment_id": "78261eea-8f8b-4381-83c6-79fa7120f1cf",
+              "status": "draft",
+              "created_at": "2023-10-06 22:59:55.977+00",
+              "scheduled_at": "2023-10-06 22:59:55.977+00",
+              "sent_at": "2023-10-06 22:59:55.977+00",
+              "topic_id": "b6d24b8e-af0b-4c3c-be0c-359bbd97381e"
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "broadcastsListClickedLinks:broadcastsListClickedLinks",
+      "operationId": "broadcastsListClickedLinks",
+      "methodName": "broadcastsListClickedLinks",
+      "namespace": [
+        "broadcasts"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "00000000-0000-4000-8000-000000000000",
+        "limit": 1,
+        "after": "after",
+        "before": "before"
+      },
+      "wireNames": {
+        "id": "id",
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "id",
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "id": "b2Zmc2V0OjA",
+              "url": "https://resend.com/pricing",
+              "clicks": 42,
+              "unique_clicks": 30
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "broadcastsRemove:broadcastsRemove",
+      "operationId": "broadcastsRemove",
+      "methodName": "broadcastsRemove",
+      "namespace": [
+        "broadcasts"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "id-1"
+      },
+      "wireNames": {
+        "id": "id"
+      },
+      "argumentOrder": [
+        "id"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "id-1",
+          "object": "broadcast",
+          "deleted": true
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "broadcastsSend:broadcastsSend",
+      "operationId": "broadcastsSend",
+      "methodName": "broadcastsSend",
+      "namespace": [
+        "broadcasts"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "id-1",
+        "scheduledAt": "2024-01-01T00:00:00Z"
+      },
+      "wireNames": {
+        "id": "id",
+        "scheduledAt": "scheduled_at"
+      },
+      "argumentOrder": [
+        "id",
+        "scheduledAt"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "id-1"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "broadcastsUpdate:broadcastsUpdate",
+      "operationId": "broadcastsUpdate",
+      "methodName": "broadcastsUpdate",
+      "namespace": [
+        "broadcasts"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "id-1",
+        "name": "Example Name",
+        "audienceId": "audience-1",
+        "segmentId": "segment-1",
+        "from": "from",
+        "subject": "subject",
+        "replyTo": [
+          "reply_to"
+        ],
+        "previewText": "preview_text",
+        "html": "html",
+        "text": "text",
+        "topicId": "topic-1"
+      },
+      "wireNames": {
+        "id": "id",
+        "name": "name",
+        "audienceId": "audience_id",
+        "segmentId": "segment_id",
+        "from": "from",
+        "subject": "subject",
+        "replyTo": "reply_to",
+        "previewText": "preview_text",
+        "html": "html",
+        "text": "text",
+        "topicId": "topic_id"
+      },
+      "argumentOrder": [
+        "id",
+        "name",
+        "audienceId",
+        "segmentId",
+        "from",
+        "subject",
+        "replyTo",
+        "previewText",
+        "html",
+        "text",
+        "topicId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "id-1",
+          "object": "broadcast"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "contactPropertiesCreate:contactPropertiesCreate",
+      "operationId": "contactPropertiesCreate",
+      "methodName": "contactPropertiesCreate",
+      "namespace": [
+        "contactProperties"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "key": "key",
+        "type": "string",
+        "fallbackValue": "fallback_value"
+      },
+      "wireNames": {
+        "key": "key",
+        "type": "type",
+        "fallbackValue": "fallback_value"
+      },
+      "argumentOrder": [
+        "key",
+        "type",
+        "fallbackValue"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "78261eea-8f8b-4381-83c6-79fa7120f1cf",
+          "object": "contact_property"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "contactPropertiesGet:contactPropertiesGet",
+      "operationId": "contactPropertiesGet",
+      "methodName": "contactPropertiesGet",
+      "namespace": [
+        "contactProperties"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "id-1"
+      },
+      "wireNames": {
+        "id": "id"
+      },
+      "argumentOrder": [
+        "id"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "contact_property",
+          "id": "id-1",
+          "key": "company_name",
+          "type": "string",
+          "fallback_value": "Acme Corp",
+          "created_at": "2023-10-06 23:47:56.678+00"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "contactPropertiesList:contactPropertiesList",
+      "operationId": "contactPropertiesList",
+      "methodName": "contactPropertiesList",
+      "namespace": [
+        "contactProperties"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "limit": 1,
+        "after": "after",
+        "before": "before"
+      },
+      "wireNames": {
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "id": "id-1",
+              "key": "key",
+              "type": "type",
+              "fallback_value": "fallback_value",
+              "created_at": "2023-10-06 23:47:56.678+00"
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "contactPropertiesRemove:contactPropertiesRemove",
+      "operationId": "contactPropertiesRemove",
+      "methodName": "contactPropertiesRemove",
+      "namespace": [
+        "contactProperties"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "id-1"
+      },
+      "wireNames": {
+        "id": "id"
+      },
+      "argumentOrder": [
+        "id"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "id-1",
+          "object": "contact_property",
+          "deleted": true
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "contactPropertiesUpdate:contactPropertiesUpdate",
+      "operationId": "contactPropertiesUpdate",
+      "methodName": "contactPropertiesUpdate",
+      "namespace": [
+        "contactProperties"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "id-1",
+        "fallbackValue": "fallback_value"
+      },
+      "wireNames": {
+        "id": "id",
+        "fallbackValue": "fallback_value"
+      },
+      "argumentOrder": [
+        "id",
+        "fallbackValue"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "id-1",
+          "object": "contact_property"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "contactsAddSegment:contactsAddSegment",
+      "operationId": "contactsAddSegment",
+      "methodName": "contactsAddSegment",
+      "namespace": [
+        "contacts"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "contactId": "contact-1",
+        "segmentId": "segment-1"
+      },
+      "wireNames": {
+        "contactId": "contact_id",
+        "segmentId": "segment_id"
+      },
+      "argumentOrder": [
+        "contactId",
+        "segmentId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "contact_segment",
+          "contact_id": "contact-1",
+          "segment_id": "segment-1"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "contactsCreate:contactsCreate",
+      "operationId": "contactsCreate",
+      "methodName": "contactsCreate",
+      "namespace": [
+        "contacts"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "email": "steve.wozniak@gmail.com",
+        "firstName": "Steve",
+        "lastName": "Wozniak",
+        "unsubscribed": false,
+        "properties": {
+          "key": "key"
+        },
+        "segments": [
+          {
+            "id": "id-1"
+          }
+        ],
+        "topics": [
+          {
+            "id": "id-1",
+            "subscription": "opt_in"
+          }
+        ],
+        "audienceId": "78261eea-8f8b-4381-83c6-79fa7120f1cf"
+      },
+      "wireNames": {
+        "email": "email",
+        "firstName": "first_name",
+        "lastName": "last_name",
+        "unsubscribed": "unsubscribed",
+        "properties": "properties",
+        "segments": "segments",
+        "topics": "topics",
+        "audienceId": "audience_id"
+      },
+      "argumentOrder": [
+        "email",
+        "firstName",
+        "lastName",
+        "unsubscribed",
+        "properties",
+        "segments",
+        "topics",
+        "audienceId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "contact",
+          "id": "479e3145-dd38-476b-932c-529ceb705947"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "contactsCreateImport:contactsCreateImport",
+      "operationId": "contactsCreateImport",
+      "methodName": "contactsCreateImport",
+      "namespace": [
+        "contacts"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "file": "ZXhhbXBsZQ==",
+        "columnMap": "{\"email\":\"Email\",\"first_name\":\"First Name\",\"last_name\":\"Last Name\",\"unsubscribed\":\"Unsubscribed\",\"properties\":{\"plan\":{\"column\":\"Plan\",\"type\":\"string\"}}}",
+        "onConflict": "skip",
+        "segments": "[{\"id\":\"78261eea-8f8b-4381-83c6-79fa7120f1cf\"}]",
+        "topics": "[{\"id\":\"b6d24b8e-af0b-4c3c-be0c-359bbd97381e\",\"subscription\":\"opt_in\"}]"
+      },
+      "wireNames": {
+        "file": "file",
+        "columnMap": "column_map",
+        "onConflict": "on_conflict",
+        "segments": "segments",
+        "topics": "topics"
+      },
+      "argumentOrder": [
+        "file",
+        "columnMap",
+        "onConflict",
+        "segments",
+        "topics"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "contact_import",
+          "id": "479e3145-dd38-476b-932c-529ceb705947"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "contactsGet:contactsGet",
+      "operationId": "contactsGet",
+      "methodName": "contactsGet",
+      "namespace": [
+        "contacts"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "id-1"
+      },
+      "wireNames": {
+        "id": "id"
+      },
+      "argumentOrder": [
+        "id"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "contact",
+          "id": "id-1",
+          "email": "steve.wozniak@gmail.com",
+          "first_name": "Steve",
+          "last_name": "Wozniak",
+          "created_at": "2023-10-06 23:47:56.678+00",
+          "unsubscribed": false,
+          "properties": {}
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "contactsGetImport:contactsGetImport",
+      "operationId": "contactsGetImport",
+      "methodName": "contactsGetImport",
+      "namespace": [
+        "contacts"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "00000000-0000-4000-8000-000000000000"
+      },
+      "wireNames": {
+        "id": "id"
+      },
+      "argumentOrder": [
+        "id"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "contact_import",
+          "id": "00000000-0000-4000-8000-000000000000",
+          "status": "completed",
+          "created_at": "2023-10-06 23:47:56.678+00",
+          "completed_at": "2023-10-06 23:50:56.678+00",
+          "counts": {
+            "total": 100,
+            "created": 80,
+            "updated": 10,
+            "skipped": 5,
+            "failed": 5
+          }
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "contactsList:contactsList",
+      "operationId": "contactsList",
+      "methodName": "contactsList",
+      "namespace": [
+        "contacts"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "limit": 1,
+        "after": "after",
+        "before": "before"
+      },
+      "wireNames": {
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "id": "e169aa45-1ecf-4183-9955-b1499d5701d3",
+              "email": "steve.wozniak@gmail.com",
+              "first_name": "Steve",
+              "last_name": "Wozniak",
+              "created_at": "2023-10-06 23:47:56.678+00",
+              "unsubscribed": false
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "contactsListImports:contactsListImports",
+      "operationId": "contactsListImports",
+      "methodName": "contactsListImports",
+      "namespace": [
+        "contacts"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "status": "queued",
+        "limit": 1,
+        "after": "after",
+        "before": "before"
+      },
+      "wireNames": {
+        "status": "status",
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "status",
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "object": "contact_import",
+              "id": "479e3145-dd38-476b-932c-529ceb705947",
+              "status": "completed",
+              "created_at": "2023-10-06 23:47:56.678+00",
+              "completed_at": "2023-10-06 23:50:56.678+00",
+              "counts": {
+                "total": 100,
+                "created": 80,
+                "updated": 10,
+                "skipped": 5,
+                "failed": 5
+              }
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "contactsListSegments:contactsListSegments",
+      "operationId": "contactsListSegments",
+      "methodName": "contactsListSegments",
+      "namespace": [
+        "contacts"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "contactId": "contact-1",
+        "limit": 1,
+        "after": "after",
+        "before": "before"
+      },
+      "wireNames": {
+        "contactId": "contact_id",
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "contactId",
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "id": "id-1",
+              "name": "Example Name",
+              "created_at": "2023-10-06 23:47:56.678+00"
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "contactsListTopics:contactsListTopics",
+      "operationId": "contactsListTopics",
+      "methodName": "contactsListTopics",
+      "namespace": [
+        "contacts"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "contactId": "contact-1",
+        "limit": 1,
+        "after": "after",
+        "before": "before"
+      },
+      "wireNames": {
+        "contactId": "contact_id",
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "contactId",
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "id": "id-1",
+              "name": "Example Name",
+              "description": "example text",
+              "subscription": "opt_in"
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "contactsRemove:contactsRemove",
+      "operationId": "contactsRemove",
+      "methodName": "contactsRemove",
+      "namespace": [
+        "contacts"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "id-1"
+      },
+      "wireNames": {
+        "id": "id"
+      },
+      "argumentOrder": [
+        "id"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "contact",
+          "id": "id-1",
+          "deleted": true
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "contactsRemoveSegment:contactsRemoveSegment",
+      "operationId": "contactsRemoveSegment",
+      "methodName": "contactsRemoveSegment",
+      "namespace": [
+        "contacts"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "contactId": "contact-1",
+        "segmentId": "segment-1"
+      },
+      "wireNames": {
+        "contactId": "contact_id",
+        "segmentId": "segment_id"
+      },
+      "argumentOrder": [
+        "contactId",
+        "segmentId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "contact_segment",
+          "contact_id": "contact-1",
+          "segment_id": "segment-1",
+          "deleted": true
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "contactsUpdate:contactsUpdate",
+      "operationId": "contactsUpdate",
+      "methodName": "contactsUpdate",
+      "namespace": [
+        "contacts"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "id-1",
+        "email": "steve.wozniak@gmail.com",
+        "firstName": "Steve",
+        "lastName": "Wozniak",
+        "unsubscribed": false,
+        "properties": {
+          "key": "key"
+        }
+      },
+      "wireNames": {
+        "id": "id",
+        "email": "email",
+        "firstName": "first_name",
+        "lastName": "last_name",
+        "unsubscribed": "unsubscribed",
+        "properties": "properties"
+      },
+      "argumentOrder": [
+        "id",
+        "email",
+        "firstName",
+        "lastName",
+        "unsubscribed",
+        "properties"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "contact",
+          "id": "id-1"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "contactsUpdateTopics:contactsUpdateTopics",
+      "operationId": "contactsUpdateTopics",
+      "methodName": "contactsUpdateTopics",
+      "namespace": [
+        "contacts"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "contactId": "contact-1",
+        "topics": [
+          {
+            "id": "id-1",
+            "subscription": "opt_in"
+          }
+        ]
+      },
+      "wireNames": {
+        "contactId": "contact_id",
+        "topics": "topics"
+      },
+      "argumentOrder": [
+        "contactId",
+        "topics"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "contact_topics",
+          "contact_id": "contact-1",
+          "topics": [
+            {
+              "id": "id-1",
+              "subscription": "opt_in"
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "domainsCreate:domainsCreate",
+      "operationId": "domainsCreate",
+      "methodName": "domainsCreate",
+      "namespace": [
+        "domains"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "name": "Example Name",
+        "region": "us-east-1",
+        "customReturnPath": "custom_return_path",
+        "openTracking": false,
+        "clickTracking": false,
+        "tls": "opportunistic",
+        "capabilities": {
+          "sending": "enabled",
+          "receiving": "enabled"
+        },
+        "trackingSubdomain": "tracking_subdomain"
+      },
+      "wireNames": {
+        "name": "name",
+        "region": "region",
+        "customReturnPath": "custom_return_path",
+        "openTracking": "open_tracking",
+        "clickTracking": "click_tracking",
+        "tls": "tls",
+        "capabilities": "capabilities",
+        "trackingSubdomain": "tracking_subdomain"
+      },
+      "argumentOrder": [
+        "name",
+        "region",
+        "customReturnPath",
+        "openTracking",
+        "clickTracking",
+        "tls",
+        "capabilities",
+        "trackingSubdomain"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "id-1",
+          "name": "Example Name",
+          "created_at": "2023-10-06 23:47:56.678+00",
+          "status": "pending",
+          "capabilities": {
+            "sending": "enabled",
+            "receiving": "enabled"
+          },
+          "records": [
+            {
+              "record": "SPF",
+              "name": "Example Name",
+              "type": "MX",
+              "ttl": "ttl",
+              "status": "pending",
+              "value": "value",
+              "priority": 1
+            }
+          ],
+          "region": "us-east-1",
+          "open_tracking": false,
+          "click_tracking": false,
+          "tracking_subdomain": "tracking_subdomain"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "domainsCreateClaim:domainsCreateClaim",
+      "operationId": "domainsCreateClaim",
+      "methodName": "domainsCreateClaim",
+      "namespace": [
+        "domains"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "name": "Example Name",
+        "region": "us-east-1",
+        "customReturnPath": "send",
+        "openTracking": false,
+        "clickTracking": false,
+        "trackingSubdomain": "tracking_subdomain"
+      },
+      "wireNames": {
+        "name": "name",
+        "region": "region",
+        "customReturnPath": "custom_return_path",
+        "openTracking": "open_tracking",
+        "clickTracking": "click_tracking",
+        "trackingSubdomain": "tracking_subdomain"
+      },
+      "argumentOrder": [
+        "name",
+        "region",
+        "customReturnPath",
+        "openTracking",
+        "clickTracking",
+        "trackingSubdomain"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "domain_claim",
+          "id": "d91cd9bd-1176-453e-8fc1-35364d380206",
+          "name": "Example Name",
+          "status": "pending",
+          "domain_id": "a1b2c3d4-1176-453e-8fc1-35364d380206",
+          "region": "us-east-1",
+          "record": {
+            "type": "TXT",
+            "name": "example.com",
+            "value": "resend-domain-verification=abc123",
+            "ttl": "Auto"
+          },
+          "blocked_reason": null,
+          "failure_reason": null,
+          "created_at": "2023-04-26 20:21:26.347412+00",
+          "expires_at": "2023-05-03 20:21:26.347412+00"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "domainsGet:domainsGet",
+      "operationId": "domainsGet",
+      "methodName": "domainsGet",
+      "namespace": [
+        "domains"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "domainId": "domain-1"
+      },
+      "wireNames": {
+        "domainId": "domain_id"
+      },
+      "argumentOrder": [
+        "domainId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "domain",
+          "id": "d91cd9bd-1176-453e-8fc1-35364d380206",
+          "name": "example.com",
+          "status": "not_started",
+          "created_at": "2023-04-26 20:21:26.347412+00",
+          "region": "us-east-1",
+          "open_tracking": false,
+          "click_tracking": false,
+          "tracking_subdomain": "tracking_subdomain",
+          "capabilities": {
+            "sending": "enabled",
+            "receiving": "enabled"
+          },
+          "records": [
+            {
+              "record": "SPF",
+              "name": "Example Name",
+              "type": "MX",
+              "ttl": "ttl",
+              "status": "pending",
+              "value": "value",
+              "priority": 1
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "domainsGetClaim:domainsGetClaim",
+      "operationId": "domainsGetClaim",
+      "methodName": "domainsGetClaim",
+      "namespace": [
+        "domains"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "domainId": "domain-1"
+      },
+      "wireNames": {
+        "domainId": "domain_id"
+      },
+      "argumentOrder": [
+        "domainId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "domain_claim",
+          "id": "d91cd9bd-1176-453e-8fc1-35364d380206",
+          "name": "example.com",
+          "status": "pending",
+          "domain_id": "domain-1",
+          "region": "us-east-1",
+          "record": {
+            "type": "TXT",
+            "name": "example.com",
+            "value": "resend-domain-verification=abc123",
+            "ttl": "Auto"
+          },
+          "blocked_reason": null,
+          "failure_reason": null,
+          "created_at": "2023-04-26 20:21:26.347412+00",
+          "expires_at": "2023-05-03 20:21:26.347412+00"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "domainsList:domainsList",
+      "operationId": "domainsList",
+      "methodName": "domainsList",
+      "namespace": [
+        "domains"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "limit": 1,
+        "after": "after",
+        "before": "before"
+      },
+      "wireNames": {
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "id": "d91cd9bd-1176-453e-8fc1-35364d380206",
+              "name": "example.com",
+              "status": "not_started",
+              "created_at": "2023-04-26 20:21:26.347412+00",
+              "region": "us-east-1",
+              "open_tracking": false,
+              "click_tracking": false,
+              "capabilities": {
+                "sending": "enabled",
+                "receiving": "enabled"
+              }
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "domainsRemove:domainsRemove",
+      "operationId": "domainsRemove",
+      "methodName": "domainsRemove",
+      "namespace": [
+        "domains"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "domainId": "domain-1"
+      },
+      "wireNames": {
+        "domainId": "domain_id"
+      },
+      "argumentOrder": [
+        "domainId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "domain",
+          "id": "d91cd9bd-1176-453e-8fc1-35364d380206",
+          "deleted": true
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "domainsUpdate:domainsUpdate",
+      "operationId": "domainsUpdate",
+      "methodName": "domainsUpdate",
+      "namespace": [
+        "domains"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "domainId": "domain-1",
+        "openTracking": false,
+        "clickTracking": false,
+        "tls": "opportunistic",
+        "capabilities": {
+          "sending": "enabled",
+          "receiving": "enabled"
+        },
+        "trackingSubdomain": "tracking_subdomain"
+      },
+      "wireNames": {
+        "domainId": "domain_id",
+        "openTracking": "open_tracking",
+        "clickTracking": "click_tracking",
+        "tls": "tls",
+        "capabilities": "capabilities",
+        "trackingSubdomain": "tracking_subdomain"
+      },
+      "argumentOrder": [
+        "domainId",
+        "openTracking",
+        "clickTracking",
+        "tls",
+        "capabilities",
+        "trackingSubdomain"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "d91cd9bd-1176-453e-8fc1-35364d380206",
+          "object": "domain"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "domainsVerify:domainsVerify",
+      "operationId": "domainsVerify",
+      "methodName": "domainsVerify",
+      "namespace": [
+        "domains"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "domainId": "domain-1"
+      },
+      "wireNames": {
+        "domainId": "domain_id"
+      },
+      "argumentOrder": [
+        "domainId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "domain",
+          "id": "d91cd9bd-1176-453e-8fc1-35364d380206"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "domainsVerifyClaim:domainsVerifyClaim",
+      "operationId": "domainsVerifyClaim",
+      "methodName": "domainsVerifyClaim",
+      "namespace": [
+        "domains"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "domainId": "domain-1"
+      },
+      "wireNames": {
+        "domainId": "domain_id"
+      },
+      "argumentOrder": [
+        "domainId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "domain_claim",
+          "id": "d91cd9bd-1176-453e-8fc1-35364d380206",
+          "name": "example.com",
+          "status": "pending",
+          "domain_id": "domain-1",
+          "region": "us-east-1",
+          "record": {
+            "type": "TXT",
+            "name": "example.com",
+            "value": "resend-domain-verification=abc123",
+            "ttl": "Auto"
+          },
+          "blocked_reason": null,
+          "failure_reason": null,
+          "created_at": "2023-04-26 20:21:26.347412+00",
+          "expires_at": "2023-05-03 20:21:26.347412+00"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "emailsCancel:emailsCancel",
+      "operationId": "emailsCancel",
+      "methodName": "emailsCancel",
+      "namespace": [
+        "emails"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "emailId": "email-1"
+      },
+      "wireNames": {
+        "emailId": "email_id"
+      },
+      "argumentOrder": [
+        "emailId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "email",
+          "id": "4ef9a417-02e9-4d39-ad75-9611e0fcc33c",
+          "message_id": "<202301010000.4ef9a417@email.example.com>",
+          "to": [
+            "delivered@resend.dev"
+          ],
+          "from": "Acme <onboarding@resend.dev>",
+          "created_at": "2023-04-03 22:13:42.674981+00",
+          "subject": "Hello World",
+          "html": "Congrats on sending your <strong>first email</strong>!",
+          "text": "text",
+          "bcc": [
+            "bcc"
+          ],
+          "cc": [
+            "cc"
+          ],
+          "reply_to": [
+            "reply_to"
+          ],
+          "last_event": "delivered"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "emailsGet:emailsGet",
+      "operationId": "emailsGet",
+      "methodName": "emailsGet",
+      "namespace": [
+        "emails"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "emailId": "email-1"
+      },
+      "wireNames": {
+        "emailId": "email_id"
+      },
+      "argumentOrder": [
+        "emailId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "email",
+          "id": "4ef9a417-02e9-4d39-ad75-9611e0fcc33c",
+          "message_id": "<202301010000.4ef9a417@email.example.com>",
+          "to": [
+            "delivered@resend.dev"
+          ],
+          "from": "Acme <onboarding@resend.dev>",
+          "created_at": "2023-04-03 22:13:42.674981+00",
+          "subject": "Hello World",
+          "html": "Congrats on sending your <strong>first email</strong>!",
+          "text": "text",
+          "bcc": [
+            "bcc"
+          ],
+          "cc": [
+            "cc"
+          ],
+          "reply_to": [
+            "reply_to"
+          ],
+          "last_event": "delivered"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "emailsGetAttachment:emailsGetAttachment",
+      "operationId": "emailsGetAttachment",
+      "methodName": "emailsGetAttachment",
+      "namespace": [
+        "emails"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "emailId": "00000000-0000-4000-8000-000000000000",
+        "attachmentId": "00000000-0000-4000-8000-000000000000"
+      },
+      "wireNames": {
+        "emailId": "email_id",
+        "attachmentId": "attachment_id"
+      },
+      "argumentOrder": [
+        "emailId",
+        "attachmentId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "attachment",
+          "id": "660e8400-e29b-41d4-a716-446655440000",
+          "filename": "document.pdf",
+          "content_type": "application/pdf",
+          "content_id": "img001",
+          "content_disposition": "attachment",
+          "download_url": "https://cloudfront.example.com/path?Signature=...",
+          "expires_at": "2024-10-27T18:30:00.000Z",
+          "size": 2048
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "emailsList:emailsList",
+      "operationId": "emailsList",
+      "methodName": "emailsList",
+      "namespace": [
+        "emails"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "limit": 1,
+        "after": "after",
+        "before": "before"
+      },
+      "wireNames": {
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "object": "email",
+              "id": "4ef9a417-02e9-4d39-ad75-9611e0fcc33c",
+              "message_id": "<202301010000.4ef9a417@email.example.com>",
+              "to": [
+                "delivered@resend.dev"
+              ],
+              "from": "Acme <onboarding@resend.dev>",
+              "created_at": "2023-04-03 22:13:42.674981+00",
+              "subject": "Hello World",
+              "html": "Congrats on sending your <strong>first email</strong>!",
+              "text": "text",
+              "bcc": [
+                "bcc"
+              ],
+              "cc": [
+                "cc"
+              ],
+              "reply_to": [
+                "reply_to"
+              ],
+              "last_event": "delivered"
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "emailsListAttachments:emailsListAttachments",
+      "operationId": "emailsListAttachments",
+      "methodName": "emailsListAttachments",
+      "namespace": [
+        "emails"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "emailId": "00000000-0000-4000-8000-000000000000",
+        "limit": 1,
+        "after": "00000000-0000-4000-8000-000000000000",
+        "before": "00000000-0000-4000-8000-000000000000"
+      },
+      "wireNames": {
+        "emailId": "email_id",
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "emailId",
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "id": "660e8400-e29b-41d4-a716-446655440000",
+              "filename": "document.pdf",
+              "content_type": "application/pdf",
+              "content_id": "img001",
+              "content_disposition": "attachment",
+              "download_url": "https://cloudfront.example.com/path?Signature=...",
+              "expires_at": "2024-10-27T18:30:00.000Z",
+              "size": 2048
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "emailsSend:emailsSend",
+      "operationId": "emailsSend",
+      "methodName": "emailsSend",
+      "namespace": [
+        "emails"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "from": "from",
+        "to": "to",
+        "subject": "subject",
+        "idempotencyKey": "Idempotency-Key",
+        "bcc": "bcc",
+        "cc": "cc",
+        "replyTo": "reply_to",
+        "html": "html",
+        "text": "text",
+        "template": {
+          "id": "id-1",
+          "variables": {
+            "variableName": "Sign up now",
+            "variableName2": 123
+          }
+        },
+        "headers": {},
+        "scheduledAt": "2024-01-01T00:00:00Z",
+        "attachments": [
+          {
+            "content": "ZXhhbXBsZQ==",
+            "filename": "Example Name",
+            "path": "path",
+            "content_type": "content_type",
+            "content_id": "content-1"
+          }
+        ],
+        "tags": [
+          {
+            "name": "Example Name",
+            "value": "value"
+          }
+        ],
+        "topicId": "topic-1"
+      },
+      "wireNames": {
+        "from": "from",
+        "to": "to",
+        "subject": "subject",
+        "idempotencyKey": "Idempotency-Key",
+        "bcc": "bcc",
+        "cc": "cc",
+        "replyTo": "reply_to",
+        "html": "html",
+        "text": "text",
+        "template": "template",
+        "headers": "headers",
+        "scheduledAt": "scheduled_at",
+        "attachments": "attachments",
+        "tags": "tags",
+        "topicId": "topic_id"
+      },
+      "argumentOrder": [
+        "from",
+        "to",
+        "subject",
+        "idempotencyKey",
+        "bcc",
+        "cc",
+        "replyTo",
+        "html",
+        "text",
+        "template",
+        "headers",
+        "scheduledAt",
+        "attachments",
+        "tags",
+        "topicId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "id-1"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "emailsSendBatch:emailsSendBatch",
+      "operationId": "emailsSendBatch",
+      "methodName": "emailsSendBatch",
+      "namespace": [
+        "emails"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "idempotencyKey": "Idempotency-Key",
+        "body": [
+          {
+            "from": "from",
+            "to": "to",
+            "subject": "subject",
+            "bcc": "bcc",
+            "cc": "cc",
+            "reply_to": "reply_to",
+            "html": "html",
+            "text": "text",
+            "template": {
+              "id": "id-1",
+              "variables": {
+                "variableName": "Sign up now",
+                "variableName2": 123
+              }
+            },
+            "headers": {},
+            "scheduled_at": "2024-01-01T00:00:00Z",
+            "attachments": [
+              {
+                "content": "ZXhhbXBsZQ==",
+                "filename": "Example Name",
+                "path": "path",
+                "content_type": "content_type",
+                "content_id": "content-1"
+              }
+            ],
+            "tags": [
+              {
+                "name": "Example Name",
+                "value": "value"
+              }
+            ],
+            "topic_id": "topic-1"
+          }
+        ]
+      },
+      "wireNames": {
+        "idempotencyKey": "Idempotency-Key",
+        "body": "body"
+      },
+      "argumentOrder": [
+        "idempotencyKey",
+        "body"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "data": [
+            {
+              "id": "id-1"
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "emailsShare:emailsShare",
+      "operationId": "emailsShare",
+      "methodName": "emailsShare",
+      "namespace": [
+        "emails"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "emailId": "email-1",
+        "expiresIn": "expires_in"
+      },
+      "wireNames": {
+        "emailId": "email_id",
+        "expiresIn": "expires_in"
+      },
+      "argumentOrder": [
+        "emailId",
+        "expiresIn"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "email",
+          "id": "4ef9a417-02e9-4d39-ad75-9611e0fcc33c",
+          "url": "https://resend.com/shared?token=eyJhbGciOiJIUzI1NiJ9..."
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "emailsUpdate:emailsUpdate",
+      "operationId": "emailsUpdate",
+      "methodName": "emailsUpdate",
+      "namespace": [
+        "emails"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "emailId": "email-1"
+      },
+      "wireNames": {
+        "emailId": "email_id"
+      },
+      "argumentOrder": [
+        "emailId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "scheduled_at": "2024-01-01T00:00:00Z"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "eventsCreate:eventsCreate",
+      "operationId": "eventsCreate",
+      "methodName": "eventsCreate",
+      "namespace": [
+        "events"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "name": "Example Name",
+        "schema": {}
+      },
+      "wireNames": {
+        "name": "name",
+        "schema": "schema"
+      },
+      "argumentOrder": [
+        "name",
+        "schema"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "event",
+          "id": "00000000-0000-4000-8000-000000000000"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "eventsGet:eventsGet",
+      "operationId": "eventsGet",
+      "methodName": "eventsGet",
+      "namespace": [
+        "events"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "identifier": "identifier"
+      },
+      "wireNames": {
+        "identifier": "identifier"
+      },
+      "argumentOrder": [
+        "identifier"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "event",
+          "id": "00000000-0000-4000-8000-000000000000",
+          "name": "Example Name",
+          "schema": {},
+          "created_at": "2023-10-06 23:47:56.678+00",
+          "updated_at": "2023-10-06 23:47:56.678+00"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "eventsList:eventsList",
+      "operationId": "eventsList",
+      "methodName": "eventsList",
+      "namespace": [
+        "events"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "limit": 1,
+        "after": "after",
+        "before": "before"
+      },
+      "wireNames": {
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "id": "00000000-0000-4000-8000-000000000000",
+              "name": "Example Name",
+              "schema": {},
+              "created_at": "2023-10-06 23:47:56.678+00",
+              "updated_at": "2023-10-06 23:47:56.678+00"
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "eventsRemove:eventsRemove",
+      "operationId": "eventsRemove",
+      "methodName": "eventsRemove",
+      "namespace": [
+        "events"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "identifier": "identifier"
+      },
+      "wireNames": {
+        "identifier": "identifier"
+      },
+      "argumentOrder": [
+        "identifier"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "event",
+          "id": "00000000-0000-4000-8000-000000000000",
+          "deleted": true
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "eventsSend:eventsSend",
+      "operationId": "eventsSend",
+      "methodName": "eventsSend",
+      "namespace": [
+        "events"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "event": "event",
+        "contactId": "00000000-0000-4000-8000-000000000000",
+        "email": "user@example.com",
+        "payload": {}
+      },
+      "wireNames": {
+        "event": "event",
+        "contactId": "contact_id",
+        "email": "email",
+        "payload": "payload"
+      },
+      "argumentOrder": [
+        "event",
+        "contactId",
+        "email",
+        "payload"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "event",
+          "event": "event"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "eventsUpdate:eventsUpdate",
+      "operationId": "eventsUpdate",
+      "methodName": "eventsUpdate",
+      "namespace": [
+        "events"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "identifier": "identifier",
+        "schema": {}
+      },
+      "wireNames": {
+        "identifier": "identifier",
+        "schema": "schema"
+      },
+      "argumentOrder": [
+        "identifier",
+        "schema"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "event",
+          "id": "00000000-0000-4000-8000-000000000000"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "get:get",
+      "operationId": "get",
+      "methodName": "get",
+      "namespace": [
+        "receivingEmails"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "emailId": "00000000-0000-4000-8000-000000000000"
+      },
+      "wireNames": {
+        "emailId": "email_id"
+      },
+      "argumentOrder": [
+        "emailId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "email",
+          "id": "550e8400-e29b-41d4-a716-446655440000",
+          "to": [
+            "delivered@resend.dev"
+          ],
+          "from": "sender@example.com",
+          "subject": "Hello World",
+          "message_id": "<message-id@email.example.com>",
+          "bcc": [],
+          "cc": [],
+          "reply_to": [],
+          "received_for": [
+            "forwarded@example.com"
+          ],
+          "html": "<p>Email content</p>",
+          "text": "Email content",
+          "headers": {
+            "X-Custom-Header": "value"
+          },
+          "created_at": "2023-10-06T23:47:56.678Z",
+          "attachments": [
+            {
+              "id": "00000000-0000-4000-8000-000000000000",
+              "filename": "Example Name",
+              "content_type": "content_type",
+              "content_id": "content-1",
+              "content_disposition": "inline",
+              "size": 1
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "getAttachment:getAttachment",
+      "operationId": "getAttachment",
+      "methodName": "getAttachment",
+      "namespace": [
+        "receivingEmails"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "emailId": "00000000-0000-4000-8000-000000000000",
+        "attachmentId": "00000000-0000-4000-8000-000000000000"
+      },
+      "wireNames": {
+        "emailId": "email_id",
+        "attachmentId": "attachment_id"
+      },
+      "argumentOrder": [
+        "emailId",
+        "attachmentId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "attachment",
+          "id": "660e8400-e29b-41d4-a716-446655440000",
+          "filename": "document.pdf",
+          "content_type": "application/pdf",
+          "content_id": "img001",
+          "content_disposition": "attachment",
+          "download_url": "https://cloudfront.example.com/path?Signature=...",
+          "expires_at": "2024-10-27T18:30:00.000Z",
+          "size": 2048
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "getMetrics:getMetrics",
+      "operationId": "getMetrics",
+      "methodName": "getMetrics",
+      "namespace": [
+        "emails"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "startDate": "2024-01-01T00:00:00Z",
+        "endDate": "2024-01-01T00:00:00Z",
+        "timezone": "UTC",
+        "granularity": "daily",
+        "metrics": [
+          "received"
+        ],
+        "dimensions": [
+          "period"
+        ],
+        "domainId": [
+          "00000000-0000-4000-8000-000000000000"
+        ],
+        "emailId": [
+          "00000000-0000-4000-8000-000000000000"
+        ],
+        "broadcastId": [
+          "00000000-0000-4000-8000-000000000000"
+        ]
+      },
+      "wireNames": {
+        "startDate": "start_date",
+        "endDate": "end_date",
+        "timezone": "timezone",
+        "granularity": "granularity",
+        "metrics": "metrics",
+        "dimensions": "dimensions",
+        "domainId": "domain_id",
+        "emailId": "email_id",
+        "broadcastId": "broadcast_id"
+      },
+      "argumentOrder": [
+        "startDate",
+        "endDate",
+        "timezone",
+        "granularity",
+        "metrics",
+        "dimensions",
+        "domainId",
+        "emailId",
+        "broadcastId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "metrics",
+          "start_date": "2026-07-01T00:00:00.000Z",
+          "end_date": "2026-07-08T00:00:00.000Z",
+          "metrics": [
+            "metrics"
+          ],
+          "dimensions": [
+            "period"
+          ],
+          "granularity": "hourly",
+          "totals": {
+            "key": 1
+          },
+          "data": [
+            {
+              "period": "period",
+              "domain_id": "00000000-0000-4000-8000-000000000000",
+              "domain_name": "Example Name",
+              "email_id": "00000000-0000-4000-8000-000000000000",
+              "broadcast_id": "00000000-0000-4000-8000-000000000000",
+              "broadcast_name": "Example Name"
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "inboxesCreate:inboxesCreate",
+      "operationId": "inboxesCreate",
+      "methodName": "inboxesCreate",
+      "namespace": [
+        "inboxes"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "emailAddress": "support@acme.com",
+        "name": "Customer Support",
+        "fromName": "Ada from Support",
+        "forwarding": false
+      },
+      "wireNames": {
+        "emailAddress": "email_address",
+        "name": "name",
+        "fromName": "from_name",
+        "forwarding": "forwarding"
+      },
+      "argumentOrder": [
+        "emailAddress",
+        "name",
+        "fromName",
+        "forwarding"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "inbox",
+          "id": "b3e2b2b6-3f0e-4c8e-9ad3-2f43a1e2c7f1"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "inboxesCreateDraft:inboxesCreateDraft",
+      "operationId": "inboxesCreateDraft",
+      "methodName": "inboxesCreateDraft",
+      "namespace": [
+        "inboxes"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "inboxId": "00000000-0000-4000-8000-000000000000",
+        "idempotencyKey": "x",
+        "to": [
+          "ada@example.org"
+        ],
+        "cc": "cc",
+        "bcc": "bcc",
+        "subject": "Refund for order 1041",
+        "html": "<p>Refund issued for order 1041.</p>",
+        "text": "Refund issued for order 1041.",
+        "attachments": [
+          {
+            "content": "aGVsbG8gZTJl",
+            "filename": "receipt.pdf",
+            "content_type": "application/pdf"
+          }
+        ],
+        "threadId": "4d8e2a1c-9b3f-4c6d-8a21-3e5f7c9c0d12",
+        "replyToEmailId": "5b1a9f47-2c8d-4e6f-9a03-1d2e3f4a5b60"
+      },
+      "wireNames": {
+        "inboxId": "inbox_id",
+        "idempotencyKey": "Idempotency-Key",
+        "to": "to",
+        "cc": "cc",
+        "bcc": "bcc",
+        "subject": "subject",
+        "html": "html",
+        "text": "text",
+        "attachments": "attachments",
+        "threadId": "thread_id",
+        "replyToEmailId": "reply_to_email_id"
+      },
+      "argumentOrder": [
+        "inboxId",
+        "idempotencyKey",
+        "to",
+        "cc",
+        "bcc",
+        "subject",
+        "html",
+        "text",
+        "attachments",
+        "threadId",
+        "replyToEmailId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "inbox_draft",
+          "id": "c3a1e8b4-2d5f-4a7c-9e10-6b8d7f5a4c32"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "inboxesCreateLabel:inboxesCreateLabel",
+      "operationId": "inboxesCreateLabel",
+      "methodName": "inboxesCreateLabel",
+      "namespace": [
+        "inboxes"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "inboxId": "00000000-0000-4000-8000-000000000000",
+        "name": "Urgent",
+        "color": "#E93D82"
+      },
+      "wireNames": {
+        "inboxId": "inbox_id",
+        "name": "name",
+        "color": "color"
+      },
+      "argumentOrder": [
+        "inboxId",
+        "name",
+        "color"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "inbox_label",
+          "id": "7f9c1d2e-4a6b-4c3d-8e15-9b0a7c6d5e34"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "inboxesForwardThreadEmail:inboxesForwardThreadEmail",
+      "operationId": "inboxesForwardThreadEmail",
+      "methodName": "inboxesForwardThreadEmail",
+      "namespace": [
+        "inboxes"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "inboxId": "00000000-0000-4000-8000-000000000000",
+        "threadId": "00000000-0000-4000-8000-000000000000",
+        "emailId": "00000000-0000-4000-8000-000000000000",
+        "to": [
+          "colleague@example.org"
+        ],
+        "idempotencyKey": "x",
+        "cc": [
+          "billing@acme.com"
+        ],
+        "bcc": [
+          "records@acme.com"
+        ],
+        "html": "<p>Flagging this refund request for you.</p>",
+        "text": "Flagging this refund request for you.",
+        "subject": "Fwd: Refund for order 1041",
+        "attachments": [
+          {
+            "content": "ZXhhbXBsZQ==",
+            "filename": "Example Name",
+            "path": "path",
+            "content_type": "content_type",
+            "content_id": "content-1"
+          }
+        ],
+        "headers": {
+          "X-Ticket-Id": "4821"
+        }
+      },
+      "wireNames": {
+        "inboxId": "inbox_id",
+        "threadId": "thread_id",
+        "emailId": "email_id",
+        "to": "to",
+        "idempotencyKey": "Idempotency-Key",
+        "cc": "cc",
+        "bcc": "bcc",
+        "html": "html",
+        "text": "text",
+        "subject": "subject",
+        "attachments": "attachments",
+        "headers": "headers"
+      },
+      "argumentOrder": [
+        "inboxId",
+        "threadId",
+        "emailId",
+        "to",
+        "idempotencyKey",
+        "cc",
+        "bcc",
+        "html",
+        "text",
+        "subject",
+        "attachments",
+        "headers"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "6a0c8e58-3d9e-4f7a-8b14-2e3f4a5b6c71"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "inboxesGet:inboxesGet",
+      "operationId": "inboxesGet",
+      "methodName": "inboxesGet",
+      "namespace": [
+        "inboxes"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "inboxId": "b3e2b2b6-3f0e-4c8e-9ad3-2f43a1e2c7f1"
+      },
+      "wireNames": {
+        "inboxId": "inbox_id"
+      },
+      "argumentOrder": [
+        "inboxId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "inbox",
+          "id": "b3e2b2b6-3f0e-4c8e-9ad3-2f43a1e2c7f1",
+          "name": "Customer Support",
+          "email_address": "support@acme.com",
+          "domain_id": "d91cd9bd-1176-453e-8fc1-35364d380206",
+          "receiving_address": null,
+          "from_name": "Ada from Support",
+          "unread": 3,
+          "drafts": 2,
+          "last_received": "2026-08-05T14:03:11.229Z",
+          "created_at": "2026-08-01T09:12:44.512Z"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "inboxesGetAgent:inboxesGetAgent",
+      "operationId": "inboxesGetAgent",
+      "methodName": "inboxesGetAgent",
+      "namespace": [
+        "inboxes"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "inboxId": "00000000-0000-4000-8000-000000000000"
+      },
+      "wireNames": {
+        "inboxId": "inbox_id"
+      },
+      "argumentOrder": [
+        "inboxId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "inbox_agent",
+          "instructions": "Answer refund questions yourself. Escalate legal threats.",
+          "tone": "concise_professional",
+          "enabled_actions": [
+            "draft_reply",
+            "add_labels"
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "inboxesGetDraft:inboxesGetDraft",
+      "operationId": "inboxesGetDraft",
+      "methodName": "inboxesGetDraft",
+      "namespace": [
+        "inboxes"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "inboxId": "00000000-0000-4000-8000-000000000000",
+        "draftId": "00000000-0000-4000-8000-000000000000"
+      },
+      "wireNames": {
+        "inboxId": "inbox_id",
+        "draftId": "draft_id"
+      },
+      "argumentOrder": [
+        "inboxId",
+        "draftId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "inbox_draft",
+          "id": "c3a1e8b4-2d5f-4a7c-9e10-6b8d7f5a4c32",
+          "type": "standalone",
+          "to": [
+            "ada@example.org"
+          ],
+          "cc": [],
+          "bcc": [],
+          "subject": "Refund for order 1041",
+          "html": "<p>Refund issued for order 1041.</p>",
+          "text": "Refund issued for order 1041.",
+          "thread_id": null,
+          "reply_to_email_id": null,
+          "email_id": null,
+          "created_at": "2026-08-05T14:12:04.110Z",
+          "updated_at": "2026-08-05T14:12:04.110Z",
+          "attachments": [
+            {
+              "id": "5c1e9d2a-7b3f-4e8a-9c6d-2f0a1b3c4d5e",
+              "filename": "receipt.pdf",
+              "content_type": "application/pdf",
+              "size": 20841
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "inboxesGetThread:inboxesGetThread",
+      "operationId": "inboxesGetThread",
+      "methodName": "inboxesGetThread",
+      "namespace": [
+        "inboxes"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "inboxId": "00000000-0000-4000-8000-000000000000",
+        "threadId": "00000000-0000-4000-8000-000000000000"
+      },
+      "wireNames": {
+        "inboxId": "inbox_id",
+        "threadId": "thread_id"
+      },
+      "argumentOrder": [
+        "inboxId",
+        "threadId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "inbox_thread",
+          "id": "4d8e2a1c-9b3f-4c6d-8a21-3e5f7c9c0d12",
+          "subject": "Refund for order 1041",
+          "folder": "inbox",
+          "labels": [
+            {
+              "id": "7f9c1d2e-4a6b-4c3d-8e15-9b0a7c6d5e34",
+              "name": "Urgent",
+              "color": "#E93D82"
+            }
+          ],
+          "read": false
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "inboxesGetThreadEmail:inboxesGetThreadEmail",
+      "operationId": "inboxesGetThreadEmail",
+      "methodName": "inboxesGetThreadEmail",
+      "namespace": [
+        "inboxes"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "inboxId": "00000000-0000-4000-8000-000000000000",
+        "threadId": "00000000-0000-4000-8000-000000000000",
+        "emailId": "00000000-0000-4000-8000-000000000000"
+      },
+      "wireNames": {
+        "inboxId": "inbox_id",
+        "threadId": "thread_id",
+        "emailId": "email_id"
+      },
+      "argumentOrder": [
+        "inboxId",
+        "threadId",
+        "emailId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "5b1a9f47-2c8d-4e6f-9a03-1d2e3f4a5b60",
+          "direction": "inbound",
+          "from": "Ada Lovelace <ada@example.org>",
+          "to": [
+            "support@acme.com"
+          ],
+          "cc": [],
+          "bcc": [],
+          "reply_to": [
+            "replies@example.org"
+          ],
+          "subject": "Refund for order 1041",
+          "message_id": "<1041@example.org>",
+          "html": "<p>Could I get a refund for order 1041?</p>",
+          "text": "Could I get a refund for order 1041?",
+          "attachments": [
+            {
+              "id": "9d4f2b81-6c3a-4e7d-8b12-0a5c6d7e8f90",
+              "filename": "receipt.pdf",
+              "size": 20841
+            }
+          ],
+          "read": false,
+          "received_at": "2026-08-05T14:03:11.229Z"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "inboxesList:inboxesList",
+      "operationId": "inboxesList",
+      "methodName": "inboxesList",
+      "namespace": [
+        "inboxes"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "limit": 1,
+        "after": "after",
+        "before": "before"
+      },
+      "wireNames": {
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "id": "b3e2b2b6-3f0e-4c8e-9ad3-2f43a1e2c7f1",
+              "name": "Customer Support",
+              "email_address": "support@acme.com",
+              "from_name": "Ada from Support",
+              "unread": 3,
+              "last_received": "2026-08-05T14:03:11.229Z"
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "inboxesListDrafts:inboxesListDrafts",
+      "operationId": "inboxesListDrafts",
+      "methodName": "inboxesListDrafts",
+      "namespace": [
+        "inboxes"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "inboxId": "00000000-0000-4000-8000-000000000000",
+        "limit": 1,
+        "after": "after",
+        "before": "before"
+      },
+      "wireNames": {
+        "inboxId": "inbox_id",
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "inboxId",
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "id": "c3a1e8b4-2d5f-4a7c-9e10-6b8d7f5a4c32",
+              "type": "standalone",
+              "to": [
+                "ada@example.org"
+              ],
+              "cc": [],
+              "bcc": [],
+              "subject": "Refund for order 1041",
+              "snippet": "Refund issued for order 1041.",
+              "thread_id": null,
+              "reply_to_email_id": null,
+              "updated_at": "2026-08-05T14:12:04.110Z",
+              "attachments": [
+                {
+                  "id": "5c1e9d2a-7b3f-4e8a-9c6d-2f0a1b3c4d5e",
+                  "filename": "receipt.pdf",
+                  "content_type": "application/pdf",
+                  "size": 20841
+                }
+              ]
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "inboxesListLabels:inboxesListLabels",
+      "operationId": "inboxesListLabels",
+      "methodName": "inboxesListLabels",
+      "namespace": [
+        "inboxes"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "inboxId": "00000000-0000-4000-8000-000000000000"
+      },
+      "wireNames": {
+        "inboxId": "inbox_id"
+      },
+      "argumentOrder": [
+        "inboxId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "data": [
+            {
+              "id": "7f9c1d2e-4a6b-4c3d-8e15-9b0a7c6d5e34",
+              "name": "Urgent",
+              "color": "#E93D82",
+              "created_at": "2026-08-05T14:07:42.881Z"
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "inboxesListThreadEmails:inboxesListThreadEmails",
+      "operationId": "inboxesListThreadEmails",
+      "methodName": "inboxesListThreadEmails",
+      "namespace": [
+        "inboxes"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "inboxId": "00000000-0000-4000-8000-000000000000",
+        "threadId": "00000000-0000-4000-8000-000000000000",
+        "limit": 1,
+        "after": "after",
+        "before": "before"
+      },
+      "wireNames": {
+        "inboxId": "inbox_id",
+        "threadId": "thread_id",
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "inboxId",
+        "threadId",
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "id": "5b1a9f47-2c8d-4e6f-9a03-1d2e3f4a5b60",
+              "direction": "inbound",
+              "from": "Ada Lovelace <ada@example.org>",
+              "to": [
+                "support@acme.com"
+              ],
+              "cc": [],
+              "bcc": [],
+              "reply_to": [
+                "replies@example.org"
+              ],
+              "subject": "Refund for order 1041",
+              "message_id": "<1041@example.org>",
+              "html": "<p>Could I get a refund for order 1041?</p>",
+              "text": "Could I get a refund for order 1041?",
+              "attachments": [
+                {
+                  "id": "9d4f2b81-6c3a-4e7d-8b12-0a5c6d7e8f90",
+                  "filename": "receipt.pdf",
+                  "size": 20841
+                }
+              ],
+              "read": false,
+              "received_at": "2026-08-05T14:03:11.229Z"
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "inboxesListThreads:inboxesListThreads",
+      "operationId": "inboxesListThreads",
+      "methodName": "inboxesListThreads",
+      "namespace": [
+        "inboxes"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "inboxId": "00000000-0000-4000-8000-000000000000",
+        "folders": [
+          "inbox",
+          "sent"
+        ],
+        "labels": [
+          "7f9c1d2e-4a6b-4c3d-8e15-9b0a7c6d5e34"
+        ],
+        "read": false,
+        "limit": 1,
+        "after": "after",
+        "before": "before"
+      },
+      "wireNames": {
+        "inboxId": "inbox_id",
+        "folders": "folders",
+        "labels": "labels",
+        "read": "read",
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "inboxId",
+        "folders",
+        "labels",
+        "read",
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": true,
+          "data": [
+            {
+              "id": "4d8e2a1c-9b3f-4c6d-8a21-3e5f7c9c0d12",
+              "subject": "Refund for order 1041",
+              "from": "ada@example.org",
+              "to": [
+                "support@example.com"
+              ],
+              "cc": [],
+              "bcc": [],
+              "labels": [
+                {
+                  "id": "7f9c1d2e-4a6b-4c3d-8e15-9b0a7c6d5e34",
+                  "name": "Urgent",
+                  "color": "#E93D82"
+                }
+              ],
+              "email_count": 2,
+              "has_attachment": true,
+              "has_draft": false,
+              "read": false,
+              "received_at": "2026-08-05T14:03:11.229Z",
+              "folder": "inbox"
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "inboxesRemove:inboxesRemove",
+      "operationId": "inboxesRemove",
+      "methodName": "inboxesRemove",
+      "namespace": [
+        "inboxes"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "inboxId": "b3e2b2b6-3f0e-4c8e-9ad3-2f43a1e2c7f1"
+      },
+      "wireNames": {
+        "inboxId": "inbox_id"
+      },
+      "argumentOrder": [
+        "inboxId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "inbox",
+          "id": "b3e2b2b6-3f0e-4c8e-9ad3-2f43a1e2c7f1",
+          "deleted": true
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "inboxesRemoveDraft:inboxesRemoveDraft",
+      "operationId": "inboxesRemoveDraft",
+      "methodName": "inboxesRemoveDraft",
+      "namespace": [
+        "inboxes"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "inboxId": "00000000-0000-4000-8000-000000000000",
+        "draftId": "00000000-0000-4000-8000-000000000000"
+      },
+      "wireNames": {
+        "inboxId": "inbox_id",
+        "draftId": "draft_id"
+      },
+      "argumentOrder": [
+        "inboxId",
+        "draftId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "inbox_draft",
+          "id": "c3a1e8b4-2d5f-4a7c-9e10-6b8d7f5a4c32",
+          "deleted": true
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "inboxesRemoveLabel:inboxesRemoveLabel",
+      "operationId": "inboxesRemoveLabel",
+      "methodName": "inboxesRemoveLabel",
+      "namespace": [
+        "inboxes"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "inboxId": "00000000-0000-4000-8000-000000000000",
+        "labelId": "00000000-0000-4000-8000-000000000000"
+      },
+      "wireNames": {
+        "inboxId": "inbox_id",
+        "labelId": "label_id"
+      },
+      "argumentOrder": [
+        "inboxId",
+        "labelId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "inbox_label",
+          "id": "7f9c1d2e-4a6b-4c3d-8e15-9b0a7c6d5e34",
+          "deleted": true
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "inboxesRemoveThread:inboxesRemoveThread",
+      "operationId": "inboxesRemoveThread",
+      "methodName": "inboxesRemoveThread",
+      "namespace": [
+        "inboxes"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "inboxId": "00000000-0000-4000-8000-000000000000",
+        "threadId": "00000000-0000-4000-8000-000000000000"
+      },
+      "wireNames": {
+        "inboxId": "inbox_id",
+        "threadId": "thread_id"
+      },
+      "argumentOrder": [
+        "inboxId",
+        "threadId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "inbox_thread",
+          "id": "4d8e2a1c-9b3f-4c6d-8a21-3e5f7c9c0d12",
+          "deleted": true
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "inboxesReplyThreadEmail:inboxesReplyThreadEmail",
+      "operationId": "inboxesReplyThreadEmail",
+      "methodName": "inboxesReplyThreadEmail",
+      "namespace": [
+        "inboxes"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "inboxId": "00000000-0000-4000-8000-000000000000",
+        "threadId": "00000000-0000-4000-8000-000000000000",
+        "emailId": "00000000-0000-4000-8000-000000000000",
+        "idempotencyKey": "x",
+        "cc": [
+          "billing@acme.com"
+        ],
+        "bcc": [
+          "records@acme.com"
+        ],
+        "html": "<p>Refund issued for order 1041.</p>",
+        "text": "Refund issued for order 1041.",
+        "subject": "Re: Refund for order 1041",
+        "replyAll": false,
+        "attachments": [
+          {
+            "content": "ZXhhbXBsZQ==",
+            "filename": "Example Name",
+            "path": "path",
+            "content_type": "content_type",
+            "content_id": "content-1"
+          }
+        ],
+        "headers": {
+          "X-Ticket-Id": "4821"
+        }
+      },
+      "wireNames": {
+        "inboxId": "inbox_id",
+        "threadId": "thread_id",
+        "emailId": "email_id",
+        "idempotencyKey": "Idempotency-Key",
+        "cc": "cc",
+        "bcc": "bcc",
+        "html": "html",
+        "text": "text",
+        "subject": "subject",
+        "replyAll": "reply_all",
+        "attachments": "attachments",
+        "headers": "headers"
+      },
+      "argumentOrder": [
+        "inboxId",
+        "threadId",
+        "emailId",
+        "idempotencyKey",
+        "cc",
+        "bcc",
+        "html",
+        "text",
+        "subject",
+        "replyAll",
+        "attachments",
+        "headers"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "6a0c8e58-3d9e-4f7a-8b14-2e3f4a5b6c71"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "inboxesSearchThreads:inboxesSearchThreads",
+      "operationId": "inboxesSearchThreads",
+      "methodName": "inboxesSearchThreads",
+      "namespace": [
+        "inboxes"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "inboxId": "00000000-0000-4000-8000-000000000000",
+        "query": "invoice -draft",
+        "from": [
+          "isabella@example.com",
+          "carolina@example.com"
+        ],
+        "to": [
+          "to"
+        ],
+        "cc": [
+          "cc"
+        ],
+        "bcc": [
+          "bcc"
+        ],
+        "hasAttachment": false,
+        "startDate": "2026-09-01",
+        "endDate": "2026-09-30",
+        "folders": [
+          "inbox",
+          "sent"
+        ],
+        "labels": [
+          "7f9c1d2e-4a6b-4c3d-8e15-9b0a7c6d5e34"
+        ],
+        "read": false,
+        "limit": 1,
+        "after": "after",
+        "before": "before"
+      },
+      "wireNames": {
+        "inboxId": "inbox_id",
+        "query": "query",
+        "from": "from",
+        "to": "to",
+        "cc": "cc",
+        "bcc": "bcc",
+        "hasAttachment": "has_attachment",
+        "startDate": "start_date",
+        "endDate": "end_date",
+        "folders": "folders",
+        "labels": "labels",
+        "read": "read",
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "inboxId",
+        "query",
+        "from",
+        "to",
+        "cc",
+        "bcc",
+        "hasAttachment",
+        "startDate",
+        "endDate",
+        "folders",
+        "labels",
+        "read",
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": true,
+          "data": [
+            {
+              "id": "4d8e2a1c-9b3f-4c6d-8a21-3e5f7c9c0d12",
+              "subject": "Refund for order 1041",
+              "from": "ada@example.org",
+              "to": [
+                "support@example.com"
+              ],
+              "cc": [],
+              "bcc": [],
+              "labels": [
+                {
+                  "id": "7f9c1d2e-4a6b-4c3d-8e15-9b0a7c6d5e34",
+                  "name": "Urgent",
+                  "color": "#E93D82"
+                }
+              ],
+              "email_count": 2,
+              "has_attachment": true,
+              "has_draft": false,
+              "read": false,
+              "received_at": "2026-08-05T14:03:11.229Z",
+              "folder": "inbox",
+              "matched_email_id": "e8a3f1c6-2b9d-4e5a-a7c4-9d1b6f3e2a80",
+              "highlights": {
+                "subject": [
+                  "September **invoice**"
+                ],
+                "attachments": [
+                  "**invoice**-2026-09.pdf"
+                ]
+              }
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "inboxesSendDraft:inboxesSendDraft",
+      "operationId": "inboxesSendDraft",
+      "methodName": "inboxesSendDraft",
+      "namespace": [
+        "inboxes"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "inboxId": "00000000-0000-4000-8000-000000000000",
+        "draftId": "00000000-0000-4000-8000-000000000000",
+        "idempotencyKey": "x",
+        "headers": {
+          "X-Ticket-Id": "4821"
+        }
+      },
+      "wireNames": {
+        "inboxId": "inbox_id",
+        "draftId": "draft_id",
+        "idempotencyKey": "Idempotency-Key",
+        "headers": "headers"
+      },
+      "argumentOrder": [
+        "inboxId",
+        "draftId",
+        "idempotencyKey",
+        "headers"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "6a0c8e58-3d9e-4f7a-8b14-2e3f4a5b6c71"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "inboxesUpdate:inboxesUpdate",
+      "operationId": "inboxesUpdate",
+      "methodName": "inboxesUpdate",
+      "namespace": [
+        "inboxes"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "inboxId": "b3e2b2b6-3f0e-4c8e-9ad3-2f43a1e2c7f1",
+        "name": "Customer Support",
+        "fromName": "Ada from Support"
+      },
+      "wireNames": {
+        "inboxId": "inbox_id",
+        "name": "name",
+        "fromName": "from_name"
+      },
+      "argumentOrder": [
+        "inboxId",
+        "name",
+        "fromName"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "inbox",
+          "id": "b3e2b2b6-3f0e-4c8e-9ad3-2f43a1e2c7f1"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "inboxesUpdateAgent:inboxesUpdateAgent",
+      "operationId": "inboxesUpdateAgent",
+      "methodName": "inboxesUpdateAgent",
+      "namespace": [
+        "inboxes"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "inboxId": "00000000-0000-4000-8000-000000000000",
+        "instructions": "Answer refund questions yourself. Escalate legal threats.",
+        "tone": "concise_professional",
+        "enabledActions": [
+          "draft_reply",
+          "add_labels"
+        ]
+      },
+      "wireNames": {
+        "inboxId": "inbox_id",
+        "instructions": "instructions",
+        "tone": "tone",
+        "enabledActions": "enabled_actions"
+      },
+      "argumentOrder": [
+        "inboxId",
+        "instructions",
+        "tone",
+        "enabledActions"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "inbox_agent",
+          "id": "a1f84a4e-6f2b-4f0a-9c1d-8a2e5b3c7d90"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "inboxesUpdateDraft:inboxesUpdateDraft",
+      "operationId": "inboxesUpdateDraft",
+      "methodName": "inboxesUpdateDraft",
+      "namespace": [
+        "inboxes"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "inboxId": "00000000-0000-4000-8000-000000000000",
+        "draftId": "00000000-0000-4000-8000-000000000000",
+        "to": [
+          "ada@example.org"
+        ],
+        "cc": "cc",
+        "bcc": "bcc",
+        "subject": "Refund issued for order 1041",
+        "html": "html",
+        "text": "text",
+        "attachments": [
+          {
+            "content": "aGVsbG8gZTJl",
+            "filename": "receipt.pdf",
+            "content_type": "application/pdf"
+          }
+        ]
+      },
+      "wireNames": {
+        "inboxId": "inbox_id",
+        "draftId": "draft_id",
+        "to": "to",
+        "cc": "cc",
+        "bcc": "bcc",
+        "subject": "subject",
+        "html": "html",
+        "text": "text",
+        "attachments": "attachments"
+      },
+      "argumentOrder": [
+        "inboxId",
+        "draftId",
+        "to",
+        "cc",
+        "bcc",
+        "subject",
+        "html",
+        "text",
+        "attachments"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "inbox_draft",
+          "id": "c3a1e8b4-2d5f-4a7c-9e10-6b8d7f5a4c32",
+          "type": "standalone",
+          "to": [
+            "ada@example.org"
+          ],
+          "cc": [],
+          "bcc": [],
+          "subject": "Refund issued for order 1041",
+          "html": "html",
+          "text": "text",
+          "thread_id": null,
+          "reply_to_email_id": null,
+          "email_id": null,
+          "created_at": "2026-08-05T14:12:04.110Z",
+          "updated_at": "2026-08-05T14:12:04.110Z",
+          "attachments": [
+            {
+              "id": "5c1e9d2a-7b3f-4e8a-9c6d-2f0a1b3c4d5e",
+              "filename": "receipt.pdf",
+              "content_type": "application/pdf",
+              "size": 20841
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "inboxesUpdateLabel:inboxesUpdateLabel",
+      "operationId": "inboxesUpdateLabel",
+      "methodName": "inboxesUpdateLabel",
+      "namespace": [
+        "inboxes"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "inboxId": "00000000-0000-4000-8000-000000000000",
+        "labelId": "00000000-0000-4000-8000-000000000000",
+        "name": "Billing",
+        "color": "#F76B15"
+      },
+      "wireNames": {
+        "inboxId": "inbox_id",
+        "labelId": "label_id",
+        "name": "name",
+        "color": "color"
+      },
+      "argumentOrder": [
+        "inboxId",
+        "labelId",
+        "name",
+        "color"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "inbox_label",
+          "id": "7f9c1d2e-4a6b-4c3d-8e15-9b0a7c6d5e34"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "inboxesUpdateThread:inboxesUpdateThread",
+      "operationId": "inboxesUpdateThread",
+      "methodName": "inboxesUpdateThread",
+      "namespace": [
+        "inboxes"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "inboxId": "00000000-0000-4000-8000-000000000000",
+        "threadId": "00000000-0000-4000-8000-000000000000",
+        "read": true,
+        "folder": "archive",
+        "addLabelIds": [
+          "7f9c1d2e-4a6b-4c3d-8e15-9b0a7c6d5e34"
+        ],
+        "removeLabelIds": [
+          "2b6d0f4e-8a1c-4e3b-9d57-1c0e8a6f4b21"
+        ]
+      },
+      "wireNames": {
+        "inboxId": "inbox_id",
+        "threadId": "thread_id",
+        "read": "read",
+        "folder": "folder",
+        "addLabelIds": "add_label_ids",
+        "removeLabelIds": "remove_label_ids"
+      },
+      "argumentOrder": [
+        "inboxId",
+        "threadId",
+        "read",
+        "folder",
+        "addLabelIds",
+        "removeLabelIds"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "inbox_thread",
+          "id": "4d8e2a1c-9b3f-4c6d-8a21-3e5f7c9c0d12",
+          "subject": "Refund for order 1041",
+          "folder": "archive",
+          "labels": [
+            {
+              "id": "7f9c1d2e-4a6b-4c3d-8e15-9b0a7c6d5e34",
+              "name": "Urgent",
+              "color": "#E93D82"
+            }
+          ],
+          "read": true
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "list:list",
+      "operationId": "list",
+      "methodName": "list",
+      "namespace": [
+        "receivingEmails"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "limit": 1,
+        "after": "00000000-0000-4000-8000-000000000000",
+        "before": "00000000-0000-4000-8000-000000000000"
+      },
+      "wireNames": {
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "id": "550e8400-e29b-41d4-a716-446655440000",
+              "to": [
+                "delivered@resend.dev"
+              ],
+              "from": "sender@example.com",
+              "subject": "Hello World",
+              "message_id": "<message-id@email.example.com>",
+              "bcc": [
+                "bcc"
+              ],
+              "cc": [
+                "cc"
+              ],
+              "reply_to": [
+                "reply_to"
+              ],
+              "created_at": "2023-10-06T23:47:56.678Z",
+              "attachments": [
+                {
+                  "id": "00000000-0000-4000-8000-000000000000",
+                  "filename": "Example Name",
+                  "content_type": "content_type",
+                  "content_id": "content-1",
+                  "content_disposition": "inline",
+                  "size": 1
+                }
+              ]
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "listAttachments:listAttachments",
+      "operationId": "listAttachments",
+      "methodName": "listAttachments",
+      "namespace": [
+        "receivingEmails"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "emailId": "00000000-0000-4000-8000-000000000000",
+        "limit": 1,
+        "after": "00000000-0000-4000-8000-000000000000",
+        "before": "00000000-0000-4000-8000-000000000000"
+      },
+      "wireNames": {
+        "emailId": "email_id",
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "emailId",
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "id": "660e8400-e29b-41d4-a716-446655440000",
+              "filename": "document.pdf",
+              "content_type": "application/pdf",
+              "content_id": "img001",
+              "content_disposition": "attachment",
+              "download_url": "https://cloudfront.example.com/path?Signature=...",
+              "expires_at": "2024-10-27T18:30:00.000Z",
+              "size": 2048
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "listGrants:listGrants",
+      "operationId": "listGrants",
+      "methodName": "listGrants",
+      "namespace": [
+        "oauth"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "limit": 1,
+        "after": "after",
+        "before": "before"
+      },
+      "wireNames": {
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "id": "id-1",
+              "client_id": "client-1",
+              "scopes": [
+                "scopes"
+              ],
+              "created_at": "2023-10-06 23:47:56.678+00",
+              "revoked_at": "2023-10-06 23:47:56.678+00",
+              "revoked_reason": "revoked_reason",
+              "client": {
+                "name": "Example Name",
+                "logo_uri": "https://example.com"
+              }
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "listRecipients:listRecipients",
+      "operationId": "listRecipients",
+      "methodName": "listRecipients",
+      "namespace": [
+        "broadcasts"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "00000000-0000-4000-8000-000000000000",
+        "type": "sent",
+        "email": "user@example.com",
+        "bounceType": "permanent",
+        "limit": 1,
+        "after": "after",
+        "before": "before"
+      },
+      "wireNames": {
+        "id": "id",
+        "type": "type",
+        "email": "email",
+        "bounceType": "bounce_type",
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "id",
+        "type",
+        "email",
+        "bounceType",
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "id": "b2Zmc2V0OjA",
+              "contact_id": "e169aa45-1ecf-4183-9955-b1499d5701d3",
+              "email": "steve.wozniak@gmail.com",
+              "count": 3,
+              "bounce_type": "permanent",
+              "clicked_links": [
+                {
+                  "url": "https://resend.com/pricing",
+                  "clicks": 2
+                }
+              ]
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "logsGet:logsGet",
+      "operationId": "logsGet",
+      "methodName": "logsGet",
+      "namespace": [
+        "logs"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "logId": "00000000-0000-4000-8000-000000000000"
+      },
+      "wireNames": {
+        "logId": "log_id"
+      },
+      "argumentOrder": [
+        "logId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "log",
+          "id": "00000000-0000-4000-8000-000000000000",
+          "created_at": "2023-10-06 23:47:56.678+00",
+          "endpoint": "endpoint",
+          "method": "GET",
+          "response_status": 1,
+          "user_agent": "user_agent",
+          "request_body": {},
+          "response_body": {}
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "logsList:logsList",
+      "operationId": "logsList",
+      "methodName": "logsList",
+      "namespace": [
+        "logs"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "limit": 1,
+        "after": "after",
+        "before": "before"
+      },
+      "wireNames": {
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "id": "00000000-0000-4000-8000-000000000000",
+              "created_at": "2023-10-06 23:47:56.678+00",
+              "endpoint": "endpoint",
+              "method": "GET",
+              "response_status": 1,
+              "user_agent": "user_agent"
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "revokeGrant:revokeGrant",
+      "operationId": "revokeGrant",
+      "methodName": "revokeGrant",
+      "namespace": [
+        "oauth"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "oauthGrantId": "oauth_grant-1"
+      },
+      "wireNames": {
+        "oauthGrantId": "oauth_grant_id"
+      },
+      "argumentOrder": [
+        "oauthGrantId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "oauth_grant",
+          "id": "id-1",
+          "revoked_at": "2023-10-06T23:47:56.678Z",
+          "revoked_reason": "revoked_reason"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "segmentsCreate:segmentsCreate",
+      "operationId": "segmentsCreate",
+      "methodName": "segmentsCreate",
+      "namespace": [
+        "segments"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "name": "Example Name",
+        "audienceId": "audience-1",
+        "filter": {}
+      },
+      "wireNames": {
+        "name": "name",
+        "audienceId": "audience_id",
+        "filter": "filter"
+      },
+      "argumentOrder": [
+        "name",
+        "audienceId",
+        "filter"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "78261eea-8f8b-4381-83c6-79fa7120f1cf",
+          "object": "segment"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "segmentsGet:segmentsGet",
+      "operationId": "segmentsGet",
+      "methodName": "segmentsGet",
+      "namespace": [
+        "segments"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "id-1"
+      },
+      "wireNames": {
+        "id": "id"
+      },
+      "argumentOrder": [
+        "id"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "id-1",
+          "object": "segment",
+          "name": "Active Users",
+          "audience_id": "audience-1",
+          "filter": {},
+          "created_at": "2023-10-06 23:47:56.678+00"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "segmentsList:segmentsList",
+      "operationId": "segmentsList",
+      "methodName": "segmentsList",
+      "namespace": [
+        "segments"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "limit": 1,
+        "after": "after",
+        "before": "before"
+      },
+      "wireNames": {
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "id": "id-1",
+              "name": "Example Name",
+              "audience_id": "audience-1",
+              "created_at": "2023-10-06 23:47:56.678+00"
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "segmentsListContacts:segmentsListContacts",
+      "operationId": "segmentsListContacts",
+      "methodName": "segmentsListContacts",
+      "namespace": [
+        "segments"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "00000000-0000-4000-8000-000000000000",
+        "limit": 1,
+        "after": "after",
+        "before": "before"
+      },
+      "wireNames": {
+        "id": "id",
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "id",
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "id": "e169aa45-1ecf-4183-9955-b1499d5701d3",
+              "email": "steve.wozniak@gmail.com",
+              "first_name": "Steve",
+              "last_name": "Wozniak",
+              "created_at": "2023-10-06 23:47:56.678+00",
+              "unsubscribed": false
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "segmentsRemove:segmentsRemove",
+      "operationId": "segmentsRemove",
+      "methodName": "segmentsRemove",
+      "namespace": [
+        "segments"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "id-1"
+      },
+      "wireNames": {
+        "id": "id"
+      },
+      "argumentOrder": [
+        "id"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "id-1",
+          "object": "segment",
+          "deleted": true
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "segmentsUpdate:segmentsUpdate",
+      "operationId": "segmentsUpdate",
+      "methodName": "segmentsUpdate",
+      "namespace": [
+        "segments"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "id-1",
+        "name": "Example Name"
+      },
+      "wireNames": {
+        "id": "id",
+        "name": "name"
+      },
+      "argumentOrder": [
+        "id",
+        "name"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "id-1",
+          "object": "segment"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "suppressionsAdd:suppressionsAdd",
+      "operationId": "suppressionsAdd",
+      "methodName": "suppressionsAdd",
+      "namespace": [
+        "suppressions"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "email": "steve.wozniak@gmail.com"
+      },
+      "wireNames": {
+        "email": "email"
+      },
+      "argumentOrder": [
+        "email"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "suppression",
+          "id": "e169aa45-1ecf-4183-9955-b1499d5701d3"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "suppressionsBatchAdd:suppressionsBatchAdd",
+      "operationId": "suppressionsBatchAdd",
+      "methodName": "suppressionsBatchAdd",
+      "namespace": [
+        "suppressions"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "emails": [
+          "steve.wozniak@gmail.com"
+        ]
+      },
+      "wireNames": {
+        "emails": "emails"
+      },
+      "argumentOrder": [
+        "emails"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "data": [
+            {
+              "object": "suppression",
+              "id": "e169aa45-1ecf-4183-9955-b1499d5701d3"
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "suppressionsBatchRemove:suppressionsBatchRemove",
+      "operationId": "suppressionsBatchRemove",
+      "methodName": "suppressionsBatchRemove",
+      "namespace": [
+        "suppressions"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "emails": [
+          "steve.wozniak@gmail.com"
+        ],
+        "ids": [
+          "e169aa45-1ecf-4183-9955-b1499d5701d3"
+        ]
+      },
+      "wireNames": {
+        "emails": "emails",
+        "ids": "ids"
+      },
+      "argumentOrder": [
+        "emails",
+        "ids"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "data": [
+            {
+              "object": "suppression",
+              "id": "e169aa45-1ecf-4183-9955-b1499d5701d3",
+              "deleted": true
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "suppressionsGet:suppressionsGet",
+      "operationId": "suppressionsGet",
+      "methodName": "suppressionsGet",
+      "namespace": [
+        "suppressions"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "suppression": "suppression"
+      },
+      "wireNames": {
+        "suppression": "suppression"
+      },
+      "argumentOrder": [
+        "suppression"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "suppression",
+          "id": "e169aa45-1ecf-4183-9955-b1499d5701d3",
+          "email": "steve.wozniak@gmail.com",
+          "origin": "manual",
+          "source_id": "479e3145-dd38-476b-932c-529ceb705947",
+          "created_at": "2023-10-06 23:47:56.678+00"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "suppressionsList:suppressionsList",
+      "operationId": "suppressionsList",
+      "methodName": "suppressionsList",
+      "namespace": [
+        "suppressions"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "origin": "bounce",
+        "limit": 1,
+        "after": "after",
+        "before": "before"
+      },
+      "wireNames": {
+        "origin": "origin",
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "origin",
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "id": "e169aa45-1ecf-4183-9955-b1499d5701d3",
+              "email": "steve.wozniak@gmail.com",
+              "origin": "manual",
+              "source_id": "479e3145-dd38-476b-932c-529ceb705947",
+              "created_at": "2023-10-06 23:47:56.678+00"
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "suppressionsRemove:suppressionsRemove",
+      "operationId": "suppressionsRemove",
+      "methodName": "suppressionsRemove",
+      "namespace": [
+        "suppressions"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "suppression": "suppression"
+      },
+      "wireNames": {
+        "suppression": "suppression"
+      },
+      "argumentOrder": [
+        "suppression"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "suppression",
+          "id": "e169aa45-1ecf-4183-9955-b1499d5701d3",
+          "deleted": true
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "templatesCreate:templatesCreate",
+      "operationId": "templatesCreate",
+      "methodName": "templatesCreate",
+      "namespace": [
+        "templates"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "name": "Example Name",
+        "html": "html",
+        "alias": "alias",
+        "from": "from",
+        "subject": "subject",
+        "replyTo": [
+          "reply_to"
+        ],
+        "text": "text",
+        "variables": [
+          {
+            "key": "key",
+            "type": "string",
+            "fallback_value": "fallback_value"
+          }
+        ]
+      },
+      "wireNames": {
+        "name": "name",
+        "html": "html",
+        "alias": "alias",
+        "from": "from",
+        "subject": "subject",
+        "replyTo": "reply_to",
+        "text": "text",
+        "variables": "variables"
+      },
+      "argumentOrder": [
+        "name",
+        "html",
+        "alias",
+        "from",
+        "subject",
+        "replyTo",
+        "text",
+        "variables"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "id-1",
+          "object": "template"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "templatesDuplicate:templatesDuplicate",
+      "operationId": "templatesDuplicate",
+      "methodName": "templatesDuplicate",
+      "namespace": [
+        "templates"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "id-1"
+      },
+      "wireNames": {
+        "id": "id"
+      },
+      "argumentOrder": [
+        "id"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "id-1",
+          "object": "template"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "templatesGet:templatesGet",
+      "operationId": "templatesGet",
+      "methodName": "templatesGet",
+      "namespace": [
+        "templates"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "id-1"
+      },
+      "wireNames": {
+        "id": "id"
+      },
+      "argumentOrder": [
+        "id"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "template",
+          "id": "id-1",
+          "current_version_id": "current_version-1",
+          "name": "Example Name",
+          "alias": "alias",
+          "from": "from",
+          "subject": "subject",
+          "reply_to": [
+            "reply_to"
+          ],
+          "html": "html",
+          "text": "text",
+          "variables": [
+            {
+              "id": "id-1",
+              "key": "key",
+              "type": "string",
+              "fallback_value": "fallback_value",
+              "created_at": "2023-10-06 23:47:56.678+00",
+              "updated_at": "2023-10-06 23:47:56.678+00"
+            }
+          ],
+          "created_at": "2023-10-06 23:47:56.678+00",
+          "updated_at": "2023-10-06 23:47:56.678+00",
+          "status": "draft",
+          "published_at": "2023-10-06 23:47:56.678+00",
+          "has_unpublished_versions": false
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "templatesList:templatesList",
+      "operationId": "templatesList",
+      "methodName": "templatesList",
+      "namespace": [
+        "templates"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "limit": 1,
+        "after": "after",
+        "before": "before"
+      },
+      "wireNames": {
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "data": [
+            {
+              "id": "id-1",
+              "name": "Example Name",
+              "status": "draft",
+              "published_at": "2023-10-06 23:47:56.678+00",
+              "created_at": "2023-10-06 23:47:56.678+00",
+              "updated_at": "2023-10-06 23:47:56.678+00",
+              "alias": "alias"
+            }
+          ],
+          "has_more": false
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "templatesPublish:templatesPublish",
+      "operationId": "templatesPublish",
+      "methodName": "templatesPublish",
+      "namespace": [
+        "templates"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "id-1"
+      },
+      "wireNames": {
+        "id": "id"
+      },
+      "argumentOrder": [
+        "id"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "id-1",
+          "object": "template"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "templatesRemove:templatesRemove",
+      "operationId": "templatesRemove",
+      "methodName": "templatesRemove",
+      "namespace": [
+        "templates"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "id-1"
+      },
+      "wireNames": {
+        "id": "id"
+      },
+      "argumentOrder": [
+        "id"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "template",
+          "id": "id-1",
+          "deleted": true
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "templatesUpdate:templatesUpdate",
+      "operationId": "templatesUpdate",
+      "methodName": "templatesUpdate",
+      "namespace": [
+        "templates"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "id-1",
+        "name": "Example Name",
+        "alias": "alias",
+        "from": "from",
+        "subject": "subject",
+        "replyTo": [
+          "reply_to"
+        ],
+        "html": "html",
+        "text": "text",
+        "variables": [
+          {
+            "key": "key",
+            "type": "string",
+            "fallback_value": "fallback_value"
+          }
+        ]
+      },
+      "wireNames": {
+        "id": "id",
+        "name": "name",
+        "alias": "alias",
+        "from": "from",
+        "subject": "subject",
+        "replyTo": "reply_to",
+        "html": "html",
+        "text": "text",
+        "variables": "variables"
+      },
+      "argumentOrder": [
+        "id",
+        "name",
+        "alias",
+        "from",
+        "subject",
+        "replyTo",
+        "html",
+        "text",
+        "variables"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "id-1",
+          "object": "template"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "topicsCreate:topicsCreate",
+      "operationId": "topicsCreate",
+      "methodName": "topicsCreate",
+      "namespace": [
+        "topics"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "name": "Example Name",
+        "defaultSubscription": "opt_in",
+        "description": "example text",
+        "visibility": "private"
+      },
+      "wireNames": {
+        "name": "name",
+        "defaultSubscription": "default_subscription",
+        "description": "description",
+        "visibility": "visibility"
+      },
+      "argumentOrder": [
+        "name",
+        "defaultSubscription",
+        "description",
+        "visibility"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "78261eea-8f8b-4381-83c6-79fa7120f1cf",
+          "object": "topic"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "topicsGet:topicsGet",
+      "operationId": "topicsGet",
+      "methodName": "topicsGet",
+      "namespace": [
+        "topics"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "id-1"
+      },
+      "wireNames": {
+        "id": "id"
+      },
+      "argumentOrder": [
+        "id"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "id-1",
+          "object": "topic",
+          "name": "Newsletter",
+          "description": "example text",
+          "default_subscription": "opt_in",
+          "visibility": "public",
+          "created_at": "2023-10-06 23:47:56.678+00"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "topicsList:topicsList",
+      "operationId": "topicsList",
+      "methodName": "topicsList",
+      "namespace": [
+        "topics"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "limit": 1,
+        "after": "after",
+        "before": "before"
+      },
+      "wireNames": {
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "id": "id-1",
+              "name": "Example Name",
+              "description": "example text",
+              "default_subscription": "opt_in",
+              "visibility": "public",
+              "created_at": "2023-10-06 23:47:56.678+00"
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "topicsRemove:topicsRemove",
+      "operationId": "topicsRemove",
+      "methodName": "topicsRemove",
+      "namespace": [
+        "topics"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "id-1"
+      },
+      "wireNames": {
+        "id": "id"
+      },
+      "argumentOrder": [
+        "id"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "id-1",
+          "object": "topic",
+          "deleted": true
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "topicsUpdate:topicsUpdate",
+      "operationId": "topicsUpdate",
+      "methodName": "topicsUpdate",
+      "namespace": [
+        "topics"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "id": "id-1",
+        "name": "Example Name",
+        "description": "example text",
+        "visibility": "public"
+      },
+      "wireNames": {
+        "id": "id",
+        "name": "name",
+        "description": "description",
+        "visibility": "visibility"
+      },
+      "argumentOrder": [
+        "id",
+        "name",
+        "description",
+        "visibility"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "id": "id-1",
+          "object": "topic"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "usageGet:usageGet",
+      "operationId": "usageGet",
+      "methodName": "usageGet",
+      "namespace": [
+        "usage"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {},
+      "wireNames": {},
+      "argumentOrder": [],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "usage",
+          "emails": {
+            "daily": {
+              "used": 1,
+              "limit": 1,
+              "sent": 1,
+              "received": 1,
+              "resets_at": "2024-01-01T00:00:00Z"
+            },
+            "monthly": {
+              "used": 1,
+              "limit": 1,
+              "sent": 1,
+              "received": 1,
+              "resets_at": "2024-01-01T00:00:00Z"
+            }
+          },
+          "contacts": {
+            "used": 1,
+            "limit": 1
+          },
+          "segments": {
+            "used": 1,
+            "limit": 1
+          },
+          "broadcasts": {
+            "used": 1,
+            "limit": null
+          },
+          "ai_credits": {
+            "used": 1,
+            "limit": 1,
+            "next_increase_at": "2024-01-01T00:00:00Z"
+          },
+          "automation_runs": {
+            "used": 1,
+            "limit": 1,
+            "resets_at": "2024-01-01T00:00:00Z"
+          },
+          "domains": {
+            "used": 1,
+            "limit": 1
+          },
+          "rate_limit": {
+            "limit": 1,
+            "duration": "duration"
+          }
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "webhooksCreate:webhooksCreate",
+      "operationId": "webhooksCreate",
+      "methodName": "webhooksCreate",
+      "namespace": [
+        "webhooks"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "endpoint": "https://webhook.example.com/handler",
+        "events": [
+          "email.sent",
+          "email.delivered",
+          "email.bounced",
+          "email.suppressed"
+        ]
+      },
+      "wireNames": {
+        "endpoint": "endpoint",
+        "events": "events"
+      },
+      "argumentOrder": [
+        "endpoint",
+        "events"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "webhook",
+          "id": "479e3145-dd38-476b-932c-529ceb705947",
+          "signing_secret": "whsec_..."
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "webhooksGet:webhooksGet",
+      "operationId": "webhooksGet",
+      "methodName": "webhooksGet",
+      "namespace": [
+        "webhooks"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "webhookId": "00000000-0000-4000-8000-000000000000"
+      },
+      "wireNames": {
+        "webhookId": "webhook_id"
+      },
+      "argumentOrder": [
+        "webhookId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "webhook",
+          "id": "479e3145-dd38-476b-932c-529ceb705947",
+          "endpoint": "https://webhook.example.com/handler",
+          "events": [
+            "email.sent",
+            "email.delivered"
+          ],
+          "status": "enabled",
+          "created_at": "2023-10-06 23:47:56.678+00",
+          "signing_secret": "whsec_..."
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "webhooksGetEvent:webhooksGetEvent",
+      "operationId": "webhooksGetEvent",
+      "methodName": "webhooksGetEvent",
+      "namespace": [
+        "webhooks"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "webhookId": "00000000-0000-4000-8000-000000000000",
+        "eventId": "event-1"
+      },
+      "wireNames": {
+        "webhookId": "webhook_id",
+        "eventId": "event_id"
+      },
+      "argumentOrder": [
+        "webhookId",
+        "eventId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "webhook_event",
+          "id": "msg_1srOrx2ZWZBpBUvZwXKQmoEYga2",
+          "type": "email.sent",
+          "created_at": "2026-08-22T15:28:00.000Z",
+          "status": "attempting",
+          "next_attempt_at": "2026-08-22T15:33:00.000Z",
+          "payload": {
+            "type": "email.sent",
+            "created_at": "2026-08-22T15:28:00.000Z",
+            "data": {
+              "email_id": "571f1f42-1c2d-4b1f-8f8e-8b3b5b3b5b3b",
+              "from": "onboarding@resend.dev",
+              "to": [
+                "delivered@resend.dev"
+              ],
+              "subject": "Welcome",
+              "created_at": "2026-08-22T15:27:59.000Z"
+            }
+          }
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "webhooksList:webhooksList",
+      "operationId": "webhooksList",
+      "methodName": "webhooksList",
+      "namespace": [
+        "webhooks"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "limit": 1,
+        "after": "00000000-0000-4000-8000-000000000000",
+        "before": "00000000-0000-4000-8000-000000000000"
+      },
+      "wireNames": {
+        "limit": "limit",
+        "after": "after",
+        "before": "before"
+      },
+      "argumentOrder": [
+        "limit",
+        "after",
+        "before"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "id": "479e3145-dd38-476b-932c-529ceb705947",
+              "endpoint": "https://webhook.example.com/handler",
+              "events": [
+                "email.sent"
+              ],
+              "status": "enabled",
+              "created_at": "2023-10-06 23:47:56.678+00"
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "webhooksListEventAttempts:webhooksListEventAttempts",
+      "operationId": "webhooksListEventAttempts",
+      "methodName": "webhooksListEventAttempts",
+      "namespace": [
+        "webhooks"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "webhookId": "00000000-0000-4000-8000-000000000000",
+        "eventId": "event-1",
+        "limit": 1,
+        "after": "after"
+      },
+      "wireNames": {
+        "webhookId": "webhook_id",
+        "eventId": "event_id",
+        "limit": "limit",
+        "after": "after"
+      },
+      "argumentOrder": [
+        "webhookId",
+        "eventId",
+        "limit",
+        "after"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "id": "atmpt_1srOrx2ZWZBpBUvZwXKQmoEYga2",
+              "http_status_code": 200,
+              "response": "{\"ok\":true}",
+              "sent_at": "2026-08-22T15:33:12.000Z"
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "webhooksListEvents:webhooksListEvents",
+      "operationId": "webhooksListEvents",
+      "methodName": "webhooksListEvents",
+      "namespace": [
+        "webhooks"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "webhookId": "00000000-0000-4000-8000-000000000000",
+        "limit": 1,
+        "after": "after"
+      },
+      "wireNames": {
+        "webhookId": "webhook_id",
+        "limit": "limit",
+        "after": "after"
+      },
+      "argumentOrder": [
+        "webhookId",
+        "limit",
+        "after"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "list",
+          "has_more": false,
+          "data": [
+            {
+              "id": "msg_1srOrx2ZWZBpBUvZwXKQmoEYga2",
+              "type": "email.sent",
+              "created_at": "2026-08-22T15:28:00.000Z",
+              "status": "success"
+            }
+          ]
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "webhooksRemove:webhooksRemove",
+      "operationId": "webhooksRemove",
+      "methodName": "webhooksRemove",
+      "namespace": [
+        "webhooks"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "webhookId": "00000000-0000-4000-8000-000000000000"
+      },
+      "wireNames": {
+        "webhookId": "webhook_id"
+      },
+      "argumentOrder": [
+        "webhookId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "webhook",
+          "id": "479e3145-dd38-476b-932c-529ceb705947",
+          "deleted": true
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "webhooksReplayEvent:webhooksReplayEvent",
+      "operationId": "webhooksReplayEvent",
+      "methodName": "webhooksReplayEvent",
+      "namespace": [
+        "webhooks"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "webhookId": "00000000-0000-4000-8000-000000000000",
+        "eventId": "event-1"
+      },
+      "wireNames": {
+        "webhookId": "webhook_id",
+        "eventId": "event_id"
+      },
+      "argumentOrder": [
+        "webhookId",
+        "eventId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "webhook_event",
+          "id": "msg_1srOrx2ZWZBpBUvZwXKQmoEYga2"
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "webhooksRotateSigningSecret:webhooksRotateSigningSecret",
+      "operationId": "webhooksRotateSigningSecret",
+      "methodName": "webhooksRotateSigningSecret",
+      "namespace": [
+        "webhooks"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "webhookId": "00000000-0000-4000-8000-000000000000"
+      },
+      "wireNames": {
+        "webhookId": "webhook_id"
+      },
+      "argumentOrder": [
+        "webhookId"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "webhook",
+          "id": "479e3145-dd38-476b-932c-529ceb705947",
+          "signing_secret": "whsec_..."
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "webhooksUpdate:webhooksUpdate",
+      "operationId": "webhooksUpdate",
+      "methodName": "webhooksUpdate",
+      "namespace": [
+        "webhooks"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "webhookId": "00000000-0000-4000-8000-000000000000",
+        "endpoint": "https://webhook.example.com/new-handler",
+        "events": [
+          "email.sent",
+          "email.delivered"
+        ],
+        "status": "enabled"
+      },
+      "wireNames": {
+        "webhookId": "webhook_id",
+        "endpoint": "endpoint",
+        "events": "events",
+        "status": "status"
+      },
+      "argumentOrder": [
+        "webhookId",
+        "endpoint",
+        "events",
+        "status"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "webhook",
+          "id": "479e3145-dd38-476b-932c-529ceb705947"
+        },
+        "byteLength": 0
+      }
+    }
+  ]
+}
