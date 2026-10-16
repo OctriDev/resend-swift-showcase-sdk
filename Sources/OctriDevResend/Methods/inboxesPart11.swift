@@ -6,19 +6,37 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension InboxesMethods {
-    /// Retrieves the summary of a single inbox thread. Use the list thread emails endpoint to retrieve the messages that make up the thread.
+public extension InboxesMethods {
+    /// Retrieves the summary of a single inbox thread. Use the list thread emails endpoint to retrieve the messages
+    /// that make up the thread.
     ///
     /// Returns the thread summary. The emails in the thread are listed with the list thread emails endpoint.
     ///
     /// - Parameters:
     /// - inboxId: The Inbox ID. An email address is not accepted.
     /// - threadId: The Thread ID.
-    public static func inboxesGetThread(config: ClientConfig, inboxId: String, threadId: String, requestOptions: RequestOptions? = nil) async throws -> InboxThreadSummary {
+    static func inboxesGetThread(
+        config: ClientConfig,
+        inboxId: String,
+        threadId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> InboxThreadSummary {
         try sdkValidateUuid("inbox_id", inboxId)
 
         try sdkValidateUuid("thread_id", threadId)
 
-        return try (await sdkRequest("GET", ["/inboxes/", sdkEncodePathSegment(sdkWireString(inboxId)), "/threads/", sdkEncodePathSegment(sdkWireString(threadId))].joined(), config: config, decoder: .json, operationId: "inboxesGetThread", options: requestOptions)).data
+        return try await (sdkRequest(
+            "GET",
+            [
+                "/inboxes/",
+                sdkEncodePathSegment(sdkWireString(inboxId)),
+                "/threads/",
+                sdkEncodePathSegment(sdkWireString(threadId)),
+            ].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "inboxesGetThread",
+            options: requestOptions
+        )).data
     }
 }

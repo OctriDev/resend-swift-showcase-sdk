@@ -9,7 +9,10 @@ import Foundation
 public struct InboxesSearchThreadsParameterItem: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let inbox = InboxesSearchThreadsParameterItem(rawValue: "inbox")
     public static let archive = InboxesSearchThreadsParameterItem(rawValue: "archive")
     public static let spam = InboxesSearchThreadsParameterItem(rawValue: "spam")
@@ -18,7 +21,7 @@ public struct InboxesSearchThreadsParameterItem: RawRepresentable, Hashable, Cod
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -45,37 +48,37 @@ struct EmailsSendRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.from, forKey: SdkCodingKey("from"))
-        try keyedContainer.encode(self.to, forKey: SdkCodingKey("to"))
-        try keyedContainer.encode(self.subject, forKey: SdkCodingKey("subject"))
-        try keyedContainer.encodeIfPresent(self.bcc, forKey: SdkCodingKey("bcc"))
-        try keyedContainer.encodeIfPresent(self.cc, forKey: SdkCodingKey("cc"))
-        try keyedContainer.encodeIfPresent(self.replyTo, forKey: SdkCodingKey("reply_to"))
-        try keyedContainer.encodeIfPresent(self.html, forKey: SdkCodingKey("html"))
-        try keyedContainer.encodeIfPresent(self.text, forKey: SdkCodingKey("text"))
-        try keyedContainer.encodeIfPresent(self.template, forKey: SdkCodingKey("template"))
-        try keyedContainer.encodeIfPresent(self.headers, forKey: SdkCodingKey("headers"))
-        try keyedContainer.encodeIfPresent(self.scheduledAt, forKey: SdkCodingKey("scheduled_at"))
-        try keyedContainer.encodeIfPresent(self.attachments, forKey: SdkCodingKey("attachments"))
-        try keyedContainer.encodeIfPresent(self.tags, forKey: SdkCodingKey("tags"))
-        try keyedContainer.encodeIfPresent(self.topicId, forKey: SdkCodingKey("topic_id"))
+        try keyedContainer.encode(from, forKey: SdkCodingKey("from"))
+        try keyedContainer.encode(to, forKey: SdkCodingKey("to"))
+        try keyedContainer.encode(subject, forKey: SdkCodingKey("subject"))
+        try keyedContainer.encodeIfPresent(bcc, forKey: SdkCodingKey("bcc"))
+        try keyedContainer.encodeIfPresent(cc, forKey: SdkCodingKey("cc"))
+        try keyedContainer.encodeIfPresent(replyTo, forKey: SdkCodingKey("reply_to"))
+        try keyedContainer.encodeIfPresent(html, forKey: SdkCodingKey("html"))
+        try keyedContainer.encodeIfPresent(text, forKey: SdkCodingKey("text"))
+        try keyedContainer.encodeIfPresent(template, forKey: SdkCodingKey("template"))
+        try keyedContainer.encodeIfPresent(headers, forKey: SdkCodingKey("headers"))
+        try keyedContainer.encodeIfPresent(scheduledAt, forKey: SdkCodingKey("scheduled_at"))
+        try keyedContainer.encodeIfPresent(attachments, forKey: SdkCodingKey("attachments"))
+        try keyedContainer.encodeIfPresent(tags, forKey: SdkCodingKey("tags"))
+        try keyedContainer.encodeIfPresent(topicId, forKey: SdkCodingKey("topic_id"))
     }
 
     init(options: EmailsMethods.EmailsSendOptions) {
-        self.from = options.from
-        self.to = options.to
-        self.subject = options.subject
-        self.bcc = options.bcc
-        self.cc = options.cc
-        self.replyTo = options.replyTo
-        self.html = options.html
-        self.text = options.text
-        self.template = options.template
-        self.headers = options.headers
-        self.scheduledAt = options.scheduledAt
-        self.attachments = options.attachments
-        self.tags = options.tags
-        self.topicId = options.topicId
+        from = options.from
+        to = options.to
+        subject = options.subject
+        bcc = options.bcc
+        cc = options.cc
+        replyTo = options.replyTo
+        html = options.html
+        text = options.text
+        template = options.template
+        headers = options.headers
+        scheduledAt = options.scheduledAt
+        attachments = options.attachments
+        tags = options.tags
+        topicId = options.topicId
     }
 }
 
@@ -84,7 +87,7 @@ struct EmailsShareRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.expiresIn, forKey: SdkCodingKey("expires_in"))
+        try keyedContainer.encodeIfPresent(expiresIn, forKey: SdkCodingKey("expires_in"))
     }
 }
 
@@ -100,25 +103,25 @@ struct DomainsCreateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(self.region, forKey: SdkCodingKey("region"))
-        try keyedContainer.encodeIfPresent(self.customReturnPath, forKey: SdkCodingKey("custom_return_path"))
-        try keyedContainer.encodeIfPresent(self.openTracking, forKey: SdkCodingKey("open_tracking"))
-        try keyedContainer.encodeIfPresent(self.clickTracking, forKey: SdkCodingKey("click_tracking"))
-        try keyedContainer.encodeIfPresent(self.tls, forKey: SdkCodingKey("tls"))
-        try keyedContainer.encodeIfPresent(self.capabilities, forKey: SdkCodingKey("capabilities"))
-        try keyedContainer.encodeIfPresent(self.trackingSubdomain, forKey: SdkCodingKey("tracking_subdomain"))
+        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(region, forKey: SdkCodingKey("region"))
+        try keyedContainer.encodeIfPresent(customReturnPath, forKey: SdkCodingKey("custom_return_path"))
+        try keyedContainer.encodeIfPresent(openTracking, forKey: SdkCodingKey("open_tracking"))
+        try keyedContainer.encodeIfPresent(clickTracking, forKey: SdkCodingKey("click_tracking"))
+        try keyedContainer.encodeIfPresent(tls, forKey: SdkCodingKey("tls"))
+        try keyedContainer.encodeIfPresent(capabilities, forKey: SdkCodingKey("capabilities"))
+        try keyedContainer.encodeIfPresent(trackingSubdomain, forKey: SdkCodingKey("tracking_subdomain"))
     }
 
     init(options: DomainsMethods.DomainsCreateOptions) {
-        self.name = options.name
-        self.region = options.region
-        self.customReturnPath = options.customReturnPath
-        self.openTracking = options.openTracking
-        self.clickTracking = options.clickTracking
-        self.tls = options.tls
-        self.capabilities = options.capabilities
-        self.trackingSubdomain = options.trackingSubdomain
+        name = options.name
+        region = options.region
+        customReturnPath = options.customReturnPath
+        openTracking = options.openTracking
+        clickTracking = options.clickTracking
+        tls = options.tls
+        capabilities = options.capabilities
+        trackingSubdomain = options.trackingSubdomain
     }
 }
 
@@ -131,11 +134,11 @@ struct DomainsUpdateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.openTracking, forKey: SdkCodingKey("open_tracking"))
-        try keyedContainer.encodeIfPresent(self.clickTracking, forKey: SdkCodingKey("click_tracking"))
-        try keyedContainer.encodeIfPresent(self.tls, forKey: SdkCodingKey("tls"))
-        try keyedContainer.encodeIfPresent(self.capabilities, forKey: SdkCodingKey("capabilities"))
-        try keyedContainer.encodeIfPresent(self.trackingSubdomain, forKey: SdkCodingKey("tracking_subdomain"))
+        try keyedContainer.encodeIfPresent(openTracking, forKey: SdkCodingKey("open_tracking"))
+        try keyedContainer.encodeIfPresent(clickTracking, forKey: SdkCodingKey("click_tracking"))
+        try keyedContainer.encodeIfPresent(tls, forKey: SdkCodingKey("tls"))
+        try keyedContainer.encodeIfPresent(capabilities, forKey: SdkCodingKey("capabilities"))
+        try keyedContainer.encodeIfPresent(trackingSubdomain, forKey: SdkCodingKey("tracking_subdomain"))
     }
 }
 
@@ -149,12 +152,12 @@ struct DomainsCreateClaimRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(self.region, forKey: SdkCodingKey("region"))
-        try keyedContainer.encodeIfPresent(self.customReturnPath, forKey: SdkCodingKey("custom_return_path"))
-        try keyedContainer.encodeIfPresent(self.openTracking, forKey: SdkCodingKey("open_tracking"))
-        try keyedContainer.encodeIfPresent(self.clickTracking, forKey: SdkCodingKey("click_tracking"))
-        try keyedContainer.encodeIfPresent(self.trackingSubdomain, forKey: SdkCodingKey("tracking_subdomain"))
+        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(region, forKey: SdkCodingKey("region"))
+        try keyedContainer.encodeIfPresent(customReturnPath, forKey: SdkCodingKey("custom_return_path"))
+        try keyedContainer.encodeIfPresent(openTracking, forKey: SdkCodingKey("open_tracking"))
+        try keyedContainer.encodeIfPresent(clickTracking, forKey: SdkCodingKey("click_tracking"))
+        try keyedContainer.encodeIfPresent(trackingSubdomain, forKey: SdkCodingKey("tracking_subdomain"))
     }
 }
 
@@ -165,9 +168,9 @@ struct ApiKeysCreateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(self.permission, forKey: SdkCodingKey("permission"))
-        try keyedContainer.encodeIfPresent(self.domainId, forKey: SdkCodingKey("domain_id"))
+        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(permission, forKey: SdkCodingKey("permission"))
+        try keyedContainer.encodeIfPresent(domainId, forKey: SdkCodingKey("domain_id"))
     }
 }
 
@@ -176,7 +179,7 @@ struct ApiKeysUpdateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
     }
 }
 
@@ -192,24 +195,24 @@ struct TemplatesCreateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encode(self.html, forKey: SdkCodingKey("html"))
-        try keyedContainer.encodeIfPresent(self.alias, forKey: SdkCodingKey("alias"))
-        try keyedContainer.encodeIfPresent(self.from, forKey: SdkCodingKey("from"))
-        try keyedContainer.encodeIfPresent(self.subject, forKey: SdkCodingKey("subject"))
-        try keyedContainer.encodeIfPresent(self.replyTo, forKey: SdkCodingKey("reply_to"))
-        try keyedContainer.encodeIfPresent(self.text, forKey: SdkCodingKey("text"))
-        try keyedContainer.encodeIfPresent(self.variables, forKey: SdkCodingKey("variables"))
+        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(html, forKey: SdkCodingKey("html"))
+        try keyedContainer.encodeIfPresent(alias, forKey: SdkCodingKey("alias"))
+        try keyedContainer.encodeIfPresent(from, forKey: SdkCodingKey("from"))
+        try keyedContainer.encodeIfPresent(subject, forKey: SdkCodingKey("subject"))
+        try keyedContainer.encodeIfPresent(replyTo, forKey: SdkCodingKey("reply_to"))
+        try keyedContainer.encodeIfPresent(text, forKey: SdkCodingKey("text"))
+        try keyedContainer.encodeIfPresent(variables, forKey: SdkCodingKey("variables"))
     }
 
     init(options: TemplatesMethods.TemplatesCreateOptions) {
-        self.name = options.name
-        self.html = options.html
-        self.alias = options.alias
-        self.from = options.from
-        self.subject = options.subject
-        self.replyTo = options.replyTo
-        self.text = options.text
-        self.variables = options.variables
+        name = options.name
+        html = options.html
+        alias = options.alias
+        from = options.from
+        subject = options.subject
+        replyTo = options.replyTo
+        text = options.text
+        variables = options.variables
     }
 }

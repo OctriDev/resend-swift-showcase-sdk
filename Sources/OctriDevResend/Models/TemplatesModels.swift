@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Templates domain models
+/// Templates domain models
 /// Typed representation of the `CreateTemplateRequest` API schema.
 public struct CreateTemplateRequest: Codable {
     /// The name of the template.
@@ -34,31 +34,50 @@ public struct CreateTemplateRequest: Codable {
         case variables
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateTemplateRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        guard container.contains(.html) else {
-            throw SdkValidationError(field: "html", code: "required", message: "Validation failed for 'html': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.html = try container.sdkDecodeRequired(.html)
-        self.alias = try container.sdkDecodeIfPresent(.alias)
-        self.from = try container.sdkDecodeIfPresent(.from)
-        self.subject = try container.sdkDecodeIfPresent(.subject)
-        self.replyTo = try container.sdkDecodeIfPresent(.replyTo)
-        self.text = try container.sdkDecodeIfPresent(.text)
-        self.variables = try container.sdkDecodeIfPresent(.variables)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateTemplateRequest {
-    public init(name: String, html: String, alias: String? = nil, from: String? = nil, subject: String? = nil, replyTo: [String]? = nil, text: String? = nil, variables: [TemplateVariableInput]? = nil) {
+public extension CreateTemplateRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        guard container.contains(.html) else {
+            throw SdkValidationError(
+                field: "html",
+                code: "required",
+                message: "Validation failed for 'html': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        html = try container.sdkDecodeRequired(.html)
+        alias = try container.sdkDecodeIfPresent(.alias)
+        from = try container.sdkDecodeIfPresent(.from)
+        subject = try container.sdkDecodeIfPresent(.subject)
+        replyTo = try container.sdkDecodeIfPresent(.replyTo)
+        text = try container.sdkDecodeIfPresent(.text)
+        variables = try container.sdkDecodeIfPresent(.variables)
+    }
+}
+
+public extension CreateTemplateRequest {
+    init(
+        name: String,
+        html: String,
+        alias: String? = nil,
+        from: String? = nil,
+        subject: String? = nil,
+        replyTo: [String]? = nil,
+        text: String? = nil,
+        variables: [TemplateVariableInput]? = nil
+    ) {
         (self.name, self.html) = (name, html)
         (self.alias, self.from) = (alias, from)
         (self.subject, self.replyTo) = (subject, replyTo)
@@ -92,29 +111,46 @@ public struct TemplateVariable: Codable {
         case updatedAt = "updated_at"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension TemplateVariable {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.key) else {
-            throw SdkValidationError(field: "key", code: "required", message: "Validation failed for 'key': value is required")
-        }
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        self.key = try container.sdkDecodeRequired(.key)
-        self.type = try container.sdkDecodeRequired(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.fallbackValue = try container.sdkDecodeIfPresent(.fallbackValue)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension TemplateVariable {
-    public init(key: String, type: TemplateVariableType, id: String? = nil, fallbackValue: TemplateVariableFallbackValue? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+public extension TemplateVariable {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.key) else {
+            throw SdkValidationError(
+                field: "key",
+                code: "required",
+                message: "Validation failed for 'key': value is required"
+            )
+        }
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        key = try container.sdkDecodeRequired(.key)
+        type = try container.sdkDecodeRequired(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        fallbackValue = try container.sdkDecodeIfPresent(.fallbackValue)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+    }
+}
+
+public extension TemplateVariable {
+    init(
+        key: String,
+        type: TemplateVariableType,
+        id: String? = nil,
+        fallbackValue: TemplateVariableFallbackValue? = nil,
+        createdAt: String? = nil,
+        updatedAt: String? = nil
+    ) {
         (self.key, self.type) = (key, type)
         (self.id, self.fallbackValue) = (id, fallbackValue)
         (self.createdAt, self.updatedAt) = (createdAt, updatedAt)
@@ -152,26 +188,34 @@ public struct TemplateListItem: Codable {
     }
 
     init() {
-        (self.id, self.name, self.status, self.publishedAt, self.createdAt) = (nil, nil, nil, nil, nil)
-        (self.updatedAt, self.alias) = (nil, nil)
+        (id, name, status, publishedAt, createdAt) = (nil, nil, nil, nil, nil)
+        (updatedAt, alias) = (nil, nil)
     }
 }
 
-extension TemplateListItem {
-    public init(from decoder: Decoder) throws {
+public extension TemplateListItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.publishedAt = try container.sdkDecodeIfPresent(.publishedAt)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.alias = try container.sdkDecodeIfPresent(.alias)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        status = try container.sdkDecodeIfPresent(.status)
+        publishedAt = try container.sdkDecodeIfPresent(.publishedAt)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        alias = try container.sdkDecodeIfPresent(.alias)
     }
 }
 
-extension TemplateListItem {
-    public init(id: String? = nil, name: String? = nil, status: TemplateListItemStatus? = nil, publishedAt: String? = nil, createdAt: String? = nil, updatedAt: String? = nil, alias: String? = nil) {
+public extension TemplateListItem {
+    init(
+        id: String? = nil,
+        name: String? = nil,
+        status: TemplateListItemStatus? = nil,
+        publishedAt: String? = nil,
+        createdAt: String? = nil,
+        updatedAt: String? = nil,
+        alias: String? = nil
+    ) {
         self.init()
         (self.id, self.name) = (id, name)
         (self.status, self.publishedAt) = (status, publishedAt)
@@ -194,20 +238,20 @@ public struct CreateTemplateResponseSuccess: Codable {
     }
 
     init() {
-        (self.id, self.object) = (nil, nil)
+        (id, object) = (nil, nil)
     }
 }
 
-extension CreateTemplateResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension CreateTemplateResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
     }
 }
 
-extension CreateTemplateResponseSuccess {
-    public init(id: String? = nil, object: String? = nil) {
+public extension CreateTemplateResponseSuccess {
+    init(id: String? = nil, object: String? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
     }
@@ -244,27 +288,36 @@ public struct UpdateTemplateOptions: Codable {
     }
 
     init() {
-        (self.name, self.alias, self.from, self.subject, self.replyTo) = (nil, nil, nil, nil, nil)
-        (self.html, self.text, self.variables) = (nil, nil, nil)
+        (name, alias, from, subject, replyTo) = (nil, nil, nil, nil, nil)
+        (html, text, variables) = (nil, nil, nil)
     }
 }
 
-extension UpdateTemplateOptions {
-    public init(from decoder: Decoder) throws {
+public extension UpdateTemplateOptions {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.alias = try container.sdkDecodeIfPresent(.alias)
-        self.from = try container.sdkDecodeIfPresent(.from)
-        self.subject = try container.sdkDecodeIfPresent(.subject)
-        self.replyTo = try container.sdkDecodeIfPresent(.replyTo)
-        self.html = try container.sdkDecodeIfPresent(.html)
-        self.text = try container.sdkDecodeIfPresent(.text)
-        self.variables = try container.sdkDecodeIfPresent(.variables)
+        name = try container.sdkDecodeIfPresent(.name)
+        alias = try container.sdkDecodeIfPresent(.alias)
+        from = try container.sdkDecodeIfPresent(.from)
+        subject = try container.sdkDecodeIfPresent(.subject)
+        replyTo = try container.sdkDecodeIfPresent(.replyTo)
+        html = try container.sdkDecodeIfPresent(.html)
+        text = try container.sdkDecodeIfPresent(.text)
+        variables = try container.sdkDecodeIfPresent(.variables)
     }
 }
 
-extension UpdateTemplateOptions {
-    public init(name: String? = nil, alias: String? = nil, from: String? = nil, subject: String? = nil, replyTo: [String]? = nil, html: String? = nil, text: String? = nil, variables: [TemplateVariableInput]? = nil) {
+public extension UpdateTemplateOptions {
+    init(
+        name: String? = nil,
+        alias: String? = nil,
+        from: String? = nil,
+        subject: String? = nil,
+        replyTo: [String]? = nil,
+        html: String? = nil,
+        text: String? = nil,
+        variables: [TemplateVariableInput]? = nil
+    ) {
         self.init()
         (self.name, self.alias) = (name, alias)
         (self.from, self.subject) = (from, subject)
@@ -288,26 +341,36 @@ public struct TemplateVariableInput: Codable {
         case fallbackValue = "fallback_value"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension TemplateVariableInput {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.key) else {
-            throw SdkValidationError(field: "key", code: "required", message: "Validation failed for 'key': value is required")
-        }
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        self.key = try container.sdkDecodeRequired(.key)
-        self.type = try container.sdkDecodeRequired(.type)
-        self.fallbackValue = try container.sdkDecodeIfPresent(.fallbackValue)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension TemplateVariableInput {
-    public init(key: String, type: TemplateVariableInputType, fallbackValue: TemplateVariableInputFallbackValue? = nil) {
+public extension TemplateVariableInput {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.key) else {
+            throw SdkValidationError(
+                field: "key",
+                code: "required",
+                message: "Validation failed for 'key': value is required"
+            )
+        }
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        key = try container.sdkDecodeRequired(.key)
+        type = try container.sdkDecodeRequired(.type)
+        fallbackValue = try container.sdkDecodeIfPresent(.fallbackValue)
+    }
+}
+
+public extension TemplateVariableInput {
+    init(key: String, type: TemplateVariableInputType, fallbackValue: TemplateVariableInputFallbackValue? = nil) {
         (self.key, self.type) = (key, type)
         self.fallbackValue = fallbackValue
     }
@@ -322,25 +385,41 @@ public indirect enum TemplateVariableInputFallbackValue {
 }
 
 extension TemplateVariableInputFallbackValue: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for TemplateVariableInputFallbackValue")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for TemplateVariableInputFallbackValue"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension TemplateVariableInputFallbackValue {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode(Double.self) { return .doubleValue(value) }
-        if let value = try? container.decode(Bool.self) { return .boolValue(value) }
-        if let value = try? container.decode([String: JSONValue].self) { return .jsonValue(value) }
-        if let value = try? container.decode([JSONValue].self) { return .jSonValueList(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode(Double.self) {
+            return .doubleValue(value)
+        }
+        if let value = try? container.decode(Bool.self) {
+            return .boolValue(value)
+        }
+        if let value = try? container.decode([String: JSONValue].self) {
+            return .jsonValue(value)
+        }
+        if let value = try? container.decode([JSONValue].self) {
+            return .jSonValueList(value)
+        }
         return nil
     }
 }
@@ -384,21 +463,21 @@ public struct ListTemplatesResponseSuccess: Codable {
     }
 
     init() {
-        (self.object, self.data, self.hasMore) = (nil, nil, nil)
+        (object, data, hasMore) = (nil, nil, nil)
     }
 }
 
-extension ListTemplatesResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension ListTemplatesResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.data = try container.sdkDecodeIfPresent(.data)
-        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        object = try container.sdkDecodeIfPresent(.object)
+        data = try container.sdkDecodeIfPresent(.data)
+        hasMore = try container.sdkDecodeIfPresent(.hasMore)
     }
 }
 
-extension ListTemplatesResponseSuccess {
-    public init(object: String? = nil, data: [TemplateListItem]? = nil, hasMore: Bool? = nil) {
+public extension ListTemplatesResponseSuccess {
+    init(object: String? = nil, data: [TemplateListItem]? = nil, hasMore: Bool? = nil) {
         self.init()
         (self.object, self.data) = (object, data)
         self.hasMore = hasMore
@@ -419,20 +498,20 @@ public struct PublishTemplateResponseSuccess: Codable {
     }
 
     init() {
-        (self.id, self.object) = (nil, nil)
+        (id, object) = (nil, nil)
     }
 }
 
-extension PublishTemplateResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension PublishTemplateResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
     }
 }
 
-extension PublishTemplateResponseSuccess {
-    public init(id: String? = nil, object: String? = nil) {
+public extension PublishTemplateResponseSuccess {
+    init(id: String? = nil, object: String? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
     }
@@ -452,20 +531,20 @@ public struct DuplicateTemplateResponseSuccess: Codable {
     }
 
     init() {
-        (self.id, self.object) = (nil, nil)
+        (id, object) = (nil, nil)
     }
 }
 
-extension DuplicateTemplateResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension DuplicateTemplateResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
     }
 }
 
-extension DuplicateTemplateResponseSuccess {
-    public init(id: String? = nil, object: String? = nil) {
+public extension DuplicateTemplateResponseSuccess {
+    init(id: String? = nil, object: String? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
     }
@@ -489,21 +568,21 @@ public struct RemoveTemplateResponseSuccess: Codable {
     }
 
     init() {
-        (self.object, self.id, self.deleted) = (nil, nil, nil)
+        (object, id, deleted) = (nil, nil, nil)
     }
 }
 
-extension RemoveTemplateResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension RemoveTemplateResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.deleted = try container.sdkDecodeIfPresent(.deleted)
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-extension RemoveTemplateResponseSuccess {
-    public init(object: String? = nil, id: String? = nil, deleted: Bool? = nil) {
+public extension RemoveTemplateResponseSuccess {
+    init(object: String? = nil, id: String? = nil, deleted: Bool? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
         self.deleted = deleted
@@ -524,20 +603,20 @@ public struct UpdateTemplateResponseSuccess: Codable {
     }
 
     init() {
-        (self.id, self.object) = (nil, nil)
+        (id, object) = (nil, nil)
     }
 }
 
-extension UpdateTemplateResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension UpdateTemplateResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
     }
 }
 
-extension UpdateTemplateResponseSuccess {
-    public init(id: String? = nil, object: String? = nil) {
+public extension UpdateTemplateResponseSuccess {
+    init(id: String? = nil, object: String? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
     }

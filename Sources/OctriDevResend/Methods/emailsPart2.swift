@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension EmailsMethods {
-    public struct EmailsSendOptions: Codable {
+public extension EmailsMethods {
+    struct EmailsSendOptions: Codable {
         public var from: String
         public var to: SendEmailRequestTo
         public var subject: String
@@ -31,7 +31,8 @@ extension EmailsMethods {
         }
     }
 
-    /// Sends an email to one or more recipients. Supply `from`, `to`, and `subject`; use either message content in `html` or `text`, or a published `template`. A successful response includes the sent email's identifier.
+    /// Sends an email to one or more recipients. Supply `from`, `to`, and `subject`; use either message content in
+    /// `html` or `text`, or a published `template`. A successful response includes the sent email's identifier.
     ///
     /// - Parameters:
     /// - from: Sender email address. To include a friendly name, use the format
@@ -61,15 +62,28 @@ extension EmailsMethods {
     ///   and opted-in to the topic, the email is sent. If opted-out, the email is not
     ///   sent. If the recipient is not a contact, the email is sent if the topic's
     ///   default subscription is opt_in.
-    public static func emailsSend(config: ClientConfig, options: EmailsSendOptions, requestOptions: RequestOptions? = nil) async throws -> SendEmailResponse {
+    static func emailsSend(
+        config: ClientConfig,
+        options: EmailsSendOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SendEmailResponse {
         if let idempotencyKey = options.idempotencyKey {
             try validateLength("Idempotency-Key", idempotencyKey, max: 256)
         }
 
         let requestBody = EmailsSendRequestBody(options: options)
 
-        return try (await sdkRequest("POST", "/emails", config: config, body: requestBody, decoder: .json, operationId: "emailsSend", extraHeaders: sdkHeaders([
-            ("Idempotency-Key", sdkHeaderValue(options.idempotencyKey)),
-        ]), options: requestOptions)).data
+        return try await (sdkRequest(
+            "POST",
+            "/emails",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "emailsSend",
+            extraHeaders: sdkHeaders([
+                ("Idempotency-Key", sdkHeaderValue(options.idempotencyKey)),
+            ]),
+            options: requestOptions
+        )).data
     }
 }

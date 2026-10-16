@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Automations domain models
+/// Automations domain models
 /// Typed representation of the `DuplicateAutomationResponse` API schema.
 public struct DuplicateAutomationResponse: Codable {
     /// Type of the response object.
@@ -18,20 +18,20 @@ public struct DuplicateAutomationResponse: Codable {
     }
 
     init() {
-        (self.object, self.id) = (nil, nil)
+        (object, id) = (nil, nil)
     }
 }
 
-extension DuplicateAutomationResponse {
-    public init(from decoder: Decoder) throws {
+public extension DuplicateAutomationResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-extension DuplicateAutomationResponse {
-    public init(object: String? = nil, id: String? = nil) {
+public extension DuplicateAutomationResponse {
+    init(object: String? = nil, id: String? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
     }
@@ -69,26 +69,34 @@ public struct AutomationRun: Codable {
     }
 
     init() {
-        (self.object, self.id, self.status, self.startedAt, self.completedAt) = (nil, nil, nil, nil, nil)
-        (self.createdAt, self.steps) = (nil, nil)
+        (object, id, status, startedAt, completedAt) = (nil, nil, nil, nil, nil)
+        (createdAt, steps) = (nil, nil)
     }
 }
 
-extension AutomationRun {
-    public init(from decoder: Decoder) throws {
+public extension AutomationRun {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.steps = try container.sdkDecodeIfPresent(.steps)
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        status = try container.sdkDecodeIfPresent(.status)
+        startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        steps = try container.sdkDecodeIfPresent(.steps)
     }
 }
 
-extension AutomationRun {
-    public init(object: String? = nil, id: String? = nil, status: AutomationRunStatus? = nil, startedAt: String? = nil, completedAt: String? = nil, createdAt: String? = nil, steps: [AutomationRunStep]? = nil) {
+public extension AutomationRun {
+    init(
+        object: String? = nil,
+        id: String? = nil,
+        status: AutomationRunStatus? = nil,
+        startedAt: String? = nil,
+        completedAt: String? = nil,
+        createdAt: String? = nil,
+        steps: [AutomationRunStep]? = nil
+    ) {
         self.init()
         (self.object, self.id) = (object, id)
         (self.status, self.startedAt) = (status, startedAt)
@@ -112,26 +120,36 @@ public struct AutomationConnection: Codable {
         case type
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AutomationConnection {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.from) else {
-            throw SdkValidationError(field: "from", code: "required", message: "Validation failed for 'from': value is required")
-        }
-        guard container.contains(.to) else {
-            throw SdkValidationError(field: "to", code: "required", message: "Validation failed for 'to': value is required")
-        }
-        self.from = try container.sdkDecodeRequired(.from)
-        self.to = try container.sdkDecodeRequired(.to)
-        self.type = try container.sdkDecodeIfPresent(.type)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AutomationConnection {
-    public init(from: String, to: String, type: AutomationConnectionType? = nil) {
+public extension AutomationConnection {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.from) else {
+            throw SdkValidationError(
+                field: "from",
+                code: "required",
+                message: "Validation failed for 'from': value is required"
+            )
+        }
+        guard container.contains(.to) else {
+            throw SdkValidationError(
+                field: "to",
+                code: "required",
+                message: "Validation failed for 'to': value is required"
+            )
+        }
+        from = try container.sdkDecodeRequired(.from)
+        to = try container.sdkDecodeRequired(.to)
+        type = try container.sdkDecodeIfPresent(.type)
+    }
+}
+
+public extension AutomationConnection {
+    init(from: String, to: String, type: AutomationConnectionType? = nil) {
         (self.from, self.to) = (from, to)
         self.type = type
     }
@@ -151,20 +169,20 @@ public struct PatchAutomationResponse: Codable {
     }
 
     init() {
-        (self.object, self.id) = (nil, nil)
+        (object, id) = (nil, nil)
     }
 }
 
-extension PatchAutomationResponse {
-    public init(from decoder: Decoder) throws {
+public extension PatchAutomationResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-extension PatchAutomationResponse {
-    public init(object: String? = nil, id: String? = nil) {
+public extension PatchAutomationResponse {
+    init(object: String? = nil, id: String? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
     }
@@ -184,20 +202,20 @@ public struct CreateAutomationResponse: Codable {
     }
 
     init() {
-        (self.object, self.id) = (nil, nil)
+        (object, id) = (nil, nil)
     }
 }
 
-extension CreateAutomationResponse {
-    public init(from decoder: Decoder) throws {
+public extension CreateAutomationResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-extension CreateAutomationResponse {
-    public init(object: String? = nil, id: String? = nil) {
+public extension CreateAutomationResponse {
+    init(object: String? = nil, id: String? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
     }
@@ -221,36 +239,55 @@ public struct CreateAutomationRequest: Codable {
         case status
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateAutomationRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        guard container.contains(.steps) else {
-            throw SdkValidationError(field: "steps", code: "required", message: "Validation failed for 'steps': value is required")
-        }
-        guard container.contains(.connections) else {
-            throw SdkValidationError(field: "connections", code: "required", message: "Validation failed for 'connections': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.steps = try container.sdkDecodeRequired(.steps)
-        self.connections = try container.sdkDecodeRequired(.connections)
-        self.status = try container.sdkDecodeIfPresent(.status)
-            try validateLength("name", self.name, min: 1, max: nil)
-            try validateItems("steps", self.steps, min: 1, max: 150)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateAutomationRequest {
-    public init(name: String, steps: [AutomationStep], connections: [AutomationConnection], status: CreateAutomationRequestStatus? = nil) throws {
+public extension CreateAutomationRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        guard container.contains(.steps) else {
+            throw SdkValidationError(
+                field: "steps",
+                code: "required",
+                message: "Validation failed for 'steps': value is required"
+            )
+        }
+        guard container.contains(.connections) else {
+            throw SdkValidationError(
+                field: "connections",
+                code: "required",
+                message: "Validation failed for 'connections': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        steps = try container.sdkDecodeRequired(.steps)
+        connections = try container.sdkDecodeRequired(.connections)
+        status = try container.sdkDecodeIfPresent(.status)
+        try validateLength("name", name, min: 1, max: nil)
+        try validateItems("steps", steps, min: 1, max: 150)
+    }
+}
+
+public extension CreateAutomationRequest {
+    init(
+        name: String,
+        steps: [AutomationStep],
+        connections: [AutomationConnection],
+        status: CreateAutomationRequestStatus? = nil
+    ) throws {
         (self.name, self.steps) = (name, steps)
         (self.connections, self.status) = (connections, status)
-            try validateLength("name", self.name, min: 1, max: nil)
-            try validateItems("steps", self.steps, min: 1, max: 150)
+        try validateLength("name", self.name, min: 1, max: nil)
+        try validateItems("steps", self.steps, min: 1, max: 150)
     }
 }
 
@@ -288,27 +325,36 @@ public struct Automation: Codable {
     }
 
     init() {
-        (self.object, self.id, self.name, self.status, self.createdAt) = (nil, nil, nil, nil, nil)
-        (self.updatedAt, self.steps, self.connections) = (nil, nil, nil)
+        (object, id, name, status, createdAt) = (nil, nil, nil, nil, nil)
+        (updatedAt, steps, connections) = (nil, nil, nil)
     }
 }
 
-extension Automation {
-    public init(from decoder: Decoder) throws {
+public extension Automation {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.steps = try container.sdkDecodeIfPresent(.steps)
-        self.connections = try container.sdkDecodeIfPresent(.connections)
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        status = try container.sdkDecodeIfPresent(.status)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        steps = try container.sdkDecodeIfPresent(.steps)
+        connections = try container.sdkDecodeIfPresent(.connections)
     }
 }
 
-extension Automation {
-    public init(object: String? = nil, id: String? = nil, name: String? = nil, status: AutomationStatus? = nil, createdAt: String? = nil, updatedAt: String? = nil, steps: [AutomationStepResponse]? = nil, connections: [AutomationConnection]? = nil) {
+public extension Automation {
+    init(
+        object: String? = nil,
+        id: String? = nil,
+        name: String? = nil,
+        status: AutomationStatus? = nil,
+        createdAt: String? = nil,
+        updatedAt: String? = nil,
+        steps: [AutomationStepResponse]? = nil,
+        connections: [AutomationConnection]? = nil
+    ) {
         self.init()
         (self.object, self.id) = (object, id)
         (self.name, self.status) = (name, status)
@@ -341,23 +387,29 @@ public struct AutomationListItem: Codable {
     }
 
     init() {
-        (self.id, self.name, self.status, self.createdAt, self.updatedAt) = (nil, nil, nil, nil, nil)
+        (id, name, status, createdAt, updatedAt) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension AutomationListItem {
-    public init(from decoder: Decoder) throws {
+public extension AutomationListItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        status = try container.sdkDecodeIfPresent(.status)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
     }
 }
 
-extension AutomationListItem {
-    public init(id: String? = nil, name: String? = nil, status: AutomationListItemStatus? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+public extension AutomationListItem {
+    init(
+        id: String? = nil,
+        name: String? = nil,
+        status: AutomationListItemStatus? = nil,
+        createdAt: String? = nil,
+        updatedAt: String? = nil
+    ) {
         self.init()
         (self.id, self.name) = (id, name)
         (self.status, self.createdAt) = (status, createdAt)
@@ -383,21 +435,21 @@ public struct AutomationStepResponse: Codable {
     }
 
     init() {
-        (self.key, self.type, self.config) = (nil, nil, nil)
+        (key, type, config) = (nil, nil, nil)
     }
 }
 
-extension AutomationStepResponse {
-    public init(from decoder: Decoder) throws {
+public extension AutomationStepResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.key = try container.sdkDecodeIfPresent(.key)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.config = try container.sdkDecodeIfPresent(.config)
+        key = try container.sdkDecodeIfPresent(.key)
+        type = try container.sdkDecodeIfPresent(.type)
+        config = try container.sdkDecodeIfPresent(.config)
     }
 }
 
-extension AutomationStepResponse {
-    public init(key: String? = nil, type: AutomationStepResponseType? = nil, config: [String: JSONValue]? = nil) {
+public extension AutomationStepResponse {
+    init(key: String? = nil, type: AutomationStepResponseType? = nil, config: [String: JSONValue]? = nil) {
         self.init()
         (self.key, self.type) = (key, type)
         self.config = config
@@ -424,28 +476,33 @@ public struct PatchAutomationRequest: Codable {
     }
 
     init() {
-        (self.name, self.status, self.steps, self.connections) = (nil, nil, nil, nil)
+        (name, status, steps, connections) = (nil, nil, nil, nil)
     }
 }
 
-extension PatchAutomationRequest {
-    public init(from decoder: Decoder) throws {
+public extension PatchAutomationRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.steps = try container.sdkDecodeIfPresent(.steps)
-        self.connections = try container.sdkDecodeIfPresent(.connections)
-        if let value = self.name {
+        name = try container.sdkDecodeIfPresent(.name)
+        status = try container.sdkDecodeIfPresent(.status)
+        steps = try container.sdkDecodeIfPresent(.steps)
+        connections = try container.sdkDecodeIfPresent(.connections)
+        if let value = name {
             try validateLength("name", value, min: 1, max: nil)
         }
-        if let value = self.steps {
+        if let value = steps {
             try validateItems("steps", value, min: 1, max: 150)
         }
     }
 }
 
-extension PatchAutomationRequest {
-    public init(name: String? = nil, status: PatchAutomationRequestStatus? = nil, steps: [AutomationStep]? = nil, connections: [AutomationConnection]? = nil) throws {
+public extension PatchAutomationRequest {
+    init(
+        name: String? = nil,
+        status: PatchAutomationRequestStatus? = nil,
+        steps: [AutomationStep]? = nil,
+        connections: [AutomationConnection]? = nil
+    ) throws {
         self.init()
         (self.name, self.status) = (name, status)
         (self.steps, self.connections) = (steps, connections)
@@ -483,23 +540,29 @@ public struct AutomationRunListItem: Codable {
     }
 
     init() {
-        (self.id, self.status, self.startedAt, self.completedAt, self.createdAt) = (nil, nil, nil, nil, nil)
+        (id, status, startedAt, completedAt, createdAt) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension AutomationRunListItem {
-    public init(from decoder: Decoder) throws {
+public extension AutomationRunListItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        id = try container.sdkDecodeIfPresent(.id)
+        status = try container.sdkDecodeIfPresent(.status)
+        startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
     }
 }
 
-extension AutomationRunListItem {
-    public init(id: String? = nil, status: AutomationRunListItemStatus? = nil, startedAt: String? = nil, completedAt: String? = nil, createdAt: String? = nil) {
+public extension AutomationRunListItem {
+    init(
+        id: String? = nil,
+        status: AutomationRunListItemStatus? = nil,
+        startedAt: String? = nil,
+        completedAt: String? = nil,
+        createdAt: String? = nil
+    ) {
         self.init()
         (self.id, self.status) = (id, status)
         (self.startedAt, self.completedAt) = (startedAt, completedAt)
@@ -525,21 +588,21 @@ public struct StopAutomationResponse: Codable {
     }
 
     init() {
-        (self.object, self.id, self.status) = (nil, nil, nil)
+        (object, id, status) = (nil, nil, nil)
     }
 }
 
-extension StopAutomationResponse {
-    public init(from decoder: Decoder) throws {
+public extension StopAutomationResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.status = try container.sdkDecodeIfPresent(.status)
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        status = try container.sdkDecodeIfPresent(.status)
     }
 }
 
-extension StopAutomationResponse {
-    public init(object: String? = nil, id: String? = nil, status: String? = nil) {
+public extension StopAutomationResponse {
+    init(object: String? = nil, id: String? = nil, status: String? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
         self.status = status

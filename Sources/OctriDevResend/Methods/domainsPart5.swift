@@ -6,18 +6,34 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DomainsMethods {
-    /// Triggers verification of a domain's DNS records, including DKIM, SPF, and the tracking CNAME when a tracking subdomain is configured. Use this operation after adding the required DNS records to check the domain's verification status.
+public extension DomainsMethods {
+    /// Triggers verification of a domain's DNS records, including DKIM, SPF, and the tracking CNAME when a tracking
+    /// subdomain is configured. Use this operation after adding the required DNS records to check the domain's
+    /// verification status.
     ///
-    /// Triggers verification of the domain's DNS records including DKIM, SPF, and the tracking CNAME (if a tracking subdomain is configured).
+    /// Triggers verification of the domain's DNS records including DKIM, SPF, and the tracking CNAME (if a tracking
+    /// subdomain is configured).
     ///
     /// - Parameters:
     /// - domainId: The ID of the domain.
-    public static func domainsVerify(config: ClientConfig, domainId: String, requestOptions: RequestOptions? = nil) async throws -> VerifyDomainResponse {
-        return try (await sdkRequest("POST", ["/domains/", sdkEncodePathSegment(sdkWireString(domainId)), "/verify"].joined(), config: config, decoder: .json, operationId: "domainsVerify", options: requestOptions)).data
+    static func domainsVerify(
+        config: ClientConfig,
+        domainId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> VerifyDomainResponse {
+        try await (sdkRequest(
+            "POST",
+            ["/domains/", sdkEncodePathSegment(sdkWireString(domainId)), "/verify"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "domainsVerify",
+            options: requestOptions
+        )).data
     }
 
-    /// Start a claim for a domain that another Resend account has already verified. The domain is recreated under your account with fresh DKIM keys, so the previous account's DNS records cannot be reused. Returns a TXT record to add to your DNS to prove ownership. Uses the same request body as creating a domain.
+    /// Start a claim for a domain that another Resend account has already verified. The domain is recreated under your
+    /// account with fresh DKIM keys, so the previous account's DNS records cannot be reused. Returns a TXT record to
+    /// add to your DNS to prove ownership. Uses the same request body as creating a domain.
     ///
     /// - Parameters:
     /// - name: The name of the domain you want to claim.
@@ -28,9 +44,33 @@ extension DomainsMethods {
     /// - openTracking: Track the open rate of each email.
     /// - clickTracking: Track clicks within the body of each HTML email.
     /// - trackingSubdomain: The subdomain to use for click and open tracking.
-    public static func domainsCreateClaim(config: ClientConfig, name: String, region: CreateDomainClaimRequestRegion? = nil, customReturnPath: String? = nil, openTracking: Bool? = nil, clickTracking: Bool? = nil, trackingSubdomain: String? = nil, requestOptions: RequestOptions? = nil) async throws -> DomainClaim {
-        let requestBody = DomainsCreateClaimRequestBody(name: name, region: region, customReturnPath: customReturnPath, openTracking: openTracking, clickTracking: clickTracking, trackingSubdomain: trackingSubdomain)
+    static func domainsCreateClaim(
+        config: ClientConfig,
+        name: String,
+        region: CreateDomainClaimRequestRegion? = nil,
+        customReturnPath: String? = nil,
+        openTracking: Bool? = nil,
+        clickTracking: Bool? = nil,
+        trackingSubdomain: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DomainClaim {
+        let requestBody = DomainsCreateClaimRequestBody(
+            name: name,
+            region: region,
+            customReturnPath: customReturnPath,
+            openTracking: openTracking,
+            clickTracking: clickTracking,
+            trackingSubdomain: trackingSubdomain
+        )
 
-        return try (await sdkRequest("POST", "/domains/claim", config: config, body: requestBody, decoder: .json, operationId: "domainsCreateClaim", options: requestOptions)).data
+        return try await (sdkRequest(
+            "POST",
+            "/domains/claim",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "domainsCreateClaim",
+            options: requestOptions
+        )).data
     }
 }

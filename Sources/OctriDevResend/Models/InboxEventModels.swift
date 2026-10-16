@@ -3,7 +3,7 @@
 
 import Foundation
 
-// InboxEvent domain models
+/// InboxEvent domain models
 /// The email carried by an inbox webhook event. It has no `html` or `text`.
 public struct InboxEventEmail: Codable {
     /// The ID of the email.
@@ -53,39 +53,54 @@ public struct InboxEventEmail: Codable {
         case receivedAt = "received_at"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension InboxEventEmail {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeRequired(.id)
-        self.direction = try container.sdkDecodeRequired(.direction)
-        self.from = try container.sdkDecodeRequired(.from)
-        self.to = try container.sdkDecodeRequired(.to)
-        self.cc = try container.sdkDecodeRequired(.cc)
-        self.bcc = try container.sdkDecodeRequired(.bcc)
-        self.replyTo = try container.sdkDecodeRequired(.replyTo)
-        self.subject = try container.sdkDecodeNullable(.subject)
-        self.messageId = try container.sdkDecodeNullable(.messageId)
-        self.attachments = try container.sdkDecodeRequired(.attachments)
-        self.read = try container.sdkDecodeRequired(.read)
-        self.receivedAt = try container.sdkDecodeRequired(.receivedAt)
-            try sdkValidateUuid("id", self.id)
-            try sdkValidateDateTime("received_at", sdkWireString(self.receivedAt))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension InboxEventEmail {
-    public init(id: String, direction: InboxEventEmailDirection, from: String, to: [String], cc: [String], bcc: [String], replyTo: [String], subject: String?, messageId: String?, attachments: [InboxEventEmailAttachment], read: Bool, receivedAt: Date) throws {
+public extension InboxEventEmail {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.sdkDecodeRequired(.id)
+        direction = try container.sdkDecodeRequired(.direction)
+        from = try container.sdkDecodeRequired(.from)
+        to = try container.sdkDecodeRequired(.to)
+        cc = try container.sdkDecodeRequired(.cc)
+        bcc = try container.sdkDecodeRequired(.bcc)
+        replyTo = try container.sdkDecodeRequired(.replyTo)
+        subject = try container.sdkDecodeNullable(.subject)
+        messageId = try container.sdkDecodeNullable(.messageId)
+        attachments = try container.sdkDecodeRequired(.attachments)
+        read = try container.sdkDecodeRequired(.read)
+        receivedAt = try container.sdkDecodeRequired(.receivedAt)
+        try sdkValidateUuid("id", id)
+        try sdkValidateDateTime("received_at", sdkWireString(receivedAt))
+    }
+}
+
+public extension InboxEventEmail {
+    init(
+        id: String,
+        direction: InboxEventEmailDirection,
+        from: String,
+        to: [String],
+        cc: [String],
+        bcc: [String],
+        replyTo: [String],
+        subject: String?,
+        messageId: String?,
+        attachments: [InboxEventEmailAttachment],
+        read: Bool,
+        receivedAt: Date
+    ) throws {
         (self.id, self.direction) = (id, direction)
         (self.from, self.to) = (from, to)
         (self.cc, self.bcc) = (cc, bcc)
         (self.replyTo, self.subject) = (replyTo, subject)
         (self.messageId, self.attachments) = (messageId, attachments)
         (self.read, self.receivedAt) = (read, receivedAt)
-            try sdkValidateUuid("id", self.id)
-            try sdkValidateDateTime("received_at", sdkWireString(self.receivedAt))
+        try sdkValidateUuid("id", self.id)
+        try sdkValidateDateTime("received_at", sdkWireString(self.receivedAt))
     }
 }
 
@@ -107,29 +122,43 @@ public struct InboxEventEmailAttachment: Codable {
         case size
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension InboxEventEmailAttachment {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
-        }
-        guard container.contains(.filename) else {
-            throw SdkValidationError(field: "filename", code: "required", message: "Validation failed for 'filename': value is required")
-        }
-        guard container.contains(.size) else {
-            throw SdkValidationError(field: "size", code: "required", message: "Validation failed for 'size': value is required")
-        }
-        self.id = try container.sdkDecodeRequired(.id)
-        self.filename = try container.sdkDecodeNullable(.filename)
-        self.size = try container.sdkDecodeNullable(.size)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension InboxEventEmailAttachment {
-    public init(id: String, filename: String?, size: Int?) {
+public extension InboxEventEmailAttachment {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.id) else {
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
+        }
+        guard container.contains(.filename) else {
+            throw SdkValidationError(
+                field: "filename",
+                code: "required",
+                message: "Validation failed for 'filename': value is required"
+            )
+        }
+        guard container.contains(.size) else {
+            throw SdkValidationError(
+                field: "size",
+                code: "required",
+                message: "Validation failed for 'size': value is required"
+            )
+        }
+        id = try container.sdkDecodeRequired(.id)
+        filename = try container.sdkDecodeNullable(.filename)
+        size = try container.sdkDecodeNullable(.size)
+    }
+}
+
+public extension InboxEventEmailAttachment {
+    init(id: String, filename: String?, size: Int?) {
         (self.id, self.filename) = (id, filename)
         self.size = size
     }
@@ -189,42 +218,58 @@ public struct InboxEventDraft: Codable {
         case attachments
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension InboxEventDraft {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeRequired(.object)
-        self.id = try container.sdkDecodeRequired(.id)
-        self.type = try container.sdkDecodeRequired(.type)
-        self.to = try container.sdkDecodeNullable(.to)
-        self.cc = try container.sdkDecodeRequired(.cc)
-        self.bcc = try container.sdkDecodeRequired(.bcc)
-        self.subject = try container.sdkDecodeNullable(.subject)
-        self.threadId = try container.sdkDecodeNullable(.threadId)
-        self.replyToEmailId = try container.sdkDecodeNullable(.replyToEmailId)
-        self.emailId = try container.sdkDecodeNullable(.emailId)
-        self.createdAt = try container.sdkDecodeRequired(.createdAt)
-        self.updatedAt = try container.sdkDecodeRequired(.updatedAt)
-        self.attachments = try container.sdkDecodeRequired(.attachments)
-            try sdkValidateUuid("id", self.id)
-        if let value = self.threadId {
-            try sdkValidateUuid("thread_id", value)
-        }
-        if let value = self.replyToEmailId {
-            try sdkValidateUuid("reply_to_email_id", value)
-        }
-        if let value = self.emailId {
-            try sdkValidateUuid("email_id", value)
-        }
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
-            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension InboxEventDraft {
-    public init(object: String, id: String, type: InboxEventDraftType, to: [String]?, cc: [String], bcc: [String], subject: String?, threadId: String?, replyToEmailId: String?, emailId: String?, createdAt: Date, updatedAt: Date, attachments: [InboxDraftAttachment]) throws {
+public extension InboxEventDraft {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        object = try container.sdkDecodeRequired(.object)
+        id = try container.sdkDecodeRequired(.id)
+        type = try container.sdkDecodeRequired(.type)
+        to = try container.sdkDecodeNullable(.to)
+        cc = try container.sdkDecodeRequired(.cc)
+        bcc = try container.sdkDecodeRequired(.bcc)
+        subject = try container.sdkDecodeNullable(.subject)
+        threadId = try container.sdkDecodeNullable(.threadId)
+        replyToEmailId = try container.sdkDecodeNullable(.replyToEmailId)
+        emailId = try container.sdkDecodeNullable(.emailId)
+        createdAt = try container.sdkDecodeRequired(.createdAt)
+        updatedAt = try container.sdkDecodeRequired(.updatedAt)
+        attachments = try container.sdkDecodeRequired(.attachments)
+        try sdkValidateUuid("id", id)
+        if let value = threadId {
+            try sdkValidateUuid("thread_id", value)
+        }
+        if let value = replyToEmailId {
+            try sdkValidateUuid("reply_to_email_id", value)
+        }
+        if let value = emailId {
+            try sdkValidateUuid("email_id", value)
+        }
+        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        try sdkValidateDateTime("updated_at", sdkWireString(updatedAt))
+    }
+}
+
+public extension InboxEventDraft {
+    init(
+        object: String,
+        id: String,
+        type: InboxEventDraftType,
+        to: [String]?,
+        cc: [String],
+        bcc: [String],
+        subject: String?,
+        threadId: String?,
+        replyToEmailId: String?,
+        emailId: String?,
+        createdAt: Date,
+        updatedAt: Date,
+        attachments: [InboxDraftAttachment]
+    ) throws {
         (self.object, self.id) = (object, id)
         (self.type, self.to) = (type, to)
         (self.cc, self.bcc) = (cc, bcc)
@@ -232,7 +277,7 @@ extension InboxEventDraft {
         (self.replyToEmailId, self.emailId) = (replyToEmailId, emailId)
         (self.createdAt, self.updatedAt) = (createdAt, updatedAt)
         self.attachments = attachments
-            try sdkValidateUuid("id", self.id)
+        try sdkValidateUuid("id", self.id)
         if let value = self.threadId {
             try sdkValidateUuid("thread_id", value)
         }
@@ -242,8 +287,8 @@ extension InboxEventDraft {
         if let value = self.emailId {
             try sdkValidateUuid("email_id", value)
         }
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
-            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
+        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+        try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
     }
 }
 
@@ -264,30 +309,40 @@ public struct InboxEventData: Codable {
         case inbox
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension InboxEventData {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.source) else {
-            throw SdkValidationError(field: "source", code: "required", message: "Validation failed for 'source': value is required")
-        }
-        guard container.contains(.inboxId) else {
-            throw SdkValidationError(field: "inbox_id", code: "required", message: "Validation failed for 'inbox_id': value is required")
-        }
-        self.source = try container.sdkDecodeRequired(.source)
-        self.inboxId = try container.sdkDecodeRequired(.inboxId)
-        self.inbox = try container.sdkDecodeIfPresent(.inbox)
-            try sdkValidateUuid("inbox_id", self.inboxId)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension InboxEventData {
-    public init(source: InboxEventSource, inboxId: String, inbox: Inbox? = nil) throws {
+public extension InboxEventData {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.source) else {
+            throw SdkValidationError(
+                field: "source",
+                code: "required",
+                message: "Validation failed for 'source': value is required"
+            )
+        }
+        guard container.contains(.inboxId) else {
+            throw SdkValidationError(
+                field: "inbox_id",
+                code: "required",
+                message: "Validation failed for 'inbox_id': value is required"
+            )
+        }
+        source = try container.sdkDecodeRequired(.source)
+        inboxId = try container.sdkDecodeRequired(.inboxId)
+        inbox = try container.sdkDecodeIfPresent(.inbox)
+        try sdkValidateUuid("inbox_id", inboxId)
+    }
+}
+
+public extension InboxEventData {
+    init(source: InboxEventSource, inboxId: String, inbox: Inbox? = nil) throws {
         (self.source, self.inboxId) = (source, inboxId)
         self.inbox = inbox
-            try sdkValidateUuid("inbox_id", self.inboxId)
+        try sdkValidateUuid("inbox_id", self.inboxId)
     }
 }
 
@@ -295,13 +350,16 @@ extension InboxEventData {
 public struct InboxEventDraftType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let standalone = InboxEventDraftType(rawValue: "standalone")
     public static let reply = InboxEventDraftType(rawValue: "reply")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -314,7 +372,10 @@ public struct InboxEventDraftType: RawRepresentable, Hashable, Codable, Sendable
 public struct InboxEventSource: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let api = InboxEventSource(rawValue: "api")
     public static let dashboard = InboxEventSource(rawValue: "dashboard")
     public static let agent = InboxEventSource(rawValue: "agent")
@@ -322,7 +383,7 @@ public struct InboxEventSource: RawRepresentable, Hashable, Codable, Sendable, S
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -335,13 +396,16 @@ public struct InboxEventSource: RawRepresentable, Hashable, Codable, Sendable, S
 public struct InboxEventEmailDirection: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let inbound = InboxEventEmailDirection(rawValue: "inbound")
     public static let outbound = InboxEventEmailDirection(rawValue: "outbound")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

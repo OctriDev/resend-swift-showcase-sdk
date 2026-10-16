@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Shared domain models
+/// Shared domain models
 /// Required object value serialized in the `data[]` wire field.
 public struct ListAttachmentsResponseDataItem: Codable {
     /// The ID of the attachment.
@@ -43,33 +43,42 @@ public struct ListAttachmentsResponseDataItem: Codable {
     }
 
     init() {
-        (self.id, self.filename, self.contentType, self.contentId, self.contentDisposition) = (nil, nil, nil, nil, nil)
-        (self.downloadUrl, self.expiresAt, self.size) = (nil, nil, nil)
+        (id, filename, contentType, contentId, contentDisposition) = (nil, nil, nil, nil, nil)
+        (downloadUrl, expiresAt, size) = (nil, nil, nil)
     }
 }
 
-extension ListAttachmentsResponseDataItem {
-    public init(from decoder: Decoder) throws {
+public extension ListAttachmentsResponseDataItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.filename = try container.sdkDecodeIfPresent(.filename)
-        self.contentType = try container.sdkDecodeIfPresent(.contentType)
-        self.contentId = try container.sdkDecodeIfPresent(.contentId)
-        self.contentDisposition = try container.sdkDecodeIfPresent(.contentDisposition)
-        self.downloadUrl = try container.sdkDecodeIfPresent(.downloadUrl)
-        self.expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
-        self.size = try container.sdkDecodeIfPresent(.size)
-        if let value = self.id {
+        id = try container.sdkDecodeIfPresent(.id)
+        filename = try container.sdkDecodeIfPresent(.filename)
+        contentType = try container.sdkDecodeIfPresent(.contentType)
+        contentId = try container.sdkDecodeIfPresent(.contentId)
+        contentDisposition = try container.sdkDecodeIfPresent(.contentDisposition)
+        downloadUrl = try container.sdkDecodeIfPresent(.downloadUrl)
+        expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
+        size = try container.sdkDecodeIfPresent(.size)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
-        if let value = self.expiresAt {
+        if let value = expiresAt {
             try sdkValidateDateTime("expires_at", sdkWireString(value))
         }
     }
 }
 
-extension ListAttachmentsResponseDataItem {
-    public init(id: String? = nil, filename: String? = nil, contentType: String? = nil, contentId: String? = nil, contentDisposition: ListAttachmentsResponseDataItemContentDisposition? = nil, downloadUrl: String? = nil, expiresAt: Date? = nil, size: Int? = nil) throws {
+public extension ListAttachmentsResponseDataItem {
+    init(
+        id: String? = nil,
+        filename: String? = nil,
+        contentType: String? = nil,
+        contentId: String? = nil,
+        contentDisposition: ListAttachmentsResponseDataItemContentDisposition? = nil,
+        downloadUrl: String? = nil,
+        expiresAt: Date? = nil,
+        size: Int? = nil
+    ) throws {
         self.init()
         (self.id, self.filename) = (id, filename)
         (self.contentType, self.contentId) = (contentType, contentId)
@@ -114,25 +123,32 @@ public struct ListContactsResponseSuccessDataItem: Codable {
     }
 
     init() {
-        (self.id, self.email, self.firstName, self.lastName, self.createdAt) = (nil, nil, nil, nil, nil)
-        self.unsubscribed = nil
+        (id, email, firstName, lastName, createdAt) = (nil, nil, nil, nil, nil)
+        unsubscribed = nil
     }
 }
 
-extension ListContactsResponseSuccessDataItem {
-    public init(from decoder: Decoder) throws {
+public extension ListContactsResponseSuccessDataItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.email = try container.sdkDecodeIfPresent(.email)
-        self.firstName = try container.sdkDecodeIfPresent(.firstName)
-        self.lastName = try container.sdkDecodeIfPresent(.lastName)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.unsubscribed = try container.sdkDecodeIfPresent(.unsubscribed)
+        id = try container.sdkDecodeIfPresent(.id)
+        email = try container.sdkDecodeIfPresent(.email)
+        firstName = try container.sdkDecodeIfPresent(.firstName)
+        lastName = try container.sdkDecodeIfPresent(.lastName)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        unsubscribed = try container.sdkDecodeIfPresent(.unsubscribed)
     }
 }
 
-extension ListContactsResponseSuccessDataItem {
-    public init(id: String? = nil, email: String? = nil, firstName: String? = nil, lastName: String? = nil, createdAt: String? = nil, unsubscribed: Bool? = nil) {
+public extension ListContactsResponseSuccessDataItem {
+    init(
+        id: String? = nil,
+        email: String? = nil,
+        firstName: String? = nil,
+        lastName: String? = nil,
+        createdAt: String? = nil,
+        unsubscribed: Bool? = nil
+    ) {
         self.init()
         (self.id, self.email) = (id, email)
         (self.firstName, self.lastName) = (firstName, lastName)
@@ -162,23 +178,29 @@ public struct Attachment: Codable {
     }
 
     init() {
-        (self.content, self.filename, self.path, self.contentType, self.contentId) = (nil, nil, nil, nil, nil)
+        (content, filename, path, contentType, contentId) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension Attachment {
-    public init(from decoder: Decoder) throws {
+public extension Attachment {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.content = try container.sdkDecodeIfPresent(.content)
-        self.filename = try container.sdkDecodeIfPresent(.filename)
-        self.path = try container.sdkDecodeIfPresent(.path)
-        self.contentType = try container.sdkDecodeIfPresent(.contentType)
-        self.contentId = try container.sdkDecodeIfPresent(.contentId)
+        content = try container.sdkDecodeIfPresent(.content)
+        filename = try container.sdkDecodeIfPresent(.filename)
+        path = try container.sdkDecodeIfPresent(.path)
+        contentType = try container.sdkDecodeIfPresent(.contentType)
+        contentId = try container.sdkDecodeIfPresent(.contentId)
     }
 }
 
-extension Attachment {
-    public init(content: Data? = nil, filename: String? = nil, path: String? = nil, contentType: String? = nil, contentId: String? = nil) {
+public extension Attachment {
+    init(
+        content: Data? = nil,
+        filename: String? = nil,
+        path: String? = nil,
+        contentType: String? = nil,
+        contentId: String? = nil
+    ) {
         self.init()
         (self.content, self.filename) = (content, filename)
         (self.path, self.contentType) = (path, contentType)
@@ -203,21 +225,21 @@ public struct ListAttachmentsResponse: Codable {
     }
 
     init() {
-        (self.object, self.hasMore, self.data) = (nil, nil, nil)
+        (object, hasMore, data) = (nil, nil, nil)
     }
 }
 
-extension ListAttachmentsResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListAttachmentsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        object = try container.sdkDecodeIfPresent(.object)
+        hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension ListAttachmentsResponse {
-    public init(object: String? = nil, hasMore: Bool? = nil, data: [ListAttachmentsResponseDataItem]? = nil) {
+public extension ListAttachmentsResponse {
+    init(object: String? = nil, hasMore: Bool? = nil, data: [ListAttachmentsResponseDataItem]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -241,21 +263,21 @@ public struct ListContactsResponseSuccess: Codable {
     }
 
     init() {
-        (self.object, self.hasMore, self.data) = (nil, nil, nil)
+        (object, hasMore, data) = (nil, nil, nil)
     }
 }
 
-extension ListContactsResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension ListContactsResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        object = try container.sdkDecodeIfPresent(.object)
+        hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension ListContactsResponseSuccess {
-    public init(object: String? = nil, hasMore: Bool? = nil, data: [ListContactsResponseSuccessDataItem]? = nil) {
+public extension ListContactsResponseSuccess {
+    init(object: String? = nil, hasMore: Bool? = nil, data: [ListContactsResponseSuccessDataItem]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -305,34 +327,44 @@ public struct RetrievedAttachment: Codable {
     }
 
     init() {
-        (self.object, self.id, self.filename, self.contentType, self.contentId) = (nil, nil, nil, nil, nil)
-        (self.contentDisposition, self.downloadUrl, self.expiresAt, self.size) = (nil, nil, nil, nil)
+        (object, id, filename, contentType, contentId) = (nil, nil, nil, nil, nil)
+        (contentDisposition, downloadUrl, expiresAt, size) = (nil, nil, nil, nil)
     }
 }
 
-extension RetrievedAttachment {
-    public init(from decoder: Decoder) throws {
+public extension RetrievedAttachment {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.filename = try container.sdkDecodeIfPresent(.filename)
-        self.contentType = try container.sdkDecodeIfPresent(.contentType)
-        self.contentId = try container.sdkDecodeIfPresent(.contentId)
-        self.contentDisposition = try container.sdkDecodeIfPresent(.contentDisposition)
-        self.downloadUrl = try container.sdkDecodeIfPresent(.downloadUrl)
-        self.expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
-        self.size = try container.sdkDecodeIfPresent(.size)
-        if let value = self.id {
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        filename = try container.sdkDecodeIfPresent(.filename)
+        contentType = try container.sdkDecodeIfPresent(.contentType)
+        contentId = try container.sdkDecodeIfPresent(.contentId)
+        contentDisposition = try container.sdkDecodeIfPresent(.contentDisposition)
+        downloadUrl = try container.sdkDecodeIfPresent(.downloadUrl)
+        expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
+        size = try container.sdkDecodeIfPresent(.size)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
-        if let value = self.expiresAt {
+        if let value = expiresAt {
             try sdkValidateDateTime("expires_at", sdkWireString(value))
         }
     }
 }
 
-extension RetrievedAttachment {
-    public init(object: String? = nil, id: String? = nil, filename: String? = nil, contentType: String? = nil, contentId: String? = nil, contentDisposition: RetrievedAttachmentContentDisposition? = nil, downloadUrl: String? = nil, expiresAt: Date? = nil, size: Int? = nil) throws {
+public extension RetrievedAttachment {
+    init(
+        object: String? = nil,
+        id: String? = nil,
+        filename: String? = nil,
+        contentType: String? = nil,
+        contentId: String? = nil,
+        contentDisposition: RetrievedAttachmentContentDisposition? = nil,
+        downloadUrl: String? = nil,
+        expiresAt: Date? = nil,
+        size: Int? = nil
+    ) throws {
         self.init()
         (self.object, self.id) = (object, id)
         (self.filename, self.contentType) = (filename, contentType)
@@ -349,16 +381,20 @@ extension RetrievedAttachment {
 }
 
 /// How the attachment should be displayed.
-public struct ListAttachmentsResponseDataItemContentDisposition: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct ListAttachmentsResponseDataItemContentDisposition: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let inline = ListAttachmentsResponseDataItemContentDisposition(rawValue: "inline")
     public static let attachment = ListAttachmentsResponseDataItemContentDisposition(rawValue: "attachment")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -371,13 +407,16 @@ public struct ListAttachmentsResponseDataItemContentDisposition: RawRepresentabl
 public struct RetrievedAttachmentContentDisposition: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let inline = RetrievedAttachmentContentDisposition(rawValue: "inline")
     public static let attachment = RetrievedAttachmentContentDisposition(rawValue: "attachment")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

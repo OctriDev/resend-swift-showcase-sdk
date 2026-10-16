@@ -230,7 +230,10 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try TemplatesMethods.TemplatesCreateOptions(name: decoded("\"Example Name\""), html: decoded("\"html\""))
+        var options = try TemplatesMethods.TemplatesCreateOptions(
+            name: decoded("\"Example Name\""),
+            html: decoded("\"html\"")
+        )
         options.alias = try decoded("\"alias\"")
         options.from = try decoded("\"from\"")
         options.subject = try decoded("\"subject\"")

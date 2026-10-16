@@ -3,12 +3,16 @@
 
 import Foundation
 
-// InboxesUpdate domain models
+/// InboxesUpdate domain models
 /// Required enumerated value serialized in the `enabled_actions[]` wire field.
-public struct UpdateInboxAgentOptionsEnabledActionsItem: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct UpdateInboxAgentOptionsEnabledActionsItem: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let draftReply = UpdateInboxAgentOptionsEnabledActionsItem(rawValue: "draft_reply")
     public static let forwardThread = UpdateInboxAgentOptionsEnabledActionsItem(rawValue: "forward_thread")
     public static let addLabels = UpdateInboxAgentOptionsEnabledActionsItem(rawValue: "add_labels")
@@ -19,7 +23,7 @@ public struct UpdateInboxAgentOptionsEnabledActionsItem: RawRepresentable, Hasha
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -32,7 +36,10 @@ public struct UpdateInboxAgentOptionsEnabledActionsItem: RawRepresentable, Hasha
 public struct UpdateInboxThreadOptionsFolder: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let inbox = UpdateInboxThreadOptionsFolder(rawValue: "inbox")
     public static let archive = UpdateInboxThreadOptionsFolder(rawValue: "archive")
     public static let spam = UpdateInboxThreadOptionsFolder(rawValue: "spam")
@@ -40,7 +47,7 @@ public struct UpdateInboxThreadOptionsFolder: RawRepresentable, Hashable, Codabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension InboxesMethods {
-    public struct InboxesSearchThreadsOptions: Codable {
+public extension InboxesMethods {
+    struct InboxesSearchThreadsOptions: Codable {
         public var inboxId: String
         public var query: String?
         public var from: [String]?
@@ -29,9 +29,19 @@ extension InboxesMethods {
         }
     }
 
-    /// Searches an inbox’s threads by email text, sender or recipient, attachment presence, and date. Combine filters to find threads matching all specified criteria; email-level filters must match the same email, and results may lag new emails by up to about a minute. Search covers the 10,000 threads with the newest matching email when more than 10,000 threads match.
+    /// Searches an inbox’s threads by email text, sender or recipient, attachment presence, and date. Combine filters
+    /// to find threads matching all specified criteria; email-level filters must match the same email, and results may
+    /// lag new emails by up to about a minute. Search covers the 10,000 threads with the newest matching email when
+    /// more than 10,000 threads match.
     ///
-    /// Finds threads by the text of their emails, who sent or received them, whether they have attachments, and their dates. Results are ordered by latest activity, newest first, and paginate like the list threads endpoint, so a cursor that is not a thread ID returns a 422. Search can be up to about a minute behind new emails. Different parameters combine, so a thread must match all of them. `folders`, `labels`, and `read` apply to the thread. `query`, `from`, `to`, `cc`, `bcc`, `has_attachment`, `start_date`, and `end_date` must all match the same email in the thread. When any of these email filters is set, the matching email must itself be in one of `folders`. For `sent`, that means an email the inbox sent. When more than 10,000 threads match, search covers the 10,000 with the newest matching email.
+    /// Finds threads by the text of their emails, who sent or received them, whether they have attachments, and their
+    /// dates. Results are ordered by latest activity, newest first, and paginate like the list threads endpoint, so a
+    /// cursor that is not a thread ID returns a 422. Search can be up to about a minute behind new emails. Different
+    /// parameters combine, so a thread must match all of them. `folders`, `labels`, and `read` apply to the thread.
+    /// `query`, `from`, `to`, `cc`, `bcc`, `has_attachment`, `start_date`, and `end_date` must all match the same email
+    /// in the thread. When any of these email filters is set, the matching email must itself be in one of `folders`.
+    /// For `sent`, that means an email the inbox sent. When more than 10,000 threads match, search covers the 10,000
+    /// with the newest matching email.
     ///
     /// - Parameters:
     /// - inboxId: The Inbox ID. An email address is not accepted.
@@ -72,7 +82,11 @@ extension InboxesMethods {
     /// - limit: Number of items to return.
     /// - after: Return items after this cursor.
     /// - before: Return items before this cursor.
-    public static func inboxesSearchThreads(config: ClientConfig, options: InboxesSearchThreadsOptions, requestOptions: RequestOptions? = nil) async throws -> SearchInboxThreadsResponseSuccess {
+    static func inboxesSearchThreads(
+        config: ClientConfig,
+        options: InboxesSearchThreadsOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SearchInboxThreadsResponseSuccess {
         try sdkValidateUuid("inbox_id", options.inboxId)
 
         if let query = options.query {
@@ -103,21 +117,29 @@ extension InboxesMethods {
             try validateRange("limit", Double(limit), min: 1, max: 100)
         }
 
-        return try (await sdkRequest("GET", ["/inboxes/", sdkEncodePathSegment(sdkWireString(options.inboxId)), "/threads/search"].joined(), config: config, query: [
-            SdkQueryParameter("query", value: options.query),
-            SdkQueryParameter("from", values: options.from, style: "form", explode: false),
-            SdkQueryParameter("to", values: options.to, style: "form", explode: false),
-            SdkQueryParameter("cc", values: options.cc, style: "form", explode: false),
-            SdkQueryParameter("bcc", values: options.bcc, style: "form", explode: false),
-            SdkQueryParameter("has_attachment", value: options.hasAttachment),
-            SdkQueryParameter("start_date", value: options.startDate),
-            SdkQueryParameter("end_date", value: options.endDate),
-            SdkQueryParameter("folders", values: options.folders, style: "form", explode: false),
-            SdkQueryParameter("labels", values: options.labels, style: "form", explode: false),
-            SdkQueryParameter("read", value: options.read),
-            SdkQueryParameter("limit", value: options.limit),
-            SdkQueryParameter("after", value: options.after),
-            SdkQueryParameter("before", value: options.before),
-        ], decoder: .json, operationId: "inboxesSearchThreads", options: requestOptions)).data
+        return try await (sdkRequest(
+            "GET",
+            ["/inboxes/", sdkEncodePathSegment(sdkWireString(options.inboxId)), "/threads/search"].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("query", value: options.query),
+                SdkQueryParameter("from", values: options.from, style: "form", explode: false),
+                SdkQueryParameter("to", values: options.to, style: "form", explode: false),
+                SdkQueryParameter("cc", values: options.cc, style: "form", explode: false),
+                SdkQueryParameter("bcc", values: options.bcc, style: "form", explode: false),
+                SdkQueryParameter("has_attachment", value: options.hasAttachment),
+                SdkQueryParameter("start_date", value: options.startDate),
+                SdkQueryParameter("end_date", value: options.endDate),
+                SdkQueryParameter("folders", values: options.folders, style: "form", explode: false),
+                SdkQueryParameter("labels", values: options.labels, style: "form", explode: false),
+                SdkQueryParameter("read", value: options.read),
+                SdkQueryParameter("limit", value: options.limit),
+                SdkQueryParameter("after", value: options.after),
+                SdkQueryParameter("before", value: options.before),
+            ],
+            decoder: .json,
+            operationId: "inboxesSearchThreads",
+            options: requestOptions
+        )).data
     }
 }

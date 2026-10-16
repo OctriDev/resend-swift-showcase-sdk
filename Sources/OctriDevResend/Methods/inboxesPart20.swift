@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension InboxesMethods {
-    public struct InboxesUpdateDraftOptions: Codable {
+public extension InboxesMethods {
+    struct InboxesUpdateDraftOptions: Codable {
         public var inboxId: String
         public var draftId: String
         public var to: SdkOptional<UpdateInboxDraftOptionsTo>?
@@ -24,9 +24,15 @@ extension InboxesMethods {
         }
     }
 
-    /// Updates the content of an unsent draft in an inbox. Send only the fields you want to change; sending `attachments` replaces all attachments, while sending `text` or `html` replaces the entire body. The merged draft must retain at least one non-empty field and no more than 50 combined recipients.
+    /// Updates the content of an unsent draft in an inbox. Send only the fields you want to change; sending
+    /// `attachments` replaces all attachments, while sending `text` or `html` replaces the entire body. The merged
+    /// draft must retain at least one non-empty field and no more than 50 combined recipients.
     ///
-    /// Updates the content of an unsent draft. Omitted fields are left unchanged. Send at least one of `to`, `cc`, `bcc`, `subject`, `text`, `html` or `attachments`. Sending `attachments` replaces every attachment on the draft. A request that sets `text` or `html` replaces the whole body. The body part you omit from that request becomes `null`. The merged draft must still contain at least one non-empty field, and its combined recipients cannot exceed 50. A draft that was already sent, or that changed during the request, returns a 409.
+    /// Updates the content of an unsent draft. Omitted fields are left unchanged. Send at least one of `to`, `cc`,
+    /// `bcc`, `subject`, `text`, `html` or `attachments`. Sending `attachments` replaces every attachment on the draft.
+    /// A request that sets `text` or `html` replaces the whole body. The body part you omit from that request becomes
+    /// `null`. The merged draft must still contain at least one non-empty field, and its combined recipients cannot
+    /// exceed 50. A draft that was already sent, or that changed during the request, returns a 409.
     ///
     /// - Parameters:
     /// - inboxId: The Inbox ID. An email address is not accepted.
@@ -51,7 +57,11 @@ extension InboxesMethods {
     ///   files on a draft can total at most 25 MB. An empty file or a blocked file
     ///   type returns a 422. Sending the field replaces every attachment on the
     ///   draft. Send `[]` to remove them all. `null` also removes them all.
-    public static func inboxesUpdateDraft(config: ClientConfig, options: InboxesUpdateDraftOptions, requestOptions: RequestOptions? = nil) async throws -> InboxDraft {
+    static func inboxesUpdateDraft(
+        config: ClientConfig,
+        options: InboxesUpdateDraftOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> InboxDraft {
         try sdkValidateUuid("inbox_id", options.inboxId)
 
         try sdkValidateUuid("draft_id", options.draftId)
@@ -62,6 +72,19 @@ extension InboxesMethods {
 
         let requestBody = InboxesUpdateDraftRequestBody(options: options)
 
-        return try (await sdkRequest("PATCH", ["/inboxes/", sdkEncodePathSegment(sdkWireString(options.inboxId)), "/drafts/", sdkEncodePathSegment(sdkWireString(options.draftId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "inboxesUpdateDraft", options: requestOptions)).data
+        return try await (sdkRequest(
+            "PATCH",
+            [
+                "/inboxes/",
+                sdkEncodePathSegment(sdkWireString(options.inboxId)),
+                "/drafts/",
+                sdkEncodePathSegment(sdkWireString(options.draftId)),
+            ].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "inboxesUpdateDraft",
+            options: requestOptions
+        )).data
     }
 }

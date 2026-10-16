@@ -3,24 +3,34 @@
 
 import Foundation
 
-// Emails domain models
+/// Emails domain models
 extension SendEmailRequestCc: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for SendEmailRequestCc")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for SendEmailRequestCc"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension SendEmailRequestCc {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode([String].self) { return .stringList(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode([String].self) {
+            return .stringList(value)
+        }
         return nil
     }
 }
@@ -48,22 +58,28 @@ public struct EmailTemplateInput: Codable {
         case variables
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension EmailTemplateInput {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
-        }
-        self.id = try container.sdkDecodeRequired(.id)
-        self.variables = try container.sdkDecodeIfPresent(.variables)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension EmailTemplateInput {
-    public init(id: String, variables: [String: EmailTemplateInputVariablesValue]? = nil) {
+public extension EmailTemplateInput {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.id) else {
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
+        }
+        id = try container.sdkDecodeRequired(.id)
+        variables = try container.sdkDecodeIfPresent(.variables)
+    }
+}
+
+public extension EmailTemplateInput {
+    init(id: String, variables: [String: EmailTemplateInputVariablesValue]? = nil) {
         (self.id, self.variables) = (id, variables)
     }
 }
@@ -81,22 +97,28 @@ public struct SendEmailRequestTemplate: Codable {
         case variables
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension SendEmailRequestTemplate {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
-        }
-        self.id = try container.sdkDecodeRequired(.id)
-        self.variables = try container.sdkDecodeIfPresent(.variables)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension SendEmailRequestTemplate {
-    public init(id: String, variables: [String: EmailTemplateInputVariablesValue]? = nil) {
+public extension SendEmailRequestTemplate {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.id) else {
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
+        }
+        id = try container.sdkDecodeRequired(.id)
+        variables = try container.sdkDecodeIfPresent(.variables)
+    }
+}
+
+public extension SendEmailRequestTemplate {
+    init(id: String, variables: [String: EmailTemplateInputVariablesValue]? = nil) {
         (self.id, self.variables) = (id, variables)
     }
 }
@@ -111,19 +133,19 @@ public struct SendEmailResponse: Codable {
     }
 
     init() {
-        self.id = nil
+        id = nil
     }
 }
 
-extension SendEmailResponse {
-    public init(from decoder: Decoder) throws {
+public extension SendEmailResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
+        id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-extension SendEmailResponse {
-    public init(id: String? = nil) {
+public extension SendEmailResponse {
+    init(id: String? = nil) {
         self.init()
         self.id = id
     }
@@ -139,19 +161,19 @@ public struct UpdateEmailOptions: Codable {
     }
 
     init() {
-        self.scheduledAt = nil
+        scheduledAt = nil
     }
 }
 
-extension UpdateEmailOptions {
-    public init(from decoder: Decoder) throws {
+public extension UpdateEmailOptions {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.scheduledAt = try container.sdkDecodeIfPresent(.scheduledAt)
+        scheduledAt = try container.sdkDecodeIfPresent(.scheduledAt)
     }
 }
 
-extension UpdateEmailOptions {
-    public init(scheduledAt: String? = nil) {
+public extension UpdateEmailOptions {
+    init(scheduledAt: String? = nil) {
         self.init()
         self.scheduledAt = scheduledAt
     }
@@ -212,33 +234,47 @@ public struct Email: Codable {
     }
 
     init() {
-        (self.object, self.id, self.messageId, self.to, self.from) = (nil, nil, nil, nil, nil)
-        (self.createdAt, self.subject, self.html, self.text, self.bcc) = (nil, nil, nil, nil, nil)
-        (self.cc, self.replyTo, self.lastEvent) = (nil, nil, nil)
+        (object, id, messageId, to, from) = (nil, nil, nil, nil, nil)
+        (createdAt, subject, html, text, bcc) = (nil, nil, nil, nil, nil)
+        (cc, replyTo, lastEvent) = (nil, nil, nil)
     }
 }
 
-extension Email {
-    public init(from decoder: Decoder) throws {
+public extension Email {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.messageId = try container.sdkDecodeIfPresent(.messageId)
-        self.to = try container.sdkDecodeIfPresent(.to)
-        self.from = try container.sdkDecodeIfPresent(.from)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.subject = try container.sdkDecodeIfPresent(.subject)
-        self.html = try container.sdkDecodeIfPresent(.html)
-        self.text = try container.sdkDecodeIfPresent(.text)
-        self.bcc = try container.sdkDecodeIfPresent(.bcc)
-        self.cc = try container.sdkDecodeIfPresent(.cc)
-        self.replyTo = try container.sdkDecodeIfPresent(.replyTo)
-        self.lastEvent = try container.sdkDecodeIfPresent(.lastEvent)
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        messageId = try container.sdkDecodeIfPresent(.messageId)
+        to = try container.sdkDecodeIfPresent(.to)
+        from = try container.sdkDecodeIfPresent(.from)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        subject = try container.sdkDecodeIfPresent(.subject)
+        html = try container.sdkDecodeIfPresent(.html)
+        text = try container.sdkDecodeIfPresent(.text)
+        bcc = try container.sdkDecodeIfPresent(.bcc)
+        cc = try container.sdkDecodeIfPresent(.cc)
+        replyTo = try container.sdkDecodeIfPresent(.replyTo)
+        lastEvent = try container.sdkDecodeIfPresent(.lastEvent)
     }
 }
 
-extension Email {
-    public init(object: String? = nil, id: String? = nil, messageId: String? = nil, to: [String]? = nil, from: String? = nil, createdAt: String? = nil, subject: String? = nil, html: String? = nil, text: String? = nil, bcc: [String]? = nil, cc: [String]? = nil, replyTo: [String]? = nil, lastEvent: EmailLastEvent? = nil) {
+public extension Email {
+    init(
+        object: String? = nil,
+        id: String? = nil,
+        messageId: String? = nil,
+        to: [String]? = nil,
+        from: String? = nil,
+        createdAt: String? = nil,
+        subject: String? = nil,
+        html: String? = nil,
+        text: String? = nil,
+        bcc: [String]? = nil,
+        cc: [String]? = nil,
+        replyTo: [String]? = nil,
+        lastEvent: EmailLastEvent? = nil
+    ) {
         self.init()
         (self.object, self.id) = (object, id)
         (self.messageId, self.to) = (messageId, to)
@@ -267,21 +303,21 @@ public struct ListEmailsResponse: Codable {
     }
 
     init() {
-        (self.object, self.hasMore, self.data) = (nil, nil, nil)
+        (object, hasMore, data) = (nil, nil, nil)
     }
 }
 
-extension ListEmailsResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListEmailsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        object = try container.sdkDecodeIfPresent(.object)
+        hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension ListEmailsResponse {
-    public init(object: String? = nil, hasMore: Bool? = nil, data: [Email]? = nil) {
+public extension ListEmailsResponse {
+    init(object: String? = nil, hasMore: Bool? = nil, data: [Email]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -299,29 +335,33 @@ public struct ShareEmailOptions: Codable {
     }
 
     init() {
-        self.expiresIn = nil
+        expiresIn = nil
     }
 }
 
-extension ShareEmailOptions {
-    public init(from decoder: Decoder) throws {
+public extension ShareEmailOptions {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.expiresIn = try container.sdkDecodeIfPresent(.expiresIn)
+        expiresIn = try container.sdkDecodeIfPresent(.expiresIn)
     }
 }
 
-extension ShareEmailOptions {
-    public init(expiresIn: String? = nil) {
+public extension ShareEmailOptions {
+    init(expiresIn: String? = nil) {
         self.init()
         self.expiresIn = expiresIn
     }
 }
 
 /// Required enumerated value serialized in the `dimensions[]` wire field.
-public struct GetEmailsMetricsResponseDimensionsItem: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct GetEmailsMetricsResponseDimensionsItem: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let period = GetEmailsMetricsResponseDimensionsItem(rawValue: "period")
     public static let domain = GetEmailsMetricsResponseDimensionsItem(rawValue: "domain")
     public static let email = GetEmailsMetricsResponseDimensionsItem(rawValue: "email")
@@ -329,7 +369,7 @@ public struct GetEmailsMetricsResponseDimensionsItem: RawRepresentable, Hashable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -342,7 +382,10 @@ public struct GetEmailsMetricsResponseDimensionsItem: RawRepresentable, Hashable
 public struct EmailLastEvent: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let bounced = EmailLastEvent(rawValue: "bounced")
     public static let canceled = EmailLastEvent(rawValue: "canceled")
     public static let clicked = EmailLastEvent(rawValue: "clicked")
@@ -358,7 +401,7 @@ public struct EmailLastEvent: RawRepresentable, Hashable, Codable, Sendable, Sdk
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -371,7 +414,10 @@ public struct EmailLastEvent: RawRepresentable, Hashable, Codable, Sendable, Sdk
 public struct GetEmailsMetricsResponseGranularity: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let hourly = GetEmailsMetricsResponseGranularity(rawValue: "hourly")
     public static let daily = GetEmailsMetricsResponseGranularity(rawValue: "daily")
     public static let weekly = GetEmailsMetricsResponseGranularity(rawValue: "weekly")
@@ -379,7 +425,7 @@ public struct GetEmailsMetricsResponseGranularity: RawRepresentable, Hashable, C
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

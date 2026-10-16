@@ -3,7 +3,7 @@
 
 import Foundation
 
-// OAuth domain models
+/// OAuth domain models
 /// Typed representation of the `ListOAuthGrantsResponse` API schema.
 public struct ListOAuthGrantsResponse: Codable {
     /// Type of the response object.
@@ -21,21 +21,21 @@ public struct ListOAuthGrantsResponse: Codable {
     }
 
     init() {
-        (self.object, self.hasMore, self.data) = (nil, nil, nil)
+        (object, hasMore, data) = (nil, nil, nil)
     }
 }
 
-extension ListOAuthGrantsResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListOAuthGrantsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        object = try container.sdkDecodeIfPresent(.object)
+        hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension ListOAuthGrantsResponse {
-    public init(object: String? = nil, hasMore: Bool? = nil, data: [OAuthGrant]? = nil) {
+public extension ListOAuthGrantsResponse {
+    init(object: String? = nil, hasMore: Bool? = nil, data: [OAuthGrant]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -72,26 +72,34 @@ public struct OAuthGrant: Codable {
     }
 
     init() {
-        (self.id, self.clientId, self.scopes, self.createdAt, self.revokedAt) = (nil, nil, nil, nil, nil)
-        (self.revokedReason, self.client) = (nil, nil)
+        (id, clientId, scopes, createdAt, revokedAt) = (nil, nil, nil, nil, nil)
+        (revokedReason, client) = (nil, nil)
     }
 }
 
-extension OAuthGrant {
-    public init(from decoder: Decoder) throws {
+public extension OAuthGrant {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.clientId = try container.sdkDecodeIfPresent(.clientId)
-        self.scopes = try container.sdkDecodeIfPresent(.scopes)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.revokedAt = try container.sdkDecodeIfPresent(.revokedAt)
-        self.revokedReason = try container.sdkDecodeIfPresent(.revokedReason)
-        self.client = try container.sdkDecodeIfPresent(.client)
+        id = try container.sdkDecodeIfPresent(.id)
+        clientId = try container.sdkDecodeIfPresent(.clientId)
+        scopes = try container.sdkDecodeIfPresent(.scopes)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        revokedAt = try container.sdkDecodeIfPresent(.revokedAt)
+        revokedReason = try container.sdkDecodeIfPresent(.revokedReason)
+        client = try container.sdkDecodeIfPresent(.client)
     }
 }
 
-extension OAuthGrant {
-    public init(id: String? = nil, clientId: String? = nil, scopes: [String]? = nil, createdAt: String? = nil, revokedAt: String? = nil, revokedReason: String? = nil, client: OAuthGrantClient? = nil) {
+public extension OAuthGrant {
+    init(
+        id: String? = nil,
+        clientId: String? = nil,
+        scopes: [String]? = nil,
+        createdAt: String? = nil,
+        revokedAt: String? = nil,
+        revokedReason: String? = nil,
+        client: OAuthGrantClient? = nil
+    ) {
         self.init()
         (self.id, self.clientId) = (id, clientId)
         (self.scopes, self.createdAt) = (scopes, createdAt)
@@ -121,25 +129,25 @@ public struct RevokeOAuthGrantResponse: Codable {
     }
 
     init() {
-        (self.object, self.id, self.revokedAt, self.revokedReason) = (nil, nil, nil, nil)
+        (object, id, revokedAt, revokedReason) = (nil, nil, nil, nil)
     }
 }
 
-extension RevokeOAuthGrantResponse {
-    public init(from decoder: Decoder) throws {
+public extension RevokeOAuthGrantResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.revokedAt = try container.sdkDecodeIfPresent(.revokedAt)
-        self.revokedReason = try container.sdkDecodeIfPresent(.revokedReason)
-        if let value = self.revokedAt {
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        revokedAt = try container.sdkDecodeIfPresent(.revokedAt)
+        revokedReason = try container.sdkDecodeIfPresent(.revokedReason)
+        if let value = revokedAt {
             try sdkValidateDateTime("revoked_at", sdkWireString(value))
         }
     }
 }
 
-extension RevokeOAuthGrantResponse {
-    public init(object: String? = nil, id: String? = nil, revokedAt: Date? = nil, revokedReason: String? = nil) throws {
+public extension RevokeOAuthGrantResponse {
+    init(object: String? = nil, id: String? = nil, revokedAt: Date? = nil, revokedReason: String? = nil) throws {
         self.init()
         (self.object, self.id) = (object, id)
         (self.revokedAt, self.revokedReason) = (revokedAt, revokedReason)
@@ -162,20 +170,20 @@ public struct OAuthGrantClient: Codable {
     }
 
     init() {
-        (self.name, self.logoUri) = (nil, nil)
+        (name, logoUri) = (nil, nil)
     }
 }
 
-extension OAuthGrantClient {
-    public init(from decoder: Decoder) throws {
+public extension OAuthGrantClient {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.logoUri = try container.sdkDecodeIfPresent(.logoUri)
+        name = try container.sdkDecodeIfPresent(.name)
+        logoUri = try container.sdkDecodeIfPresent(.logoUri)
     }
 }
 
-extension OAuthGrantClient {
-    public init(name: String? = nil, logoUri: String? = nil) {
+public extension OAuthGrantClient {
+    init(name: String? = nil, logoUri: String? = nil) {
         self.init()
         (self.name, self.logoUri) = (name, logoUri)
     }
