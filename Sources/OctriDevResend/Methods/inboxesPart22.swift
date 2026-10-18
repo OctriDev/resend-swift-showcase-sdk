@@ -6,10 +6,15 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension InboxesMethods {
-    /// Submits an unsent draft from the inbox address. A reply draft is sent in its existing thread, while a standalone draft starts a new thread; you can add custom headers in the optional request body. Before sending, the draft must have at least one recipient, a non-empty subject, and an HTML or plain-text body.
+public extension InboxesMethods {
+    /// Submits an unsent draft from the inbox address. A reply draft is sent in its existing thread, while a standalone
+    /// draft starts a new thread; you can add custom headers in the optional request body. Before sending, the draft
+    /// must have at least one recipient, a non-empty subject, and an HTML or plain-text body.
     ///
-    /// Sends the draft from the inbox address. A reply draft is sent in its thread. A draft without a thread starts a new thread. The draft must have at least one `to` recipient, a non-empty `subject`, and `html` or `text`, or the request returns a 422. A draft that was already sent returns a 409. The request body is optional and takes only `headers`. The whole email, encoded, can be at most 40 MB, or the request returns a 422.
+    /// Sends the draft from the inbox address. A reply draft is sent in its thread. A draft without a thread starts a
+    /// new thread. The draft must have at least one `to` recipient, a non-empty `subject`, and `html` or `text`, or the
+    /// request returns a 422. A draft that was already sent returns a 409. The request body is optional and takes only
+    /// `headers`. The whole email, encoded, can be at most 40 MB, or the request returns a 422.
     ///
     /// - Parameters:
     /// - inboxId: The Inbox ID. An email address is not accepted.
@@ -27,19 +32,41 @@ extension InboxesMethods {
     ///   here. Sending one of them, in any letter case, returns a 422. Header names
     ///   cannot be empty, and names and values cannot contain line breaks or null
     ///   characters, or the request returns a 422. `null` means no custom headers.
-    public static func inboxesSendDraft(config: ClientConfig, inboxId: String, draftId: String, idempotencyKey: String? = nil, headers: SdkOptional<[String: String]>? = nil, requestOptions: RequestOptions? = nil) async throws -> SendInboxDraftResponseSuccess {
+    static func inboxesSendDraft(
+        config: ClientConfig,
+        inboxId: String,
+        draftId: String,
+        idempotencyKey: String? = nil,
+        headers: SdkOptional<[String: String]>? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SendInboxDraftResponseSuccess {
         try sdkValidateUuid("inbox_id", inboxId)
 
         try sdkValidateUuid("draft_id", draftId)
 
-        if let idempotencyKey = idempotencyKey {
+        if let idempotencyKey {
             try validateLength("Idempotency-Key", idempotencyKey, min: 1, max: 256)
         }
 
         let requestBody = InboxesSendDraftRequestBody(headers: headers)
 
-        return try (await sdkRequest("POST", ["/inboxes/", sdkEncodePathSegment(sdkWireString(inboxId)), "/drafts/", sdkEncodePathSegment(sdkWireString(draftId)), "/send"].joined(), config: config, body: requestBody, decoder: .json, operationId: "inboxesSendDraft", extraHeaders: sdkHeaders([
-            ("Idempotency-Key", sdkHeaderValue(idempotencyKey)),
-        ]), options: requestOptions)).data
+        return try await (sdkRequest(
+            "POST",
+            [
+                "/inboxes/",
+                sdkEncodePathSegment(sdkWireString(inboxId)),
+                "/drafts/",
+                sdkEncodePathSegment(sdkWireString(draftId)),
+                "/send",
+            ].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "inboxesSendDraft",
+            extraHeaders: sdkHeaders([
+                ("Idempotency-Key", sdkHeaderValue(idempotencyKey)),
+            ]),
+            options: requestOptions
+        )).data
     }
 }

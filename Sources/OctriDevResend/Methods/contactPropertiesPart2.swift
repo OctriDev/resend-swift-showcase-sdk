@@ -6,8 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ContactPropertiesMethods {
-    /// Creates a custom property that you can use to store contact data. Supply `key` and `type`; use `fallback_value` to provide a default that matches the selected type.
+public extension ContactPropertiesMethods {
+    /// Creates a custom property that you can use to store contact data. Supply `key` and `type`; use `fallback_value`
+    /// to provide a default that matches the selected type.
     ///
     /// - Parameters:
     /// - key: The property key. Max length is 50 characters. Only alphanumeric
@@ -15,35 +16,68 @@ extension ContactPropertiesMethods {
     /// - type: The property type.
     /// - fallbackValue: The default value to use when the property is not set for a
     ///   contact. Must match the type specified in the type field.
-    public static func contactPropertiesCreate(config: ClientConfig, key: String, type: CreateContactPropertyOptionsType, fallbackValue: CreateContactPropertyOptionsFallbackValue? = nil, requestOptions: RequestOptions? = nil) async throws -> CreateContactPropertyResponseSuccess {
+    static func contactPropertiesCreate(
+        config: ClientConfig,
+        key: String,
+        type: CreateContactPropertyOptionsType,
+        fallbackValue: CreateContactPropertyOptionsFallbackValue? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateContactPropertyResponseSuccess {
         let requestBody = ContactPropertiesCreateRequestBody(key: key, type: type, fallbackValue: fallbackValue)
 
-        return try (await sdkRequest("POST", "/contact-properties", config: config, body: requestBody, decoder: .json, operationId: "contactPropertiesCreate", options: requestOptions)).data
+        return try await (sdkRequest(
+            "POST",
+            "/contact-properties",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "contactPropertiesCreate",
+            options: requestOptions
+        )).data
     }
 
-    /// Lists contact properties with cursor-based pagination. Use `after` or `before` to navigate results and `limit` to control the number of properties returned.
+    /// Lists contact properties with cursor-based pagination. Use `after` or `before` to navigate results and `limit`
+    /// to control the number of properties returned.
     ///
     /// - Parameters:
     /// - limit: Number of items to return.
     /// - after: Return items after this cursor.
     /// - before: Return items before this cursor.
-    public static func contactPropertiesList(config: ClientConfig, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListContactPropertiesResponseSuccess {
-        if let limit = limit {
+    static func contactPropertiesList(
+        config: ClientConfig,
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListContactPropertiesResponseSuccess {
+        if let limit {
             try validateRange("limit", Double(limit), min: 1, max: 100)
         }
 
-        return try (await sdkRequest("GET", "/contact-properties", config: config, query: [
+        return try await (sdkRequest("GET", "/contact-properties", config: config, query: [
             SdkQueryParameter("limit", value: limit),
             SdkQueryParameter("after", value: after),
             SdkQueryParameter("before", value: before),
         ], decoder: .json, operationId: "contactPropertiesList", options: requestOptions)).data
     }
 
-    /// Retrieves a contact property by its identifier. Use the property ID to inspect its key, type, fallback value, and creation timestamp.
+    /// Retrieves a contact property by its identifier. Use the property ID to inspect its key, type, fallback value,
+    /// and creation timestamp.
     ///
     /// - Parameters:
     /// - id: The Contact Property ID.
-    public static func contactPropertiesGet(config: ClientConfig, id: String, requestOptions: RequestOptions? = nil) async throws -> GetContactPropertyResponseSuccess {
-        return try (await sdkRequest("GET", ["/contact-properties/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "contactPropertiesGet", options: requestOptions)).data
+    static func contactPropertiesGet(
+        config: ClientConfig,
+        id: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GetContactPropertyResponseSuccess {
+        try await (sdkRequest(
+            "GET",
+            ["/contact-properties/", sdkEncodePathSegment(sdkWireString(id))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "contactPropertiesGet",
+            options: requestOptions
+        )).data
     }
 }

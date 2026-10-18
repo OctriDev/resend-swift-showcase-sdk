@@ -3,9 +3,22 @@
 
 import Foundation
 
-// Broadcasts domain models
-extension CreateBroadcastOptions {
-    public init(segmentId: String, from: String, subject: String, name: String? = nil, audienceId: String? = nil, replyTo: [String]? = nil, previewText: String? = nil, html: String? = nil, text: String? = nil, topicId: String? = nil, send: Bool? = nil, scheduledAt: String? = nil) {
+/// Broadcasts domain models
+public extension CreateBroadcastOptions {
+    init(
+        segmentId: String,
+        from: String,
+        subject: String,
+        name: String? = nil,
+        audienceId: String? = nil,
+        replyTo: [String]? = nil,
+        previewText: String? = nil,
+        html: String? = nil,
+        text: String? = nil,
+        topicId: String? = nil,
+        send: Bool? = nil,
+        scheduledAt: String? = nil
+    ) {
         (self.segmentId, self.from) = (segmentId, from)
         (self.subject, self.name) = (subject, name)
         (self.audienceId, self.replyTo) = (audienceId, replyTo)
@@ -30,20 +43,20 @@ public struct DuplicateBroadcastResponseSuccess: Codable {
     }
 
     init() {
-        (self.id, self.object) = (nil, nil)
+        (id, object) = (nil, nil)
     }
 }
 
-extension DuplicateBroadcastResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension DuplicateBroadcastResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
     }
 }
 
-extension DuplicateBroadcastResponseSuccess {
-    public init(id: String? = nil, object: String? = nil) {
+public extension DuplicateBroadcastResponseSuccess {
+    init(id: String? = nil, object: String? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
     }
@@ -64,20 +77,20 @@ public struct CreateBroadcastResponseSuccess: Codable {
     }
 
     init() {
-        (self.id, self.object) = (nil, nil)
+        (id, object) = (nil, nil)
     }
 }
 
-extension CreateBroadcastResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension CreateBroadcastResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
     }
 }
 
-extension CreateBroadcastResponseSuccess {
-    public init(id: String? = nil, object: String? = nil) {
+public extension CreateBroadcastResponseSuccess {
+    init(id: String? = nil, object: String? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
     }
@@ -100,21 +113,21 @@ public struct ListBroadcastRecipientsResponseSuccess: Codable {
     }
 
     init() {
-        (self.object, self.hasMore, self.data) = (nil, nil, nil)
+        (object, hasMore, data) = (nil, nil, nil)
     }
 }
 
-extension ListBroadcastRecipientsResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension ListBroadcastRecipientsResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        object = try container.sdkDecodeIfPresent(.object)
+        hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension ListBroadcastRecipientsResponseSuccess {
-    public init(object: String? = nil, hasMore: Bool? = nil, data: [ListBroadcastRecipientsResponseSuccessDataItem]? = nil) {
+public extension ListBroadcastRecipientsResponseSuccess {
+    init(object: String? = nil, hasMore: Bool? = nil, data: [ListBroadcastRecipientsResponseSuccessDataItem]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -136,20 +149,20 @@ public struct CancelBroadcastResponseSuccess: Codable {
     }
 
     init() {
-        (self.id, self.object) = (nil, nil)
+        (id, object) = (nil, nil)
     }
 }
 
-extension CancelBroadcastResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension CancelBroadcastResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
     }
 }
 
-extension CancelBroadcastResponseSuccess {
-    public init(id: String? = nil, object: String? = nil) {
+public extension CancelBroadcastResponseSuccess {
+    init(id: String? = nil, object: String? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
     }
@@ -219,35 +232,51 @@ public struct GetBroadcastResponseSuccess: Codable {
     }
 
     init() {
-        (self.id, self.name, self.audienceId, self.segmentId, self.from) = (nil, nil, nil, nil, nil)
-        (self.subject, self.replyTo, self.previewText, self.status, self.createdAt) = (nil, nil, nil, nil, nil)
-        (self.scheduledAt, self.sentAt, self.text, self.html, self.topicId) = (nil, nil, nil, nil, nil)
+        (id, name, audienceId, segmentId, from) = (nil, nil, nil, nil, nil)
+        (subject, replyTo, previewText, status, createdAt) = (nil, nil, nil, nil, nil)
+        (scheduledAt, sentAt, text, html, topicId) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension GetBroadcastResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension GetBroadcastResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.audienceId = try container.sdkDecodeIfPresent(.audienceId)
-        self.segmentId = try container.sdkDecodeIfPresent(.segmentId)
-        self.from = try container.sdkDecodeIfPresent(.from)
-        self.subject = try container.sdkDecodeIfPresent(.subject)
-        self.replyTo = try container.sdkDecodeIfPresent(.replyTo)
-        self.previewText = try container.sdkDecodeIfPresent(.previewText)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.scheduledAt = try container.sdkDecodeIfPresent(.scheduledAt)
-        self.sentAt = try container.sdkDecodeIfPresent(.sentAt)
-        self.text = try container.sdkDecodeIfPresent(.text)
-        self.html = try container.sdkDecodeIfPresent(.html)
-        self.topicId = try container.sdkDecodeIfPresent(.topicId)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        audienceId = try container.sdkDecodeIfPresent(.audienceId)
+        segmentId = try container.sdkDecodeIfPresent(.segmentId)
+        from = try container.sdkDecodeIfPresent(.from)
+        subject = try container.sdkDecodeIfPresent(.subject)
+        replyTo = try container.sdkDecodeIfPresent(.replyTo)
+        previewText = try container.sdkDecodeIfPresent(.previewText)
+        status = try container.sdkDecodeIfPresent(.status)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        scheduledAt = try container.sdkDecodeIfPresent(.scheduledAt)
+        sentAt = try container.sdkDecodeIfPresent(.sentAt)
+        text = try container.sdkDecodeIfPresent(.text)
+        html = try container.sdkDecodeIfPresent(.html)
+        topicId = try container.sdkDecodeIfPresent(.topicId)
     }
 }
 
-extension GetBroadcastResponseSuccess {
-    public init(id: String? = nil, name: String? = nil, audienceId: String? = nil, segmentId: String? = nil, from: String? = nil, subject: String? = nil, replyTo: [String]? = nil, previewText: String? = nil, status: String? = nil, createdAt: String? = nil, scheduledAt: String? = nil, sentAt: String? = nil, text: String? = nil, html: String? = nil, topicId: String? = nil) {
+public extension GetBroadcastResponseSuccess {
+    init(
+        id: String? = nil,
+        name: String? = nil,
+        audienceId: String? = nil,
+        segmentId: String? = nil,
+        from: String? = nil,
+        subject: String? = nil,
+        replyTo: [String]? = nil,
+        previewText: String? = nil,
+        status: String? = nil,
+        createdAt: String? = nil,
+        scheduledAt: String? = nil,
+        sentAt: String? = nil,
+        text: String? = nil,
+        html: String? = nil,
+        topicId: String? = nil
+    ) {
         self.init()
         (self.id, self.name) = (id, name)
         (self.audienceId, self.segmentId) = (audienceId, segmentId)
@@ -261,17 +290,21 @@ extension GetBroadcastResponseSuccess {
 }
 
 /// The type of bounce. Only present when `type` is `bounced`.
-public struct ListBroadcastRecipientsResponseSuccessDataItemBounceType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct ListBroadcastRecipientsResponseSuccessDataItemBounceType: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let permanent = ListBroadcastRecipientsResponseSuccessDataItemBounceType(rawValue: "permanent")
     public static let transient = ListBroadcastRecipientsResponseSuccessDataItemBounceType(rawValue: "transient")
     public static let undetermined = ListBroadcastRecipientsResponseSuccessDataItemBounceType(rawValue: "undetermined")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

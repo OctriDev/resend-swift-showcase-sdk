@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Broadcasts domain models
+/// Broadcasts domain models
 /// Typed representation of the `SendBroadcastResponseSuccess` API schema.
 public struct SendBroadcastResponseSuccess: Codable {
     /// The ID of the broadcast.
@@ -15,19 +15,19 @@ public struct SendBroadcastResponseSuccess: Codable {
     }
 
     init() {
-        self.id = nil
+        id = nil
     }
 }
 
-extension SendBroadcastResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension SendBroadcastResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
+        id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-extension SendBroadcastResponseSuccess {
-    public init(id: String? = nil) {
+public extension SendBroadcastResponseSuccess {
+    init(id: String? = nil) {
         self.init()
         self.id = id
     }
@@ -50,21 +50,21 @@ public struct ListBroadcastsResponseSuccess: Codable {
     }
 
     init() {
-        (self.object, self.hasMore, self.data) = (nil, nil, nil)
+        (object, hasMore, data) = (nil, nil, nil)
     }
 }
 
-extension ListBroadcastsResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension ListBroadcastsResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        object = try container.sdkDecodeIfPresent(.object)
+        hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension ListBroadcastsResponseSuccess {
-    public init(object: String? = nil, hasMore: Bool? = nil, data: [ListBroadcastsResponseSuccessDataItem]? = nil) {
+public extension ListBroadcastsResponseSuccess {
+    init(object: String? = nil, hasMore: Bool? = nil, data: [ListBroadcastsResponseSuccessDataItem]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -81,19 +81,19 @@ public struct SendBroadcastOptions: Codable {
     }
 
     init() {
-        self.scheduledAt = nil
+        scheduledAt = nil
     }
 }
 
-extension SendBroadcastOptions {
-    public init(from decoder: Decoder) throws {
+public extension SendBroadcastOptions {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.scheduledAt = try container.sdkDecodeIfPresent(.scheduledAt)
+        scheduledAt = try container.sdkDecodeIfPresent(.scheduledAt)
     }
 }
 
-extension SendBroadcastOptions {
-    public init(scheduledAt: String? = nil) {
+public extension SendBroadcastOptions {
+    init(scheduledAt: String? = nil) {
         self.init()
         self.scheduledAt = scheduledAt
     }
@@ -114,20 +114,20 @@ public struct UpdateBroadcastResponseSuccess: Codable {
     }
 
     init() {
-        (self.id, self.object) = (nil, nil)
+        (id, object) = (nil, nil)
     }
 }
 
-extension UpdateBroadcastResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension UpdateBroadcastResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
     }
 }
 
-extension UpdateBroadcastResponseSuccess {
-    public init(id: String? = nil, object: String? = nil) {
+public extension UpdateBroadcastResponseSuccess {
+    init(id: String? = nil, object: String? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
     }
@@ -152,21 +152,21 @@ public struct RemoveBroadcastResponseSuccess: Codable {
     }
 
     init() {
-        (self.id, self.object, self.deleted) = (nil, nil, nil)
+        (id, object, deleted) = (nil, nil, nil)
     }
 }
 
-extension RemoveBroadcastResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension RemoveBroadcastResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.deleted = try container.sdkDecodeIfPresent(.deleted)
+        id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
+        deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-extension RemoveBroadcastResponseSuccess {
-    public init(id: String? = nil, object: String? = nil, deleted: Bool? = nil) {
+public extension RemoveBroadcastResponseSuccess {
+    init(id: String? = nil, object: String? = nil, deleted: Bool? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
         self.deleted = deleted
@@ -190,21 +190,21 @@ public struct ListBroadcastClickedLinksResponseSuccess: Codable {
     }
 
     init() {
-        (self.object, self.hasMore, self.data) = (nil, nil, nil)
+        (object, hasMore, data) = (nil, nil, nil)
     }
 }
 
-extension ListBroadcastClickedLinksResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension ListBroadcastClickedLinksResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        object = try container.sdkDecodeIfPresent(.object)
+        hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension ListBroadcastClickedLinksResponseSuccess {
-    public init(object: String? = nil, hasMore: Bool? = nil, data: [ListBroadcastClickedLinksResponseSuccessDataItem]? = nil) {
+public extension ListBroadcastClickedLinksResponseSuccess {
+    init(object: String? = nil, hasMore: Bool? = nil, data: [ListBroadcastClickedLinksResponseSuccessDataItem]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -248,29 +248,40 @@ public struct UpdateBroadcastOptions: Codable {
     }
 
     init() {
-        (self.name, self.audienceId, self.segmentId, self.from, self.subject) = (nil, nil, nil, nil, nil)
-        (self.replyTo, self.previewText, self.html, self.text, self.topicId) = (nil, nil, nil, nil, nil)
+        (name, audienceId, segmentId, from, subject) = (nil, nil, nil, nil, nil)
+        (replyTo, previewText, html, text, topicId) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension UpdateBroadcastOptions {
-    public init(from decoder: Decoder) throws {
+public extension UpdateBroadcastOptions {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.audienceId = try container.sdkDecodeIfPresent(.audienceId)
-        self.segmentId = try container.sdkDecodeIfPresent(.segmentId)
-        self.from = try container.sdkDecodeIfPresent(.from)
-        self.subject = try container.sdkDecodeIfPresent(.subject)
-        self.replyTo = try container.sdkDecodeIfPresent(.replyTo)
-        self.previewText = try container.sdkDecodeIfPresent(.previewText)
-        self.html = try container.sdkDecodeIfPresent(.html)
-        self.text = try container.sdkDecodeIfPresent(.text)
-        self.topicId = try container.sdkDecodeIfPresent(.topicId)
+        name = try container.sdkDecodeIfPresent(.name)
+        audienceId = try container.sdkDecodeIfPresent(.audienceId)
+        segmentId = try container.sdkDecodeIfPresent(.segmentId)
+        from = try container.sdkDecodeIfPresent(.from)
+        subject = try container.sdkDecodeIfPresent(.subject)
+        replyTo = try container.sdkDecodeIfPresent(.replyTo)
+        previewText = try container.sdkDecodeIfPresent(.previewText)
+        html = try container.sdkDecodeIfPresent(.html)
+        text = try container.sdkDecodeIfPresent(.text)
+        topicId = try container.sdkDecodeIfPresent(.topicId)
     }
 }
 
-extension UpdateBroadcastOptions {
-    public init(name: String? = nil, audienceId: String? = nil, segmentId: String? = nil, from: String? = nil, subject: String? = nil, replyTo: [String]? = nil, previewText: String? = nil, html: String? = nil, text: String? = nil, topicId: String? = nil) {
+public extension UpdateBroadcastOptions {
+    init(
+        name: String? = nil,
+        audienceId: String? = nil,
+        segmentId: String? = nil,
+        from: String? = nil,
+        subject: String? = nil,
+        replyTo: [String]? = nil,
+        previewText: String? = nil,
+        html: String? = nil,
+        text: String? = nil,
+        topicId: String? = nil
+    ) {
         self.init()
         (self.name, self.audienceId) = (name, audienceId)
         (self.segmentId, self.from) = (segmentId, from)
@@ -323,28 +334,38 @@ public struct ListBroadcastsResponseSuccessDataItem: Codable {
     }
 
     init() {
-        (self.id, self.name, self.audienceId, self.segmentId, self.status) = (nil, nil, nil, nil, nil)
-        (self.createdAt, self.scheduledAt, self.sentAt, self.topicId) = (nil, nil, nil, nil)
+        (id, name, audienceId, segmentId, status) = (nil, nil, nil, nil, nil)
+        (createdAt, scheduledAt, sentAt, topicId) = (nil, nil, nil, nil)
     }
 }
 
-extension ListBroadcastsResponseSuccessDataItem {
-    public init(from decoder: Decoder) throws {
+public extension ListBroadcastsResponseSuccessDataItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.audienceId = try container.sdkDecodeIfPresent(.audienceId)
-        self.segmentId = try container.sdkDecodeIfPresent(.segmentId)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.scheduledAt = try container.sdkDecodeIfPresent(.scheduledAt)
-        self.sentAt = try container.sdkDecodeIfPresent(.sentAt)
-        self.topicId = try container.sdkDecodeIfPresent(.topicId)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        audienceId = try container.sdkDecodeIfPresent(.audienceId)
+        segmentId = try container.sdkDecodeIfPresent(.segmentId)
+        status = try container.sdkDecodeIfPresent(.status)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        scheduledAt = try container.sdkDecodeIfPresent(.scheduledAt)
+        sentAt = try container.sdkDecodeIfPresent(.sentAt)
+        topicId = try container.sdkDecodeIfPresent(.topicId)
     }
 }
 
-extension ListBroadcastsResponseSuccessDataItem {
-    public init(id: String? = nil, name: String? = nil, audienceId: String? = nil, segmentId: String? = nil, status: String? = nil, createdAt: String? = nil, scheduledAt: String? = nil, sentAt: String? = nil, topicId: String? = nil) {
+public extension ListBroadcastsResponseSuccessDataItem {
+    init(
+        id: String? = nil,
+        name: String? = nil,
+        audienceId: String? = nil,
+        segmentId: String? = nil,
+        status: String? = nil,
+        createdAt: String? = nil,
+        scheduledAt: String? = nil,
+        sentAt: String? = nil,
+        topicId: String? = nil
+    ) {
         self.init()
         (self.id, self.name) = (id, name)
         (self.audienceId, self.segmentId) = (audienceId, segmentId)
@@ -369,26 +390,27 @@ public struct ListBroadcastRecipientsResponseSuccessDataItemClickedLinksItem: Co
     }
 
     init() {
-        (self.url, self.clicks) = (nil, nil)
+        (url, clicks) = (nil, nil)
     }
 }
 
-extension ListBroadcastRecipientsResponseSuccessDataItemClickedLinksItem {
-    public init(from decoder: Decoder) throws {
+public extension ListBroadcastRecipientsResponseSuccessDataItemClickedLinksItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.url = try container.sdkDecodeIfPresent(.url)
-        self.clicks = try container.sdkDecodeIfPresent(.clicks)
+        url = try container.sdkDecodeIfPresent(.url)
+        clicks = try container.sdkDecodeIfPresent(.clicks)
     }
 }
 
-extension ListBroadcastRecipientsResponseSuccessDataItemClickedLinksItem {
-    public init(url: String? = nil, clicks: Int? = nil) {
+public extension ListBroadcastRecipientsResponseSuccessDataItemClickedLinksItem {
+    init(url: String? = nil, clicks: Int? = nil) {
         self.init()
         (self.url, self.clicks) = (url, clicks)
     }
 }
 
-public typealias ListBroadcastRecipientsResponseSuccessDataItemClickedLinksList = [ListBroadcastRecipientsResponseSuccessDataItemClickedLinksItem]
+public typealias ListBroadcastRecipientsResponseSuccessDataItemClickedLinksList =
+    [ListBroadcastRecipientsResponseSuccessDataItemClickedLinksItem]
 
 /// Required object value serialized in the `data[]` wire field.
 public struct ListBroadcastRecipientsResponseSuccessDataItem: Codable {
@@ -419,25 +441,32 @@ public struct ListBroadcastRecipientsResponseSuccessDataItem: Codable {
     }
 
     init() {
-        (self.id, self.contactId, self.email, self.count, self.bounceType) = (nil, nil, nil, nil, nil)
-        self.clickedLinks = nil
+        (id, contactId, email, count, bounceType) = (nil, nil, nil, nil, nil)
+        clickedLinks = nil
     }
 }
 
-extension ListBroadcastRecipientsResponseSuccessDataItem {
-    public init(from decoder: Decoder) throws {
+public extension ListBroadcastRecipientsResponseSuccessDataItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.contactId = try container.sdkDecodeIfPresent(.contactId)
-        self.email = try container.sdkDecodeIfPresent(.email)
-        self.count = try container.sdkDecodeIfPresent(.count)
-        self.bounceType = try container.sdkDecodeIfPresent(.bounceType)
-        self.clickedLinks = try container.sdkDecodeIfPresent(.clickedLinks)
+        id = try container.sdkDecodeIfPresent(.id)
+        contactId = try container.sdkDecodeIfPresent(.contactId)
+        email = try container.sdkDecodeIfPresent(.email)
+        count = try container.sdkDecodeIfPresent(.count)
+        bounceType = try container.sdkDecodeIfPresent(.bounceType)
+        clickedLinks = try container.sdkDecodeIfPresent(.clickedLinks)
     }
 }
 
-extension ListBroadcastRecipientsResponseSuccessDataItem {
-    public init(id: String? = nil, contactId: String? = nil, email: String? = nil, count: Int? = nil, bounceType: ListBroadcastRecipientsResponseSuccessDataItemBounceType? = nil, clickedLinks: ListBroadcastRecipientsResponseSuccessDataItemClickedLinksList? = nil) {
+public extension ListBroadcastRecipientsResponseSuccessDataItem {
+    init(
+        id: String? = nil,
+        contactId: String? = nil,
+        email: String? = nil,
+        count: Int? = nil,
+        bounceType: ListBroadcastRecipientsResponseSuccessDataItemBounceType? = nil,
+        clickedLinks: ListBroadcastRecipientsResponseSuccessDataItemClickedLinksList? = nil
+    ) {
         self.init()
         (self.id, self.contactId) = (id, contactId)
         (self.email, self.count) = (email, count)
@@ -468,22 +497,22 @@ public struct ListBroadcastClickedLinksResponseSuccessDataItem: Codable {
     }
 
     init() {
-        (self.id, self.url, self.clicks, self.uniqueClicks) = (nil, nil, nil, nil)
+        (id, url, clicks, uniqueClicks) = (nil, nil, nil, nil)
     }
 }
 
-extension ListBroadcastClickedLinksResponseSuccessDataItem {
-    public init(from decoder: Decoder) throws {
+public extension ListBroadcastClickedLinksResponseSuccessDataItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.url = try container.sdkDecodeIfPresent(.url)
-        self.clicks = try container.sdkDecodeIfPresent(.clicks)
-        self.uniqueClicks = try container.sdkDecodeIfPresent(.uniqueClicks)
+        id = try container.sdkDecodeIfPresent(.id)
+        url = try container.sdkDecodeIfPresent(.url)
+        clicks = try container.sdkDecodeIfPresent(.clicks)
+        uniqueClicks = try container.sdkDecodeIfPresent(.uniqueClicks)
     }
 }
 
-extension ListBroadcastClickedLinksResponseSuccessDataItem {
-    public init(id: String? = nil, url: String? = nil, clicks: Int? = nil, uniqueClicks: Int? = nil) {
+public extension ListBroadcastClickedLinksResponseSuccessDataItem {
+    init(id: String? = nil, url: String? = nil, clicks: Int? = nil, uniqueClicks: Int? = nil) {
         self.init()
         (self.id, self.url) = (id, url)
         (self.clicks, self.uniqueClicks) = (clicks, uniqueClicks)
@@ -533,32 +562,46 @@ public struct CreateBroadcastOptions: Codable {
         case scheduledAt = "scheduled_at"
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension CreateBroadcastOptions {
-    public init(from decoder: Decoder) throws {
+public extension CreateBroadcastOptions {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.segmentId) else {
-            throw SdkValidationError(field: "segment_id", code: "required", message: "Validation failed for 'segment_id': value is required")
+            throw SdkValidationError(
+                field: "segment_id",
+                code: "required",
+                message: "Validation failed for 'segment_id': value is required"
+            )
         }
         guard container.contains(.from) else {
-            throw SdkValidationError(field: "from", code: "required", message: "Validation failed for 'from': value is required")
+            throw SdkValidationError(
+                field: "from",
+                code: "required",
+                message: "Validation failed for 'from': value is required"
+            )
         }
         guard container.contains(.subject) else {
-            throw SdkValidationError(field: "subject", code: "required", message: "Validation failed for 'subject': value is required")
+            throw SdkValidationError(
+                field: "subject",
+                code: "required",
+                message: "Validation failed for 'subject': value is required"
+            )
         }
-        self.segmentId = try container.sdkDecodeRequired(.segmentId)
-        self.from = try container.sdkDecodeRequired(.from)
-        self.subject = try container.sdkDecodeRequired(.subject)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.audienceId = try container.sdkDecodeIfPresent(.audienceId)
-        self.replyTo = try container.sdkDecodeIfPresent(.replyTo)
-        self.previewText = try container.sdkDecodeIfPresent(.previewText)
-        self.html = try container.sdkDecodeIfPresent(.html)
-        self.text = try container.sdkDecodeIfPresent(.text)
-        self.topicId = try container.sdkDecodeIfPresent(.topicId)
-        self.send = try container.sdkDecodeIfPresent(.send)
-        self.scheduledAt = try container.sdkDecodeIfPresent(.scheduledAt)
+        segmentId = try container.sdkDecodeRequired(.segmentId)
+        from = try container.sdkDecodeRequired(.from)
+        subject = try container.sdkDecodeRequired(.subject)
+        name = try container.sdkDecodeIfPresent(.name)
+        audienceId = try container.sdkDecodeIfPresent(.audienceId)
+        replyTo = try container.sdkDecodeIfPresent(.replyTo)
+        previewText = try container.sdkDecodeIfPresent(.previewText)
+        html = try container.sdkDecodeIfPresent(.html)
+        text = try container.sdkDecodeIfPresent(.text)
+        topicId = try container.sdkDecodeIfPresent(.topicId)
+        send = try container.sdkDecodeIfPresent(.send)
+        scheduledAt = try container.sdkDecodeIfPresent(.scheduledAt)
     }
 }

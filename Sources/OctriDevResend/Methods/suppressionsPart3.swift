@@ -6,39 +6,77 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension SuppressionsMethods {
-    /// Removes multiple suppressions from the suppression list in one request. Provide either an `emails` array or an `ids` array, but not both, with between 1 and 100 values in the selected array.
+public extension SuppressionsMethods {
+    /// Removes multiple suppressions from the suppression list in one request. Provide either an `emails` array or an
+    /// `ids` array, but not both, with between 1 and 100 values in the selected array.
     ///
     /// - Parameters:
     /// - emails: Email addresses to remove from the suppression list.
     /// - ids: Suppression IDs to remove from the suppression list.
-    public static func suppressionsBatchRemove(config: ClientConfig, emails: [String]? = nil, ids: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> BatchRemoveSuppressionsResponseSuccess {
-        if let emails = emails {
+    static func suppressionsBatchRemove(
+        config: ClientConfig,
+        emails: [String]? = nil,
+        ids: [String]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> BatchRemoveSuppressionsResponseSuccess {
+        if let emails {
             try validateItems("emails", emails, min: 1, max: 100)
         }
 
-        if let ids = ids {
+        if let ids {
             try validateItems("ids", ids, min: 1, max: 100)
         }
 
         let requestBody = SuppressionsBatchRemoveRequestBody(emails: emails, ids: ids)
 
-        return try (await sdkRequest("POST", "/suppressions/batch/remove", config: config, body: requestBody, decoder: .json, operationId: "suppressionsBatchRemove", options: requestOptions)).data
+        return try await (sdkRequest(
+            "POST",
+            "/suppressions/batch/remove",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "suppressionsBatchRemove",
+            options: requestOptions
+        )).data
     }
 
-    /// Retrieves a single suppression by its identifier or email address. Use `suppression` to look up the matching suppression record.
+    /// Retrieves a single suppression by its identifier or email address. Use `suppression` to look up the matching
+    /// suppression record.
     ///
     /// - Parameters:
     /// - suppression: The Suppression ID or email address.
-    public static func suppressionsGet(config: ClientConfig, suppression: String, requestOptions: RequestOptions? = nil) async throws -> GetSuppressionResponseSuccess {
-        return try (await sdkRequest("GET", ["/suppressions/", sdkEncodePathSegment(sdkWireString(suppression))].joined(), config: config, decoder: .json, operationId: "suppressionsGet", options: requestOptions)).data
+    static func suppressionsGet(
+        config: ClientConfig,
+        suppression: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GetSuppressionResponseSuccess {
+        try await (sdkRequest(
+            "GET",
+            ["/suppressions/", sdkEncodePathSegment(sdkWireString(suppression))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "suppressionsGet",
+            options: requestOptions
+        )).data
     }
 
-    /// Deletes a single suppression by its identifier or email address. Use `suppression` to select the suppression to remove.
+    /// Deletes a single suppression by its identifier or email address. Use `suppression` to select the suppression to
+    /// remove.
     ///
     /// - Parameters:
     /// - suppression: The Suppression ID or email address.
-    public static func suppressionsRemove(config: ClientConfig, suppression: String, requestOptions: RequestOptions? = nil) async throws -> RemoveSuppressionResponseSuccess {
-        return try (await sdkRequest("DELETE", ["/suppressions/", sdkEncodePathSegment(sdkWireString(suppression))].joined(), config: config, decoder: .json, operationId: "suppressionsRemove", options: requestOptions)).data
+    static func suppressionsRemove(
+        config: ClientConfig,
+        suppression: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> RemoveSuppressionResponseSuccess {
+        try await (sdkRequest(
+            "DELETE",
+            ["/suppressions/", sdkEncodePathSegment(sdkWireString(suppression))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "suppressionsRemove",
+            options: requestOptions
+        )).data
     }
 }

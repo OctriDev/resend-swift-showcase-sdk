@@ -9,39 +9,72 @@ public class TemplatesNamespace {
         self.config = config
     }
 
-/// Creates a new email template from its name and HTML content. Supply `name` and `html`; you can also set sender details, reply-to addresses, plain-text content, and template variables.
-    public func create(options: TemplatesMethods.TemplatesCreateOptions, requestOptions: RequestOptions? = nil) async throws -> CreateTemplateResponseSuccess {
-        return try await TemplatesMethods.templatesCreate(config: config, options: options, requestOptions: requestOptions)
+    /// Creates a new email template from its name and HTML content. Supply `name` and `html`; you can also set sender
+    /// details, reply-to addresses, plain-text content, and template variables.
+    public func create(
+        options: TemplatesMethods.TemplatesCreateOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateTemplateResponseSuccess {
+        try await TemplatesMethods.templatesCreate(config: config, options: options, requestOptions: requestOptions)
     }
 
-/// Lists templates available to the authenticated user. Use `after` or `before` to navigate the results with a cursor, and `limit` to control the number of templates returned.
-    public func list(limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListTemplatesResponseSuccess {
-        return try await TemplatesMethods.templatesList(config: config, limit: limit, after: after, before: before, requestOptions: requestOptions)
+    /// Lists templates available to the authenticated user. Use `after` or `before` to navigate the results with a
+    /// cursor, and `limit` to control the number of templates returned.
+    public func list(
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListTemplatesResponseSuccess {
+        try await TemplatesMethods.templatesList(
+            config: config,
+            limit: limit,
+            after: after,
+            before: before,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieves a template by its ID or alias. Use the returned details to inspect the template content, variables, and publication status.
+    /// Retrieves a template by its ID or alias. Use the returned details to inspect the template content, variables,
+    /// and publication status.
     public func get(id: String, requestOptions: RequestOptions? = nil) async throws -> Template {
-        return try await TemplatesMethods.templatesGet(config: config, id: id, requestOptions: requestOptions)
+        try await TemplatesMethods.templatesGet(config: config, id: id, requestOptions: requestOptions)
     }
 
-/// Updates an existing template with the fields you provide. Use the `id` path parameter to select the template and send only the template properties you want to change.
-    public func update(options: TemplatesMethods.TemplatesUpdateOptions, requestOptions: RequestOptions? = nil) async throws -> UpdateTemplateResponseSuccess {
-        return try await TemplatesMethods.templatesUpdate(config: config, options: options, requestOptions: requestOptions)
+    /// Updates an existing template with the fields you provide. Use the `id` path parameter to select the template and
+    /// send only the template properties you want to change.
+    public func update(
+        options: TemplatesMethods.TemplatesUpdateOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> UpdateTemplateResponseSuccess {
+        try await TemplatesMethods.templatesUpdate(config: config, options: options, requestOptions: requestOptions)
     }
 
-/// Deletes a template selected by its ID or alias. Use this operation when you want to remove the template; the response indicates whether it was deleted.
-    public func remove(id: String, requestOptions: RequestOptions? = nil) async throws -> RemoveTemplateResponseSuccess {
-        return try await TemplatesMethods.templatesRemove(config: config, id: id, requestOptions: requestOptions)
+    /// Deletes a template selected by its ID or alias. Use this operation when you want to remove the template; the
+    /// response indicates whether it was deleted.
+    public func remove(
+        id: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> RemoveTemplateResponseSuccess {
+        try await TemplatesMethods.templatesRemove(config: config, id: id, requestOptions: requestOptions)
     }
 
-/// Publishes a template selected by its ID or alias. Use this operation to make the template's current version published.
-    public func publish(id: String, requestOptions: RequestOptions? = nil) async throws -> PublishTemplateResponseSuccess {
-        return try await TemplatesMethods.templatesPublish(config: config, id: id, requestOptions: requestOptions)
+    /// Publishes a template selected by its ID or alias. Use this operation to make the template's current version
+    /// published.
+    public func publish(
+        id: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> PublishTemplateResponseSuccess {
+        try await TemplatesMethods.templatesPublish(config: config, id: id, requestOptions: requestOptions)
     }
 
-/// Creates a duplicate of a template selected by its ID or alias. Use this operation when you want a separate template based on an existing one.
-    public func duplicate(id: String, requestOptions: RequestOptions? = nil) async throws -> DuplicateTemplateResponseSuccess {
-        return try await TemplatesMethods.templatesDuplicate(config: config, id: id, requestOptions: requestOptions)
+    /// Creates a duplicate of a template selected by its ID or alias. Use this operation when you want a separate
+    /// template based on an existing one.
+    public func duplicate(
+        id: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DuplicateTemplateResponseSuccess {
+        try await TemplatesMethods.templatesDuplicate(config: config, id: id, requestOptions: requestOptions)
     }
 }
 
@@ -51,40 +84,52 @@ public class AudiencesNamespace {
         self.config = config
     }
 
-/// Creates an audience with the name you provide. Use the Segments endpoints instead, because this audience operation is deprecated. This operation is closing down and will be removed on a date not specified in the API definition.
+    /// Creates an audience with the name you provide. Use the Segments endpoints instead, because this audience
+    /// operation is deprecated. This operation is closing down and will be removed on a date not specified in the API
+    /// definition.
     ///
     /// Deprecated: Use Segments instead. These endpoints still work, but will be removed in the future.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
-    public func create(name: String, requestOptions: RequestOptions? = nil) async throws -> CreateAudienceResponseSuccess {
-        return try await AudiencesMethods.audiencesCreate(config: config, name: name, requestOptions: requestOptions)
+    public func create(
+        name: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateAudienceResponseSuccess {
+        try await AudiencesMethods.audiencesCreate(config: config, name: name, requestOptions: requestOptions)
     }
 
-/// Lists audiences with their identifiers, names, and creation timestamps. Use the Segments endpoints instead, because this audience operation is deprecated. This operation is closing down and will be removed on a date not specified in the API definition.
+    /// Lists audiences with their identifiers, names, and creation timestamps. Use the Segments endpoints instead,
+    /// because this audience operation is deprecated. This operation is closing down and will be removed on a date not
+    /// specified in the API definition.
     ///
     /// Deprecated: Use Segments instead. These endpoints still work, but will be removed in the future.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
     public func list(requestOptions: RequestOptions? = nil) async throws -> ListAudiencesResponseSuccess {
-        return try await AudiencesMethods.audiencesList(config: config, requestOptions: requestOptions)
+        try await AudiencesMethods.audiencesList(config: config, requestOptions: requestOptions)
     }
 
-/// Deletes an audience selected by its ID. Use the Segments endpoints instead, because this audience operation is deprecated. This operation is closing down and will be removed on a date not specified in the API definition.
+    /// Deletes an audience selected by its ID. Use the Segments endpoints instead, because this audience operation is
+    /// deprecated. This operation is closing down and will be removed on a date not specified in the API definition.
     ///
     /// Deprecated: Use Segments instead. These endpoints still work, but will be removed in the future.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
-    public func remove(id: String, requestOptions: RequestOptions? = nil) async throws -> RemoveAudienceResponseSuccess {
-        return try await AudiencesMethods.audiencesRemove(config: config, id: id, requestOptions: requestOptions)
+    public func remove(
+        id: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> RemoveAudienceResponseSuccess {
+        try await AudiencesMethods.audiencesRemove(config: config, id: id, requestOptions: requestOptions)
     }
 
-/// Retrieves an audience by its ID. Use the Segments endpoints instead, because this audience operation is deprecated. This operation is closing down and will be removed on a date not specified in the API definition.
+    /// Retrieves an audience by its ID. Use the Segments endpoints instead, because this audience operation is
+    /// deprecated. This operation is closing down and will be removed on a date not specified in the API definition.
     ///
     /// Deprecated: Use Segments instead. These endpoints still work, but will be removed in the future.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
     public func get(id: String, requestOptions: RequestOptions? = nil) async throws -> GetAudienceResponseSuccess {
-        return try await AudiencesMethods.audiencesGet(config: config, id: id, requestOptions: requestOptions)
+        try await AudiencesMethods.audiencesGet(config: config, id: id, requestOptions: requestOptions)
     }
 }
 
@@ -94,71 +139,199 @@ public class ContactsNamespace {
         self.config = config
     }
 
-/// Creates a contact with an email address and optional profile, subscription, and grouping details. Include `email`; you can also set custom `properties`, add `segments`, or configure `topics`.
-    public func create(options: ContactsMethods.ContactsCreateOptions, requestOptions: RequestOptions? = nil) async throws -> CreateContactResponseSuccess {
-        return try await ContactsMethods.contactsCreate(config: config, options: options, requestOptions: requestOptions)
+    /// Creates a contact with an email address and optional profile, subscription, and grouping details. Include
+    /// `email`; you can also set custom `properties`, add `segments`, or configure `topics`.
+    public func create(
+        options: ContactsMethods.ContactsCreateOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateContactResponseSuccess {
+        try await ContactsMethods.contactsCreate(config: config, options: options, requestOptions: requestOptions)
     }
 
-/// Lists contacts, with each result including contact information. Use `after` or `before` to navigate results by cursor, and `limit` to control the number of items returned.
-    public func list(limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListContactsResponseSuccess {
-        return try await ContactsMethods.contactsList(config: config, limit: limit, after: after, before: before, requestOptions: requestOptions)
+    /// Lists contacts, with each result including contact information. Use `after` or `before` to navigate results by
+    /// cursor, and `limit` to control the number of items returned.
+    public func list(
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListContactsResponseSuccess {
+        try await ContactsMethods.contactsList(
+            config: config,
+            limit: limit,
+            after: after,
+            before: before,
+            requestOptions: requestOptions
+        )
     }
 
-/// Creates a contact import from a CSV file. Include the file and optionally provide a column mapping, conflict strategy, segments, or topic subscriptions for imported contacts.
-    public func createImport(file: SdkUploadFile, columnMap: String? = nil, onConflict: CreateContactImportOptionsOnConflict? = nil, segments: String? = nil, topics: String? = nil, requestOptions: RequestOptions? = nil) async throws -> CreateContactImportResponseSuccess {
-        return try await ContactsMethods.contactsCreateImport(config: config, file: file, columnMap: columnMap, onConflict: onConflict, segments: segments, topics: topics, requestOptions: requestOptions)
+    /// Creates a contact import from a CSV file. Include the file and optionally provide a column mapping, conflict
+    /// strategy, segments, or topic subscriptions for imported contacts.
+    public func createImport(
+        file: SdkUploadFile,
+        columnMap: String? = nil,
+        onConflict: CreateContactImportOptionsOnConflict? = nil,
+        segments: String? = nil,
+        topics: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateContactImportResponseSuccess {
+        try await ContactsMethods.contactsCreateImport(
+            config: config,
+            file: file,
+            columnMap: columnMap,
+            onConflict: onConflict,
+            segments: segments,
+            topics: topics,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists contact imports and their processing information. Use `status` to filter by import state, and `after` or `before` to navigate results by cursor.
-    public func listImports(status: ContactsListImportsParameter? = nil, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListContactImportsResponseSuccess {
-        return try await ContactsMethods.contactsListImports(config: config, status: status, limit: limit, after: after, before: before, requestOptions: requestOptions)
+    /// Lists contact imports and their processing information. Use `status` to filter by import state, and `after` or
+    /// `before` to navigate results by cursor.
+    public func listImports(
+        status: ContactsListImportsParameter? = nil,
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListContactImportsResponseSuccess {
+        try await ContactsMethods.contactsListImports(
+            config: config,
+            status: status,
+            limit: limit,
+            after: after,
+            before: before,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieves a contact import by its identifier. Use the import record to review its status, timestamps, and processing counts.
-    public func getImport(id: String, requestOptions: RequestOptions? = nil) async throws -> GetContactImportResponseSuccess {
-        return try await ContactsMethods.contactsGetImport(config: config, id: id, requestOptions: requestOptions)
+    /// Retrieves a contact import by its identifier. Use the import record to review its status, timestamps, and
+    /// processing counts.
+    public func getImport(
+        id: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GetContactImportResponseSuccess {
+        try await ContactsMethods.contactsGetImport(config: config, id: id, requestOptions: requestOptions)
     }
 
-/// Retrieves a contact by its ID or email address. Use this operation to inspect the contact's profile, subscription status, and custom properties.
+    /// Retrieves a contact by its ID or email address. Use this operation to inspect the contact's profile,
+    /// subscription status, and custom properties.
     public func get(id: String, requestOptions: RequestOptions? = nil) async throws -> GetContactResponseSuccess {
-        return try await ContactsMethods.contactsGet(config: config, id: id, requestOptions: requestOptions)
+        try await ContactsMethods.contactsGet(config: config, id: id, requestOptions: requestOptions)
     }
 
-/// Updates a contact identified by its ID or email address. Include only the profile, subscription, or custom property fields you want to change.
-    public func update(id: String, email: String? = nil, firstName: String? = nil, lastName: String? = nil, unsubscribed: Bool? = nil, properties: [String: JSONValue?]? = nil, requestOptions: RequestOptions? = nil) async throws -> UpdateContactResponseSuccess {
-        return try await ContactsMethods.contactsUpdate(config: config, id: id, email: email, firstName: firstName, lastName: lastName, unsubscribed: unsubscribed, properties: properties, requestOptions: requestOptions)
+    /// Updates a contact identified by its ID or email address. Include only the profile, subscription, or custom
+    /// property fields you want to change.
+    public func update(
+        id: String,
+        email: String? = nil,
+        firstName: String? = nil,
+        lastName: String? = nil,
+        unsubscribed: Bool? = nil,
+        properties: [String: JSONValue?]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> UpdateContactResponseSuccess {
+        try await ContactsMethods.contactsUpdate(
+            config: config,
+            id: id,
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            unsubscribed: unsubscribed,
+            properties: properties,
+            requestOptions: requestOptions
+        )
     }
 
-/// Deletes a contact identified by its ID or email address. Use this operation to remove the contact from the contacts resource.
+    /// Deletes a contact identified by its ID or email address. Use this operation to remove the contact from the
+    /// contacts resource.
     public func remove(id: String, requestOptions: RequestOptions? = nil) async throws -> RemoveContactResponseSuccess {
-        return try await ContactsMethods.contactsRemove(config: config, id: id, requestOptions: requestOptions)
+        try await ContactsMethods.contactsRemove(config: config, id: id, requestOptions: requestOptions)
     }
 }
 
-extension ContactsNamespace {
-/// Lists the segments associated with a contact. Use `contact_id` to select the contact and `after` or `before` to position results relative to a cursor.
-    public func listSegments(contactId: String, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListContactSegmentsResponseSuccess {
-        return try await ContactsMethods.contactsListSegments(config: config, contactId: contactId, limit: limit, after: after, before: before, requestOptions: requestOptions)
+public extension ContactsNamespace {
+    /// Lists the segments associated with a contact. Use `contact_id` to select the contact and `after` or `before` to
+    /// position results relative to a cursor.
+    func listSegments(
+        contactId: String,
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListContactSegmentsResponseSuccess {
+        try await ContactsMethods.contactsListSegments(
+            config: config,
+            contactId: contactId,
+            limit: limit,
+            after: after,
+            before: before,
+            requestOptions: requestOptions
+        )
     }
 
-/// Adds a contact to a segment. Supply the contact’s ID or email address and the segment ID to select the membership to create.
-    public func addSegment(contactId: String, segmentId: String, requestOptions: RequestOptions? = nil) async throws -> AddContactToSegmentResponseSuccess {
-        return try await ContactsMethods.contactsAddSegment(config: config, contactId: contactId, segmentId: segmentId, requestOptions: requestOptions)
+    /// Adds a contact to a segment. Supply the contact’s ID or email address and the segment ID to select the
+    /// membership to create.
+    func addSegment(
+        contactId: String,
+        segmentId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AddContactToSegmentResponseSuccess {
+        try await ContactsMethods.contactsAddSegment(
+            config: config,
+            contactId: contactId,
+            segmentId: segmentId,
+            requestOptions: requestOptions
+        )
     }
 
-/// Removes a contact from a segment. Supply the contact’s ID or email address and the segment ID to select the membership to remove.
-    public func removeSegment(contactId: String, segmentId: String, requestOptions: RequestOptions? = nil) async throws -> RemoveContactFromSegmentResponseSuccess {
-        return try await ContactsMethods.contactsRemoveSegment(config: config, contactId: contactId, segmentId: segmentId, requestOptions: requestOptions)
+    /// Removes a contact from a segment. Supply the contact’s ID or email address and the segment ID to select the
+    /// membership to remove.
+    func removeSegment(
+        contactId: String,
+        segmentId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> RemoveContactFromSegmentResponseSuccess {
+        try await ContactsMethods.contactsRemoveSegment(
+            config: config,
+            contactId: contactId,
+            segmentId: segmentId,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists the topics and subscription statuses associated with a contact. Use `contact_id` to select the contact and `after` or `before` to position results relative to a cursor.
-    public func listTopics(contactId: String, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> GetContactTopicsResponseSuccess {
-        return try await ContactsMethods.contactsListTopics(config: config, contactId: contactId, limit: limit, after: after, before: before, requestOptions: requestOptions)
+    /// Lists the topics and subscription statuses associated with a contact. Use `contact_id` to select the contact and
+    /// `after` or `before` to position results relative to a cursor.
+    func listTopics(
+        contactId: String,
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GetContactTopicsResponseSuccess {
+        try await ContactsMethods.contactsListTopics(
+            config: config,
+            contactId: contactId,
+            limit: limit,
+            after: after,
+            before: before,
+            requestOptions: requestOptions
+        )
     }
 
-/// Updates a contact’s subscriptions to topics. Supply the required `topics` array with each topic ID and its subscription status.
-    public func updateTopics(contactId: String, topics: [UpdateContactTopicsOptionsTopicsItem], requestOptions: RequestOptions? = nil) async throws -> UpdateContactTopicsResponseSuccess {
-        return try await ContactsMethods.contactsUpdateTopics(config: config, contactId: contactId, topics: topics, requestOptions: requestOptions)
+    /// Updates a contact’s subscriptions to topics. Supply the required `topics` array with each topic ID and its
+    /// subscription status.
+    func updateTopics(
+        contactId: String,
+        topics: [UpdateContactTopicsOptionsTopicsItem],
+        requestOptions: RequestOptions? = nil
+    ) async throws -> UpdateContactTopicsResponseSuccess {
+        try await ContactsMethods.contactsUpdateTopics(
+            config: config,
+            contactId: contactId,
+            topics: topics,
+            requestOptions: requestOptions
+        )
     }
 }
 
@@ -168,45 +341,89 @@ public class BroadcastsNamespace {
         self.config = config
     }
 
-/// Creates a broadcast with sender, subject, and segment details. Include `from`, `subject`, and `segment_id`; optionally provide message content, reply addresses, a topic, or sending and scheduling settings.
-    public func create(options: BroadcastsMethods.BroadcastsCreateOptions, requestOptions: RequestOptions? = nil) async throws -> CreateBroadcastResponseSuccess {
-        return try await BroadcastsMethods.broadcastsCreate(config: config, options: options, requestOptions: requestOptions)
+    /// Creates a broadcast with sender, subject, and segment details. Include `from`, `subject`, and `segment_id`;
+    /// optionally provide message content, reply addresses, a topic, or sending and scheduling settings.
+    public func create(
+        options: BroadcastsMethods.BroadcastsCreateOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateBroadcastResponseSuccess {
+        try await BroadcastsMethods.broadcastsCreate(config: config, options: options, requestOptions: requestOptions)
     }
 
-/// Lists broadcasts and their delivery or scheduling information. Use `after` or `before` to navigate results by cursor, and `limit` to control the number of items returned.
-    public func list(limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListBroadcastsResponseSuccess {
-        return try await BroadcastsMethods.broadcastsList(config: config, limit: limit, after: after, before: before, requestOptions: requestOptions)
+    /// Lists broadcasts and their delivery or scheduling information. Use `after` or `before` to navigate results by
+    /// cursor, and `limit` to control the number of items returned.
+    public func list(
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListBroadcastsResponseSuccess {
+        try await BroadcastsMethods.broadcastsList(
+            config: config,
+            limit: limit,
+            after: after,
+            before: before,
+            requestOptions: requestOptions
+        )
     }
 
-/// Deletes an existing broadcast that is in draft status. Use this operation to remove a draft broadcast that you no longer need.
-    public func remove(id: String, requestOptions: RequestOptions? = nil) async throws -> RemoveBroadcastResponseSuccess {
-        return try await BroadcastsMethods.broadcastsRemove(config: config, id: id, requestOptions: requestOptions)
+    /// Deletes an existing broadcast that is in draft status. Use this operation to remove a draft broadcast that you
+    /// no longer need.
+    public func remove(
+        id: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> RemoveBroadcastResponseSuccess {
+        try await BroadcastsMethods.broadcastsRemove(config: config, id: id, requestOptions: requestOptions)
     }
 
-/// Retrieves a single broadcast by its identifier. Use this endpoint to inspect the broadcast's audience, sender, content, and delivery status.
+    /// Retrieves a single broadcast by its identifier. Use this endpoint to inspect the broadcast's audience, sender,
+    /// content, and delivery status.
     public func get(id: String, requestOptions: RequestOptions? = nil) async throws -> GetBroadcastResponseSuccess {
-        return try await BroadcastsMethods.broadcastsGet(config: config, id: id, requestOptions: requestOptions)
+        try await BroadcastsMethods.broadcastsGet(config: config, id: id, requestOptions: requestOptions)
     }
 
-/// Updates the name, audience, sender, content, or topic of an existing broadcast. Supply only the fields you want to change; use `segment_id` instead of the deprecated `audience_id` field.
-    public func update(options: BroadcastsMethods.BroadcastsUpdateOptions, requestOptions: RequestOptions? = nil) async throws -> UpdateBroadcastResponseSuccess {
-        return try await BroadcastsMethods.broadcastsUpdate(config: config, options: options, requestOptions: requestOptions)
+    /// Updates the name, audience, sender, content, or topic of an existing broadcast. Supply only the fields you want
+    /// to change; use `segment_id` instead of the deprecated `audience_id` field.
+    public func update(
+        options: BroadcastsMethods.BroadcastsUpdateOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> UpdateBroadcastResponseSuccess {
+        try await BroadcastsMethods.broadcastsUpdate(config: config, options: options, requestOptions: requestOptions)
     }
 
-/// Submits a broadcast for sending or schedules it for later delivery. Provide `scheduled_at` in ISO 8601 format when you want the broadcast sent at a specific time; omit it to send without scheduling.
-    public func send(id: String, scheduledAt: String? = nil, requestOptions: RequestOptions? = nil) async throws -> SendBroadcastResponseSuccess {
-        return try await BroadcastsMethods.broadcastsSend(config: config, id: id, scheduledAt: scheduledAt, requestOptions: requestOptions)
+    /// Submits a broadcast for sending or schedules it for later delivery. Provide `scheduled_at` in ISO 8601 format
+    /// when you want the broadcast sent at a specific time; omit it to send without scheduling.
+    public func send(
+        id: String,
+        scheduledAt: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SendBroadcastResponseSuccess {
+        try await BroadcastsMethods.broadcastsSend(
+            config: config,
+            id: id,
+            scheduledAt: scheduledAt,
+            requestOptions: requestOptions
+        )
     }
 
-/// Cancels a queued or scheduled broadcast. Cancelling a queued broadcast stops further delivery, but does not affect emails that have already been sent.
+    /// Cancels a queued or scheduled broadcast. Cancelling a queued broadcast stops further delivery, but does not
+    /// affect emails that have already been sent.
     ///
-    /// Cancels a broadcast that is queued or scheduled. Canceling a queued broadcast stops it mid-send; emails already sent are not affected, but no further emails will go out.
-    public func cancel(id: String, requestOptions: RequestOptions? = nil) async throws -> CancelBroadcastResponseSuccess {
-        return try await BroadcastsMethods.broadcastsCancel(config: config, id: id, requestOptions: requestOptions)
+    /// Cancels a broadcast that is queued or scheduled. Canceling a queued broadcast stops it mid-send; emails already
+    /// sent are not affected, but no further emails will go out.
+    public func cancel(
+        id: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CancelBroadcastResponseSuccess {
+        try await BroadcastsMethods.broadcastsCancel(config: config, id: id, requestOptions: requestOptions)
     }
 
-/// Creates a new draft broadcast with the same segment, topic, sender, subject, reply-to, preview text, and content as the source. The copy is named after the source with " (copy)" appended, truncated to 70 characters.
-    public func duplicate(id: String, requestOptions: RequestOptions? = nil) async throws -> DuplicateBroadcastResponseSuccess {
-        return try await BroadcastsMethods.broadcastsDuplicate(config: config, id: id, requestOptions: requestOptions)
+    /// Creates a new draft broadcast with the same segment, topic, sender, subject, reply-to, preview text, and content
+    /// as the source. The copy is named after the source with " (copy)" appended, truncated to 70 characters.
+    public func duplicate(
+        id: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DuplicateBroadcastResponseSuccess {
+        try await BroadcastsMethods.broadcastsDuplicate(config: config, id: id, requestOptions: requestOptions)
     }
 }
