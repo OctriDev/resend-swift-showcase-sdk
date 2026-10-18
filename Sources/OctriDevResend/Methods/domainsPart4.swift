@@ -6,9 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DomainsMethods {
-    /// Updates the configuration of an existing domain. Supply only the settings you want to change, such as tracking
-    /// options, TLS mode, capabilities, or the tracking subdomain.
+extension DomainsMethods {
+    /// Updates the configuration of an existing domain. Supply only the settings you want to change, such as tracking options, TLS mode, capabilities, or the tracking subdomain.
     ///
     /// - Parameters:
     /// - domainId: The ID of the domain.
@@ -18,52 +17,17 @@ public extension DomainsMethods {
     /// - capabilities: Configure the domain capabilities for sending and receiving
     ///   emails. At least one capability must be enabled.
     /// - trackingSubdomain: The subdomain to use for click and open tracking.
-    static func domainsUpdate(
-        config: ClientConfig,
-        domainId: String,
-        openTracking: Bool? = nil,
-        clickTracking: Bool? = nil,
-        tls: UpdateDomainOptionsTls? = nil,
-        capabilities: DomainCapabilities? = nil,
-        trackingSubdomain: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> UpdateDomainResponseSuccess {
-        let requestBody = DomainsUpdateRequestBody(
-            openTracking: openTracking,
-            clickTracking: clickTracking,
-            tls: tls,
-            capabilities: capabilities,
-            trackingSubdomain: trackingSubdomain
-        )
+    public static func domainsUpdate(config: ClientConfig, domainId: String, openTracking: Bool? = nil, clickTracking: Bool? = nil, tls: UpdateDomainOptionsTls? = nil, capabilities: DomainCapabilities? = nil, trackingSubdomain: String? = nil, requestOptions: RequestOptions? = nil) async throws -> UpdateDomainResponseSuccess {
+        let requestBody = DomainsUpdateRequestBody(openTracking: openTracking, clickTracking: clickTracking, tls: tls, capabilities: capabilities, trackingSubdomain: trackingSubdomain)
 
-        return try await (sdkRequest(
-            "PATCH",
-            ["/domains/", sdkEncodePathSegment(sdkWireString(domainId))].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "domainsUpdate",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("PATCH", ["/domains/", sdkEncodePathSegment(sdkWireString(domainId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "domainsUpdate", options: requestOptions)).data
     }
 
-    /// Deletes an existing domain. Use `domain_id` to select the domain to remove; the response indicates whether
-    /// deletion succeeded.
+    /// Deletes an existing domain. Use `domain_id` to select the domain to remove; the response indicates whether deletion succeeded.
     ///
     /// - Parameters:
     /// - domainId: The ID of the domain.
-    static func domainsRemove(
-        config: ClientConfig,
-        domainId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DeleteDomainResponse {
-        try await (sdkRequest(
-            "DELETE",
-            ["/domains/", sdkEncodePathSegment(sdkWireString(domainId))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "domainsRemove",
-            options: requestOptions
-        )).data
+    public static func domainsRemove(config: ClientConfig, domainId: String, requestOptions: RequestOptions? = nil) async throws -> DeleteDomainResponse {
+        return try (await sdkRequest("DELETE", ["/domains/", sdkEncodePathSegment(sdkWireString(domainId))].joined(), config: config, decoder: .json, operationId: "domainsRemove", options: requestOptions)).data
     }
 }

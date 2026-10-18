@@ -6,80 +6,41 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension TopicsMethods {
-    /// Retrieves a topic by its identifier. Use the topic ID to look up its name, subscription default, visibility, and
-    /// other details.
+extension TopicsMethods {
+    /// Retrieves a topic by its identifier. Use the topic ID to look up its name, subscription default, visibility, and other details.
     ///
     /// - Parameters:
     /// - id: The Topic ID.
-    static func topicsGet(
-        config: ClientConfig,
-        id: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> GetTopicResponseSuccess {
-        try await (sdkRequest(
-            "GET",
-            ["/topics/", sdkEncodePathSegment(sdkWireString(id))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "topicsGet",
-            options: requestOptions
-        )).data
+    public static func topicsGet(config: ClientConfig, id: String, requestOptions: RequestOptions? = nil) async throws -> GetTopicResponseSuccess {
+        return try (await sdkRequest("GET", ["/topics/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "topicsGet", options: requestOptions)).data
     }
 
-    /// Updates the name, description, or visibility of an existing topic. Supply only the fields you want to change;
-    /// `visibility` must be `public` or `private`.
+    /// Updates the name, description, or visibility of an existing topic. Supply only the fields you want to change; `visibility` must be `public` or `private`.
     ///
     /// - Parameters:
     /// - id: The Topic ID.
     /// - name: The name of the topic. Max 50 characters.
     /// - description: A description of the topic. Max 200 characters.
     /// - visibility: The visibility of the topic.
-    static func topicsUpdate(
-        config: ClientConfig,
-        id: String,
-        name: String? = nil,
-        description: String? = nil,
-        visibility: UpdateTopicOptionsVisibility? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> UpdateTopicResponseSuccess {
-        if let name {
+    public static func topicsUpdate(config: ClientConfig, id: String, name: String? = nil, description: String? = nil, visibility: UpdateTopicOptionsVisibility? = nil, requestOptions: RequestOptions? = nil) async throws -> UpdateTopicResponseSuccess {
+        if let name = name {
             try validateLength("name", name, max: 50)
         }
 
-        if let description {
+        if let description = description {
             try validateLength("description", description, max: 200)
         }
 
         let requestBody = TopicsUpdateRequestBody(name: name, description: description, visibility: visibility)
 
-        return try await (sdkRequest(
-            "PATCH",
-            ["/topics/", sdkEncodePathSegment(sdkWireString(id))].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "topicsUpdate",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("PATCH", ["/topics/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, body: requestBody, decoder: .json, operationId: "topicsUpdate", options: requestOptions)).data
     }
 
     /// Deletes an existing topic. Use the topic ID to select the topic to remove.
     ///
     /// - Parameters:
     /// - id: The Topic ID.
-    static func topicsRemove(
-        config: ClientConfig,
-        id: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> RemoveTopicResponseSuccess {
-        try await (sdkRequest(
-            "DELETE",
-            ["/topics/", sdkEncodePathSegment(sdkWireString(id))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "topicsRemove",
-            options: requestOptions
-        )).data
+    public static func topicsRemove(config: ClientConfig, id: String, requestOptions: RequestOptions? = nil) async throws -> RemoveTopicResponseSuccess {
+        return try (await sdkRequest("DELETE", ["/topics/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "topicsRemove", options: requestOptions)).data
     }
 }

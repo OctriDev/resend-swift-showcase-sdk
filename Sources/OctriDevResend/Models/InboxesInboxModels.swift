@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// InboxesInbox domain models
+// InboxesInbox domain models
 /// Typed representation of the `InboxThreadEmail` API schema.
 public struct InboxThreadEmail: Codable {
     /// The ID of the message.
@@ -67,50 +67,33 @@ public struct InboxThreadEmail: Codable {
         case receivedAt = "received_at"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension InboxThreadEmail {
-    init(from decoder: Decoder) throws {
+extension InboxThreadEmail {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeRequired(.id)
-        direction = try container.sdkDecodeRequired(.direction)
-        from = try container.sdkDecodeRequired(.from)
-        to = try container.sdkDecodeRequired(.to)
-        cc = try container.sdkDecodeRequired(.cc)
-        bcc = try container.sdkDecodeRequired(.bcc)
-        replyTo = try container.sdkDecodeRequired(.replyTo)
-        subject = try container.sdkDecodeNullable(.subject)
-        messageId = try container.sdkDecodeNullable(.messageId)
-        html = try container.sdkDecodeNullable(.html)
-        text = try container.sdkDecodeNullable(.text)
-        attachments = try container.sdkDecodeRequired(.attachments)
-        read = try container.sdkDecodeRequired(.read)
-        receivedAt = try container.sdkDecodeRequired(.receivedAt)
-        try sdkValidateUuid("id", id)
-        try sdkValidateDateTime("received_at", sdkWireString(receivedAt))
+        self.id = try container.sdkDecodeRequired(.id)
+        self.direction = try container.sdkDecodeRequired(.direction)
+        self.from = try container.sdkDecodeRequired(.from)
+        self.to = try container.sdkDecodeRequired(.to)
+        self.cc = try container.sdkDecodeRequired(.cc)
+        self.bcc = try container.sdkDecodeRequired(.bcc)
+        self.replyTo = try container.sdkDecodeRequired(.replyTo)
+        self.subject = try container.sdkDecodeNullable(.subject)
+        self.messageId = try container.sdkDecodeNullable(.messageId)
+        self.html = try container.sdkDecodeNullable(.html)
+        self.text = try container.sdkDecodeNullable(.text)
+        self.attachments = try container.sdkDecodeRequired(.attachments)
+        self.read = try container.sdkDecodeRequired(.read)
+        self.receivedAt = try container.sdkDecodeRequired(.receivedAt)
+            try sdkValidateUuid("id", self.id)
+            try sdkValidateDateTime("received_at", sdkWireString(self.receivedAt))
     }
 }
 
-public extension InboxThreadEmail {
-    init(
-        id: String,
-        direction: InboxThreadEmailDirection,
-        from: String,
-        to: [String],
-        cc: [String],
-        bcc: [String],
-        replyTo: [String],
-        subject: String?,
-        messageId: String?,
-        html: String?,
-        text: String?,
-        attachments: [InboxThreadEmailAttachment],
-        read: Bool,
-        receivedAt: Date
-    ) throws {
+extension InboxThreadEmail {
+    public init(id: String, direction: InboxThreadEmailDirection, from: String, to: [String], cc: [String], bcc: [String], replyTo: [String], subject: String?, messageId: String?, html: String?, text: String?, attachments: [InboxThreadEmailAttachment], read: Bool, receivedAt: Date) throws {
         (self.id, self.direction) = (id, direction)
         (self.from, self.to) = (from, to)
         (self.cc, self.bcc) = (cc, bcc)
@@ -118,8 +101,8 @@ public extension InboxThreadEmail {
         (self.messageId, self.html) = (messageId, html)
         (self.text, self.attachments) = (text, attachments)
         (self.read, self.receivedAt) = (read, receivedAt)
-        try sdkValidateUuid("id", self.id)
-        try sdkValidateDateTime("received_at", sdkWireString(self.receivedAt))
+            try sdkValidateUuid("id", self.id)
+            try sdkValidateDateTime("received_at", sdkWireString(self.receivedAt))
     }
 }
 
@@ -143,49 +126,35 @@ public struct InboxDraftAttachmentInput: Codable {
         case contentType = "content_type"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension InboxDraftAttachmentInput {
-    init(from decoder: Decoder) throws {
+extension InboxDraftAttachmentInput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.content) else {
-            throw SdkValidationError(
-                field: "content",
-                code: "required",
-                message: "Validation failed for 'content': value is required"
-            )
+            throw SdkValidationError(field: "content", code: "required", message: "Validation failed for 'content': value is required")
         }
         guard container.contains(.filename) else {
-            throw SdkValidationError(
-                field: "filename",
-                code: "required",
-                message: "Validation failed for 'filename': value is required"
-            )
+            throw SdkValidationError(field: "filename", code: "required", message: "Validation failed for 'filename': value is required")
         }
         guard container.contains(.contentType) else {
-            throw SdkValidationError(
-                field: "content_type",
-                code: "required",
-                message: "Validation failed for 'content_type': value is required"
-            )
+            throw SdkValidationError(field: "content_type", code: "required", message: "Validation failed for 'content_type': value is required")
         }
-        content = try container.sdkDecodeRequired(.content)
-        filename = try container.sdkDecodeRequired(.filename)
-        contentType = try container.sdkDecodeRequired(.contentType)
-        try validateLength("filename", filename, min: 1, max: nil)
-        try validateLength("content_type", contentType, min: 1, max: nil)
+        self.content = try container.sdkDecodeRequired(.content)
+        self.filename = try container.sdkDecodeRequired(.filename)
+        self.contentType = try container.sdkDecodeRequired(.contentType)
+            try validateLength("filename", self.filename, min: 1, max: nil)
+            try validateLength("content_type", self.contentType, min: 1, max: nil)
     }
 }
 
-public extension InboxDraftAttachmentInput {
-    init(content: String, filename: String, contentType: String) throws {
+extension InboxDraftAttachmentInput {
+    public init(content: String, filename: String, contentType: String) throws {
         (self.content, self.filename) = (content, filename)
         self.contentType = contentType
-        try validateLength("filename", self.filename, min: 1, max: nil)
-        try validateLength("content_type", self.contentType, min: 1, max: nil)
+            try validateLength("filename", self.filename, min: 1, max: nil)
+            try validateLength("content_type", self.contentType, min: 1, max: nil)
     }
 }
 
@@ -211,55 +180,37 @@ public struct InboxDraftAttachment: Codable {
         case size
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension InboxDraftAttachment {
-    init(from decoder: Decoder) throws {
+extension InboxDraftAttachment {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.filename) else {
-            throw SdkValidationError(
-                field: "filename",
-                code: "required",
-                message: "Validation failed for 'filename': value is required"
-            )
+            throw SdkValidationError(field: "filename", code: "required", message: "Validation failed for 'filename': value is required")
         }
         guard container.contains(.contentType) else {
-            throw SdkValidationError(
-                field: "content_type",
-                code: "required",
-                message: "Validation failed for 'content_type': value is required"
-            )
+            throw SdkValidationError(field: "content_type", code: "required", message: "Validation failed for 'content_type': value is required")
         }
         guard container.contains(.size) else {
-            throw SdkValidationError(
-                field: "size",
-                code: "required",
-                message: "Validation failed for 'size': value is required"
-            )
+            throw SdkValidationError(field: "size", code: "required", message: "Validation failed for 'size': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        filename = try container.sdkDecodeRequired(.filename)
-        contentType = try container.sdkDecodeRequired(.contentType)
-        size = try container.sdkDecodeRequired(.size)
-        try sdkValidateUuid("id", id)
+        self.id = try container.sdkDecodeRequired(.id)
+        self.filename = try container.sdkDecodeRequired(.filename)
+        self.contentType = try container.sdkDecodeRequired(.contentType)
+        self.size = try container.sdkDecodeRequired(.size)
+            try sdkValidateUuid("id", self.id)
     }
 }
 
-public extension InboxDraftAttachment {
-    init(id: String, filename: String, contentType: String, size: Int) throws {
+extension InboxDraftAttachment {
+    public init(id: String, filename: String, contentType: String, size: Int) throws {
         (self.id, self.filename) = (id, filename)
         (self.contentType, self.size) = (contentType, size)
-        try sdkValidateUuid("id", self.id)
+            try sdkValidateUuid("id", self.id)
     }
 }
 
@@ -281,38 +232,28 @@ public struct InboxThreadSearchResultVariant1: Codable {
         case highlights
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension InboxThreadSearchResultVariant1 {
-    init(from decoder: Decoder) throws {
+extension InboxThreadSearchResultVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.matchedEmailId) else {
-            throw SdkValidationError(
-                field: "matched_email_id",
-                code: "required",
-                message: "Validation failed for 'matched_email_id': value is required"
-            )
+            throw SdkValidationError(field: "matched_email_id", code: "required", message: "Validation failed for 'matched_email_id': value is required")
         }
         guard container.contains(.highlights) else {
-            throw SdkValidationError(
-                field: "highlights",
-                code: "required",
-                message: "Validation failed for 'highlights': value is required"
-            )
+            throw SdkValidationError(field: "highlights", code: "required", message: "Validation failed for 'highlights': value is required")
         }
-        matchedEmailId = try container.sdkDecodeNullable(.matchedEmailId)
-        highlights = try container.sdkDecodeRequired(.highlights)
-        if let value = matchedEmailId {
+        self.matchedEmailId = try container.sdkDecodeNullable(.matchedEmailId)
+        self.highlights = try container.sdkDecodeRequired(.highlights)
+        if let value = self.matchedEmailId {
             try sdkValidateUuid("matched_email_id", value)
         }
     }
 }
 
-public extension InboxThreadSearchResultVariant1 {
-    init(matchedEmailId: String?, highlights: InboxThreadSearchResultVariant1Highlights) throws {
+extension InboxThreadSearchResultVariant1 {
+    public init(matchedEmailId: String?, highlights: InboxThreadSearchResultVariant1Highlights) throws {
         (self.matchedEmailId, self.highlights) = (matchedEmailId, highlights)
         if let value = self.matchedEmailId {
             try sdkValidateUuid("matched_email_id", value)
@@ -383,71 +324,28 @@ public struct InboxDraft: Codable {
         case attachments
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension InboxDraft {
-    init(from decoder: Decoder) throws {
+extension InboxDraft {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeRequired(.object)
-        id = try container.sdkDecodeRequired(.id)
-        type = try container.sdkDecodeRequired(.type)
-        to = try container.sdkDecodeNullable(.to)
-        cc = try container.sdkDecodeRequired(.cc)
-        bcc = try container.sdkDecodeRequired(.bcc)
-        subject = try container.sdkDecodeNullable(.subject)
-        html = try container.sdkDecodeNullable(.html)
-        text = try container.sdkDecodeNullable(.text)
-        threadId = try container.sdkDecodeNullable(.threadId)
-        replyToEmailId = try container.sdkDecodeNullable(.replyToEmailId)
-        emailId = try container.sdkDecodeNullable(.emailId)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        updatedAt = try container.sdkDecodeRequired(.updatedAt)
-        attachments = try container.sdkDecodeRequired(.attachments)
-        try sdkValidateUuid("id", id)
-        if let value = threadId {
-            try sdkValidateUuid("thread_id", value)
-        }
-        if let value = replyToEmailId {
-            try sdkValidateUuid("reply_to_email_id", value)
-        }
-        if let value = emailId {
-            try sdkValidateUuid("email_id", value)
-        }
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
-        try sdkValidateDateTime("updated_at", sdkWireString(updatedAt))
-    }
-}
-
-public extension InboxDraft {
-    init(
-        object: String,
-        id: String,
-        type: InboxDraftType,
-        to: [String]?,
-        cc: [String],
-        bcc: [String],
-        subject: String?,
-        html: String?,
-        text: String?,
-        threadId: String?,
-        replyToEmailId: String?,
-        emailId: String?,
-        createdAt: Date,
-        updatedAt: Date,
-        attachments: [InboxDraftAttachment]
-    ) throws {
-        (self.object, self.id) = (object, id)
-        (self.type, self.to) = (type, to)
-        (self.cc, self.bcc) = (cc, bcc)
-        (self.subject, self.html) = (subject, html)
-        (self.text, self.threadId) = (text, threadId)
-        (self.replyToEmailId, self.emailId) = (replyToEmailId, emailId)
-        (self.createdAt, self.updatedAt) = (createdAt, updatedAt)
-        self.attachments = attachments
-        try sdkValidateUuid("id", self.id)
+        self.object = try container.sdkDecodeRequired(.object)
+        self.id = try container.sdkDecodeRequired(.id)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.to = try container.sdkDecodeNullable(.to)
+        self.cc = try container.sdkDecodeRequired(.cc)
+        self.bcc = try container.sdkDecodeRequired(.bcc)
+        self.subject = try container.sdkDecodeNullable(.subject)
+        self.html = try container.sdkDecodeNullable(.html)
+        self.text = try container.sdkDecodeNullable(.text)
+        self.threadId = try container.sdkDecodeNullable(.threadId)
+        self.replyToEmailId = try container.sdkDecodeNullable(.replyToEmailId)
+        self.emailId = try container.sdkDecodeNullable(.emailId)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.updatedAt = try container.sdkDecodeRequired(.updatedAt)
+        self.attachments = try container.sdkDecodeRequired(.attachments)
+            try sdkValidateUuid("id", self.id)
         if let value = self.threadId {
             try sdkValidateUuid("thread_id", value)
         }
@@ -457,8 +355,33 @@ public extension InboxDraft {
         if let value = self.emailId {
             try sdkValidateUuid("email_id", value)
         }
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
-        try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
+    }
+}
+
+extension InboxDraft {
+    public init(object: String, id: String, type: InboxDraftType, to: [String]?, cc: [String], bcc: [String], subject: String?, html: String?, text: String?, threadId: String?, replyToEmailId: String?, emailId: String?, createdAt: Date, updatedAt: Date, attachments: [InboxDraftAttachment]) throws {
+        (self.object, self.id) = (object, id)
+        (self.type, self.to) = (type, to)
+        (self.cc, self.bcc) = (cc, bcc)
+        (self.subject, self.html) = (subject, html)
+        (self.text, self.threadId) = (text, threadId)
+        (self.replyToEmailId, self.emailId) = (replyToEmailId, emailId)
+        (self.createdAt, self.updatedAt) = (createdAt, updatedAt)
+        self.attachments = attachments
+            try sdkValidateUuid("id", self.id)
+        if let value = self.threadId {
+            try sdkValidateUuid("thread_id", value)
+        }
+        if let value = self.replyToEmailId {
+            try sdkValidateUuid("reply_to_email_id", value)
+        }
+        if let value = self.emailId {
+            try sdkValidateUuid("email_id", value)
+        }
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
     }
 }
 
@@ -490,79 +413,46 @@ public struct InboxThreadSummary: Codable {
         case read
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension InboxThreadSummary {
-    init(from decoder: Decoder) throws {
+extension InboxThreadSummary {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.object) else {
-            throw SdkValidationError(
-                field: "object",
-                code: "required",
-                message: "Validation failed for 'object': value is required"
-            )
+            throw SdkValidationError(field: "object", code: "required", message: "Validation failed for 'object': value is required")
         }
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.subject) else {
-            throw SdkValidationError(
-                field: "subject",
-                code: "required",
-                message: "Validation failed for 'subject': value is required"
-            )
+            throw SdkValidationError(field: "subject", code: "required", message: "Validation failed for 'subject': value is required")
         }
         guard container.contains(.folder) else {
-            throw SdkValidationError(
-                field: "folder",
-                code: "required",
-                message: "Validation failed for 'folder': value is required"
-            )
+            throw SdkValidationError(field: "folder", code: "required", message: "Validation failed for 'folder': value is required")
         }
         guard container.contains(.labels) else {
-            throw SdkValidationError(
-                field: "labels",
-                code: "required",
-                message: "Validation failed for 'labels': value is required"
-            )
+            throw SdkValidationError(field: "labels", code: "required", message: "Validation failed for 'labels': value is required")
         }
         guard container.contains(.read) else {
-            throw SdkValidationError(
-                field: "read",
-                code: "required",
-                message: "Validation failed for 'read': value is required"
-            )
+            throw SdkValidationError(field: "read", code: "required", message: "Validation failed for 'read': value is required")
         }
-        object = try container.sdkDecodeRequired(.object)
-        id = try container.sdkDecodeRequired(.id)
-        subject = try container.sdkDecodeNullable(.subject)
-        folder = try container.sdkDecodeRequired(.folder)
-        labels = try container.sdkDecodeRequired(.labels)
-        read = try container.sdkDecodeRequired(.read)
-        try sdkValidateUuid("id", id)
+        self.object = try container.sdkDecodeRequired(.object)
+        self.id = try container.sdkDecodeRequired(.id)
+        self.subject = try container.sdkDecodeNullable(.subject)
+        self.folder = try container.sdkDecodeRequired(.folder)
+        self.labels = try container.sdkDecodeRequired(.labels)
+        self.read = try container.sdkDecodeRequired(.read)
+            try sdkValidateUuid("id", self.id)
     }
 }
 
-public extension InboxThreadSummary {
-    init(
-        object: String,
-        id: String,
-        subject: String?,
-        folder: InboxThreadSummaryFolder,
-        labels: [InboxThreadLabel],
-        read: Bool
-    ) throws {
+extension InboxThreadSummary {
+    public init(object: String, id: String, subject: String?, folder: InboxThreadSummaryFolder, labels: [InboxThreadLabel], read: Bool) throws {
         (self.object, self.id) = (object, id)
         (self.subject, self.folder) = (subject, folder)
         (self.labels, self.read) = (labels, read)
-        try sdkValidateUuid("id", self.id)
+            try sdkValidateUuid("id", self.id)
     }
 }
 
@@ -588,48 +478,30 @@ public struct InboxLabel: Codable {
         case createdAt = "created_at"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension InboxLabel {
-    init(from decoder: Decoder) throws {
+extension InboxLabel {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.color) else {
-            throw SdkValidationError(
-                field: "color",
-                code: "required",
-                message: "Validation failed for 'color': value is required"
-            )
+            throw SdkValidationError(field: "color", code: "required", message: "Validation failed for 'color': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        name = try container.sdkDecodeRequired(.name)
-        color = try container.sdkDecodeRequired(.color)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        try sdkValidateUuid("id", id)
-        try sdkValidatePattern("color", color, sdkPatternf01b4765958d)
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        self.id = try container.sdkDecodeRequired(.id)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.color = try container.sdkDecodeRequired(.color)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+            try sdkValidateUuid("id", self.id)
+            try sdkValidatePattern("color", self.color, sdkPatternf01b4765958d)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }

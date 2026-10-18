@@ -6,93 +6,41 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ContactsMethods {
-    /// Lists the segments associated with a contact. Use `contact_id` to select the contact and `after` or `before` to
-    /// position results relative to a cursor.
+extension ContactsMethods {
+    /// Lists the segments associated with a contact. Use `contact_id` to select the contact and `after` or `before` to position results relative to a cursor.
     ///
     /// - Parameters:
     /// - contactId: The Contact ID or email address.
     /// - limit: Number of items to return.
     /// - after: Return items after this cursor.
     /// - before: Return items before this cursor.
-    static func contactsListSegments(
-        config: ClientConfig,
-        contactId: String,
-        limit: Int? = nil,
-        after: String? = nil,
-        before: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ListContactSegmentsResponseSuccess {
-        if let limit {
+    public static func contactsListSegments(config: ClientConfig, contactId: String, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListContactSegmentsResponseSuccess {
+        if let limit = limit {
             try validateRange("limit", Double(limit), min: 1, max: 100)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId)), "/segments"].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("limit", value: limit),
-                SdkQueryParameter("after", value: after),
-                SdkQueryParameter("before", value: before),
-            ],
-            decoder: .json,
-            operationId: "contactsListSegments",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("GET", ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId)), "/segments"].joined(), config: config, query: [
+            SdkQueryParameter("limit", value: limit),
+            SdkQueryParameter("after", value: after),
+            SdkQueryParameter("before", value: before),
+        ], decoder: .json, operationId: "contactsListSegments", options: requestOptions)).data
     }
 
-    /// Adds a contact to a segment. Supply the contact’s ID or email address and the segment ID to select the
-    /// membership to create.
+    /// Adds a contact to a segment. Supply the contact’s ID or email address and the segment ID to select the membership to create.
     ///
     /// - Parameters:
     /// - contactId: The Contact ID or email address.
     /// - segmentId: The Segment ID.
-    static func contactsAddSegment(
-        config: ClientConfig,
-        contactId: String,
-        segmentId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AddContactToSegmentResponseSuccess {
-        try await (sdkRequest(
-            "POST",
-            [
-                "/contacts/",
-                sdkEncodePathSegment(sdkWireString(contactId)),
-                "/segments/",
-                sdkEncodePathSegment(sdkWireString(segmentId)),
-            ].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "contactsAddSegment",
-            options: requestOptions
-        )).data
+    public static func contactsAddSegment(config: ClientConfig, contactId: String, segmentId: String, requestOptions: RequestOptions? = nil) async throws -> AddContactToSegmentResponseSuccess {
+        return try (await sdkRequest("POST", ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId)), "/segments/", sdkEncodePathSegment(sdkWireString(segmentId))].joined(), config: config, decoder: .json, operationId: "contactsAddSegment", options: requestOptions)).data
     }
 
-    /// Removes a contact from a segment. Supply the contact’s ID or email address and the segment ID to select the
-    /// membership to remove.
+    /// Removes a contact from a segment. Supply the contact’s ID or email address and the segment ID to select the membership to remove.
     ///
     /// - Parameters:
     /// - contactId: The Contact ID or email address.
     /// - segmentId: The Segment ID.
-    static func contactsRemoveSegment(
-        config: ClientConfig,
-        contactId: String,
-        segmentId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> RemoveContactFromSegmentResponseSuccess {
-        try await (sdkRequest(
-            "DELETE",
-            [
-                "/contacts/",
-                sdkEncodePathSegment(sdkWireString(contactId)),
-                "/segments/",
-                sdkEncodePathSegment(sdkWireString(segmentId)),
-            ].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "contactsRemoveSegment",
-            options: requestOptions
-        )).data
+    public static func contactsRemoveSegment(config: ClientConfig, contactId: String, segmentId: String, requestOptions: RequestOptions? = nil) async throws -> RemoveContactFromSegmentResponseSuccess {
+        return try (await sdkRequest("DELETE", ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId)), "/segments/", sdkEncodePathSegment(sdkWireString(segmentId))].joined(), config: config, decoder: .json, operationId: "contactsRemoveSegment", options: requestOptions)).data
     }
 }

@@ -13,9 +13,9 @@ struct InboxesUpdateAgentRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(instructions, forKey: SdkCodingKey("instructions"))
-        try keyedContainer.encodeIfPresent(tone, forKey: SdkCodingKey("tone"))
-        try keyedContainer.encodeIfPresent(enabledActions, forKey: SdkCodingKey("enabled_actions"))
+        try keyedContainer.encodeIfPresent(self.instructions, forKey: SdkCodingKey("instructions"))
+        try keyedContainer.encodeIfPresent(self.tone, forKey: SdkCodingKey("tone"))
+        try keyedContainer.encodeIfPresent(self.enabledActions, forKey: SdkCodingKey("enabled_actions"))
     }
 }
 
@@ -25,8 +25,8 @@ struct InboxesCreateLabelRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(color, forKey: SdkCodingKey("color"))
+        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.color, forKey: SdkCodingKey("color"))
     }
 }
 
@@ -36,8 +36,8 @@ struct InboxesUpdateLabelRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(color, forKey: SdkCodingKey("color"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.color, forKey: SdkCodingKey("color"))
     }
 }
 
@@ -49,10 +49,10 @@ struct InboxesUpdateThreadRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(read, forKey: SdkCodingKey("read"))
-        try keyedContainer.encodeIfPresent(folder, forKey: SdkCodingKey("folder"))
-        try keyedContainer.encodeIfPresent(addLabelIds, forKey: SdkCodingKey("add_label_ids"))
-        try keyedContainer.encodeIfPresent(removeLabelIds, forKey: SdkCodingKey("remove_label_ids"))
+        try keyedContainer.encodeIfPresent(self.read, forKey: SdkCodingKey("read"))
+        try keyedContainer.encodeIfPresent(self.folder, forKey: SdkCodingKey("folder"))
+        try keyedContainer.encodeIfPresent(self.addLabelIds, forKey: SdkCodingKey("add_label_ids"))
+        try keyedContainer.encodeIfPresent(self.removeLabelIds, forKey: SdkCodingKey("remove_label_ids"))
     }
 }
 
@@ -68,25 +68,25 @@ struct InboxesReplyThreadEmailRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(cc, forKey: SdkCodingKey("cc"))
-        try keyedContainer.encodeIfPresent(bcc, forKey: SdkCodingKey("bcc"))
-        try keyedContainer.encodeIfPresent(html, forKey: SdkCodingKey("html"))
-        try keyedContainer.encodeIfPresent(text, forKey: SdkCodingKey("text"))
-        try keyedContainer.encodeIfPresent(subject, forKey: SdkCodingKey("subject"))
-        try keyedContainer.encodeIfPresent(replyAll, forKey: SdkCodingKey("reply_all"))
-        try keyedContainer.encodeIfPresent(attachments, forKey: SdkCodingKey("attachments"))
-        try keyedContainer.encodeIfPresent(headers, forKey: SdkCodingKey("headers"))
+        try keyedContainer.encodeIfPresent(self.cc, forKey: SdkCodingKey("cc"))
+        try keyedContainer.encodeIfPresent(self.bcc, forKey: SdkCodingKey("bcc"))
+        try keyedContainer.encodeIfPresent(self.html, forKey: SdkCodingKey("html"))
+        try keyedContainer.encodeIfPresent(self.text, forKey: SdkCodingKey("text"))
+        try keyedContainer.encodeIfPresent(self.subject, forKey: SdkCodingKey("subject"))
+        try keyedContainer.encodeIfPresent(self.replyAll, forKey: SdkCodingKey("reply_all"))
+        try keyedContainer.encodeIfPresent(self.attachments, forKey: SdkCodingKey("attachments"))
+        try keyedContainer.encodeIfPresent(self.headers, forKey: SdkCodingKey("headers"))
     }
 
     init(options: InboxesMethods.InboxesReplyThreadEmailOptions) {
-        cc = options.cc
-        bcc = options.bcc
-        html = options.html
-        text = options.text
-        subject = options.subject
-        replyAll = options.replyAll
-        attachments = options.attachments
-        headers = options.headers
+        self.cc = options.cc
+        self.bcc = options.bcc
+        self.html = options.html
+        self.text = options.text
+        self.subject = options.subject
+        self.replyAll = options.replyAll
+        self.attachments = options.attachments
+        self.headers = options.headers
     }
 }
 
@@ -102,25 +102,25 @@ struct InboxesForwardThreadEmailRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(to, forKey: SdkCodingKey("to"))
-        try keyedContainer.encodeIfPresent(cc, forKey: SdkCodingKey("cc"))
-        try keyedContainer.encodeIfPresent(bcc, forKey: SdkCodingKey("bcc"))
-        try keyedContainer.encodeIfPresent(html, forKey: SdkCodingKey("html"))
-        try keyedContainer.encodeIfPresent(text, forKey: SdkCodingKey("text"))
-        try keyedContainer.encodeIfPresent(subject, forKey: SdkCodingKey("subject"))
-        try keyedContainer.encodeIfPresent(attachments, forKey: SdkCodingKey("attachments"))
-        try keyedContainer.encodeIfPresent(headers, forKey: SdkCodingKey("headers"))
+        try keyedContainer.encode(self.to, forKey: SdkCodingKey("to"))
+        try keyedContainer.encodeIfPresent(self.cc, forKey: SdkCodingKey("cc"))
+        try keyedContainer.encodeIfPresent(self.bcc, forKey: SdkCodingKey("bcc"))
+        try keyedContainer.encodeIfPresent(self.html, forKey: SdkCodingKey("html"))
+        try keyedContainer.encodeIfPresent(self.text, forKey: SdkCodingKey("text"))
+        try keyedContainer.encodeIfPresent(self.subject, forKey: SdkCodingKey("subject"))
+        try keyedContainer.encodeIfPresent(self.attachments, forKey: SdkCodingKey("attachments"))
+        try keyedContainer.encodeIfPresent(self.headers, forKey: SdkCodingKey("headers"))
     }
 
     init(options: InboxesMethods.InboxesForwardThreadEmailOptions) {
-        to = options.to
-        cc = options.cc
-        bcc = options.bcc
-        html = options.html
-        text = options.text
-        subject = options.subject
-        attachments = options.attachments
-        headers = options.headers
+        self.to = options.to
+        self.cc = options.cc
+        self.bcc = options.bcc
+        self.html = options.html
+        self.text = options.text
+        self.subject = options.subject
+        self.attachments = options.attachments
+        self.headers = options.headers
     }
 }
 
@@ -137,27 +137,27 @@ struct InboxesCreateDraftRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(to, forKey: SdkCodingKey("to"))
-        try keyedContainer.encodeIfPresent(cc, forKey: SdkCodingKey("cc"))
-        try keyedContainer.encodeIfPresent(bcc, forKey: SdkCodingKey("bcc"))
-        try keyedContainer.encodeIfPresent(subject, forKey: SdkCodingKey("subject"))
-        try keyedContainer.encodeIfPresent(html, forKey: SdkCodingKey("html"))
-        try keyedContainer.encodeIfPresent(text, forKey: SdkCodingKey("text"))
-        try keyedContainer.encodeIfPresent(attachments, forKey: SdkCodingKey("attachments"))
-        try keyedContainer.encodeIfPresent(threadId, forKey: SdkCodingKey("thread_id"))
-        try keyedContainer.encodeIfPresent(replyToEmailId, forKey: SdkCodingKey("reply_to_email_id"))
+        try keyedContainer.encodeIfPresent(self.to, forKey: SdkCodingKey("to"))
+        try keyedContainer.encodeIfPresent(self.cc, forKey: SdkCodingKey("cc"))
+        try keyedContainer.encodeIfPresent(self.bcc, forKey: SdkCodingKey("bcc"))
+        try keyedContainer.encodeIfPresent(self.subject, forKey: SdkCodingKey("subject"))
+        try keyedContainer.encodeIfPresent(self.html, forKey: SdkCodingKey("html"))
+        try keyedContainer.encodeIfPresent(self.text, forKey: SdkCodingKey("text"))
+        try keyedContainer.encodeIfPresent(self.attachments, forKey: SdkCodingKey("attachments"))
+        try keyedContainer.encodeIfPresent(self.threadId, forKey: SdkCodingKey("thread_id"))
+        try keyedContainer.encodeIfPresent(self.replyToEmailId, forKey: SdkCodingKey("reply_to_email_id"))
     }
 
     init(options: InboxesMethods.InboxesCreateDraftOptions) {
-        to = options.to
-        cc = options.cc
-        bcc = options.bcc
-        subject = options.subject
-        html = options.html
-        text = options.text
-        attachments = options.attachments
-        threadId = options.threadId
-        replyToEmailId = options.replyToEmailId
+        self.to = options.to
+        self.cc = options.cc
+        self.bcc = options.bcc
+        self.subject = options.subject
+        self.html = options.html
+        self.text = options.text
+        self.attachments = options.attachments
+        self.threadId = options.threadId
+        self.replyToEmailId = options.replyToEmailId
     }
 }
 
@@ -172,23 +172,23 @@ struct InboxesUpdateDraftRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(to, forKey: SdkCodingKey("to"))
-        try keyedContainer.encodeIfPresent(cc, forKey: SdkCodingKey("cc"))
-        try keyedContainer.encodeIfPresent(bcc, forKey: SdkCodingKey("bcc"))
-        try keyedContainer.encodeIfPresent(subject, forKey: SdkCodingKey("subject"))
-        try keyedContainer.encodeIfPresent(html, forKey: SdkCodingKey("html"))
-        try keyedContainer.encodeIfPresent(text, forKey: SdkCodingKey("text"))
-        try keyedContainer.encodeIfPresent(attachments, forKey: SdkCodingKey("attachments"))
+        try keyedContainer.encodeIfPresent(self.to, forKey: SdkCodingKey("to"))
+        try keyedContainer.encodeIfPresent(self.cc, forKey: SdkCodingKey("cc"))
+        try keyedContainer.encodeIfPresent(self.bcc, forKey: SdkCodingKey("bcc"))
+        try keyedContainer.encodeIfPresent(self.subject, forKey: SdkCodingKey("subject"))
+        try keyedContainer.encodeIfPresent(self.html, forKey: SdkCodingKey("html"))
+        try keyedContainer.encodeIfPresent(self.text, forKey: SdkCodingKey("text"))
+        try keyedContainer.encodeIfPresent(self.attachments, forKey: SdkCodingKey("attachments"))
     }
 
     init(options: InboxesMethods.InboxesUpdateDraftOptions) {
-        to = options.to
-        cc = options.cc
-        bcc = options.bcc
-        subject = options.subject
-        html = options.html
-        text = options.text
-        attachments = options.attachments
+        self.to = options.to
+        self.cc = options.cc
+        self.bcc = options.bcc
+        self.subject = options.subject
+        self.html = options.html
+        self.text = options.text
+        self.attachments = options.attachments
     }
 }
 
@@ -197,6 +197,6 @@ struct InboxesSendDraftRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(headers, forKey: SdkCodingKey("headers"))
+        try keyedContainer.encodeIfPresent(self.headers, forKey: SdkCodingKey("headers"))
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// EmailFailedEvent domain models
+// EmailFailedEvent domain models
 /// Typed representation of the `EmailFailedEventData` API schema.
 public struct EmailFailedEventData: Codable {
     /// Unique identifier for the email.
@@ -41,89 +41,52 @@ public struct EmailFailedEventData: Codable {
         case headers
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension EmailFailedEventData {
-    init(from decoder: Decoder) throws {
+extension EmailFailedEventData {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.emailId) else {
-            throw SdkValidationError(
-                field: "email_id",
-                code: "required",
-                message: "Validation failed for 'email_id': value is required"
-            )
+            throw SdkValidationError(field: "email_id", code: "required", message: "Validation failed for 'email_id': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
         guard container.contains(.from) else {
-            throw SdkValidationError(
-                field: "from",
-                code: "required",
-                message: "Validation failed for 'from': value is required"
-            )
+            throw SdkValidationError(field: "from", code: "required", message: "Validation failed for 'from': value is required")
         }
         guard container.contains(.to) else {
-            throw SdkValidationError(
-                field: "to",
-                code: "required",
-                message: "Validation failed for 'to': value is required"
-            )
+            throw SdkValidationError(field: "to", code: "required", message: "Validation failed for 'to': value is required")
         }
         guard container.contains(.subject) else {
-            throw SdkValidationError(
-                field: "subject",
-                code: "required",
-                message: "Validation failed for 'subject': value is required"
-            )
+            throw SdkValidationError(field: "subject", code: "required", message: "Validation failed for 'subject': value is required")
         }
         guard container.contains(.failed) else {
-            throw SdkValidationError(
-                field: "failed",
-                code: "required",
-                message: "Validation failed for 'failed': value is required"
-            )
+            throw SdkValidationError(field: "failed", code: "required", message: "Validation failed for 'failed': value is required")
         }
-        emailId = try container.sdkDecodeRequired(.emailId)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        from = try container.sdkDecodeRequired(.from)
-        to = try container.sdkDecodeRequired(.to)
-        subject = try container.sdkDecodeRequired(.subject)
-        failed = try container.sdkDecodeRequired(.failed)
-        broadcastId = try container.sdkDecodeIfPresent(.broadcastId)
-        templateId = try container.sdkDecodeIfPresent(.templateId)
-        tags = try container.sdkDecodeIfPresent(.tags)
-        headers = try container.sdkDecodeIfPresent(.headers)
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        self.emailId = try container.sdkDecodeRequired(.emailId)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.from = try container.sdkDecodeRequired(.from)
+        self.to = try container.sdkDecodeRequired(.to)
+        self.subject = try container.sdkDecodeRequired(.subject)
+        self.failed = try container.sdkDecodeRequired(.failed)
+        self.broadcastId = try container.sdkDecodeIfPresent(.broadcastId)
+        self.templateId = try container.sdkDecodeIfPresent(.templateId)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
+        self.headers = try container.sdkDecodeIfPresent(.headers)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
-public extension EmailFailedEventData {
-    init(
-        emailId: String,
-        createdAt: Date,
-        from: String,
-        to: [String],
-        subject: String,
-        failed: WebhookEventFailed,
-        broadcastId: String? = nil,
-        templateId: String? = nil,
-        tags: [String: String]? = nil,
-        headers: [OutboundEmailEventDataHeadersItem]? = nil
-    ) throws {
+extension EmailFailedEventData {
+    public init(emailId: String, createdAt: Date, from: String, to: [String], subject: String, failed: WebhookEventFailed, broadcastId: String? = nil, templateId: String? = nil, tags: [String: String]? = nil, headers: [OutboundEmailEventDataHeadersItem]? = nil) throws {
         (self.emailId, self.createdAt) = (emailId, createdAt)
         (self.from, self.to) = (from, to)
         (self.subject, self.failed) = (subject, failed)
         (self.broadcastId, self.templateId) = (broadcastId, templateId)
         (self.tags, self.headers) = (tags, headers)
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
@@ -143,49 +106,35 @@ public struct EmailFailedEvent: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension EmailFailedEvent {
-    init(from decoder: Decoder) throws {
+extension EmailFailedEvent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
         guard container.contains(.data) else {
-            throw SdkValidationError(
-                field: "data",
-                code: "required",
-                message: "Validation failed for 'data': value is required"
-            )
+            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        data = try container.sdkDecodeRequired(.data)
-        try sdkValidateRawEnum("type", type, EmailFailedEventType.allCases.map(\.rawValue))
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        self.type = try container.sdkDecodeRequired(.type)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.data = try container.sdkDecodeRequired(.data)
+            try sdkValidateRawEnum("type", self.type, EmailFailedEventType.allCases.map(\.rawValue))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
-public extension EmailFailedEvent {
-    init(type: EmailFailedEventType, createdAt: Date, data: EmailFailedEventData) throws {
+extension EmailFailedEvent {
+    public init(type: EmailFailedEventType, createdAt: Date, data: EmailFailedEventData) throws {
         (self.type, self.createdAt) = (type, createdAt)
         self.data = data
-        try sdkValidateRawEnum("type", self.type, EmailFailedEventType.allCases.map(\.rawValue))
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateRawEnum("type", self.type, EmailFailedEventType.allCases.map(\.rawValue))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
@@ -198,27 +147,21 @@ public struct EmailFailedEventDataVariant1: Codable {
         case failed
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension EmailFailedEventDataVariant1 {
-    init(from decoder: Decoder) throws {
+extension EmailFailedEventDataVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.failed) else {
-            throw SdkValidationError(
-                field: "failed",
-                code: "required",
-                message: "Validation failed for 'failed': value is required"
-            )
+            throw SdkValidationError(field: "failed", code: "required", message: "Validation failed for 'failed': value is required")
         }
-        failed = try container.sdkDecodeRequired(.failed)
+        self.failed = try container.sdkDecodeRequired(.failed)
     }
 }
 
-public extension EmailFailedEventDataVariant1 {
-    init(failed: WebhookEventFailed) {
+extension EmailFailedEventDataVariant1 {
+    public init(failed: WebhookEventFailed) {
         self.failed = failed
     }
 }

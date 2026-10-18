@@ -6,9 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension EventsMethods {
-    /// Sends an event and associates it with a contact or an email address. Supply the required `event` name and
-    /// exactly one of `contact_id` or `email`; include `payload` to attach additional key/value data.
+extension EventsMethods {
+    /// Sends an event and associates it with a contact or an email address. Supply the required `event` name and exactly one of `contact_id` or `email`; include `payload` to attach additional key/value data.
     ///
     /// - Parameters:
     /// - event: The name of the event to send.
@@ -17,52 +16,25 @@ public extension EventsMethods {
     /// - email: The email address to associate with this event. Exactly one of
     ///   `contact_id` or `email` must be provided.
     /// - payload: An optional payload of key/value pairs to include with the event.
-    static func eventsSend(
-        config: ClientConfig,
-        event: String,
-        contactId: String? = nil,
-        email: String? = nil,
-        payload: [String: JSONValue]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SendEventResponse {
-        if let contactId {
+    public static func eventsSend(config: ClientConfig, event: String, contactId: String? = nil, email: String? = nil, payload: [String: JSONValue]? = nil, requestOptions: RequestOptions? = nil) async throws -> SendEventResponse {
+        if let contactId = contactId {
             try sdkValidateUuid("contact_id", contactId)
         }
 
-        if let email {
+        if let email = email {
             try sdkValidateEmail("email", email)
         }
 
         let requestBody = EventsSendRequestBody(event: event, contactId: contactId, email: email, payload: payload)
 
-        return try await (sdkRequest(
-            "POST",
-            "/events/send",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "eventsSend",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("POST", "/events/send", config: config, body: requestBody, decoder: .json, operationId: "eventsSend", options: requestOptions)).data
     }
 
-    /// Retrieves an event by its UUID or event name. Use the `identifier` path parameter to select the event whose
-    /// name, payload schema, and timestamps you need.
+    /// Retrieves an event by its UUID or event name. Use the `identifier` path parameter to select the event whose name, payload schema, and timestamps you need.
     ///
     /// - Parameters:
     /// - identifier: The event ID (UUID) or event name.
-    static func eventsGet(
-        config: ClientConfig,
-        identifier: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Event {
-        try await (sdkRequest(
-            "GET",
-            ["/events/", sdkEncodePathSegment(sdkWireString(identifier))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "eventsGet",
-            options: requestOptions
-        )).data
+    public static func eventsGet(config: ClientConfig, identifier: String, requestOptions: RequestOptions? = nil) async throws -> Event {
+        return try (await sdkRequest("GET", ["/events/", sdkEncodePathSegment(sdkWireString(identifier))].joined(), config: config, decoder: .json, operationId: "eventsGet", options: requestOptions)).data
     }
 }

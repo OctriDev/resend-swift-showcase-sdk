@@ -18,25 +18,25 @@ struct TemplatesUpdateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(alias, forKey: SdkCodingKey("alias"))
-        try keyedContainer.encodeIfPresent(from, forKey: SdkCodingKey("from"))
-        try keyedContainer.encodeIfPresent(subject, forKey: SdkCodingKey("subject"))
-        try keyedContainer.encodeIfPresent(replyTo, forKey: SdkCodingKey("reply_to"))
-        try keyedContainer.encodeIfPresent(html, forKey: SdkCodingKey("html"))
-        try keyedContainer.encodeIfPresent(text, forKey: SdkCodingKey("text"))
-        try keyedContainer.encodeIfPresent(variables, forKey: SdkCodingKey("variables"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.alias, forKey: SdkCodingKey("alias"))
+        try keyedContainer.encodeIfPresent(self.from, forKey: SdkCodingKey("from"))
+        try keyedContainer.encodeIfPresent(self.subject, forKey: SdkCodingKey("subject"))
+        try keyedContainer.encodeIfPresent(self.replyTo, forKey: SdkCodingKey("reply_to"))
+        try keyedContainer.encodeIfPresent(self.html, forKey: SdkCodingKey("html"))
+        try keyedContainer.encodeIfPresent(self.text, forKey: SdkCodingKey("text"))
+        try keyedContainer.encodeIfPresent(self.variables, forKey: SdkCodingKey("variables"))
     }
 
     init(options: TemplatesMethods.TemplatesUpdateOptions) {
-        name = options.name
-        alias = options.alias
-        from = options.from
-        subject = options.subject
-        replyTo = options.replyTo
-        html = options.html
-        text = options.text
-        variables = options.variables
+        self.name = options.name
+        self.alias = options.alias
+        self.from = options.from
+        self.subject = options.subject
+        self.replyTo = options.replyTo
+        self.html = options.html
+        self.text = options.text
+        self.variables = options.variables
     }
 }
 
@@ -45,7 +45,7 @@ struct AudiencesCreateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
     }
 }
 
@@ -61,25 +61,25 @@ struct ContactsCreateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(email, forKey: SdkCodingKey("email"))
-        try keyedContainer.encodeIfPresent(firstName, forKey: SdkCodingKey("first_name"))
-        try keyedContainer.encodeIfPresent(lastName, forKey: SdkCodingKey("last_name"))
-        try keyedContainer.encodeIfPresent(unsubscribed, forKey: SdkCodingKey("unsubscribed"))
-        try keyedContainer.encodeIfPresent(properties, forKey: SdkCodingKey("properties"))
-        try keyedContainer.encodeIfPresent(segments, forKey: SdkCodingKey("segments"))
-        try keyedContainer.encodeIfPresent(topics, forKey: SdkCodingKey("topics"))
-        try keyedContainer.encodeIfPresent(audienceId, forKey: SdkCodingKey("audience_id"))
+        try keyedContainer.encode(self.email, forKey: SdkCodingKey("email"))
+        try keyedContainer.encodeIfPresent(self.firstName, forKey: SdkCodingKey("first_name"))
+        try keyedContainer.encodeIfPresent(self.lastName, forKey: SdkCodingKey("last_name"))
+        try keyedContainer.encodeIfPresent(self.unsubscribed, forKey: SdkCodingKey("unsubscribed"))
+        try keyedContainer.encodeIfPresent(self.properties, forKey: SdkCodingKey("properties"))
+        try keyedContainer.encodeIfPresent(self.segments, forKey: SdkCodingKey("segments"))
+        try keyedContainer.encodeIfPresent(self.topics, forKey: SdkCodingKey("topics"))
+        try keyedContainer.encodeIfPresent(self.audienceId, forKey: SdkCodingKey("audience_id"))
     }
 
     init(options: ContactsMethods.ContactsCreateOptions) {
-        email = options.email
-        firstName = options.firstName
-        lastName = options.lastName
-        unsubscribed = options.unsubscribed
-        properties = options.properties
-        segments = options.segments
-        topics = options.topics
-        audienceId = options.audienceId
+        self.email = options.email
+        self.firstName = options.firstName
+        self.lastName = options.lastName
+        self.unsubscribed = options.unsubscribed
+        self.properties = options.properties
+        self.segments = options.segments
+        self.topics = options.topics
+        self.audienceId = options.audienceId
     }
 }
 
@@ -92,11 +92,11 @@ struct ContactsUpdateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(email, forKey: SdkCodingKey("email"))
-        try keyedContainer.encodeIfPresent(firstName, forKey: SdkCodingKey("first_name"))
-        try keyedContainer.encodeIfPresent(lastName, forKey: SdkCodingKey("last_name"))
-        try keyedContainer.encodeIfPresent(unsubscribed, forKey: SdkCodingKey("unsubscribed"))
-        try keyedContainer.encodeIfPresent(properties, forKey: SdkCodingKey("properties"))
+        try keyedContainer.encodeIfPresent(self.email, forKey: SdkCodingKey("email"))
+        try keyedContainer.encodeIfPresent(self.firstName, forKey: SdkCodingKey("first_name"))
+        try keyedContainer.encodeIfPresent(self.lastName, forKey: SdkCodingKey("last_name"))
+        try keyedContainer.encodeIfPresent(self.unsubscribed, forKey: SdkCodingKey("unsubscribed"))
+        try keyedContainer.encodeIfPresent(self.properties, forKey: SdkCodingKey("properties"))
     }
 }
 
@@ -105,7 +105,7 @@ struct ContactsUpdateTopicsRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(topics, forKey: SdkCodingKey("topics"))
+        try keyedContainer.encode(self.topics, forKey: SdkCodingKey("topics"))
     }
 }
 
@@ -125,33 +125,33 @@ struct BroadcastsCreateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(segmentId, forKey: SdkCodingKey("segment_id"))
-        try keyedContainer.encode(from, forKey: SdkCodingKey("from"))
-        try keyedContainer.encode(subject, forKey: SdkCodingKey("subject"))
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(audienceId, forKey: SdkCodingKey("audience_id"))
-        try keyedContainer.encodeIfPresent(replyTo, forKey: SdkCodingKey("reply_to"))
-        try keyedContainer.encodeIfPresent(previewText, forKey: SdkCodingKey("preview_text"))
-        try keyedContainer.encodeIfPresent(html, forKey: SdkCodingKey("html"))
-        try keyedContainer.encodeIfPresent(text, forKey: SdkCodingKey("text"))
-        try keyedContainer.encodeIfPresent(topicId, forKey: SdkCodingKey("topic_id"))
-        try keyedContainer.encodeIfPresent(send, forKey: SdkCodingKey("send"))
-        try keyedContainer.encodeIfPresent(scheduledAt, forKey: SdkCodingKey("scheduled_at"))
+        try keyedContainer.encode(self.segmentId, forKey: SdkCodingKey("segment_id"))
+        try keyedContainer.encode(self.from, forKey: SdkCodingKey("from"))
+        try keyedContainer.encode(self.subject, forKey: SdkCodingKey("subject"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.audienceId, forKey: SdkCodingKey("audience_id"))
+        try keyedContainer.encodeIfPresent(self.replyTo, forKey: SdkCodingKey("reply_to"))
+        try keyedContainer.encodeIfPresent(self.previewText, forKey: SdkCodingKey("preview_text"))
+        try keyedContainer.encodeIfPresent(self.html, forKey: SdkCodingKey("html"))
+        try keyedContainer.encodeIfPresent(self.text, forKey: SdkCodingKey("text"))
+        try keyedContainer.encodeIfPresent(self.topicId, forKey: SdkCodingKey("topic_id"))
+        try keyedContainer.encodeIfPresent(self.send, forKey: SdkCodingKey("send"))
+        try keyedContainer.encodeIfPresent(self.scheduledAt, forKey: SdkCodingKey("scheduled_at"))
     }
 
     init(options: BroadcastsMethods.BroadcastsCreateOptions) {
-        segmentId = options.segmentId
-        from = options.from
-        subject = options.subject
-        name = options.name
-        audienceId = options.audienceId
-        replyTo = options.replyTo
-        previewText = options.previewText
-        html = options.html
-        text = options.text
-        topicId = options.topicId
-        send = options.send
-        scheduledAt = options.scheduledAt
+        self.segmentId = options.segmentId
+        self.from = options.from
+        self.subject = options.subject
+        self.name = options.name
+        self.audienceId = options.audienceId
+        self.replyTo = options.replyTo
+        self.previewText = options.previewText
+        self.html = options.html
+        self.text = options.text
+        self.topicId = options.topicId
+        self.send = options.send
+        self.scheduledAt = options.scheduledAt
     }
 }
 
@@ -169,29 +169,29 @@ struct BroadcastsUpdateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(audienceId, forKey: SdkCodingKey("audience_id"))
-        try keyedContainer.encodeIfPresent(segmentId, forKey: SdkCodingKey("segment_id"))
-        try keyedContainer.encodeIfPresent(from, forKey: SdkCodingKey("from"))
-        try keyedContainer.encodeIfPresent(subject, forKey: SdkCodingKey("subject"))
-        try keyedContainer.encodeIfPresent(replyTo, forKey: SdkCodingKey("reply_to"))
-        try keyedContainer.encodeIfPresent(previewText, forKey: SdkCodingKey("preview_text"))
-        try keyedContainer.encodeIfPresent(html, forKey: SdkCodingKey("html"))
-        try keyedContainer.encodeIfPresent(text, forKey: SdkCodingKey("text"))
-        try keyedContainer.encodeIfPresent(topicId, forKey: SdkCodingKey("topic_id"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.audienceId, forKey: SdkCodingKey("audience_id"))
+        try keyedContainer.encodeIfPresent(self.segmentId, forKey: SdkCodingKey("segment_id"))
+        try keyedContainer.encodeIfPresent(self.from, forKey: SdkCodingKey("from"))
+        try keyedContainer.encodeIfPresent(self.subject, forKey: SdkCodingKey("subject"))
+        try keyedContainer.encodeIfPresent(self.replyTo, forKey: SdkCodingKey("reply_to"))
+        try keyedContainer.encodeIfPresent(self.previewText, forKey: SdkCodingKey("preview_text"))
+        try keyedContainer.encodeIfPresent(self.html, forKey: SdkCodingKey("html"))
+        try keyedContainer.encodeIfPresent(self.text, forKey: SdkCodingKey("text"))
+        try keyedContainer.encodeIfPresent(self.topicId, forKey: SdkCodingKey("topic_id"))
     }
 
     init(options: BroadcastsMethods.BroadcastsUpdateOptions) {
-        name = options.name
-        audienceId = options.audienceId
-        segmentId = options.segmentId
-        from = options.from
-        subject = options.subject
-        replyTo = options.replyTo
-        previewText = options.previewText
-        html = options.html
-        text = options.text
-        topicId = options.topicId
+        self.name = options.name
+        self.audienceId = options.audienceId
+        self.segmentId = options.segmentId
+        self.from = options.from
+        self.subject = options.subject
+        self.replyTo = options.replyTo
+        self.previewText = options.previewText
+        self.html = options.html
+        self.text = options.text
+        self.topicId = options.topicId
     }
 }
 
@@ -200,7 +200,7 @@ struct BroadcastsSendRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(scheduledAt, forKey: SdkCodingKey("scheduled_at"))
+        try keyedContainer.encodeIfPresent(self.scheduledAt, forKey: SdkCodingKey("scheduled_at"))
     }
 }
 
@@ -210,7 +210,7 @@ struct WebhooksCreateRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(endpoint, forKey: SdkCodingKey("endpoint"))
-        try keyedContainer.encode(events, forKey: SdkCodingKey("events"))
+        try keyedContainer.encode(self.endpoint, forKey: SdkCodingKey("endpoint"))
+        try keyedContainer.encode(self.events, forKey: SdkCodingKey("events"))
     }
 }

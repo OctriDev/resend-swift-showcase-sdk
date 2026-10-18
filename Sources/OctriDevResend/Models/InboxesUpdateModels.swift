@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// InboxesUpdate domain models
+// InboxesUpdate domain models
 /// Send at least one of `to`, `cc`, `bcc`, `subject`, `text`, `html` or `attachments`. Omitted fields are left
 /// unchanged. Setting `text` or `html` replaces the whole body, so the body part you omit becomes `null`. The
 /// merged draft must contain at least one non-empty field, and its combined recipients cannot exceed 50.
@@ -43,37 +43,29 @@ public struct UpdateInboxDraftOptions: Codable {
     }
 
     init() {
-        (to, cc, bcc, subject, html) = (nil, nil, nil, nil, nil)
-        (text, attachments) = (nil, nil)
+        (self.to, self.cc, self.bcc, self.subject, self.html) = (nil, nil, nil, nil, nil)
+        (self.text, self.attachments) = (nil, nil)
     }
 }
 
-public extension UpdateInboxDraftOptions {
-    init(from decoder: Decoder) throws {
+extension UpdateInboxDraftOptions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        to = try container.sdkDecodeIfPresent(.to)
-        cc = try container.sdkDecodeIfPresent(.cc)
-        bcc = try container.sdkDecodeIfPresent(.bcc)
-        subject = try container.sdkDecodeIfPresent(.subject)
-        html = try container.sdkDecodeIfPresent(.html)
-        text = try container.sdkDecodeIfPresent(.text)
-        attachments = try container.sdkDecodeIfPresent(.attachments)
-        if let value = subject {
+        self.to = try container.sdkDecodeIfPresent(.to)
+        self.cc = try container.sdkDecodeIfPresent(.cc)
+        self.bcc = try container.sdkDecodeIfPresent(.bcc)
+        self.subject = try container.sdkDecodeIfPresent(.subject)
+        self.html = try container.sdkDecodeIfPresent(.html)
+        self.text = try container.sdkDecodeIfPresent(.text)
+        self.attachments = try container.sdkDecodeIfPresent(.attachments)
+        if let value = self.subject {
             try validateLength("subject", value, min: 1, max: 2000)
         }
     }
 }
 
-public extension UpdateInboxDraftOptions {
-    init(
-        to: UpdateInboxDraftOptionsTo? = nil,
-        cc: UpdateInboxDraftOptionsCc? = nil,
-        bcc: UpdateInboxDraftOptionsBcc? = nil,
-        subject: String? = nil,
-        html: String? = nil,
-        text: String? = nil,
-        attachments: [InboxDraftAttachmentInput]? = nil
-    ) throws {
+extension UpdateInboxDraftOptions {
+    public init(to: UpdateInboxDraftOptionsTo? = nil, cc: UpdateInboxDraftOptionsCc? = nil, bcc: UpdateInboxDraftOptionsBcc? = nil, subject: String? = nil, html: String? = nil, text: String? = nil, attachments: [InboxDraftAttachmentInput]? = nil) throws {
         self.init()
         (self.to, self.cc) = (to, cc)
         (self.bcc, self.subject) = (bcc, subject)
@@ -92,35 +84,23 @@ public indirect enum UpdateInboxDraftOptionsCc {
 }
 
 extension UpdateInboxDraftOptionsCc: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for UpdateInboxDraftOptionsCc"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for UpdateInboxDraftOptionsCc")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension UpdateInboxDraftOptionsCc {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) {
-            return .stringValue(value)
-        }
-        if let value = try? container.decode([String].self) {
-            return .stringList(value)
-        }
-        if let value = try? container.decode(JSONValue.self) {
-            return .jsonValue(value)
-        }
+        if let value = try? container.decode(String.self) { return .stringValue(value) }
+        if let value = try? container.decode([String].self) { return .stringList(value) }
+        if let value = try? container.decode(JSONValue.self) { return .jsonValue(value) }
         return nil
     }
 }
@@ -143,35 +123,23 @@ public indirect enum UpdateInboxDraftOptionsTo {
 }
 
 extension UpdateInboxDraftOptionsTo: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for UpdateInboxDraftOptionsTo"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for UpdateInboxDraftOptionsTo")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension UpdateInboxDraftOptionsTo {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) {
-            return .stringValue(value)
-        }
-        if let value = try? container.decode([String].self) {
-            return .stringList(value)
-        }
-        if let value = try? container.decode(JSONValue.self) {
-            return .jsonValue(value)
-        }
+        if let value = try? container.decode(String.self) { return .stringValue(value) }
+        if let value = try? container.decode([String].self) { return .stringList(value) }
+        if let value = try? container.decode(JSONValue.self) { return .jsonValue(value) }
         return nil
     }
 }
@@ -201,38 +169,28 @@ public struct UpdateInboxAgentResponseSuccess: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension UpdateInboxAgentResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension UpdateInboxAgentResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.object) else {
-            throw SdkValidationError(
-                field: "object",
-                code: "required",
-                message: "Validation failed for 'object': value is required"
-            )
+            throw SdkValidationError(field: "object", code: "required", message: "Validation failed for 'object': value is required")
         }
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
-        object = try container.sdkDecodeRequired(.object)
-        id = try container.sdkDecodeRequired(.id)
-        try sdkValidateUuid("id", id)
+        self.object = try container.sdkDecodeRequired(.object)
+        self.id = try container.sdkDecodeRequired(.id)
+            try sdkValidateUuid("id", self.id)
     }
 }
 
-public extension UpdateInboxAgentResponseSuccess {
-    init(object: String, id: String) throws {
+extension UpdateInboxAgentResponseSuccess {
+    public init(object: String, id: String) throws {
         (self.object, self.id) = (object, id)
-        try sdkValidateUuid("id", self.id)
+            try sdkValidateUuid("id", self.id)
     }
 }
 
@@ -252,26 +210,26 @@ public struct UpdateInboxLabelOptions: Codable {
     }
 
     init() {
-        (name, color) = (nil, nil)
+        (self.name, self.color) = (nil, nil)
     }
 }
 
-public extension UpdateInboxLabelOptions {
-    init(from decoder: Decoder) throws {
+extension UpdateInboxLabelOptions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        color = try container.sdkDecodeIfPresent(.color)
-        if let value = name {
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.color = try container.sdkDecodeIfPresent(.color)
+        if let value = self.name {
             try validateLength("name", value, min: 1, max: 64)
         }
-        if let value = color {
+        if let value = self.color {
             try sdkValidatePattern("color", value, sdkPatternf01b4765958d)
         }
     }
 }
 
-public extension UpdateInboxLabelOptions {
-    init(name: String? = nil, color: String? = nil) throws {
+extension UpdateInboxLabelOptions {
+    public init(name: String? = nil, color: String? = nil) throws {
         self.init()
         (self.name, self.color) = (name, color)
         if let value = self.name {
@@ -297,38 +255,28 @@ public struct UpdateInboxResponseSuccess: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension UpdateInboxResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension UpdateInboxResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.object) else {
-            throw SdkValidationError(
-                field: "object",
-                code: "required",
-                message: "Validation failed for 'object': value is required"
-            )
+            throw SdkValidationError(field: "object", code: "required", message: "Validation failed for 'object': value is required")
         }
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
-        object = try container.sdkDecodeRequired(.object)
-        id = try container.sdkDecodeRequired(.id)
-        try sdkValidateUuid("id", id)
+        self.object = try container.sdkDecodeRequired(.object)
+        self.id = try container.sdkDecodeRequired(.id)
+            try sdkValidateUuid("id", self.id)
     }
 }
 
-public extension UpdateInboxResponseSuccess {
-    init(object: String, id: String) throws {
+extension UpdateInboxResponseSuccess {
+    public init(object: String, id: String) throws {
         (self.object, self.id) = (object, id)
-        try sdkValidateUuid("id", self.id)
+            try sdkValidateUuid("id", self.id)
     }
 }
 
@@ -358,33 +306,28 @@ public struct UpdateInboxThreadOptions: Codable {
     }
 
     init() {
-        (read, folder, addLabelIds, removeLabelIds) = (nil, nil, nil, nil)
+        (self.read, self.folder, self.addLabelIds, self.removeLabelIds) = (nil, nil, nil, nil)
     }
 }
 
-public extension UpdateInboxThreadOptions {
-    init(from decoder: Decoder) throws {
+extension UpdateInboxThreadOptions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        read = try container.sdkDecodeIfPresent(.read)
-        folder = try container.sdkDecodeIfPresent(.folder)
-        addLabelIds = try container.sdkDecodeIfPresent(.addLabelIds)
-        removeLabelIds = try container.sdkDecodeIfPresent(.removeLabelIds)
-        if let value = addLabelIds {
+        self.read = try container.sdkDecodeIfPresent(.read)
+        self.folder = try container.sdkDecodeIfPresent(.folder)
+        self.addLabelIds = try container.sdkDecodeIfPresent(.addLabelIds)
+        self.removeLabelIds = try container.sdkDecodeIfPresent(.removeLabelIds)
+        if let value = self.addLabelIds {
             try validateItems("add_label_ids", value, min: 1, max: 10)
         }
-        if let value = removeLabelIds {
+        if let value = self.removeLabelIds {
             try validateItems("remove_label_ids", value, min: 1, max: 10)
         }
     }
 }
 
-public extension UpdateInboxThreadOptions {
-    init(
-        read: Bool? = nil,
-        folder: UpdateInboxThreadOptionsFolder? = nil,
-        addLabelIds: [String]? = nil,
-        removeLabelIds: [String]? = nil
-    ) throws {
+extension UpdateInboxThreadOptions {
+    public init(read: Bool? = nil, folder: UpdateInboxThreadOptionsFolder? = nil, addLabelIds: [String]? = nil, removeLabelIds: [String]? = nil) throws {
         self.init()
         (self.read, self.folder) = (read, folder)
         (self.addLabelIds, self.removeLabelIds) = (addLabelIds, removeLabelIds)
@@ -420,28 +363,24 @@ public struct UpdateInboxAgentOptions: Codable {
     }
 
     init() {
-        (instructions, tone, enabledActions) = (nil, nil, nil)
+        (self.instructions, self.tone, self.enabledActions) = (nil, nil, nil)
     }
 }
 
-public extension UpdateInboxAgentOptions {
-    init(from decoder: Decoder) throws {
+extension UpdateInboxAgentOptions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        instructions = try container.sdkDecodeIfPresent(.instructions)
-        tone = try container.sdkDecodeIfPresent(.tone)
-        enabledActions = try container.sdkDecodeIfPresent(.enabledActions)
-        if let value = instructions {
+        self.instructions = try container.sdkDecodeIfPresent(.instructions)
+        self.tone = try container.sdkDecodeIfPresent(.tone)
+        self.enabledActions = try container.sdkDecodeIfPresent(.enabledActions)
+        if let value = self.instructions {
             try validateLength("instructions", value, min: 1, max: 4000)
         }
     }
 }
 
-public extension UpdateInboxAgentOptions {
-    init(
-        instructions: String? = nil,
-        tone: UpdateInboxAgentOptionsTone? = nil,
-        enabledActions: [UpdateInboxAgentOptionsEnabledActionsItem]? = nil
-    ) throws {
+extension UpdateInboxAgentOptions {
+    public init(instructions: String? = nil, tone: UpdateInboxAgentOptionsTone? = nil, enabledActions: [UpdateInboxAgentOptionsEnabledActionsItem]? = nil) throws {
         self.init()
         (self.instructions, self.tone) = (instructions, tone)
         self.enabledActions = enabledActions
@@ -458,35 +397,23 @@ public indirect enum UpdateInboxDraftOptionsBcc {
 }
 
 extension UpdateInboxDraftOptionsBcc: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for UpdateInboxDraftOptionsBcc"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for UpdateInboxDraftOptionsBcc")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension UpdateInboxDraftOptionsBcc {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) {
-            return .stringValue(value)
-        }
-        if let value = try? container.decode([String].self) {
-            return .stringList(value)
-        }
-        if let value = try? container.decode(JSONValue.self) {
-            return .jsonValue(value)
-        }
+        if let value = try? container.decode(String.self) { return .stringValue(value) }
+        if let value = try? container.decode([String].self) { return .stringList(value) }
+        if let value = try? container.decode(JSONValue.self) { return .jsonValue(value) }
         return nil
     }
 }
@@ -519,26 +446,26 @@ public struct UpdateInboxOptions: Codable {
     }
 
     init() {
-        (name, fromName) = (nil, nil)
+        (self.name, self.fromName) = (nil, nil)
     }
 }
 
-public extension UpdateInboxOptions {
-    init(from decoder: Decoder) throws {
+extension UpdateInboxOptions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        fromName = try container.sdkDecodeIfPresent(.fromName)
-        if let value = name {
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.fromName = try container.sdkDecodeIfPresent(.fromName)
+        if let value = self.name {
             try validateLength("name", value, min: 1, max: 64)
         }
-        if let value = fromName {
+        if let value = self.fromName {
             try validateLength("from_name", value, min: nil, max: 78)
         }
     }
 }
 
-public extension UpdateInboxOptions {
-    init(name: String? = nil, fromName: String? = nil) throws {
+extension UpdateInboxOptions {
+    public init(name: String? = nil, fromName: String? = nil) throws {
         self.init()
         (self.name, self.fromName) = (name, fromName)
         if let value = self.name {
@@ -564,38 +491,28 @@ public struct UpdateInboxLabelResponseSuccess: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension UpdateInboxLabelResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension UpdateInboxLabelResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.object) else {
-            throw SdkValidationError(
-                field: "object",
-                code: "required",
-                message: "Validation failed for 'object': value is required"
-            )
+            throw SdkValidationError(field: "object", code: "required", message: "Validation failed for 'object': value is required")
         }
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
-        object = try container.sdkDecodeRequired(.object)
-        id = try container.sdkDecodeRequired(.id)
-        try sdkValidateUuid("id", id)
+        self.object = try container.sdkDecodeRequired(.object)
+        self.id = try container.sdkDecodeRequired(.id)
+            try sdkValidateUuid("id", self.id)
     }
 }
 
-public extension UpdateInboxLabelResponseSuccess {
-    init(object: String, id: String) throws {
+extension UpdateInboxLabelResponseSuccess {
+    public init(object: String, id: String) throws {
         (self.object, self.id) = (object, id)
-        try sdkValidateUuid("id", self.id)
+            try sdkValidateUuid("id", self.id)
     }
 }
 
@@ -603,10 +520,7 @@ public extension UpdateInboxLabelResponseSuccess {
 public struct UpdateInboxAgentOptionsTone: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let conciseProfessional = UpdateInboxAgentOptionsTone(rawValue: "concise_professional")
     public static let conciseCasual = UpdateInboxAgentOptionsTone(rawValue: "concise_casual")
     public static let expandedProfessional = UpdateInboxAgentOptionsTone(rawValue: "expanded_professional")
@@ -614,7 +528,7 @@ public struct UpdateInboxAgentOptionsTone: RawRepresentable, Hashable, Codable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension EmailsMethods {
-    struct GetMetricsOptions: Codable {
+extension EmailsMethods {
+    public struct GetMetricsOptions: Codable {
         public var startDate: String?
         public var endDate: String?
         public var timezone: String?
@@ -21,8 +21,7 @@ public extension EmailsMethods {
         public init() {}
     }
 
-    /// Retrieves account-level email metrics for a date range, optionally broken down by dimensions. Use `metrics` and
-    /// `dimensions` to choose the returned measures and breakdowns, and use the ID filters to restrict the data.
+    /// Retrieves account-level email metrics for a date range, optionally broken down by dimensions. Use `metrics` and `dimensions` to choose the returned measures and breakdowns, and use the ID filters to restrict the data.
     ///
     /// - Parameters:
     /// - startDate: The start of the date range, as an ISO 8601 date or datetime.
@@ -49,12 +48,8 @@ public extension EmailsMethods {
     /// - broadcastId: List of broadcast IDs to restrict the response to, up to 100.
     ///   Cannot be combined with the `email` dimension or `email_id`. Accepts a
     ///   comma-separated value, the parameter repeated, or a mix of both.
-    static func getMetrics(
-        config: ClientConfig,
-        options: GetMetricsOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> GetEmailsMetricsResponse {
-        try await (sdkRequest("GET", "/emails/metrics", config: config, query: [
+    public static func getMetrics(config: ClientConfig, options: GetMetricsOptions, requestOptions: RequestOptions? = nil) async throws -> GetEmailsMetricsResponse {
+        return try (await sdkRequest("GET", "/emails/metrics", config: config, query: [
             SdkQueryParameter("start_date", value: options.startDate),
             SdkQueryParameter("end_date", value: options.endDate),
             SdkQueryParameter("timezone", value: options.timezone),

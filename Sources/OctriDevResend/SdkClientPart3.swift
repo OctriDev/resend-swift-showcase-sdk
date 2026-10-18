@@ -28,12 +28,12 @@ public struct SdkStreamEvent: Sendable {
 /// Opens an SSE connection and returns an AsyncThrowingStream of parsed
 /// events. Bypasses the retry loop and idempotency layer — streaming
 /// connections are long-lived; reconnect is the caller's responsibility.
-public func sdkStream(
+public func sdkStream<B: Encodable>(
     _ method: String,
     _ path: String,
     config: ClientConfig? = nil,
     query: [SdkQueryParameter] = [],
-    body: (some Encodable)? = EmptyBody?.none,
+    body: B? = Optional<EmptyBody>.none,
     rawBody: Data? = nil,
     contentType: String = "application/json",
     operationId: String = "",
@@ -65,15 +65,9 @@ public func sdkStream(
     if let rawBody {
         request.httpBody = try sdkWithStreamSelector(rawBody, operationId: operationId, contentType: contentType)
     } else if let body {
-        request.httpBody = try sdkWithStreamSelector(
-            sdkEncodeBody(body, contentType: contentType),
-            operationId: operationId,
-            contentType: contentType
-        )
+        request.httpBody = try sdkWithStreamSelector(sdkEncodeBody(body, contentType: contentType), operationId: operationId, contentType: contentType)
     }
-    if request.httpBody != nil {
-        request.setValue(contentType, forHTTPHeaderField: "Content-Type")
-    }
+    if request.httpBody != nil { request.setValue(contentType, forHTTPHeaderField: "Content-Type") }
     for (key, value) in Array(extraHeaders) + Array(options?.headers ?? [:]) {
         sdkSetHeader(&request, key, value)
     }
@@ -115,9 +109,7 @@ public func sdkStream(
                 var dataLines: [String] = []
 
                 func flush() {
-                    guard !dataLines.isEmpty else {
-                        eventName = nil; return
-                    }
+                    guard !dataLines.isEmpty else { eventName = nil; return }
                     let ev = SdkStreamEvent(
                         event: eventName ?? "message",
                         data: dataLines.joined(separator: "\n"),
@@ -138,17 +130,11 @@ public func sdkStream(
                     for byte in chunk {
                         if byte == 0x0A { // \n
                             // Strip optional trailing \r (from \r\n).
-                            if lineBuf.last == 0x0D {
-                                lineBuf.removeLast()
-                            }
+                            if lineBuf.last == 0x0D { lineBuf.removeLast() }
                             let line = try decodeStreamLine(lineBuf)
                             lineBuf.removeAll(keepingCapacity: true)
-                            if line.isEmpty {
-                                flush(); continue
-                            }
-                            if line.hasPrefix(":") {
-                                continue
-                            }
+                            if line.isEmpty { flush(); continue }
+                            if line.hasPrefix(":") { continue }
                             let (field, value) = splitSseLine(line)
                             switch field {
                             case "event": eventName = value
@@ -165,11 +151,9 @@ public func sdkStream(
                 // Flush any trailing partial line + the pending event.
                 if !lineBuf.isEmpty {
                     let line = try decodeStreamLine(lineBuf)
-                    if !line.isEmpty, !line.hasPrefix(":") {
+                    if !line.isEmpty && !line.hasPrefix(":") {
                         let (field, value) = splitSseLine(line)
-                        if field == "data" {
-                            dataLines.append(value)
-                        }
+                        if field == "data" { dataLines.append(value) }
                     }
                 }
                 flush()
@@ -184,15 +168,14 @@ public func sdkStream(
 
 /// Fails an event stream answered with plain JSON, as by a server that ignored
 /// the stream flag: its parser would yield no events at all.
-func sdkRefuseJsonAnswer(
+internal func sdkRefuseJsonAnswer(
     _ response: HTTPURLResponse,
     headers: [String: String],
     requestId: String,
     byteStream: AsyncThrowingStream<Data, Swift.Error>
 ) async throws {
     let contentType = headers["content-type"] ?? ""
-    let mediaType = contentType.split(separator: ";").first
-        .map { $0.trimmingCharacters(in: .whitespaces).lowercased() } ?? ""
+    let mediaType = contentType.split(separator: ";").first.map { $0.trimmingCharacters(in: .whitespaces).lowercased() } ?? ""
     guard mediaType == "application/json" || mediaType.hasSuffix("+json") else {
         return
     }
@@ -209,7 +192,7 @@ func sdkRefuseJsonAnswer(
     )
 }
 
-func sdkChunkStream(
+internal func sdkChunkStream(
     _ byteStream: AsyncThrowingStream<Data, Swift.Error>,
     chunkDomain: String
 ) -> AsyncThrowingStream<SdkStreamEvent, Swift.Error> {
@@ -231,9 +214,9 @@ func sdkChunkStream(
 
 /// What surrounds an NDJSON record: whitespace, and the RS a JSON text sequence
 /// record starts with.
-let sdkJsonRecordPadding = CharacterSet.whitespacesAndNewlines.union(CharacterSet(charactersIn: "\u{1E}"))
+internal let sdkJsonRecordPadding = CharacterSet.whitespacesAndNewlines.union(CharacterSet(charactersIn: "\u{1E}"))
 
-func sdkNdjsonStream(
+internal func sdkNdjsonStream(
     _ byteStream: AsyncThrowingStream<Data, Swift.Error>
 ) -> AsyncThrowingStream<SdkStreamEvent, Swift.Error> {
     AsyncThrowingStream { continuation in
@@ -266,19 +249,17 @@ func sdkNdjsonStream(
     }
 }
 
-func splitSseLine(_ line: String) -> (String, String) {
+internal func splitSseLine(_ line: String) -> (String, String) {
     if let colon = line.firstIndex(of: ":") {
         let field = String(line[line.startIndex ..< colon])
         var value = String(line[line.index(after: colon)...])
-        if value.hasPrefix(" ") {
-            value.removeFirst()
-        }
+        if value.hasPrefix(" ") { value.removeFirst() }
         return (field, value)
     }
     return (line, "")
 }
 
-func decodeStreamLine(_ bytes: [UInt8]) throws -> String {
+internal func decodeStreamLine(_ bytes: [UInt8]) throws -> String {
     guard let line = String(bytes: bytes, encoding: .utf8) else {
         throw SdkNetworkError(cause: NSError(
             domain: "SdkStream",

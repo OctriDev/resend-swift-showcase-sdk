@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Segments domain models
+// Segments domain models
 /// Typed representation of the `CreateSegmentResponseSuccess` API schema.
 public struct CreateSegmentResponseSuccess: Codable {
     /// The ID of the segment.
@@ -19,20 +19,20 @@ public struct CreateSegmentResponseSuccess: Codable {
     }
 
     init() {
-        (id, object) = (nil, nil)
+        (self.id, self.object) = (nil, nil)
     }
 }
 
-public extension CreateSegmentResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension CreateSegmentResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.object = try container.sdkDecodeIfPresent(.object)
     }
 }
 
-public extension CreateSegmentResponseSuccess {
-    init(id: String? = nil, object: String? = nil) {
+extension CreateSegmentResponseSuccess {
+    public init(id: String? = nil, object: String? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
     }
@@ -55,21 +55,21 @@ public struct ListSegmentsResponseSuccess: Codable {
     }
 
     init() {
-        (object, hasMore, data) = (nil, nil, nil)
+        (self.object, self.hasMore, self.data) = (nil, nil, nil)
     }
 }
 
-public extension ListSegmentsResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension ListSegmentsResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension ListSegmentsResponseSuccess {
-    init(object: String? = nil, hasMore: Bool? = nil, data: [ListSegmentsResponseSuccessDataItem]? = nil) {
+extension ListSegmentsResponseSuccess {
+    public init(object: String? = nil, hasMore: Bool? = nil, data: [ListSegmentsResponseSuccessDataItem]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -91,29 +91,23 @@ public struct CreateSegmentOptions: Codable {
         case filter
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateSegmentOptions {
-    init(from decoder: Decoder) throws {
+extension CreateSegmentOptions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        audienceId = try container.sdkDecodeIfPresent(.audienceId)
-        filter = try container.sdkDecodeIfPresent(.filter)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.audienceId = try container.sdkDecodeIfPresent(.audienceId)
+        self.filter = try container.sdkDecodeIfPresent(.filter)
     }
 }
 
-public extension CreateSegmentOptions {
-    init(name: String, audienceId: String? = nil, filter: [String: JSONValue]? = nil) {
+extension CreateSegmentOptions {
+    public init(name: String, audienceId: String? = nil, filter: [String: JSONValue]? = nil) {
         (self.name, self.audienceId) = (name, audienceId)
         self.filter = filter
     }
@@ -134,20 +128,20 @@ public struct UpdateSegmentResponseSuccess: Codable {
     }
 
     init() {
-        (id, object) = (nil, nil)
+        (self.id, self.object) = (nil, nil)
     }
 }
 
-public extension UpdateSegmentResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension UpdateSegmentResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.object = try container.sdkDecodeIfPresent(.object)
     }
 }
 
-public extension UpdateSegmentResponseSuccess {
-    init(id: String? = nil, object: String? = nil) {
+extension UpdateSegmentResponseSuccess {
+    public init(id: String? = nil, object: String? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
     }
@@ -173,22 +167,22 @@ public struct ListSegmentsResponseSuccessDataItem: Codable {
     }
 
     init() {
-        (id, name, audienceId, createdAt) = (nil, nil, nil, nil)
+        (self.id, self.name, self.audienceId, self.createdAt) = (nil, nil, nil, nil)
     }
 }
 
-public extension ListSegmentsResponseSuccessDataItem {
-    init(from decoder: Decoder) throws {
+extension ListSegmentsResponseSuccessDataItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        audienceId = try container.sdkDecodeIfPresent(.audienceId)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.audienceId = try container.sdkDecodeIfPresent(.audienceId)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
     }
 }
 
-public extension ListSegmentsResponseSuccessDataItem {
-    init(id: String? = nil, name: String? = nil, audienceId: String? = nil, createdAt: String? = nil) {
+extension ListSegmentsResponseSuccessDataItem {
+    public init(id: String? = nil, name: String? = nil, audienceId: String? = nil, createdAt: String? = nil) {
         self.init()
         (self.id, self.name) = (id, name)
         (self.audienceId, self.createdAt) = (audienceId, createdAt)
@@ -224,32 +218,25 @@ public struct GetSegmentResponseSuccess: Codable {
     }
 
     init() {
-        (id, object, name, audienceId, filter) = (nil, nil, nil, nil, nil)
-        createdAt = nil
+        (self.id, self.object, self.name, self.audienceId, self.filter) = (nil, nil, nil, nil, nil)
+        self.createdAt = nil
     }
 }
 
-public extension GetSegmentResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension GetSegmentResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        object = try container.sdkDecodeIfPresent(.object)
-        name = try container.sdkDecodeIfPresent(.name)
-        audienceId = try container.sdkDecodeIfPresent(.audienceId)
-        filter = try container.sdkDecodeIfPresent(.filter)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.audienceId = try container.sdkDecodeIfPresent(.audienceId)
+        self.filter = try container.sdkDecodeIfPresent(.filter)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
     }
 }
 
-public extension GetSegmentResponseSuccess {
-    init(
-        id: String? = nil,
-        object: String? = nil,
-        name: String? = nil,
-        audienceId: String? = nil,
-        filter: [String: JSONValue]? = nil,
-        createdAt: String? = nil
-    ) {
+extension GetSegmentResponseSuccess {
+    public init(id: String? = nil, object: String? = nil, name: String? = nil, audienceId: String? = nil, filter: [String: JSONValue]? = nil, createdAt: String? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
         (self.name, self.audienceId) = (name, audienceId)
@@ -266,27 +253,21 @@ public struct UpdateSegmentOptions: Codable {
         case name
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension UpdateSegmentOptions {
-    init(from decoder: Decoder) throws {
+extension UpdateSegmentOptions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
+        self.name = try container.sdkDecodeRequired(.name)
     }
 }
 
-public extension UpdateSegmentOptions {
-    init(name: String) {
+extension UpdateSegmentOptions {
+    public init(name: String) {
         self.name = name
     }
 }
@@ -310,21 +291,21 @@ public struct RemoveSegmentResponseSuccess: Codable {
     }
 
     init() {
-        (id, object, deleted) = (nil, nil, nil)
+        (self.id, self.object, self.deleted) = (nil, nil, nil)
     }
 }
 
-public extension RemoveSegmentResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension RemoveSegmentResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        object = try container.sdkDecodeIfPresent(.object)
-        deleted = try container.sdkDecodeIfPresent(.deleted)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-public extension RemoveSegmentResponseSuccess {
-    init(id: String? = nil, object: String? = nil, deleted: Bool? = nil) {
+extension RemoveSegmentResponseSuccess {
+    public init(id: String? = nil, object: String? = nil, deleted: Bool? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
         self.deleted = deleted

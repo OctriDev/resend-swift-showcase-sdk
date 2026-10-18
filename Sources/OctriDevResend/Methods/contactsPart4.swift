@@ -6,46 +6,22 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ContactsMethods {
-    /// Retrieves a contact import by its identifier. Use the import record to review its status, timestamps, and
-    /// processing counts.
+extension ContactsMethods {
+    /// Retrieves a contact import by its identifier. Use the import record to review its status, timestamps, and processing counts.
     ///
     /// - Parameters:
     /// - id: The Contact Import ID.
-    static func contactsGetImport(
-        config: ClientConfig,
-        id: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> GetContactImportResponseSuccess {
+    public static func contactsGetImport(config: ClientConfig, id: String, requestOptions: RequestOptions? = nil) async throws -> GetContactImportResponseSuccess {
         try sdkValidateUuid("id", id)
 
-        return try await (sdkRequest(
-            "GET",
-            ["/contacts/imports/", sdkEncodePathSegment(sdkWireString(id))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "contactsGetImport",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("GET", ["/contacts/imports/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "contactsGetImport", options: requestOptions)).data
     }
 
-    /// Retrieves a contact by its ID or email address. Use this operation to inspect the contact's profile,
-    /// subscription status, and custom properties.
+    /// Retrieves a contact by its ID or email address. Use this operation to inspect the contact's profile, subscription status, and custom properties.
     ///
     /// - Parameters:
     /// - id: The Contact ID or email address.
-    static func contactsGet(
-        config: ClientConfig,
-        id: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> GetContactResponseSuccess {
-        try await (sdkRequest(
-            "GET",
-            ["/contacts/", sdkEncodePathSegment(sdkWireString(id))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "contactsGet",
-            options: requestOptions
-        )).data
+    public static func contactsGet(config: ClientConfig, id: String, requestOptions: RequestOptions? = nil) async throws -> GetContactResponseSuccess {
+        return try (await sdkRequest("GET", ["/contacts/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "contactsGet", options: requestOptions)).data
     }
 }

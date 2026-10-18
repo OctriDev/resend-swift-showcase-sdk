@@ -6,55 +6,34 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension InboxesMethods {
-    /// Lists the team's inboxes, ordered from newest to oldest. Use `after` or `before` with an inbox ID to navigate
-    /// the results; list items include fewer fields than an individual inbox record.
+extension InboxesMethods {
+    /// Lists the team's inboxes, ordered from newest to oldest. Use `after` or `before` with an inbox ID to navigate the results; list items include fewer fields than an individual inbox record.
     ///
-    /// Returns the inboxes of the team, newest first. The list items carry fewer fields than a single inbox. Retrieve
-    /// an inbox to get all its fields. The `after` and `before` cursors take an inbox ID, and only one of them can be
-    /// passed, or the request returns a 422. A value that is not a UUID returns a 422, and an unknown ID returns a 404.
+    /// Returns the inboxes of the team, newest first. The list items carry fewer fields than a single inbox. Retrieve an inbox to get all its fields. The `after` and `before` cursors take an inbox ID, and only one of them can be passed, or the request returns a 422. A value that is not a UUID returns a 422, and an unknown ID returns a 404.
     ///
     /// - Parameters:
     /// - limit: Number of items to return.
     /// - after: Return items after this cursor.
     /// - before: Return items before this cursor.
-    static func inboxesList(
-        config: ClientConfig,
-        limit: Int? = nil,
-        after: String? = nil,
-        before: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ListInboxesResponseSuccess {
-        if let limit {
+    public static func inboxesList(config: ClientConfig, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListInboxesResponseSuccess {
+        if let limit = limit {
             try validateRange("limit", Double(limit), min: 1, max: 100)
         }
 
-        return try await (sdkRequest("GET", "/inboxes", config: config, query: [
+        return try (await sdkRequest("GET", "/inboxes", config: config, query: [
             SdkQueryParameter("limit", value: limit),
             SdkQueryParameter("after", value: after),
             SdkQueryParameter("before", value: before),
         ], decoder: .json, operationId: "inboxesList", options: requestOptions)).data
     }
 
-    /// Retrieves a single inbox by its ID or email address. Use an email address for a case-insensitive address lookup,
-    /// or a UUID to look up the inbox by ID.
+    /// Retrieves a single inbox by its ID or email address. Use an email address for a case-insensitive address lookup, or a UUID to look up the inbox by ID.
     ///
     /// - Parameters:
     /// - inboxId: The Inbox ID or the inbox email address, such as
     ///   `support@acme.com`. A value that contains `@` must be a valid email address,
     ///   and the match is case-insensitive. Any other value must be a UUID.
-    static func inboxesGet(
-        config: ClientConfig,
-        inboxId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Inbox {
-        try await (sdkRequest(
-            "GET",
-            ["/inboxes/", sdkEncodePathSegment(sdkWireString(inboxId))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "inboxesGet",
-            options: requestOptions
-        )).data
+    public static func inboxesGet(config: ClientConfig, inboxId: String, requestOptions: RequestOptions? = nil) async throws -> Inbox {
+        return try (await sdkRequest("GET", ["/inboxes/", sdkEncodePathSegment(sdkWireString(inboxId))].joined(), config: config, decoder: .json, operationId: "inboxesGet", options: requestOptions)).data
     }
 }

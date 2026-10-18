@@ -6,12 +6,10 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension InboxesMethods {
-    /// Updates an inbox's internal name or the sender name recipients see. Provide at least one of `name` or
-    /// `from_name`; omitted values remain unchanged.
+extension InboxesMethods {
+    /// Updates an inbox's internal name or the sender name recipients see. Provide at least one of `name` or `from_name`; omitted values remain unchanged.
     ///
-    /// Updates the internal name of the inbox or the name recipients see when mail is sent from it. At least one of
-    /// `name` or `from_name` is required.
+    /// Updates the internal name of the inbox or the name recipients see when mail is sent from it. At least one of `name` or `from_name` is required.
     ///
     /// - Parameters:
     /// - inboxId: The Inbox ID. An email address is not accepted.
@@ -22,34 +20,20 @@ public extension InboxesMethods {
     ///   contain a colon, `<`, `>`, line breaks, or other control characters. An
     ///   email address inside the name must be on a domain the team has verified for
     ///   sending. An empty string removes it.
-    static func inboxesUpdate(
-        config: ClientConfig,
-        inboxId: String,
-        name: String? = nil,
-        fromName: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> UpdateInboxResponseSuccess {
+    public static func inboxesUpdate(config: ClientConfig, inboxId: String, name: String? = nil, fromName: String? = nil, requestOptions: RequestOptions? = nil) async throws -> UpdateInboxResponseSuccess {
         try sdkValidateUuid("inbox_id", inboxId)
 
-        if let name {
+        if let name = name {
             try validateLength("name", name, min: 1, max: 64)
         }
 
-        if let fromName {
+        if let fromName = fromName {
             try validateLength("from_name", fromName, max: 78)
         }
 
         let requestBody = InboxesUpdateRequestBody(name: name, fromName: fromName)
 
-        return try await (sdkRequest(
-            "PATCH",
-            ["/inboxes/", sdkEncodePathSegment(sdkWireString(inboxId))].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "inboxesUpdate",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("PATCH", ["/inboxes/", sdkEncodePathSegment(sdkWireString(inboxId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "inboxesUpdate", options: requestOptions)).data
     }
 
     /// Deletes an existing inbox. Use its UUID as `inbox_id`; an email address is not accepted for this operation.
@@ -58,20 +42,9 @@ public extension InboxesMethods {
     ///
     /// - Parameters:
     /// - inboxId: The Inbox ID. An email address is not accepted.
-    static func inboxesRemove(
-        config: ClientConfig,
-        inboxId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> RemoveInboxResponseSuccess {
+    public static func inboxesRemove(config: ClientConfig, inboxId: String, requestOptions: RequestOptions? = nil) async throws -> RemoveInboxResponseSuccess {
         try sdkValidateUuid("inbox_id", inboxId)
 
-        return try await (sdkRequest(
-            "DELETE",
-            ["/inboxes/", sdkEncodePathSegment(sdkWireString(inboxId))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "inboxesRemove",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("DELETE", ["/inboxes/", sdkEncodePathSegment(sdkWireString(inboxId))].joined(), config: config, decoder: .json, operationId: "inboxesRemove", options: requestOptions)).data
     }
 }

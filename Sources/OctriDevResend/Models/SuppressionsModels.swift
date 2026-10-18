@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Suppressions domain models
+// Suppressions domain models
 /// Provide either `emails` or `ids`, but not both.
 public struct BatchRemoveSuppressionsOptions: Codable {
     /// Email addresses to remove from the suppression list.
@@ -19,26 +19,26 @@ public struct BatchRemoveSuppressionsOptions: Codable {
     }
 
     init() {
-        (emails, ids) = (nil, nil)
+        (self.emails, self.ids) = (nil, nil)
     }
 }
 
-public extension BatchRemoveSuppressionsOptions {
-    init(from decoder: Decoder) throws {
+extension BatchRemoveSuppressionsOptions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        emails = try container.sdkDecodeIfPresent(.emails)
-        ids = try container.sdkDecodeIfPresent(.ids)
-        if let value = emails {
+        self.emails = try container.sdkDecodeIfPresent(.emails)
+        self.ids = try container.sdkDecodeIfPresent(.ids)
+        if let value = self.emails {
             try validateItems("emails", value, min: 1, max: 100)
         }
-        if let value = ids {
+        if let value = self.ids {
             try validateItems("ids", value, min: 1, max: 100)
         }
     }
 }
 
-public extension BatchRemoveSuppressionsOptions {
-    init(emails: [String]? = nil, ids: [String]? = nil) throws {
+extension BatchRemoveSuppressionsOptions {
+    public init(emails: [String]? = nil, ids: [String]? = nil) throws {
         self.init()
         (self.emails, self.ids) = (emails, ids)
         if let value = self.emails {
@@ -60,19 +60,19 @@ public struct BatchAddSuppressionsResponseSuccess: Codable {
     }
 
     init() {
-        data = nil
+        self.data = nil
     }
 }
 
-public extension BatchAddSuppressionsResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension BatchAddSuppressionsResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension BatchAddSuppressionsResponseSuccess {
-    init(data: [BatchAddSuppressionsResponseSuccessDataItem]? = nil) {
+extension BatchAddSuppressionsResponseSuccess {
+    public init(data: [BatchAddSuppressionsResponseSuccessDataItem]? = nil) {
         self.init()
         self.data = data
     }
@@ -97,21 +97,21 @@ public struct RemoveSuppressionResponseSuccess: Codable {
     }
 
     init() {
-        (object, id, deleted) = (nil, nil, nil)
+        (self.object, self.id, self.deleted) = (nil, nil, nil)
     }
 }
 
-public extension RemoveSuppressionResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension RemoveSuppressionResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        id = try container.sdkDecodeIfPresent(.id)
-        deleted = try container.sdkDecodeIfPresent(.deleted)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-public extension RemoveSuppressionResponseSuccess {
-    init(object: String? = nil, id: String? = nil, deleted: Bool? = nil) {
+extension RemoveSuppressionResponseSuccess {
+    public init(object: String? = nil, id: String? = nil, deleted: Bool? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
         self.deleted = deleted
@@ -133,20 +133,20 @@ public struct CreateSuppressionResponseSuccess: Codable {
     }
 
     init() {
-        (object, id) = (nil, nil)
+        (self.object, self.id) = (nil, nil)
     }
 }
 
-public extension CreateSuppressionResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension CreateSuppressionResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        id = try container.sdkDecodeIfPresent(.id)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-public extension CreateSuppressionResponseSuccess {
-    init(object: String? = nil, id: String? = nil) {
+extension CreateSuppressionResponseSuccess {
+    public init(object: String? = nil, id: String? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
     }
@@ -179,29 +179,23 @@ public struct ListSuppressionsResponseSuccessDataItem: Codable {
     }
 
     init() {
-        (id, email, origin, sourceId, createdAt) = (nil, nil, nil, nil, nil)
+        (self.id, self.email, self.origin, self.sourceId, self.createdAt) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ListSuppressionsResponseSuccessDataItem {
-    init(from decoder: Decoder) throws {
+extension ListSuppressionsResponseSuccessDataItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        email = try container.sdkDecodeIfPresent(.email)
-        origin = try container.sdkDecodeIfPresent(.origin)
-        sourceId = try container.sdkDecodeIfPresent(.sourceId)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.email = try container.sdkDecodeIfPresent(.email)
+        self.origin = try container.sdkDecodeIfPresent(.origin)
+        self.sourceId = try container.sdkDecodeIfPresent(.sourceId)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
     }
 }
 
-public extension ListSuppressionsResponseSuccessDataItem {
-    init(
-        id: String? = nil,
-        email: String? = nil,
-        origin: ListSuppressionsResponseSuccessDataItemOrigin? = nil,
-        sourceId: String? = nil,
-        createdAt: String? = nil
-    ) {
+extension ListSuppressionsResponseSuccessDataItem {
+    public init(id: String? = nil, email: String? = nil, origin: ListSuppressionsResponseSuccessDataItemOrigin? = nil, sourceId: String? = nil, createdAt: String? = nil) {
         self.init()
         (self.id, self.email) = (id, email)
         (self.origin, self.sourceId) = (origin, sourceId)
@@ -228,21 +222,21 @@ public struct BatchRemoveSuppressionsResponseSuccessDataItem: Codable {
     }
 
     init() {
-        (object, id, deleted) = (nil, nil, nil)
+        (self.object, self.id, self.deleted) = (nil, nil, nil)
     }
 }
 
-public extension BatchRemoveSuppressionsResponseSuccessDataItem {
-    init(from decoder: Decoder) throws {
+extension BatchRemoveSuppressionsResponseSuccessDataItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        id = try container.sdkDecodeIfPresent(.id)
-        deleted = try container.sdkDecodeIfPresent(.deleted)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-public extension BatchRemoveSuppressionsResponseSuccessDataItem {
-    init(object: String? = nil, id: String? = nil, deleted: Bool? = nil) {
+extension BatchRemoveSuppressionsResponseSuccessDataItem {
+    public init(object: String? = nil, id: String? = nil, deleted: Bool? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
         self.deleted = deleted
@@ -259,19 +253,19 @@ public struct BatchRemoveSuppressionsResponseSuccess: Codable {
     }
 
     init() {
-        data = nil
+        self.data = nil
     }
 }
 
-public extension BatchRemoveSuppressionsResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension BatchRemoveSuppressionsResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension BatchRemoveSuppressionsResponseSuccess {
-    init(data: [BatchRemoveSuppressionsResponseSuccessDataItem]? = nil) {
+extension BatchRemoveSuppressionsResponseSuccess {
+    public init(data: [BatchRemoveSuppressionsResponseSuccessDataItem]? = nil) {
         self.init()
         self.data = data
     }
@@ -294,21 +288,21 @@ public struct ListSuppressionsResponseSuccess: Codable {
     }
 
     init() {
-        (object, hasMore, data) = (nil, nil, nil)
+        (self.object, self.hasMore, self.data) = (nil, nil, nil)
     }
 }
 
-public extension ListSuppressionsResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension ListSuppressionsResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension ListSuppressionsResponseSuccess {
-    init(object: String? = nil, hasMore: Bool? = nil, data: [ListSuppressionsResponseSuccessDataItem]? = nil) {
+extension ListSuppressionsResponseSuccess {
+    public init(object: String? = nil, hasMore: Bool? = nil, data: [ListSuppressionsResponseSuccessDataItem]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -325,27 +319,21 @@ public struct CreateSuppressionOptions: Codable {
         case email
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateSuppressionOptions {
-    init(from decoder: Decoder) throws {
+extension CreateSuppressionOptions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.email) else {
-            throw SdkValidationError(
-                field: "email",
-                code: "required",
-                message: "Validation failed for 'email': value is required"
-            )
+            throw SdkValidationError(field: "email", code: "required", message: "Validation failed for 'email': value is required")
         }
-        email = try container.sdkDecodeRequired(.email)
+        self.email = try container.sdkDecodeRequired(.email)
     }
 }
 
-public extension CreateSuppressionOptions {
-    init(email: String) {
+extension CreateSuppressionOptions {
+    public init(email: String) {
         self.email = email
     }
 }
@@ -365,20 +353,20 @@ public struct BatchAddSuppressionsResponseSuccessDataItem: Codable {
     }
 
     init() {
-        (object, id) = (nil, nil)
+        (self.object, self.id) = (nil, nil)
     }
 }
 
-public extension BatchAddSuppressionsResponseSuccessDataItem {
-    init(from decoder: Decoder) throws {
+extension BatchAddSuppressionsResponseSuccessDataItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        id = try container.sdkDecodeIfPresent(.id)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-public extension BatchAddSuppressionsResponseSuccessDataItem {
-    init(object: String? = nil, id: String? = nil) {
+extension BatchAddSuppressionsResponseSuccessDataItem {
+    public init(object: String? = nil, id: String? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
     }
@@ -415,32 +403,25 @@ public struct GetSuppressionResponseSuccess: Codable {
     }
 
     init() {
-        (object, id, email, origin, sourceId) = (nil, nil, nil, nil, nil)
-        createdAt = nil
+        (self.object, self.id, self.email, self.origin, self.sourceId) = (nil, nil, nil, nil, nil)
+        self.createdAt = nil
     }
 }
 
-public extension GetSuppressionResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension GetSuppressionResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        id = try container.sdkDecodeIfPresent(.id)
-        email = try container.sdkDecodeIfPresent(.email)
-        origin = try container.sdkDecodeIfPresent(.origin)
-        sourceId = try container.sdkDecodeIfPresent(.sourceId)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.email = try container.sdkDecodeIfPresent(.email)
+        self.origin = try container.sdkDecodeIfPresent(.origin)
+        self.sourceId = try container.sdkDecodeIfPresent(.sourceId)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
     }
 }
 
-public extension GetSuppressionResponseSuccess {
-    init(
-        object: String? = nil,
-        id: String? = nil,
-        email: String? = nil,
-        origin: GetSuppressionResponseSuccessOrigin? = nil,
-        sourceId: String? = nil,
-        createdAt: String? = nil
-    ) {
+extension GetSuppressionResponseSuccess {
+    public init(object: String? = nil, id: String? = nil, email: String? = nil, origin: GetSuppressionResponseSuccessOrigin? = nil, sourceId: String? = nil, createdAt: String? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
         (self.email, self.origin) = (email, origin)
@@ -458,30 +439,24 @@ public struct BatchAddSuppressionsOptions: Codable {
         case emails
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension BatchAddSuppressionsOptions {
-    init(from decoder: Decoder) throws {
+extension BatchAddSuppressionsOptions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.emails) else {
-            throw SdkValidationError(
-                field: "emails",
-                code: "required",
-                message: "Validation failed for 'emails': value is required"
-            )
+            throw SdkValidationError(field: "emails", code: "required", message: "Validation failed for 'emails': value is required")
         }
-        emails = try container.sdkDecodeRequired(.emails)
-        try validateItems("emails", emails, min: 1, max: 100)
+        self.emails = try container.sdkDecodeRequired(.emails)
+            try validateItems("emails", self.emails, min: 1, max: 100)
     }
 }
 
-public extension BatchAddSuppressionsOptions {
-    init(emails: [String]) throws {
+extension BatchAddSuppressionsOptions {
+    public init(emails: [String]) throws {
         self.emails = emails
-        try validateItems("emails", self.emails, min: 1, max: 100)
+            try validateItems("emails", self.emails, min: 1, max: 100)
     }
 }
 
@@ -489,17 +464,14 @@ public extension BatchAddSuppressionsOptions {
 public struct GetSuppressionResponseSuccessOrigin: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let bounce = GetSuppressionResponseSuccessOrigin(rawValue: "bounce")
     public static let complaint = GetSuppressionResponseSuccessOrigin(rawValue: "complaint")
     public static let manual = GetSuppressionResponseSuccessOrigin(rawValue: "manual")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -509,21 +481,17 @@ public struct GetSuppressionResponseSuccessOrigin: RawRepresentable, Hashable, C
 }
 
 /// Origin of the suppression.
-public struct ListSuppressionsResponseSuccessDataItemOrigin: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct ListSuppressionsResponseSuccessDataItemOrigin: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let bounce = ListSuppressionsResponseSuccessDataItemOrigin(rawValue: "bounce")
     public static let complaint = ListSuppressionsResponseSuccessDataItemOrigin(rawValue: "complaint")
     public static let manual = ListSuppressionsResponseSuccessDataItemOrigin(rawValue: "manual")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

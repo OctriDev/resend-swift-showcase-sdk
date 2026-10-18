@@ -6,49 +6,23 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ApiKeysMethods {
-    /// Updates the name of an existing API key. Supply the new `name` in the request body and the key's ID in the path.
-    /// The response identifies the updated API key.
+extension ApiKeysMethods {
+    /// Updates the name of an existing API key. Supply the new `name` in the request body and the key's ID in the path. The response identifies the updated API key.
     ///
     /// - Parameters:
     /// - apiKeyId: The API key ID.
     /// - name: The API key name.
-    static func apiKeysUpdate(
-        config: ClientConfig,
-        apiKeyId: String,
-        name: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> UpdateApiKeyResponse {
+    public static func apiKeysUpdate(config: ClientConfig, apiKeyId: String, name: String, requestOptions: RequestOptions? = nil) async throws -> UpdateApiKeyResponse {
         let requestBody = ApiKeysUpdateRequestBody(name: name)
 
-        return try await (sdkRequest(
-            "PATCH",
-            ["/api-keys/", sdkEncodePathSegment(sdkWireString(apiKeyId))].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "apiKeysUpdate",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("PATCH", ["/api-keys/", sdkEncodePathSegment(sdkWireString(apiKeyId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "apiKeysUpdate", options: requestOptions)).data
     }
 
-    /// Deletes an existing API key. Supply the key's ID to identify the API key to remove. The response indicates
-    /// whether the key was deleted.
+    /// Deletes an existing API key. Supply the key's ID to identify the API key to remove. The response indicates whether the key was deleted.
     ///
     /// - Parameters:
     /// - apiKeyId: The API key ID.
-    static func apiKeysRemove(
-        config: ClientConfig,
-        apiKeyId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DeleteApiKeyResponse {
-        try await (sdkRequest(
-            "DELETE",
-            ["/api-keys/", sdkEncodePathSegment(sdkWireString(apiKeyId))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "apiKeysRemove",
-            options: requestOptions
-        )).data
+    public static func apiKeysRemove(config: ClientConfig, apiKeyId: String, requestOptions: RequestOptions? = nil) async throws -> DeleteApiKeyResponse {
+        return try (await sdkRequest("DELETE", ["/api-keys/", sdkEncodePathSegment(sdkWireString(apiKeyId))].joined(), config: config, decoder: .json, operationId: "apiKeysRemove", options: requestOptions)).data
     }
 }

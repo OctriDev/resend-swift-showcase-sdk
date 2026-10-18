@@ -6,70 +6,34 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AutomationsMethods {
-    /// Deletes an automation by its identifier. Use this operation to remove an automation you no longer need; the
-    /// response indicates whether deletion succeeded.
+extension AutomationsMethods {
+    /// Deletes an automation by its identifier. Use this operation to remove an automation you no longer need; the response indicates whether deletion succeeded.
     ///
     /// - Parameters:
     /// - automationId: The ID of the automation.
-    static func automationsRemove(
-        config: ClientConfig,
-        automationId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DeleteAutomationResponse {
+    public static func automationsRemove(config: ClientConfig, automationId: String, requestOptions: RequestOptions? = nil) async throws -> DeleteAutomationResponse {
         try sdkValidateUuid("automation_id", automationId)
 
-        return try await (sdkRequest(
-            "DELETE",
-            ["/automations/", sdkEncodePathSegment(sdkWireString(automationId))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "automationsRemove",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("DELETE", ["/automations/", sdkEncodePathSegment(sdkWireString(automationId))].joined(), config: config, decoder: .json, operationId: "automationsRemove", options: requestOptions)).data
     }
 
-    /// Duplicates an existing automation to create a separate automation. Supply the source automation's identifier to
-    /// create the duplicate, then use the returned identifier to access it.
+    /// Duplicates an existing automation to create a separate automation. Supply the source automation's identifier to create the duplicate, then use the returned identifier to access it.
     ///
     /// - Parameters:
     /// - automationId: The ID of the automation.
-    static func automationsDuplicate(
-        config: ClientConfig,
-        automationId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DuplicateAutomationResponse {
+    public static func automationsDuplicate(config: ClientConfig, automationId: String, requestOptions: RequestOptions? = nil) async throws -> DuplicateAutomationResponse {
         try sdkValidateUuid("automation_id", automationId)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/automations/", sdkEncodePathSegment(sdkWireString(automationId)), "/duplicate"].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "automationsDuplicate",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("POST", ["/automations/", sdkEncodePathSegment(sdkWireString(automationId)), "/duplicate"].joined(), config: config, decoder: .json, operationId: "automationsDuplicate", options: requestOptions)).data
     }
 
-    /// Stops an automation by its identifier. Use this operation when you want the automation to stop running; the
-    /// response includes its status after stopping.
+    /// Stops an automation by its identifier. Use this operation when you want the automation to stop running; the response includes its status after stopping.
     ///
     /// - Parameters:
     /// - automationId: The ID of the automation.
-    static func automationsStop(
-        config: ClientConfig,
-        automationId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> StopAutomationResponse {
+    public static func automationsStop(config: ClientConfig, automationId: String, requestOptions: RequestOptions? = nil) async throws -> StopAutomationResponse {
         try sdkValidateUuid("automation_id", automationId)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/automations/", sdkEncodePathSegment(sdkWireString(automationId)), "/stop"].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "automationsStop",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("POST", ["/automations/", sdkEncodePathSegment(sdkWireString(automationId)), "/stop"].joined(), config: config, decoder: .json, operationId: "automationsStop", options: requestOptions)).data
     }
 }

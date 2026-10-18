@@ -6,35 +6,17 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension InboxesMethods {
-    /// Retrieves a specific draft from an inbox. Use the inbox and draft identifiers to inspect its recipients,
-    /// content, thread association, timestamps, and stored attachments.
+extension InboxesMethods {
+    /// Retrieves a specific draft from an inbox. Use the inbox and draft identifiers to inspect its recipients, content, thread association, timestamps, and stored attachments.
     ///
     /// - Parameters:
     /// - inboxId: The Inbox ID. An email address is not accepted.
     /// - draftId: The Draft ID.
-    static func inboxesGetDraft(
-        config: ClientConfig,
-        inboxId: String,
-        draftId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> InboxDraft {
+    public static func inboxesGetDraft(config: ClientConfig, inboxId: String, draftId: String, requestOptions: RequestOptions? = nil) async throws -> InboxDraft {
         try sdkValidateUuid("inbox_id", inboxId)
 
         try sdkValidateUuid("draft_id", draftId)
 
-        return try await (sdkRequest(
-            "GET",
-            [
-                "/inboxes/",
-                sdkEncodePathSegment(sdkWireString(inboxId)),
-                "/drafts/",
-                sdkEncodePathSegment(sdkWireString(draftId)),
-            ].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "inboxesGetDraft",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("GET", ["/inboxes/", sdkEncodePathSegment(sdkWireString(inboxId)), "/drafts/", sdkEncodePathSegment(sdkWireString(draftId))].joined(), config: config, decoder: .json, operationId: "inboxesGetDraft", options: requestOptions)).data
     }
 }

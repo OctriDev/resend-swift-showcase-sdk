@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// InboxDeletedEvent domain models
+// InboxDeletedEvent domain models
 /// Typed representation of the `InboxDeletedEvent` API schema.
 public struct InboxDeletedEvent: Codable {
     /// The event type.
@@ -20,49 +20,35 @@ public struct InboxDeletedEvent: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension InboxDeletedEvent {
-    init(from decoder: Decoder) throws {
+extension InboxDeletedEvent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
         guard container.contains(.data) else {
-            throw SdkValidationError(
-                field: "data",
-                code: "required",
-                message: "Validation failed for 'data': value is required"
-            )
+            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        data = try container.sdkDecodeRequired(.data)
-        try sdkValidateRawEnum("type", type, InboxDeletedEventType.allCases.map(\.rawValue))
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        self.type = try container.sdkDecodeRequired(.type)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.data = try container.sdkDecodeRequired(.data)
+            try sdkValidateRawEnum("type", self.type, InboxDeletedEventType.allCases.map(\.rawValue))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
-public extension InboxDeletedEvent {
-    init(type: InboxDeletedEventType, createdAt: Date, data: InboxDeletedEventData) throws {
+extension InboxDeletedEvent {
+    public init(type: InboxDeletedEventType, createdAt: Date, data: InboxDeletedEventData) throws {
         (self.type, self.createdAt) = (type, createdAt)
         self.data = data
-        try sdkValidateRawEnum("type", self.type, InboxDeletedEventType.allCases.map(\.rawValue))
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateRawEnum("type", self.type, InboxDeletedEventType.allCases.map(\.rawValue))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
@@ -80,38 +66,28 @@ public struct InboxDeletedEventData: Codable {
         case inboxId = "inbox_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension InboxDeletedEventData {
-    init(from decoder: Decoder) throws {
+extension InboxDeletedEventData {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.source) else {
-            throw SdkValidationError(
-                field: "source",
-                code: "required",
-                message: "Validation failed for 'source': value is required"
-            )
+            throw SdkValidationError(field: "source", code: "required", message: "Validation failed for 'source': value is required")
         }
         guard container.contains(.inboxId) else {
-            throw SdkValidationError(
-                field: "inbox_id",
-                code: "required",
-                message: "Validation failed for 'inbox_id': value is required"
-            )
+            throw SdkValidationError(field: "inbox_id", code: "required", message: "Validation failed for 'inbox_id': value is required")
         }
-        source = try container.sdkDecodeRequired(.source)
-        inboxId = try container.sdkDecodeRequired(.inboxId)
-        try sdkValidateUuid("inbox_id", inboxId)
+        self.source = try container.sdkDecodeRequired(.source)
+        self.inboxId = try container.sdkDecodeRequired(.inboxId)
+            try sdkValidateUuid("inbox_id", self.inboxId)
     }
 }
 
-public extension InboxDeletedEventData {
-    init(source: InboxEventSource, inboxId: String) throws {
+extension InboxDeletedEventData {
+    public init(source: InboxEventSource, inboxId: String) throws {
         (self.source, self.inboxId) = (source, inboxId)
-        try sdkValidateUuid("inbox_id", self.inboxId)
+            try sdkValidateUuid("inbox_id", self.inboxId)
     }
 }
 

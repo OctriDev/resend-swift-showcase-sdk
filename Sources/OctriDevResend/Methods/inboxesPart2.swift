@@ -6,18 +6,10 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension InboxesMethods {
-    /// Creates an inbox that sends and receives email at an address on one of the team's domains. Supply
-    /// `email_address` and choose whether to enable `forwarding`; the domain's verification requirements depend on that
-    /// setting.
+extension InboxesMethods {
+    /// Creates an inbox that sends and receives email at an address on one of the team's domains. Supply `email_address` and choose whether to enable `forwarding`; the domain's verification requirements depend on that setting.
     ///
-    /// Creates an inbox that sends and receives email at an address on one of your domains. The domain must belong to
-    /// the team. Without `forwarding`, the domain must have receiving enabled, with DKIM and SPF verified and the
-    /// inbound MX record verified or pending. With `forwarding` set to `true`, the domain only needs DKIM and SPF
-    /// verified for sending, and Resend generates a `receiving_address` on the team inbound domain, and a team without
-    /// an inbound domain gets a 422. A domain that does not meet these rules returns a 422 validation_error. An address
-    /// or receiving address that is already in use returns a 409. A team that has reached the inbox limit of its plan
-    /// returns a 403 validation_error. A blocked account returns a 451.
+    /// Creates an inbox that sends and receives email at an address on one of your domains. The domain must belong to the team. Without `forwarding`, the domain must have receiving enabled, with DKIM and SPF verified and the inbound MX record verified or pending. With `forwarding` set to `true`, the domain only needs DKIM and SPF verified for sending, and Resend generates a `receiving_address` on the team inbound domain, and a team without an inbound domain gets a 422. A domain that does not meet these rules returns a 422 validation_error. An address or receiving address that is already in use returns a 409. A team that has reached the inbox limit of its plan returns a 403 validation_error. A blocked account returns a 451.
     ///
     /// - Parameters:
     /// - emailAddress: The inbox email address on one of your domains. The API
@@ -34,37 +26,17 @@ public extension InboxesMethods {
     /// - forwarding: When `true`, Resend provisions a receiving address so you can
     ///   receive mail without adding an MX record. The address is returned in
     ///   `receiving_address`.
-    static func inboxesCreate(
-        config: ClientConfig,
-        emailAddress: String,
-        name: String? = nil,
-        fromName: String? = nil,
-        forwarding: Bool? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> CreateInboxResponseSuccess {
-        if let name {
+    public static func inboxesCreate(config: ClientConfig, emailAddress: String, name: String? = nil, fromName: String? = nil, forwarding: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> CreateInboxResponseSuccess {
+        if let name = name {
             try validateLength("name", name, max: 64)
         }
 
-        if let fromName {
+        if let fromName = fromName {
             try validateLength("from_name", fromName, max: 78)
         }
 
-        let requestBody = InboxesCreateRequestBody(
-            emailAddress: emailAddress,
-            name: name,
-            fromName: fromName,
-            forwarding: forwarding
-        )
+        let requestBody = InboxesCreateRequestBody(emailAddress: emailAddress, name: name, fromName: fromName, forwarding: forwarding)
 
-        return try await (sdkRequest(
-            "POST",
-            "/inboxes",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "inboxesCreate",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("POST", "/inboxes", config: config, body: requestBody, decoder: .json, operationId: "inboxesCreate", options: requestOptions)).data
     }
 }
