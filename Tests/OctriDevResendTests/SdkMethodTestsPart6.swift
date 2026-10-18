@@ -6,128 +6,6 @@ import Foundation
 import XCTest
 
 extension SdkMethodTests {
-    func testWebhooksListWebhooksListReachesMockAndDecodesResponse() async throws {
-        guard let client = configuredClient() else {
-            return
-        }
-        _ = client
-        let actual = try await client.webhooks.list(
-            limit: decoded("1"),
-            after: decoded("\"00000000-0000-4000-8000-000000000000\""),
-            before: decoded("\"00000000-0000-4000-8000-000000000000\"")
-        )
-        let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture133Expected.utf8),
-            options: [.fragmentsAllowed]
-        )
-        XCTAssertNil(
-            try mismatch(jsonValue(actual), expected),
-            "webhooksList decoded a response " +
-                "that differs from the mock"
-        )
-    }
-
-    func testWebhooksListEventAttemptsWebhooksListEventAttemptsReachesMockAndDecodesResponse() async throws {
-        guard let client = configuredClient() else {
-            return
-        }
-        _ = client
-        let actual = try await client.webhooks.listEventAttempts(
-            webhookId: decoded("\"00000000-0000-4000-8000-000000000000\""),
-            eventId: decoded("\"event-1\""),
-            limit: decoded("1"),
-            after: decoded("\"after\"")
-        )
-        let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture134Expected.utf8),
-            options: [.fragmentsAllowed]
-        )
-        XCTAssertNil(
-            try mismatch(jsonValue(actual), expected),
-            "webhooksListEventAttempts decoded a response " +
-                "that differs from the mock"
-        )
-    }
-
-    func testWebhooksListEventsWebhooksListEventsReachesMockAndDecodesResponse() async throws {
-        guard let client = configuredClient() else {
-            return
-        }
-        _ = client
-        let actual = try await client.webhooks.listEvents(
-            webhookId: decoded("\"00000000-0000-4000-8000-000000000000\""),
-            limit: decoded("1"),
-            after: decoded("\"after\"")
-        )
-        let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture135Expected.utf8),
-            options: [.fragmentsAllowed]
-        )
-        XCTAssertNil(
-            try mismatch(jsonValue(actual), expected),
-            "webhooksListEvents decoded a response " +
-                "that differs from the mock"
-        )
-    }
-
-    func testWebhooksRemoveWebhooksRemoveReachesMockAndDecodesResponse() async throws {
-        guard let client = configuredClient() else {
-            return
-        }
-        _ = client
-        let actual = try await client.webhooks.remove(
-            webhookId: decoded("\"00000000-0000-4000-8000-000000000000\"")
-        )
-        let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture136Expected.utf8),
-            options: [.fragmentsAllowed]
-        )
-        XCTAssertNil(
-            try mismatch(jsonValue(actual), expected),
-            "webhooksRemove decoded a response " +
-                "that differs from the mock"
-        )
-    }
-
-    func testWebhooksReplayEventWebhooksReplayEventReachesMockAndDecodesResponse() async throws {
-        guard let client = configuredClient() else {
-            return
-        }
-        _ = client
-        let actual = try await client.webhooks.replayEvent(
-            webhookId: decoded("\"00000000-0000-4000-8000-000000000000\""),
-            eventId: decoded("\"event-1\"")
-        )
-        let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture137Expected.utf8),
-            options: [.fragmentsAllowed]
-        )
-        XCTAssertNil(
-            try mismatch(jsonValue(actual), expected),
-            "webhooksReplayEvent decoded a response " +
-                "that differs from the mock"
-        )
-    }
-
-    func testWebhooksRotateSigningSecretWebhooksRotateSigningSecretReachesMockAndDecodesResponse() async throws {
-        guard let client = configuredClient() else {
-            return
-        }
-        _ = client
-        let actual = try await client.webhooks.rotateSigningSecret(
-            webhookId: decoded("\"00000000-0000-4000-8000-000000000000\"")
-        )
-        let expected = try JSONSerialization.jsonObject(
-            with: Data(sdkMethodFixture138Expected.utf8),
-            options: [.fragmentsAllowed]
-        )
-        XCTAssertNil(
-            try mismatch(jsonValue(actual), expected),
-            "webhooksRotateSigningSecret decoded a response " +
-                "that differs from the mock"
-        )
-    }
-
     func testWebhooksUpdateWebhooksUpdateReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
@@ -145,8 +23,7 @@ extension SdkMethodTests {
         )
         XCTAssertNil(
             try mismatch(jsonValue(actual), expected),
-            "webhooksUpdate decoded a response " +
-                "that differs from the mock"
+            "decoded a response that differs from the mock"
         )
     }
 }

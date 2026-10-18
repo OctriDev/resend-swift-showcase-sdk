@@ -17,7 +17,7 @@ public extension EmailsMethods {
         public var replyTo: SendEmailRequestReplyTo?
         public var html: String?
         public var text: String?
-        public var template: SendEmailRequestTemplate?
+        public var template: EmailTemplateInput?
         public var headers: [String: JSONValue]?
         public var scheduledAt: String?
         public var attachments: [Attachment]?
@@ -51,7 +51,8 @@ public extension EmailsMethods {
     ///   of strings.
     /// - html: The HTML version of the message.
     /// - text: The plain text version of the message.
-    /// - template: Optional API value serialized in the `template` wire field.
+    /// - template: Use a published template to send the email. If provided, do not
+    ///   include html or text.
     /// - headers: Custom headers to add to the email.
     /// - scheduledAt: Schedule email to be sent later. The date should be in ISO
     ///   8601 format.

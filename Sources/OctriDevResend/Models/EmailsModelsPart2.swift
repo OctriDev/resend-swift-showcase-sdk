@@ -84,45 +84,6 @@ public extension EmailTemplateInput {
     }
 }
 
-/// Optional API value serialized in the `template` wire field.
-public struct SendEmailRequestTemplate: Codable {
-    /// The id of the published email template.
-    public var id: String
-    /// Template variables object with key/value pairs.
-    /// - Example: {"variableName":"Sign up now","variableName2":123}
-    public var variables: [String: EmailTemplateInputVariablesValue]?
-
-    enum CodingKeys: String, CodingKey {
-        case id
-        case variables
-    }
-
-    private init(sdkCopy value: Self) {
-        self = value
-    }
-}
-
-public extension SendEmailRequestTemplate {
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
-        }
-        id = try container.sdkDecodeRequired(.id)
-        variables = try container.sdkDecodeIfPresent(.variables)
-    }
-}
-
-public extension SendEmailRequestTemplate {
-    init(id: String, variables: [String: EmailTemplateInputVariablesValue]? = nil) {
-        (self.id, self.variables) = (id, variables)
-    }
-}
-
 /// Typed representation of the `SendEmailResponse` API schema.
 public struct SendEmailResponse: Codable {
     /// The ID of the sent email.

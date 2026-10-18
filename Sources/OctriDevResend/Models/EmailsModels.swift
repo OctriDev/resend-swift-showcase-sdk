@@ -236,8 +236,8 @@ public struct SendEmailRequest: Codable {
     public var html: String?
     /// The plain text version of the message.
     public var text: String?
-    /// Optional API value serialized in the `template` wire field.
-    public var template: SendEmailRequestTemplate?
+    /// Use a published template to send the email. If provided, do not include html or text.
+    public var template: EmailTemplateInput?
     /// Custom headers to add to the email.
     public var headers: [String: JSONValue]?
     /// Schedule email to be sent later. The date should be in ISO 8601 format.
@@ -324,7 +324,7 @@ public extension SendEmailRequest {
         replyTo: SendEmailRequestReplyTo? = nil,
         html: String? = nil,
         text: String? = nil,
-        template: SendEmailRequestTemplate? = nil,
+        template: EmailTemplateInput? = nil,
         headers: [String: JSONValue]? = nil,
         scheduledAt: String? = nil,
         attachments: [Attachment]? = nil,

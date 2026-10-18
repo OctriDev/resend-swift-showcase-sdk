@@ -39,7 +39,7 @@ struct EmailsSendRequestBody: Encodable {
     var replyTo: SendEmailRequestReplyTo?
     var html: String?
     var text: String?
-    var template: SendEmailRequestTemplate?
+    var template: EmailTemplateInput?
     var headers: [String: JSONValue]?
     var scheduledAt: String?
     var attachments: [Attachment]?
