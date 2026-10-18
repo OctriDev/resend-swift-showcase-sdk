@@ -4,170 +4,75 @@
 import Foundation
 
 // InboxesUpdate domain models
-public indirect enum UpdateInboxAgentOptions {
-    case jsonValue(JSONValue)
-    case jsonValue1(JSONValue)
-    case jsonValue2(JSONValue)
-}
+/// Send at least one of `to`, `cc`, `bcc`, `subject`, `text`, `html` or `attachments`. Omitted fields are left
+/// unchanged. Setting `text` or `html` replaces the whole body, so the body part you omit becomes `null`. The
+/// merged draft must contain at least one non-empty field, and its combined recipients cannot exceed 50.
+public struct UpdateInboxDraftOptions: Codable {
+    /// The recipients. For multiple addresses, send an array of strings. Each value can include a friendly name.
+    /// Pass `null` to clear. Each address is `email@example.com` or `Name <email@example.com>`. An address that is
+    /// not valid returns a 422.
+    /// - Example: ["ada@example.org"]
+    public var to: UpdateInboxDraftOptionsTo?
+    /// The CC recipients. Pass `null` or `[]` to clear. Each address is `email@example.com` or `Name
+    /// <email@example.com>`. An address that is not valid returns a 422.
+    public var cc: UpdateInboxDraftOptionsCc?
+    /// The BCC recipients. Pass `null` or `[]` to clear. Each address is `email@example.com` or `Name
+    /// <email@example.com>`. An address that is not valid returns a 422.
+    public var bcc: UpdateInboxDraftOptionsBcc?
+    /// The subject. Max 2000 characters. Cannot be only whitespace or contain a line break. Pass `null` to clear.
+    /// - Example: "Refund issued for order 1041"
+    public var subject: String?
+    /// The HTML body. Pass `null` to clear.
+    public var html: String?
+    /// The plain text body. Pass `null` to clear.
+    public var text: String?
+    /// Files to store on the draft. Each one needs `content`, `filename` and `content_type`. A `path` without
+    /// `content` returns a 422, and when both are sent, `path` is ignored. A `content_id` returns a 422. The files
+    /// on a draft can total at most 25 MB. An empty file or a blocked file type returns a 422. Sending the field
+    /// replaces every attachment on the draft. Send `[]` to remove them all. `null` also removes them all.
+    public var attachments: [InboxDraftAttachmentInput]?
 
-extension UpdateInboxAgentOptions: Codable {
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for UpdateInboxAgentOptions")
+    enum CodingKeys: String, CodingKey {
+        case to
+        case cc
+        case bcc
+        case subject
+        case html
+        case text
+        case attachments
     }
 
-    public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
-    }
-}
-
-extension UpdateInboxAgentOptions {
-    static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue(value) }
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue1(value) }
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue2(value) }
-        return nil
-    }
-}
-
-extension UpdateInboxAgentOptions {
-    func encodeGroup1(to encoder: Encoder) throws -> Bool {
-        var container = encoder.singleValueContainer()
-        switch self {
-        case let .jsonValue(value): try container.encode(value); return true
-        case let .jsonValue1(value): try container.encode(value); return true
-        case let .jsonValue2(value): try container.encode(value); return true
-        }
-    }
-}
-
-public indirect enum UpdateInboxDraftOptions {
-    case jsonValue(JSONValue)
-    case jsonValue1(JSONValue)
-    case jsonValue2(JSONValue)
-    case jsonValue3(JSONValue)
-    case jsonValue4(JSONValue)
-    case jsonValue5(JSONValue)
-    case jsonValue6(JSONValue)
-}
-
-extension UpdateInboxDraftOptions: Codable {
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for UpdateInboxDraftOptions")
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+    init() {
+        (self.to, self.cc, self.bcc, self.subject, self.html) = (nil, nil, nil, nil, nil)
+        (self.text, self.attachments) = (nil, nil)
     }
 }
 
 extension UpdateInboxDraftOptions {
-    static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue(value) }
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue1(value) }
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue2(value) }
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue3(value) }
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue4(value) }
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue5(value) }
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue6(value) }
-        return nil
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.to = try container.sdkDecodeIfPresent(.to)
+        self.cc = try container.sdkDecodeIfPresent(.cc)
+        self.bcc = try container.sdkDecodeIfPresent(.bcc)
+        self.subject = try container.sdkDecodeIfPresent(.subject)
+        self.html = try container.sdkDecodeIfPresent(.html)
+        self.text = try container.sdkDecodeIfPresent(.text)
+        self.attachments = try container.sdkDecodeIfPresent(.attachments)
+        if let value = self.subject {
+            try validateLength("subject", value, min: 1, max: 2000)
+        }
     }
 }
 
 extension UpdateInboxDraftOptions {
-    func encodeGroup1(to encoder: Encoder) throws -> Bool {
-        var container = encoder.singleValueContainer()
-        switch self {
-        case let .jsonValue(value): try container.encode(value); return true
-        case let .jsonValue1(value): try container.encode(value); return true
-        case let .jsonValue2(value): try container.encode(value); return true
-        case let .jsonValue3(value): try container.encode(value); return true
-        case let .jsonValue4(value): try container.encode(value); return true
-        case let .jsonValue5(value): try container.encode(value); return true
-        case let .jsonValue6(value): try container.encode(value); return true
-        }
-    }
-}
-
-public indirect enum UpdateInboxOptions {
-    case jsonValue(JSONValue)
-    case jsonValue1(JSONValue)
-}
-
-extension UpdateInboxOptions: Codable {
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for UpdateInboxOptions")
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
-    }
-}
-
-extension UpdateInboxOptions {
-    static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue(value) }
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue1(value) }
-        return nil
-    }
-}
-
-extension UpdateInboxOptions {
-    func encodeGroup1(to encoder: Encoder) throws -> Bool {
-        var container = encoder.singleValueContainer()
-        switch self {
-        case let .jsonValue(value): try container.encode(value); return true
-        case let .jsonValue1(value): try container.encode(value); return true
-        }
-    }
-}
-
-public indirect enum UpdateInboxThreadOptions {
-    case jsonValue(JSONValue)
-    case jsonValue1(JSONValue)
-    case jsonValue2(JSONValue)
-    case jsonValue3(JSONValue)
-}
-
-extension UpdateInboxThreadOptions: Codable {
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for UpdateInboxThreadOptions")
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
-    }
-}
-
-extension UpdateInboxThreadOptions {
-    static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue(value) }
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue1(value) }
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue2(value) }
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue3(value) }
-        return nil
-    }
-}
-
-extension UpdateInboxThreadOptions {
-    func encodeGroup1(to encoder: Encoder) throws -> Bool {
-        var container = encoder.singleValueContainer()
-        switch self {
-        case let .jsonValue(value): try container.encode(value); return true
-        case let .jsonValue1(value): try container.encode(value); return true
-        case let .jsonValue2(value): try container.encode(value); return true
-        case let .jsonValue3(value): try container.encode(value); return true
+    public init(to: UpdateInboxDraftOptionsTo? = nil, cc: UpdateInboxDraftOptionsCc? = nil, bcc: UpdateInboxDraftOptionsBcc? = nil, subject: String? = nil, html: String? = nil, text: String? = nil, attachments: [InboxDraftAttachmentInput]? = nil) throws {
+        self.init()
+        (self.to, self.cc) = (to, cc)
+        (self.bcc, self.subject) = (bcc, subject)
+        (self.html, self.text) = (html, text)
+        self.attachments = attachments
+        if let value = self.subject {
+            try validateLength("subject", value, min: 1, max: 2000)
         }
     }
 }
@@ -375,6 +280,116 @@ extension UpdateInboxResponseSuccess {
     }
 }
 
+/// At least one of `read`, `folder`, `add_label_ids`, or `remove_label_ids` is required. A label ID cannot be both
+/// added and removed in the same request.
+public struct UpdateInboxThreadOptions: Codable {
+    /// Marks every email in the thread read or unread.
+    /// - Example: true
+    public var read: Bool?
+    /// Moves the thread to this folder. `sent` is assigned automatically and cannot be set.
+    /// - Example: "archive"
+    public var folder: UpdateInboxThreadOptionsFolder?
+    /// Label IDs to apply to the thread. Between 1 and 10 IDs. A label ID that does not exist in the inbox returns
+    /// a 404.
+    /// - Example: ["7f9c1d2e-4a6b-4c3d-8e15-9b0a7c6d5e34"]
+    public var addLabelIds: [String]?
+    /// Label IDs to remove from the thread. Between 1 and 10 IDs. The labels themselves are kept. A label ID that
+    /// does not exist in the inbox returns a 404.
+    /// - Example: ["2b6d0f4e-8a1c-4e3b-9d57-1c0e8a6f4b21"]
+    public var removeLabelIds: [String]?
+
+    enum CodingKeys: String, CodingKey {
+        case read
+        case folder
+        case addLabelIds = "add_label_ids"
+        case removeLabelIds = "remove_label_ids"
+    }
+
+    init() {
+        (self.read, self.folder, self.addLabelIds, self.removeLabelIds) = (nil, nil, nil, nil)
+    }
+}
+
+extension UpdateInboxThreadOptions {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.read = try container.sdkDecodeIfPresent(.read)
+        self.folder = try container.sdkDecodeIfPresent(.folder)
+        self.addLabelIds = try container.sdkDecodeIfPresent(.addLabelIds)
+        self.removeLabelIds = try container.sdkDecodeIfPresent(.removeLabelIds)
+        if let value = self.addLabelIds {
+            try validateItems("add_label_ids", value, min: 1, max: 10)
+        }
+        if let value = self.removeLabelIds {
+            try validateItems("remove_label_ids", value, min: 1, max: 10)
+        }
+    }
+}
+
+extension UpdateInboxThreadOptions {
+    public init(read: Bool? = nil, folder: UpdateInboxThreadOptionsFolder? = nil, addLabelIds: [String]? = nil, removeLabelIds: [String]? = nil) throws {
+        self.init()
+        (self.read, self.folder) = (read, folder)
+        (self.addLabelIds, self.removeLabelIds) = (addLabelIds, removeLabelIds)
+        if let value = self.addLabelIds {
+            try validateItems("add_label_ids", value, min: 1, max: 10)
+        }
+        if let value = self.removeLabelIds {
+            try validateItems("remove_label_ids", value, min: 1, max: 10)
+        }
+    }
+}
+
+/// At least one of `instructions`, `tone`, or `enabled_actions` must be provided. Omitted fields keep their current
+/// value.
+public struct UpdateInboxAgentOptions: Codable {
+    /// Instructions the agent follows when it handles the threads of the inbox. Max 4000 characters. Leading and
+    /// trailing whitespace is trimmed, and the trimmed value must not be empty. Send null to clear the
+    /// instructions.
+    /// - Example: "Answer refund questions yourself. Escalate legal threats."
+    public var instructions: String?
+    /// The tone the agent writes in. Send null to clear the tone.
+    /// - Example: "concise_professional"
+    public var tone: UpdateInboxAgentOptionsTone?
+    /// The actions the agent can take. Replaces the whole set. Duplicates are removed. Send an empty array to
+    /// disable all actions.
+    /// - Example: ["draft_reply","add_labels"]
+    public var enabledActions: [UpdateInboxAgentOptionsEnabledActionsItem]?
+
+    enum CodingKeys: String, CodingKey {
+        case instructions
+        case tone
+        case enabledActions = "enabled_actions"
+    }
+
+    init() {
+        (self.instructions, self.tone, self.enabledActions) = (nil, nil, nil)
+    }
+}
+
+extension UpdateInboxAgentOptions {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.instructions = try container.sdkDecodeIfPresent(.instructions)
+        self.tone = try container.sdkDecodeIfPresent(.tone)
+        self.enabledActions = try container.sdkDecodeIfPresent(.enabledActions)
+        if let value = self.instructions {
+            try validateLength("instructions", value, min: 1, max: 4000)
+        }
+    }
+}
+
+extension UpdateInboxAgentOptions {
+    public init(instructions: String? = nil, tone: UpdateInboxAgentOptionsTone? = nil, enabledActions: [UpdateInboxAgentOptionsEnabledActionsItem]? = nil) throws {
+        self.init()
+        (self.instructions, self.tone) = (instructions, tone)
+        self.enabledActions = enabledActions
+        if let value = self.instructions {
+            try validateLength("instructions", value, min: 1, max: 4000)
+        }
+    }
+}
+
 public indirect enum UpdateInboxDraftOptionsBcc {
     case stringValue(String)
     case stringList([String])
@@ -410,6 +425,54 @@ extension UpdateInboxDraftOptionsBcc {
         case let .stringValue(value): try container.encode(value); return true
         case let .stringList(value): try container.encode(value); return true
         case let .jsonValue(value): try container.encode(value); return true
+        }
+    }
+}
+
+/// Provide at least one of `name` or `from_name`.
+public struct UpdateInboxOptions: Codable {
+    /// New internal name for the inbox. Recipients do not see it. Between 1 and 64 characters after trimming.
+    /// - Example: "Customer Support"
+    public var name: String?
+    /// The name recipients see when mail is sent from this inbox. A plain name, not a `Name <email>` address. Max
+    /// 78 characters. It cannot contain a colon, `<`, `>`, line breaks, or other control characters. An email
+    /// address inside the name must be on a domain the team has verified for sending. An empty string removes it.
+    /// - Example: "Ada from Support"
+    public var fromName: String?
+
+    enum CodingKeys: String, CodingKey {
+        case name
+        case fromName = "from_name"
+    }
+
+    init() {
+        (self.name, self.fromName) = (nil, nil)
+    }
+}
+
+extension UpdateInboxOptions {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.fromName = try container.sdkDecodeIfPresent(.fromName)
+        if let value = self.name {
+            try validateLength("name", value, min: 1, max: 64)
+        }
+        if let value = self.fromName {
+            try validateLength("from_name", value, min: nil, max: 78)
+        }
+    }
+}
+
+extension UpdateInboxOptions {
+    public init(name: String? = nil, fromName: String? = nil) throws {
+        self.init()
+        (self.name, self.fromName) = (name, fromName)
+        if let value = self.name {
+            try validateLength("name", value, min: 1, max: 64)
+        }
+        if let value = self.fromName {
+            try validateLength("from_name", value, min: nil, max: 78)
         }
     }
 }

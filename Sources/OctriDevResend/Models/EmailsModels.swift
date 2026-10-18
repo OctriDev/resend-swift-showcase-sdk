@@ -217,8 +217,8 @@ public struct SendEmailRequest: Codable {
     public var html: String?
     /// The plain text version of the message.
     public var text: String?
-    /// Optional API value serialized in the `template` wire field.
-    public var template: SendEmailRequestTemplate?
+    /// Use a published template to send the email. If provided, do not include html or text.
+    public var template: EmailTemplateInput?
     /// Custom headers to add to the email.
     public var headers: [String: JSONValue]?
     /// Schedule email to be sent later. The date should be in ISO 8601 format.
@@ -282,7 +282,7 @@ extension SendEmailRequest {
 }
 
 extension SendEmailRequest {
-    public init(from: String, to: SendEmailRequestTo, subject: String, bcc: SendEmailRequestBcc? = nil, cc: SendEmailRequestCc? = nil, replyTo: SendEmailRequestReplyTo? = nil, html: String? = nil, text: String? = nil, template: SendEmailRequestTemplate? = nil, headers: [String: JSONValue]? = nil, scheduledAt: String? = nil, attachments: [Attachment]? = nil, tags: [Tag]? = nil, topicId: String? = nil) {
+    public init(from: String, to: SendEmailRequestTo, subject: String, bcc: SendEmailRequestBcc? = nil, cc: SendEmailRequestCc? = nil, replyTo: SendEmailRequestReplyTo? = nil, html: String? = nil, text: String? = nil, template: EmailTemplateInput? = nil, headers: [String: JSONValue]? = nil, scheduledAt: String? = nil, attachments: [Attachment]? = nil, tags: [Tag]? = nil, topicId: String? = nil) {
         (self.from, self.to) = (from, to)
         (self.subject, self.bcc) = (subject, bcc)
         (self.cc, self.replyTo) = (cc, replyTo)
