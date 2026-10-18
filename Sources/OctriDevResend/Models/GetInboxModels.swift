@@ -3,7 +3,7 @@
 
 import Foundation
 
-// GetInbox domain models
+/// GetInbox domain models
 public typealias GetInboxAgentResponseSuccess = InboxAgent
 
 public typealias GetInboxDraftResponseSuccess = InboxDraft

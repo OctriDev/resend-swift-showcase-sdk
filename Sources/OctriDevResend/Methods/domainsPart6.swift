@@ -6,24 +6,51 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DomainsMethods {
-    /// Retrieves the latest claim for the placeholder domain created by a domain claim. Use the claim status and TXT `record` details to track verification and prove ownership of the claimed domain.
+public extension DomainsMethods {
+    /// Retrieves the latest claim for the placeholder domain created by a domain claim. Use the claim status and TXT
+    /// `record` details to track verification and prove ownership of the claimed domain.
     ///
     /// Retrieve the latest claim for the placeholder domain created by the claim.
     ///
     /// - Parameters:
     /// - domainId: The ID of the placeholder domain created by the claim.
-    public static func domainsGetClaim(config: ClientConfig, domainId: String, requestOptions: RequestOptions? = nil) async throws -> DomainClaim {
-        return try (await sdkRequest("GET", ["/domains/", sdkEncodePathSegment(sdkWireString(domainId)), "/claim"].joined(), config: config, decoder: .json, operationId: "domainsGetClaim", options: requestOptions)).data
+    static func domainsGetClaim(
+        config: ClientConfig,
+        domainId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DomainClaim {
+        try await (sdkRequest(
+            "GET",
+            ["/domains/", sdkEncodePathSegment(sdkWireString(domainId)), "/claim"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "domainsGetClaim",
+            options: requestOptions
+        )).data
     }
 
-    /// Triggers asynchronous DNS verification and ownership transfer for a domain claim. The claim remains `pending` while verification runs, so retrieve the claim to check its status. Once the claim is `completed`, add the transferred domain's new DKIM records to DNS and verify them with the standard domain verification endpoint.
+    /// Triggers asynchronous DNS verification and ownership transfer for a domain claim. The claim remains `pending`
+    /// while verification runs, so retrieve the claim to check its status. Once the claim is `completed`, add the
+    /// transferred domain's new DKIM records to DNS and verify them with the standard domain verification endpoint.
     ///
-    /// Trigger asynchronous DNS verification and ownership transfer for a domain claim. The claim stays `pending` while verification runs; poll the retrieve endpoint for status. Once `completed`, the transferred domain has new DKIM records that must be added to DNS and verified via the standard domain verify endpoint.
+    /// Trigger asynchronous DNS verification and ownership transfer for a domain claim. The claim stays `pending` while
+    /// verification runs; poll the retrieve endpoint for status. Once `completed`, the transferred domain has new DKIM
+    /// records that must be added to DNS and verified via the standard domain verify endpoint.
     ///
     /// - Parameters:
     /// - domainId: The ID of the placeholder domain created by the claim.
-    public static func domainsVerifyClaim(config: ClientConfig, domainId: String, requestOptions: RequestOptions? = nil) async throws -> DomainClaim {
-        return try (await sdkRequest("POST", ["/domains/", sdkEncodePathSegment(sdkWireString(domainId)), "/claim/verify"].joined(), config: config, decoder: .json, operationId: "domainsVerifyClaim", options: requestOptions)).data
+    static func domainsVerifyClaim(
+        config: ClientConfig,
+        domainId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DomainClaim {
+        try await (sdkRequest(
+            "POST",
+            ["/domains/", sdkEncodePathSegment(sdkWireString(domainId)), "/claim/verify"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "domainsVerifyClaim",
+            options: requestOptions
+        )).data
     }
 }

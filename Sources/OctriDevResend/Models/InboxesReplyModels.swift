@@ -3,7 +3,7 @@
 
 import Foundation
 
-// InboxesReply domain models
+/// InboxesReply domain models
 /// At least one of `html` or `text` must contain more than whitespace.
 public struct ReplyInboxThreadEmailOptions: Codable {
     /// CC recipient email address. For multiple addresses, send as an array of strings. Without `reply_all`, the
@@ -59,30 +59,39 @@ public struct ReplyInboxThreadEmailOptions: Codable {
     }
 
     init() {
-        (self.cc, self.bcc, self.html, self.text, self.subject) = (nil, nil, nil, nil, nil)
-        (self.replyAll, self.attachments, self.headers) = (nil, nil, nil)
+        (cc, bcc, html, text, subject) = (nil, nil, nil, nil, nil)
+        (replyAll, attachments, headers) = (nil, nil, nil)
     }
 }
 
-extension ReplyInboxThreadEmailOptions {
-    public init(from decoder: Decoder) throws {
+public extension ReplyInboxThreadEmailOptions {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.cc = try container.sdkDecodeIfPresent(.cc)
-        self.bcc = try container.sdkDecodeIfPresent(.bcc)
-        self.html = try container.sdkDecodeIfPresent(.html)
-        self.text = try container.sdkDecodeIfPresent(.text)
-        self.subject = try container.sdkDecodeIfPresent(.subject)
-        self.replyAll = try container.sdkDecodeIfPresent(.replyAll)
-        self.attachments = try container.sdkDecodeIfPresent(.attachments)
-        self.headers = try container.sdkDecodeIfPresent(.headers)
-        if let value = self.subject {
+        cc = try container.sdkDecodeIfPresent(.cc)
+        bcc = try container.sdkDecodeIfPresent(.bcc)
+        html = try container.sdkDecodeIfPresent(.html)
+        text = try container.sdkDecodeIfPresent(.text)
+        subject = try container.sdkDecodeIfPresent(.subject)
+        replyAll = try container.sdkDecodeIfPresent(.replyAll)
+        attachments = try container.sdkDecodeIfPresent(.attachments)
+        headers = try container.sdkDecodeIfPresent(.headers)
+        if let value = subject {
             try validateLength("subject", value, min: 1, max: 2000)
         }
     }
 }
 
-extension ReplyInboxThreadEmailOptions {
-    public init(cc: ReplyInboxThreadEmailOptionsCc? = nil, bcc: ReplyInboxThreadEmailOptionsBcc? = nil, html: String? = nil, text: String? = nil, subject: String? = nil, replyAll: Bool? = nil, attachments: [Attachment]? = nil, headers: [String: String]? = nil) throws {
+public extension ReplyInboxThreadEmailOptions {
+    init(
+        cc: ReplyInboxThreadEmailOptionsCc? = nil,
+        bcc: ReplyInboxThreadEmailOptionsBcc? = nil,
+        html: String? = nil,
+        text: String? = nil,
+        subject: String? = nil,
+        replyAll: Bool? = nil,
+        attachments: [Attachment]? = nil,
+        headers: [String: String]? = nil
+    ) throws {
         self.init()
         (self.cc, self.bcc) = (cc, bcc)
         (self.html, self.text) = (html, text)
@@ -104,24 +113,30 @@ public struct ReplyInboxThreadEmailResponseSuccess: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ReplyInboxThreadEmailResponseSuccess {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
-        }
-        self.id = try container.sdkDecodeRequired(.id)
-            try sdkValidateUuid("id", self.id)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ReplyInboxThreadEmailResponseSuccess {
-    public init(id: String) throws {
+public extension ReplyInboxThreadEmailResponseSuccess {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.id) else {
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
+        }
+        id = try container.sdkDecodeRequired(.id)
+        try sdkValidateUuid("id", id)
+    }
+}
+
+public extension ReplyInboxThreadEmailResponseSuccess {
+    init(id: String) throws {
         self.id = id
-            try sdkValidateUuid("id", self.id)
+        try sdkValidateUuid("id", self.id)
     }
 }
 
@@ -132,23 +147,35 @@ public indirect enum ReplyInboxThreadEmailOptionsCc {
 }
 
 extension ReplyInboxThreadEmailOptionsCc: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for ReplyInboxThreadEmailOptionsCc")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for ReplyInboxThreadEmailOptionsCc"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension ReplyInboxThreadEmailOptionsCc {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode([String].self) { return .stringList(value) }
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode([String].self) {
+            return .stringList(value)
+        }
+        if let value = try? container.decode(JSONValue.self) {
+            return .jsonValue(value)
+        }
         return nil
     }
 }
@@ -171,23 +198,35 @@ public indirect enum ReplyInboxThreadEmailOptionsBcc {
 }
 
 extension ReplyInboxThreadEmailOptionsBcc: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for ReplyInboxThreadEmailOptionsBcc")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for ReplyInboxThreadEmailOptionsBcc"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension ReplyInboxThreadEmailOptionsBcc {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode([String].self) { return .stringList(value) }
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode([String].self) {
+            return .stringList(value)
+        }
+        if let value = try? container.decode(JSONValue.self) {
+            return .jsonValue(value)
+        }
         return nil
     }
 }

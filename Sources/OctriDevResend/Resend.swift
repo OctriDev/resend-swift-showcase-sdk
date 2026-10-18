@@ -9,56 +9,123 @@ public class EmailsNamespace {
         self.config = config
     }
 
-/// Sends an email to one or more recipients. Supply `from`, `to`, and `subject`; use either message content in `html` or `text`, or a published `template`. A successful response includes the sent email's identifier.
-    public func send(options: EmailsMethods.EmailsSendOptions, requestOptions: RequestOptions? = nil) async throws -> SendEmailResponse {
-        return try await EmailsMethods.emailsSend(config: config, options: options, requestOptions: requestOptions)
+    /// Sends an email to one or more recipients. Supply `from`, `to`, and `subject`; use either message content in
+    /// `html` or `text`, or a published `template`. A successful response includes the sent email's identifier.
+    public func send(
+        options: EmailsMethods.EmailsSendOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SendEmailResponse {
+        try await EmailsMethods.emailsSend(config: config, options: options, requestOptions: requestOptions)
     }
 
-/// Lists emails with cursor-based pagination. Use `limit` to control the number of results and `after` or `before` to choose a pagination cursor.
-    public func list(limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListEmailsResponse {
-        return try await EmailsMethods.emailsList(config: config, limit: limit, after: after, before: before, requestOptions: requestOptions)
+    /// Lists emails with cursor-based pagination. Use `limit` to control the number of results and `after` or `before`
+    /// to choose a pagination cursor.
+    public func list(
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListEmailsResponse {
+        try await EmailsMethods.emailsList(
+            config: config,
+            limit: limit,
+            after: after,
+            before: before,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieves a single email by its identifier. Use `email_id` to select the email whose message details and latest delivery event you want to inspect.
+    /// Retrieves a single email by its identifier. Use `email_id` to select the email whose message details and latest
+    /// delivery event you want to inspect.
     public func get(emailId: String, requestOptions: RequestOptions? = nil) async throws -> Email {
-        return try await EmailsMethods.emailsGet(config: config, emailId: emailId, requestOptions: requestOptions)
+        try await EmailsMethods.emailsGet(config: config, emailId: emailId, requestOptions: requestOptions)
     }
 
-/// Updates the scheduled send time for a single email. Use `email_id` to identify the email whose schedule you want to change; the response contains its scheduled time.
+    /// Updates the scheduled send time for a single email. Use `email_id` to identify the email whose schedule you want
+    /// to change; the response contains its scheduled time.
     public func update(emailId: String, requestOptions: RequestOptions? = nil) async throws -> UpdateEmailOptions {
-        return try await EmailsMethods.emailsUpdate(config: config, emailId: emailId, requestOptions: requestOptions)
+        try await EmailsMethods.emailsUpdate(config: config, emailId: emailId, requestOptions: requestOptions)
     }
 
-/// Cancels the scheduled send of an email. Use `email_id` to identify the email whose scheduled delivery you want to cancel; the response includes the email's current details and latest event.
+    /// Cancels the scheduled send of an email. Use `email_id` to identify the email whose scheduled delivery you want
+    /// to cancel; the response includes the email's current details and latest event.
     public func cancel(emailId: String, requestOptions: RequestOptions? = nil) async throws -> Email {
-        return try await EmailsMethods.emailsCancel(config: config, emailId: emailId, requestOptions: requestOptions)
+        try await EmailsMethods.emailsCancel(config: config, emailId: emailId, requestOptions: requestOptions)
     }
 
-/// Creates a shareable link for a sent or received email. Use `email_id` to select the email and optionally set `expires_in` to a duration of up to 48 hours; the default is 48 hours.
-    public func share(emailId: String, expiresIn: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ShareEmailResponse {
-        return try await EmailsMethods.emailsShare(config: config, emailId: emailId, expiresIn: expiresIn, requestOptions: requestOptions)
+    /// Creates a shareable link for a sent or received email. Use `email_id` to select the email and optionally set
+    /// `expires_in` to a duration of up to 48 hours; the default is 48 hours.
+    public func share(
+        emailId: String,
+        expiresIn: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ShareEmailResponse {
+        try await EmailsMethods.emailsShare(
+            config: config,
+            emailId: emailId,
+            expiresIn: expiresIn,
+            requestOptions: requestOptions
+        )
     }
 
-/// Submits a batch of email messages for sending, with up to 100 emails in the batch. Each message requires `from`, `to`, and `subject`; the response includes an ID for each submitted email.
-    public func sendBatch(idempotencyKey: String? = nil, body: [SendEmailRequest]? = nil, requestOptions: RequestOptions? = nil) async throws -> CreateBatchEmailsResponse {
-        return try await EmailsMethods.emailsSendBatch(config: config, idempotencyKey: idempotencyKey, body: body, requestOptions: requestOptions)
+    /// Submits a batch of email messages for sending, with up to 100 emails in the batch. Each message requires `from`,
+    /// `to`, and `subject`; the response includes an ID for each submitted email.
+    public func sendBatch(
+        idempotencyKey: String? = nil,
+        body: [SendEmailRequest]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateBatchEmailsResponse {
+        try await EmailsMethods.emailsSendBatch(
+            config: config,
+            idempotencyKey: idempotencyKey,
+            body: body,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists the attachments for a sent email. Use `email_id` to select the email and `after` or `before` to paginate through its attachments; these cursor parameters cannot be used together.
-    public func listAttachments(emailId: String, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListAttachmentsResponse {
-        return try await EmailsMethods.emailsListAttachments(config: config, emailId: emailId, limit: limit, after: after, before: before, requestOptions: requestOptions)
+    /// Lists the attachments for a sent email. Use `email_id` to select the email and `after` or `before` to paginate
+    /// through its attachments; these cursor parameters cannot be used together.
+    public func listAttachments(
+        emailId: String,
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListAttachmentsResponse {
+        try await EmailsMethods.emailsListAttachments(
+            config: config,
+            emailId: emailId,
+            limit: limit,
+            after: after,
+            before: before,
+            requestOptions: requestOptions
+        )
     }
 }
 
-extension EmailsNamespace {
-/// Retrieves a single attachment for a sent email. Use `email_id` and `attachment_id` to identify the email and attachment; the response includes a signed download URL and its expiration time.
-    public func getAttachment(emailId: String, attachmentId: String, requestOptions: RequestOptions? = nil) async throws -> RetrievedAttachment {
-        return try await EmailsMethods.emailsGetAttachment(config: config, emailId: emailId, attachmentId: attachmentId, requestOptions: requestOptions)
+public extension EmailsNamespace {
+    /// Retrieves a single attachment for a sent email. Use `email_id` and `attachment_id` to identify the email and
+    /// attachment; the response includes a signed download URL and its expiration time.
+    func getAttachment(
+        emailId: String,
+        attachmentId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> RetrievedAttachment {
+        try await EmailsMethods.emailsGetAttachment(
+            config: config,
+            emailId: emailId,
+            attachmentId: attachmentId,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieves account-level email metrics for a date range, optionally broken down by dimensions. Use `metrics` and `dimensions` to choose the returned measures and breakdowns, and use the ID filters to restrict the data.
-    public func getMetrics(options: EmailsMethods.GetMetricsOptions, requestOptions: RequestOptions? = nil) async throws -> GetEmailsMetricsResponse {
-        return try await EmailsMethods.getMetrics(config: config, options: options, requestOptions: requestOptions)
+    /// Retrieves account-level email metrics for a date range, optionally broken down by dimensions. Use `metrics` and
+    /// `dimensions` to choose the returned measures and breakdowns, and use the ID filters to restrict the data.
+    func getMetrics(
+        options: EmailsMethods.GetMetricsOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GetEmailsMetricsResponse {
+        try await EmailsMethods.getMetrics(config: config, options: options, requestOptions: requestOptions)
     }
 }
 
@@ -68,24 +135,61 @@ public class ReceivingEmailsNamespace {
         self.config = config
     }
 
-/// Lists received emails with cursor-based pagination. Use `limit` to control the number of results and `after` or `before` to select a pagination cursor; the cursor parameters cannot be used together.
-    public func list(limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListReceivedEmailsResponse {
-        return try await ReceivingEmailsMethods.list(config: config, limit: limit, after: after, before: before, requestOptions: requestOptions)
+    /// Lists received emails with cursor-based pagination. Use `limit` to control the number of results and `after` or
+    /// `before` to select a pagination cursor; the cursor parameters cannot be used together.
+    public func list(
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListReceivedEmailsResponse {
+        try await ReceivingEmailsMethods.list(
+            config: config,
+            limit: limit,
+            after: after,
+            before: before,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieves a received email by its identifier. Use `email_id` to select the email; the response includes its message content, headers, recipients, receipt time, and attachments.
+    /// Retrieves a received email by its identifier. Use `email_id` to select the email; the response includes its
+    /// message content, headers, recipients, receipt time, and attachments.
     public func get(emailId: String, requestOptions: RequestOptions? = nil) async throws -> GetReceivedEmailResponse {
-        return try await ReceivingEmailsMethods.get(config: config, emailId: emailId, requestOptions: requestOptions)
+        try await ReceivingEmailsMethods.get(config: config, emailId: emailId, requestOptions: requestOptions)
     }
 
-/// Lists attachments for a received email. Use `email_id` to select the email and `after` or `before` to navigate through attachment results.
-    public func listAttachments(emailId: String, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListAttachmentsResponse {
-        return try await ReceivingEmailsMethods.listAttachments(config: config, emailId: emailId, limit: limit, after: after, before: before, requestOptions: requestOptions)
+    /// Lists attachments for a received email. Use `email_id` to select the email and `after` or `before` to navigate
+    /// through attachment results.
+    public func listAttachments(
+        emailId: String,
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListAttachmentsResponse {
+        try await ReceivingEmailsMethods.listAttachments(
+            config: config,
+            emailId: emailId,
+            limit: limit,
+            after: after,
+            before: before,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieves an attachment belonging to a received email. Use `email_id` to identify the email and `attachment_id` to select its attachment; the response includes a signed download URL and its expiration time.
-    public func getAttachment(emailId: String, attachmentId: String, requestOptions: RequestOptions? = nil) async throws -> RetrievedAttachment {
-        return try await ReceivingEmailsMethods.getAttachment(config: config, emailId: emailId, attachmentId: attachmentId, requestOptions: requestOptions)
+    /// Retrieves an attachment belonging to a received email. Use `email_id` to identify the email and `attachment_id`
+    /// to select its attachment; the response includes a signed download URL and its expiration time.
+    public func getAttachment(
+        emailId: String,
+        attachmentId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> RetrievedAttachment {
+        try await ReceivingEmailsMethods.getAttachment(
+            config: config,
+            emailId: emailId,
+            attachmentId: attachmentId,
+            requestOptions: requestOptions
+        )
     }
 }
 
@@ -95,57 +199,120 @@ public class DomainsNamespace {
         self.config = config
     }
 
-/// Creates a domain for sending or receiving email. Supply `name` and configure the sending region, tracking options, TLS mode, and capabilities as needed; at least one domain capability must be enabled.
-    public func create(options: DomainsMethods.DomainsCreateOptions, requestOptions: RequestOptions? = nil) async throws -> CreateDomainResponse {
-        return try await DomainsMethods.domainsCreate(config: config, options: options, requestOptions: requestOptions)
+    /// Creates a domain for sending or receiving email. Supply `name` and configure the sending region, tracking
+    /// options, TLS mode, and capabilities as needed; at least one domain capability must be enabled.
+    public func create(
+        options: DomainsMethods.DomainsCreateOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateDomainResponse {
+        try await DomainsMethods.domainsCreate(config: config, options: options, requestOptions: requestOptions)
     }
 
-/// Lists domains in the account. Use `limit` to control the number of results and `after` or `before` to navigate the cursor-based list.
-    public func list(limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListDomainsResponse {
-        return try await DomainsMethods.domainsList(config: config, limit: limit, after: after, before: before, requestOptions: requestOptions)
+    /// Lists domains in the account. Use `limit` to control the number of results and `after` or `before` to navigate
+    /// the cursor-based list.
+    public func list(
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListDomainsResponse {
+        try await DomainsMethods.domainsList(
+            config: config,
+            limit: limit,
+            after: after,
+            before: before,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieves a domain by its identifier. Use `domain_id` to select the domain and view its status, configuration, capabilities, and DNS records.
+    /// Retrieves a domain by its identifier. Use `domain_id` to select the domain and view its status, configuration,
+    /// capabilities, and DNS records.
     public func get(domainId: String, requestOptions: RequestOptions? = nil) async throws -> Domain {
-        return try await DomainsMethods.domainsGet(config: config, domainId: domainId, requestOptions: requestOptions)
+        try await DomainsMethods.domainsGet(config: config, domainId: domainId, requestOptions: requestOptions)
     }
 
-/// Updates the configuration of an existing domain. Supply only the settings you want to change, such as tracking options, TLS mode, capabilities, or the tracking subdomain.
-    public func update(domainId: String, openTracking: Bool? = nil, clickTracking: Bool? = nil, tls: UpdateDomainOptionsTls? = nil, capabilities: DomainCapabilities? = nil, trackingSubdomain: String? = nil, requestOptions: RequestOptions? = nil) async throws -> UpdateDomainResponseSuccess {
-        return try await DomainsMethods.domainsUpdate(config: config, domainId: domainId, openTracking: openTracking, clickTracking: clickTracking, tls: tls, capabilities: capabilities, trackingSubdomain: trackingSubdomain, requestOptions: requestOptions)
+    /// Updates the configuration of an existing domain. Supply only the settings you want to change, such as tracking
+    /// options, TLS mode, capabilities, or the tracking subdomain.
+    public func update(
+        domainId: String,
+        openTracking: Bool? = nil,
+        clickTracking: Bool? = nil,
+        tls: UpdateDomainOptionsTls? = nil,
+        capabilities: DomainCapabilities? = nil,
+        trackingSubdomain: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> UpdateDomainResponseSuccess {
+        try await DomainsMethods.domainsUpdate(
+            config: config,
+            domainId: domainId,
+            openTracking: openTracking,
+            clickTracking: clickTracking,
+            tls: tls,
+            capabilities: capabilities,
+            trackingSubdomain: trackingSubdomain,
+            requestOptions: requestOptions
+        )
     }
 
-/// Deletes an existing domain. Use `domain_id` to select the domain to remove; the response indicates whether deletion succeeded.
+    /// Deletes an existing domain. Use `domain_id` to select the domain to remove; the response indicates whether
+    /// deletion succeeded.
     public func remove(domainId: String, requestOptions: RequestOptions? = nil) async throws -> DeleteDomainResponse {
-        return try await DomainsMethods.domainsRemove(config: config, domainId: domainId, requestOptions: requestOptions)
+        try await DomainsMethods.domainsRemove(config: config, domainId: domainId, requestOptions: requestOptions)
     }
 
-/// Triggers verification of a domain's DNS records, including DKIM, SPF, and the tracking CNAME when a tracking subdomain is configured. Use this operation after adding the required DNS records to check the domain's verification status.
+    /// Triggers verification of a domain's DNS records, including DKIM, SPF, and the tracking CNAME when a tracking
+    /// subdomain is configured. Use this operation after adding the required DNS records to check the domain's
+    /// verification status.
     ///
-    /// Triggers verification of the domain's DNS records including DKIM, SPF, and the tracking CNAME (if a tracking subdomain is configured).
+    /// Triggers verification of the domain's DNS records including DKIM, SPF, and the tracking CNAME (if a tracking
+    /// subdomain is configured).
     public func verify(domainId: String, requestOptions: RequestOptions? = nil) async throws -> VerifyDomainResponse {
-        return try await DomainsMethods.domainsVerify(config: config, domainId: domainId, requestOptions: requestOptions)
+        try await DomainsMethods.domainsVerify(config: config, domainId: domainId, requestOptions: requestOptions)
     }
 
-/// Start a claim for a domain that another Resend account has already verified. The domain is recreated under your account with fresh DKIM keys, so the previous account's DNS records cannot be reused. Returns a TXT record to add to your DNS to prove ownership. Uses the same request body as creating a domain.
-    public func createClaim(name: String, region: CreateDomainClaimRequestRegion? = nil, customReturnPath: String? = nil, openTracking: Bool? = nil, clickTracking: Bool? = nil, trackingSubdomain: String? = nil, requestOptions: RequestOptions? = nil) async throws -> DomainClaim {
-        return try await DomainsMethods.domainsCreateClaim(config: config, name: name, region: region, customReturnPath: customReturnPath, openTracking: openTracking, clickTracking: clickTracking, trackingSubdomain: trackingSubdomain, requestOptions: requestOptions)
+    /// Start a claim for a domain that another Resend account has already verified. The domain is recreated under your
+    /// account with fresh DKIM keys, so the previous account's DNS records cannot be reused. Returns a TXT record to
+    /// add to your DNS to prove ownership. Uses the same request body as creating a domain.
+    public func createClaim(
+        name: String,
+        region: CreateDomainClaimRequestRegion? = nil,
+        customReturnPath: String? = nil,
+        openTracking: Bool? = nil,
+        clickTracking: Bool? = nil,
+        trackingSubdomain: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DomainClaim {
+        try await DomainsMethods.domainsCreateClaim(
+            config: config,
+            name: name,
+            region: region,
+            customReturnPath: customReturnPath,
+            openTracking: openTracking,
+            clickTracking: clickTracking,
+            trackingSubdomain: trackingSubdomain,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieves the latest claim for the placeholder domain created by a domain claim. Use the claim status and TXT `record` details to track verification and prove ownership of the claimed domain.
+    /// Retrieves the latest claim for the placeholder domain created by a domain claim. Use the claim status and TXT
+    /// `record` details to track verification and prove ownership of the claimed domain.
     ///
     /// Retrieve the latest claim for the placeholder domain created by the claim.
     public func getClaim(domainId: String, requestOptions: RequestOptions? = nil) async throws -> DomainClaim {
-        return try await DomainsMethods.domainsGetClaim(config: config, domainId: domainId, requestOptions: requestOptions)
+        try await DomainsMethods.domainsGetClaim(config: config, domainId: domainId, requestOptions: requestOptions)
     }
 }
 
-extension DomainsNamespace {
-/// Triggers asynchronous DNS verification and ownership transfer for a domain claim. The claim remains `pending` while verification runs, so retrieve the claim to check its status. Once the claim is `completed`, add the transferred domain's new DKIM records to DNS and verify them with the standard domain verification endpoint.
+public extension DomainsNamespace {
+    /// Triggers asynchronous DNS verification and ownership transfer for a domain claim. The claim remains `pending`
+    /// while verification runs, so retrieve the claim to check its status. Once the claim is `completed`, add the
+    /// transferred domain's new DKIM records to DNS and verify them with the standard domain verification endpoint.
     ///
-    /// Trigger asynchronous DNS verification and ownership transfer for a domain claim. The claim stays `pending` while verification runs; poll the retrieve endpoint for status. Once `completed`, the transferred domain has new DKIM records that must be added to DNS and verified via the standard domain verify endpoint.
-    public func verifyClaim(domainId: String, requestOptions: RequestOptions? = nil) async throws -> DomainClaim {
-        return try await DomainsMethods.domainsVerifyClaim(config: config, domainId: domainId, requestOptions: requestOptions)
+    /// Trigger asynchronous DNS verification and ownership transfer for a domain claim. The claim stays `pending` while
+    /// verification runs; poll the retrieve endpoint for status. Once `completed`, the transferred domain has new DKIM
+    /// records that must be added to DNS and verified via the standard domain verify endpoint.
+    func verifyClaim(domainId: String, requestOptions: RequestOptions? = nil) async throws -> DomainClaim {
+        try await DomainsMethods.domainsVerifyClaim(config: config, domainId: domainId, requestOptions: requestOptions)
     }
 }
 
@@ -155,24 +322,60 @@ public class ApiKeysNamespace {
         self.config = config
     }
 
-/// Creates a new API key. Supply a `name` and choose whether the key has full access or is restricted to sending emails; a sending-only key can be limited to a specific domain. The response includes the key token, so store it securely when you create the key.
-    public func create(name: String, permission: CreateApiKeyRequestPermission? = nil, domainId: String? = nil, requestOptions: RequestOptions? = nil) async throws -> CreateApiKeyResponse {
-        return try await ApiKeysMethods.apiKeysCreate(config: config, name: name, permission: permission, domainId: domainId, requestOptions: requestOptions)
+    /// Creates a new API key. Supply a `name` and choose whether the key has full access or is restricted to sending
+    /// emails; a sending-only key can be limited to a specific domain. The response includes the key token, so store it
+    /// securely when you create the key.
+    public func create(
+        name: String,
+        permission: CreateApiKeyRequestPermission? = nil,
+        domainId: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateApiKeyResponse {
+        try await ApiKeysMethods.apiKeysCreate(
+            config: config,
+            name: name,
+            permission: permission,
+            domainId: domainId,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists API keys available to the authenticated user. Use `after` or `before` to navigate the results with a cursor, and `limit` to control the number of items returned.
-    public func list(limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListApiKeysResponse {
-        return try await ApiKeysMethods.apiKeysList(config: config, limit: limit, after: after, before: before, requestOptions: requestOptions)
+    /// Lists API keys available to the authenticated user. Use `after` or `before` to navigate the results with a
+    /// cursor, and `limit` to control the number of items returned.
+    public func list(
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListApiKeysResponse {
+        try await ApiKeysMethods.apiKeysList(
+            config: config,
+            limit: limit,
+            after: after,
+            before: before,
+            requestOptions: requestOptions
+        )
     }
 
-/// Updates the name of an existing API key. Supply the new `name` in the request body and the key's ID in the path. The response identifies the updated API key.
-    public func update(apiKeyId: String, name: String, requestOptions: RequestOptions? = nil) async throws -> UpdateApiKeyResponse {
-        return try await ApiKeysMethods.apiKeysUpdate(config: config, apiKeyId: apiKeyId, name: name, requestOptions: requestOptions)
+    /// Updates the name of an existing API key. Supply the new `name` in the request body and the key's ID in the path.
+    /// The response identifies the updated API key.
+    public func update(
+        apiKeyId: String,
+        name: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> UpdateApiKeyResponse {
+        try await ApiKeysMethods.apiKeysUpdate(
+            config: config,
+            apiKeyId: apiKeyId,
+            name: name,
+            requestOptions: requestOptions
+        )
     }
 
-/// Deletes an existing API key. Supply the key's ID to identify the API key to remove. The response indicates whether the key was deleted.
+    /// Deletes an existing API key. Supply the key's ID to identify the API key to remove. The response indicates
+    /// whether the key was deleted.
     public func remove(apiKeyId: String, requestOptions: RequestOptions? = nil) async throws -> DeleteApiKeyResponse {
-        return try await ApiKeysMethods.apiKeysRemove(config: config, apiKeyId: apiKeyId, requestOptions: requestOptions)
+        try await ApiKeysMethods.apiKeysRemove(config: config, apiKeyId: apiKeyId, requestOptions: requestOptions)
     }
 }
 
@@ -182,13 +385,29 @@ public class OauthNamespace {
         self.config = config
     }
 
-/// Lists OAuth grants available to the authenticated user. Use `after` or `before` to navigate the results with a cursor, and `limit` to control the number of grants returned.
-    public func listGrants(limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListOAuthGrantsResponse {
-        return try await OauthMethods.listGrants(config: config, limit: limit, after: after, before: before, requestOptions: requestOptions)
+    /// Lists OAuth grants available to the authenticated user. Use `after` or `before` to navigate the results with a
+    /// cursor, and `limit` to control the number of grants returned.
+    public func listGrants(
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListOAuthGrantsResponse {
+        try await OauthMethods.listGrants(
+            config: config,
+            limit: limit,
+            after: after,
+            before: before,
+            requestOptions: requestOptions
+        )
     }
 
-/// Revokes an OAuth grant, removing the authorization associated with it. Supply the grant's ID to identify which authorization to revoke. The response includes the revocation time and reason.
-    public func revokeGrant(oauthGrantId: String, requestOptions: RequestOptions? = nil) async throws -> RevokeOAuthGrantResponse {
-        return try await OauthMethods.revokeGrant(config: config, oauthGrantId: oauthGrantId, requestOptions: requestOptions)
+    /// Revokes an OAuth grant, removing the authorization associated with it. Supply the grant's ID to identify which
+    /// authorization to revoke. The response includes the revocation time and reason.
+    public func revokeGrant(
+        oauthGrantId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> RevokeOAuthGrantResponse {
+        try await OauthMethods.revokeGrant(config: config, oauthGrantId: oauthGrantId, requestOptions: requestOptions)
     }
 }

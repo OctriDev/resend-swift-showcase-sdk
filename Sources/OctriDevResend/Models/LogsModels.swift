@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Logs domain models
+/// Logs domain models
 /// Typed representation of the `LogSummary` API schema.
 public struct LogSummary: Codable {
     /// The log ID.
@@ -30,28 +30,35 @@ public struct LogSummary: Codable {
     }
 
     init() {
-        (self.id, self.createdAt, self.endpoint, self.method, self.responseStatus) = (nil, nil, nil, nil, nil)
-        self.userAgent = nil
+        (id, createdAt, endpoint, method, responseStatus) = (nil, nil, nil, nil, nil)
+        userAgent = nil
     }
 }
 
-extension LogSummary {
-    public init(from decoder: Decoder) throws {
+public extension LogSummary {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.endpoint = try container.sdkDecodeIfPresent(.endpoint)
-        self.method = try container.sdkDecodeIfPresent(.method)
-        self.responseStatus = try container.sdkDecodeIfPresent(.responseStatus)
-        self.userAgent = try container.sdkDecodeIfPresent(.userAgent)
-        if let value = self.id {
+        id = try container.sdkDecodeIfPresent(.id)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        endpoint = try container.sdkDecodeIfPresent(.endpoint)
+        method = try container.sdkDecodeIfPresent(.method)
+        responseStatus = try container.sdkDecodeIfPresent(.responseStatus)
+        userAgent = try container.sdkDecodeIfPresent(.userAgent)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-extension LogSummary {
-    public init(id: String? = nil, createdAt: String? = nil, endpoint: String? = nil, method: LogSummaryMethod? = nil, responseStatus: Int? = nil, userAgent: String? = nil) throws {
+public extension LogSummary {
+    init(
+        id: String? = nil,
+        createdAt: String? = nil,
+        endpoint: String? = nil,
+        method: LogSummaryMethod? = nil,
+        responseStatus: Int? = nil,
+        userAgent: String? = nil
+    ) throws {
         self.init()
         (self.id, self.createdAt) = (id, createdAt)
         (self.endpoint, self.method) = (endpoint, method)
@@ -98,31 +105,41 @@ public struct Log: Codable {
     }
 
     init() {
-        (self.object, self.id, self.createdAt, self.endpoint, self.method) = (nil, nil, nil, nil, nil)
-        (self.responseStatus, self.userAgent, self.requestBody, self.responseBody) = (nil, nil, nil, nil)
+        (object, id, createdAt, endpoint, method) = (nil, nil, nil, nil, nil)
+        (responseStatus, userAgent, requestBody, responseBody) = (nil, nil, nil, nil)
     }
 }
 
-extension Log {
-    public init(from decoder: Decoder) throws {
+public extension Log {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.endpoint = try container.sdkDecodeIfPresent(.endpoint)
-        self.method = try container.sdkDecodeIfPresent(.method)
-        self.responseStatus = try container.sdkDecodeIfPresent(.responseStatus)
-        self.userAgent = try container.sdkDecodeIfPresent(.userAgent)
-        self.requestBody = try container.sdkDecodeIfPresent(.requestBody)
-        self.responseBody = try container.sdkDecodeIfPresent(.responseBody)
-        if let value = self.id {
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        endpoint = try container.sdkDecodeIfPresent(.endpoint)
+        method = try container.sdkDecodeIfPresent(.method)
+        responseStatus = try container.sdkDecodeIfPresent(.responseStatus)
+        userAgent = try container.sdkDecodeIfPresent(.userAgent)
+        requestBody = try container.sdkDecodeIfPresent(.requestBody)
+        responseBody = try container.sdkDecodeIfPresent(.responseBody)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-extension Log {
-    public init(object: String? = nil, id: String? = nil, createdAt: String? = nil, endpoint: String? = nil, method: LogMethod? = nil, responseStatus: Int? = nil, userAgent: String? = nil, requestBody: [String: JSONValue]? = nil, responseBody: [String: JSONValue]? = nil) throws {
+public extension Log {
+    init(
+        object: String? = nil,
+        id: String? = nil,
+        createdAt: String? = nil,
+        endpoint: String? = nil,
+        method: LogMethod? = nil,
+        responseStatus: Int? = nil,
+        userAgent: String? = nil,
+        requestBody: [String: JSONValue]? = nil,
+        responseBody: [String: JSONValue]? = nil
+    ) throws {
         self.init()
         (self.object, self.id) = (object, id)
         (self.createdAt, self.endpoint) = (createdAt, endpoint)
@@ -152,21 +169,21 @@ public struct ListLogsResponse: Codable {
     }
 
     init() {
-        (self.object, self.hasMore, self.data) = (nil, nil, nil)
+        (object, hasMore, data) = (nil, nil, nil)
     }
 }
 
-extension ListLogsResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListLogsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        object = try container.sdkDecodeIfPresent(.object)
+        hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension ListLogsResponse {
-    public init(object: String? = nil, hasMore: Bool? = nil, data: [LogSummary]? = nil) {
+public extension ListLogsResponse {
+    init(object: String? = nil, hasMore: Bool? = nil, data: [LogSummary]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -177,7 +194,10 @@ extension ListLogsResponse {
 public struct LogSummaryMethod: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let get = LogSummaryMethod(rawValue: "GET")
     public static let post = LogSummaryMethod(rawValue: "POST")
     public static let put = LogSummaryMethod(rawValue: "PUT")
@@ -187,7 +207,7 @@ public struct LogSummaryMethod: RawRepresentable, Hashable, Codable, Sendable, S
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -200,7 +220,10 @@ public struct LogSummaryMethod: RawRepresentable, Hashable, Codable, Sendable, S
 public struct LogMethod: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let get = LogMethod(rawValue: "GET")
     public static let post = LogMethod(rawValue: "POST")
     public static let put = LogMethod(rawValue: "PUT")
@@ -210,7 +233,7 @@ public struct LogMethod: RawRepresentable, Hashable, Codable, Sendable, SdkWireC
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

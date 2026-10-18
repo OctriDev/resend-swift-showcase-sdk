@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension InboxesMethods {
-    public struct InboxesReplyThreadEmailOptions: Codable {
+public extension InboxesMethods {
+    struct InboxesReplyThreadEmailOptions: Codable {
         public var inboxId: String
         public var threadId: String
         public var emailId: String
@@ -28,9 +28,16 @@ extension InboxesMethods {
         }
     }
 
-    /// Submits a reply to a message in an inbox thread directly from the inbox address, without storing a draft. Use `html` or `text` for the reply body; recipients are derived from the message, with `reply_all` controlling whether other recipients are copied. The reply is threaded under the original message.
+    /// Submits a reply to a message in an inbox thread directly from the inbox address, without storing a draft. Use
+    /// `html` or `text` for the reply body; recipients are derived from the message, with `reply_all` controlling
+    /// whether other recipients are copied. The reply is threaded under the original message.
     ///
-    /// Sends a reply from the inbox address right away, with no stored draft. The `to` recipients come from the message you reply to. For a message the inbox received, the reply goes to its `Reply-To` addresses, or to its sender when it has no `Reply-To`. For a message the inbox sent, the reply goes to that message's `to` recipients. Set `reply_all` to also copy the other recipients of the message. The reply threads under the message through the `In-Reply-To` and `References` headers. When no recipient can be found for the reply, the request returns a 422. The whole email, encoded, can be at most 40 MB, or the request returns a 422.
+    /// Sends a reply from the inbox address right away, with no stored draft. The `to` recipients come from the message
+    /// you reply to. For a message the inbox received, the reply goes to its `Reply-To` addresses, or to its sender
+    /// when it has no `Reply-To`. For a message the inbox sent, the reply goes to that message's `to` recipients. Set
+    /// `reply_all` to also copy the other recipients of the message. The reply threads under the message through the
+    /// `In-Reply-To` and `References` headers. When no recipient can be found for the reply, the request returns a 422.
+    /// The whole email, encoded, can be at most 40 MB, or the request returns a 422.
     ///
     /// - Parameters:
     /// - inboxId: The Inbox ID. An email address is not accepted.
@@ -80,7 +87,11 @@ extension InboxesMethods {
     ///   here. Sending one of them, in any letter case, returns a 422. Header names
     ///   cannot be empty, and names and values cannot contain line breaks or null
     ///   characters, or the request returns a 422. `null` means no custom headers.
-    public static func inboxesReplyThreadEmail(config: ClientConfig, options: InboxesReplyThreadEmailOptions, requestOptions: RequestOptions? = nil) async throws -> ReplyInboxThreadEmailResponseSuccess {
+    static func inboxesReplyThreadEmail(
+        config: ClientConfig,
+        options: InboxesReplyThreadEmailOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ReplyInboxThreadEmailResponseSuccess {
         try sdkValidateUuid("inbox_id", options.inboxId)
 
         try sdkValidateUuid("thread_id", options.threadId)
@@ -97,8 +108,25 @@ extension InboxesMethods {
 
         let requestBody = InboxesReplyThreadEmailRequestBody(options: options)
 
-        return try (await sdkRequest("POST", ["/inboxes/", sdkEncodePathSegment(sdkWireString(options.inboxId)), "/threads/", sdkEncodePathSegment(sdkWireString(options.threadId)), "/emails/", sdkEncodePathSegment(sdkWireString(options.emailId)), "/reply"].joined(), config: config, body: requestBody, decoder: .json, operationId: "inboxesReplyThreadEmail", extraHeaders: sdkHeaders([
-            ("Idempotency-Key", sdkHeaderValue(options.idempotencyKey)),
-        ]), options: requestOptions)).data
+        return try await (sdkRequest(
+            "POST",
+            [
+                "/inboxes/",
+                sdkEncodePathSegment(sdkWireString(options.inboxId)),
+                "/threads/",
+                sdkEncodePathSegment(sdkWireString(options.threadId)),
+                "/emails/",
+                sdkEncodePathSegment(sdkWireString(options.emailId)),
+                "/reply",
+            ].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "inboxesReplyThreadEmail",
+            extraHeaders: sdkHeaders([
+                ("Idempotency-Key", sdkHeaderValue(options.idempotencyKey)),
+            ]),
+            options: requestOptions
+        )).data
     }
 }

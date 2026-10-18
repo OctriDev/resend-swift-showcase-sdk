@@ -6,34 +6,64 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ContactsMethods {
-    /// Lists the topics and subscription statuses associated with a contact. Use `contact_id` to select the contact and `after` or `before` to position results relative to a cursor.
+public extension ContactsMethods {
+    /// Lists the topics and subscription statuses associated with a contact. Use `contact_id` to select the contact and
+    /// `after` or `before` to position results relative to a cursor.
     ///
     /// - Parameters:
     /// - contactId: The Contact ID or email address.
     /// - limit: Number of items to return.
     /// - after: Return items after this cursor.
     /// - before: Return items before this cursor.
-    public static func contactsListTopics(config: ClientConfig, contactId: String, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> GetContactTopicsResponseSuccess {
-        if let limit = limit {
+    static func contactsListTopics(
+        config: ClientConfig,
+        contactId: String,
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GetContactTopicsResponseSuccess {
+        if let limit {
             try validateRange("limit", Double(limit), min: 1, max: 100)
         }
 
-        return try (await sdkRequest("GET", ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId)), "/topics"].joined(), config: config, query: [
-            SdkQueryParameter("limit", value: limit),
-            SdkQueryParameter("after", value: after),
-            SdkQueryParameter("before", value: before),
-        ], decoder: .json, operationId: "contactsListTopics", options: requestOptions)).data
+        return try await (sdkRequest(
+            "GET",
+            ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId)), "/topics"].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("limit", value: limit),
+                SdkQueryParameter("after", value: after),
+                SdkQueryParameter("before", value: before),
+            ],
+            decoder: .json,
+            operationId: "contactsListTopics",
+            options: requestOptions
+        )).data
     }
 
-    /// Updates a contact’s subscriptions to topics. Supply the required `topics` array with each topic ID and its subscription status.
+    /// Updates a contact’s subscriptions to topics. Supply the required `topics` array with each topic ID and its
+    /// subscription status.
     ///
     /// - Parameters:
     /// - contactId: The Contact ID or email address.
     /// - topics: Required array value serialized in the `topics` wire field.
-    public static func contactsUpdateTopics(config: ClientConfig, contactId: String, topics: [UpdateContactTopicsOptionsTopicsItem], requestOptions: RequestOptions? = nil) async throws -> UpdateContactTopicsResponseSuccess {
+    static func contactsUpdateTopics(
+        config: ClientConfig,
+        contactId: String,
+        topics: [UpdateContactTopicsOptionsTopicsItem],
+        requestOptions: RequestOptions? = nil
+    ) async throws -> UpdateContactTopicsResponseSuccess {
         let requestBody = ContactsUpdateTopicsRequestBody(topics: topics)
 
-        return try (await sdkRequest("PATCH", ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId)), "/topics"].joined(), config: config, body: requestBody, decoder: .json, operationId: "contactsUpdateTopics", options: requestOptions)).data
+        return try await (sdkRequest(
+            "PATCH",
+            ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId)), "/topics"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "contactsUpdateTopics",
+            options: requestOptions
+        )).data
     }
 }
