@@ -6,30 +6,51 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension SuppressionsMethods {
-    /// Creates a suppression for an email address. Supply the required `email` value to add that address to the suppression list.
+public extension SuppressionsMethods {
+    /// Creates a suppression for an email address. Supply the required `email` value to add that address to the
+    /// suppression list.
     ///
     /// - Parameters:
     /// - email: Email address to suppress.
-    public static func suppressionsAdd(config: ClientConfig, email: String, requestOptions: RequestOptions? = nil) async throws -> CreateSuppressionResponseSuccess {
+    static func suppressionsAdd(
+        config: ClientConfig,
+        email: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateSuppressionResponseSuccess {
         let requestBody = SuppressionsAddRequestBody(email: email)
 
-        return try (await sdkRequest("POST", "/suppressions", config: config, body: requestBody, decoder: .json, operationId: "suppressionsAdd", options: requestOptions)).data
+        return try await (sdkRequest(
+            "POST",
+            "/suppressions",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "suppressionsAdd",
+            options: requestOptions
+        )).data
     }
 
-    /// Lists suppressions, with an optional filter for their origin. Use `after` or `before` to navigate results and `limit` to control the number of suppressions returned per request.
+    /// Lists suppressions, with an optional filter for their origin. Use `after` or `before` to navigate results and
+    /// `limit` to control the number of suppressions returned per request.
     ///
     /// - Parameters:
     /// - origin: Filter suppressions by origin.
     /// - limit: Number of items to return.
     /// - after: Return items after this cursor.
     /// - before: Return items before this cursor.
-    public static func suppressionsList(config: ClientConfig, origin: SuppressionsListParameter? = nil, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListSuppressionsResponseSuccess {
-        if let limit = limit {
+    static func suppressionsList(
+        config: ClientConfig,
+        origin: SuppressionsListParameter? = nil,
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListSuppressionsResponseSuccess {
+        if let limit {
             try validateRange("limit", Double(limit), min: 1, max: 100)
         }
 
-        return try (await sdkRequest("GET", "/suppressions", config: config, query: [
+        return try await (sdkRequest("GET", "/suppressions", config: config, query: [
             SdkQueryParameter("origin", value: origin),
             SdkQueryParameter("limit", value: limit),
             SdkQueryParameter("after", value: after),
@@ -37,15 +58,28 @@ extension SuppressionsMethods {
         ], decoder: .json, operationId: "suppressionsList", options: requestOptions)).data
     }
 
-    /// Adds multiple email addresses to the suppression list in one request. Supply an `emails` array containing between 1 and 100 addresses.
+    /// Adds multiple email addresses to the suppression list in one request. Supply an `emails` array containing
+    /// between 1 and 100 addresses.
     ///
     /// - Parameters:
     /// - emails: Email addresses to suppress.
-    public static func suppressionsBatchAdd(config: ClientConfig, emails: [String], requestOptions: RequestOptions? = nil) async throws -> BatchAddSuppressionsResponseSuccess {
+    static func suppressionsBatchAdd(
+        config: ClientConfig,
+        emails: [String],
+        requestOptions: RequestOptions? = nil
+    ) async throws -> BatchAddSuppressionsResponseSuccess {
         try validateItems("emails", emails, min: 1, max: 100)
 
         let requestBody = SuppressionsBatchAddRequestBody(emails: emails)
 
-        return try (await sdkRequest("POST", "/suppressions/batch/add", config: config, body: requestBody, decoder: .json, operationId: "suppressionsBatchAdd", options: requestOptions)).data
+        return try await (sdkRequest(
+            "POST",
+            "/suppressions/batch/add",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "suppressionsBatchAdd",
+            options: requestOptions
+        )).data
     }
 }

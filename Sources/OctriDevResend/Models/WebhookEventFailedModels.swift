@@ -3,7 +3,7 @@
 
 import Foundation
 
-// WebhookEventFailed domain models
+/// WebhookEventFailed domain models
 /// Typed representation of the `WebhookEventFailed` API schema.
 public struct WebhookEventFailed: Codable {
     /// Reason for the email failure (e.g., `reached_daily_quota`).
@@ -13,21 +13,27 @@ public struct WebhookEventFailed: Codable {
         case reason
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension WebhookEventFailed {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.reason) else {
-            throw SdkValidationError(field: "reason", code: "required", message: "Validation failed for 'reason': value is required")
-        }
-        self.reason = try container.sdkDecodeRequired(.reason)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension WebhookEventFailed {
-    public init(reason: String) {
+public extension WebhookEventFailed {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.reason) else {
+            throw SdkValidationError(
+                field: "reason",
+                code: "required",
+                message: "Validation failed for 'reason': value is required"
+            )
+        }
+        reason = try container.sdkDecodeRequired(.reason)
+    }
+}
+
+public extension WebhookEventFailed {
+    init(reason: String) {
         self.reason = reason
     }
 }

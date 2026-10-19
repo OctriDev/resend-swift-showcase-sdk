@@ -6,37 +6,80 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension WebhooksMethods {
-    /// Triggers one additional delivery of a webhook event. The webhook must be enabled, and a manual replay does not schedule automatic retries.
+public extension WebhooksMethods {
+    /// Triggers one additional delivery of a webhook event. The webhook must be enabled, and a manual replay does not
+    /// schedule automatic retries.
     ///
-    /// Queues one more delivery of the event to the webhook. The event must be retrievable through the get event endpoint and the webhook must be enabled; a disabled webhook returns a 422 validation_error. A manual replay does not schedule automatic retries.
+    /// Queues one more delivery of the event to the webhook. The event must be retrievable through the get event
+    /// endpoint and the webhook must be enabled; a disabled webhook returns a 422 validation_error. A manual replay
+    /// does not schedule automatic retries.
     ///
     /// - Parameters:
     /// - webhookId: The Webhook ID.
     /// - eventId: The Webhook Event ID.
-    public static func webhooksReplayEvent(config: ClientConfig, webhookId: String, eventId: String, requestOptions: RequestOptions? = nil) async throws -> ReplayWebhookEventResponse {
+    static func webhooksReplayEvent(
+        config: ClientConfig,
+        webhookId: String,
+        eventId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ReplayWebhookEventResponse {
         try sdkValidateUuid("webhook_id", webhookId)
 
-        return try (await sdkRequest("POST", ["/webhooks/", sdkEncodePathSegment(sdkWireString(webhookId)), "/events/", sdkEncodePathSegment(sdkWireString(eventId)), "/replay"].joined(), config: config, decoder: .json, operationId: "webhooksReplayEvent", options: requestOptions)).data
+        return try await (sdkRequest(
+            "POST",
+            [
+                "/webhooks/",
+                sdkEncodePathSegment(sdkWireString(webhookId)),
+                "/events/",
+                sdkEncodePathSegment(sdkWireString(eventId)),
+                "/replay",
+            ].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "webhooksReplayEvent",
+            options: requestOptions
+        )).data
     }
 
-    /// Lists delivery attempts for a specific event associated with a webhook. Use `after` to continue from a cursor and `limit` to control the number of attempts returned.
+    /// Lists delivery attempts for a specific event associated with a webhook. Use `after` to continue from a cursor
+    /// and `limit` to control the number of attempts returned.
     ///
     /// - Parameters:
     /// - webhookId: The Webhook ID.
     /// - eventId: The Webhook Event ID.
     /// - limit: Number of items to return.
     /// - after: Return items after this cursor.
-    public static func webhooksListEventAttempts(config: ClientConfig, webhookId: String, eventId: String, limit: Int? = nil, after: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListWebhookEventAttemptsResponse {
+    static func webhooksListEventAttempts(
+        config: ClientConfig,
+        webhookId: String,
+        eventId: String,
+        limit: Int? = nil,
+        after: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListWebhookEventAttemptsResponse {
         try sdkValidateUuid("webhook_id", webhookId)
 
-        if let limit = limit {
+        if let limit {
             try validateRange("limit", Double(limit), min: 1, max: 100)
         }
 
-        return try (await sdkRequest("GET", ["/webhooks/", sdkEncodePathSegment(sdkWireString(webhookId)), "/events/", sdkEncodePathSegment(sdkWireString(eventId)), "/attempts"].joined(), config: config, query: [
-            SdkQueryParameter("limit", value: limit),
-            SdkQueryParameter("after", value: after),
-        ], decoder: .json, operationId: "webhooksListEventAttempts", options: requestOptions)).data
+        return try await (sdkRequest(
+            "GET",
+            [
+                "/webhooks/",
+                sdkEncodePathSegment(sdkWireString(webhookId)),
+                "/events/",
+                sdkEncodePathSegment(sdkWireString(eventId)),
+                "/attempts",
+            ].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("limit", value: limit),
+                SdkQueryParameter("after", value: after),
+            ],
+            decoder: .json,
+            operationId: "webhooksListEventAttempts",
+            options: requestOptions
+        )).data
     }
 }

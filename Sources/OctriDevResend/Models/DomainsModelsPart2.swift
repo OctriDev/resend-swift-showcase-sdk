@@ -3,9 +3,20 @@
 
 import Foundation
 
-// Domains domain models
-extension CreateDomainResponse {
-    public init(id: String? = nil, name: String? = nil, createdAt: String? = nil, status: CreateDomainResponseStatus? = nil, capabilities: DomainCapabilities? = nil, records: [DomainRecord]? = nil, region: String? = nil, openTracking: Bool? = nil, clickTracking: Bool? = nil, trackingSubdomain: String? = nil) {
+/// Domains domain models
+public extension CreateDomainResponse {
+    init(
+        id: String? = nil,
+        name: String? = nil,
+        createdAt: String? = nil,
+        status: CreateDomainResponseStatus? = nil,
+        capabilities: DomainCapabilities? = nil,
+        records: [DomainRecord]? = nil,
+        region: String? = nil,
+        openTracking: Bool? = nil,
+        clickTracking: Bool? = nil,
+        trackingSubdomain: String? = nil
+    ) {
         self.init()
         (self.id, self.name) = (id, name)
         (self.createdAt, self.status) = (createdAt, status)
@@ -61,31 +72,43 @@ public struct Domain: Codable {
     }
 
     init() {
-        (self.object, self.id, self.name, self.status, self.createdAt) = (nil, nil, nil, nil, nil)
-        (self.region, self.openTracking, self.clickTracking, self.trackingSubdomain, self.capabilities) = (nil, nil, nil, nil, nil)
-        self.records = nil
+        (object, id, name, status, createdAt) = (nil, nil, nil, nil, nil)
+        (region, openTracking, clickTracking, trackingSubdomain, capabilities) = (nil, nil, nil, nil, nil)
+        records = nil
     }
 }
 
-extension Domain {
-    public init(from decoder: Decoder) throws {
+public extension Domain {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.openTracking = try container.sdkDecodeIfPresent(.openTracking)
-        self.clickTracking = try container.sdkDecodeIfPresent(.clickTracking)
-        self.trackingSubdomain = try container.sdkDecodeIfPresent(.trackingSubdomain)
-        self.capabilities = try container.sdkDecodeIfPresent(.capabilities)
-        self.records = try container.sdkDecodeIfPresent(.records)
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        status = try container.sdkDecodeIfPresent(.status)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        region = try container.sdkDecodeIfPresent(.region)
+        openTracking = try container.sdkDecodeIfPresent(.openTracking)
+        clickTracking = try container.sdkDecodeIfPresent(.clickTracking)
+        trackingSubdomain = try container.sdkDecodeIfPresent(.trackingSubdomain)
+        capabilities = try container.sdkDecodeIfPresent(.capabilities)
+        records = try container.sdkDecodeIfPresent(.records)
     }
 }
 
-extension Domain {
-    public init(object: String? = nil, id: String? = nil, name: String? = nil, status: DomainStatus? = nil, createdAt: String? = nil, region: String? = nil, openTracking: Bool? = nil, clickTracking: Bool? = nil, trackingSubdomain: String? = nil, capabilities: DomainCapabilities? = nil, records: [DomainRecord]? = nil) {
+public extension Domain {
+    init(
+        object: String? = nil,
+        id: String? = nil,
+        name: String? = nil,
+        status: DomainStatus? = nil,
+        createdAt: String? = nil,
+        region: String? = nil,
+        openTracking: Bool? = nil,
+        clickTracking: Bool? = nil,
+        trackingSubdomain: String? = nil,
+        capabilities: DomainCapabilities? = nil,
+        records: [DomainRecord]? = nil
+    ) {
         self.init()
         (self.object, self.id) = (object, id)
         (self.name, self.status) = (name, status)
@@ -129,28 +152,43 @@ public struct CreateDomainRequest: Codable {
         case trackingSubdomain = "tracking_subdomain"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateDomainRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.customReturnPath = try container.sdkDecodeIfPresent(.customReturnPath)
-        self.openTracking = try container.sdkDecodeIfPresent(.openTracking)
-        self.clickTracking = try container.sdkDecodeIfPresent(.clickTracking)
-        self.tls = try container.sdkDecodeIfPresent(.tls)
-        self.capabilities = try container.sdkDecodeIfPresent(.capabilities)
-        self.trackingSubdomain = try container.sdkDecodeIfPresent(.trackingSubdomain)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateDomainRequest {
-    public init(name: String, region: CreateDomainRequestRegion? = nil, customReturnPath: String? = nil, openTracking: Bool? = nil, clickTracking: Bool? = nil, tls: CreateDomainRequestTls? = nil, capabilities: DomainCapabilities? = nil, trackingSubdomain: String? = nil) {
+public extension CreateDomainRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        region = try container.sdkDecodeIfPresent(.region)
+        customReturnPath = try container.sdkDecodeIfPresent(.customReturnPath)
+        openTracking = try container.sdkDecodeIfPresent(.openTracking)
+        clickTracking = try container.sdkDecodeIfPresent(.clickTracking)
+        tls = try container.sdkDecodeIfPresent(.tls)
+        capabilities = try container.sdkDecodeIfPresent(.capabilities)
+        trackingSubdomain = try container.sdkDecodeIfPresent(.trackingSubdomain)
+    }
+}
+
+public extension CreateDomainRequest {
+    init(
+        name: String,
+        region: CreateDomainRequestRegion? = nil,
+        customReturnPath: String? = nil,
+        openTracking: Bool? = nil,
+        clickTracking: Bool? = nil,
+        tls: CreateDomainRequestTls? = nil,
+        capabilities: DomainCapabilities? = nil,
+        trackingSubdomain: String? = nil
+    ) {
         (self.name, self.region) = (name, region)
         (self.customReturnPath, self.openTracking) = (customReturnPath, openTracking)
         (self.clickTracking, self.tls) = (clickTracking, tls)
@@ -171,20 +209,20 @@ public struct DomainCapabilities: Codable {
     }
 
     init() {
-        (self.sending, self.receiving) = (nil, nil)
+        (sending, receiving) = (nil, nil)
     }
 }
 
-extension DomainCapabilities {
-    public init(from decoder: Decoder) throws {
+public extension DomainCapabilities {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.sending = try container.sdkDecodeIfPresent(.sending)
-        self.receiving = try container.sdkDecodeIfPresent(.receiving)
+        sending = try container.sdkDecodeIfPresent(.sending)
+        receiving = try container.sdkDecodeIfPresent(.receiving)
     }
 }
 
-extension DomainCapabilities {
-    public init(sending: DomainCapabilitiesSending? = nil, receiving: DomainCapabilitiesReceiving? = nil) {
+public extension DomainCapabilities {
+    init(sending: DomainCapabilitiesSending? = nil, receiving: DomainCapabilitiesReceiving? = nil) {
         self.init()
         (self.sending, self.receiving) = (sending, receiving)
     }
@@ -194,14 +232,17 @@ extension DomainCapabilities {
 public struct DomainClaimBlockedReason: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let gracePeriod = DomainClaimBlockedReason(rawValue: "grace_period")
     public static let recentOwnerActivity = DomainClaimBlockedReason(rawValue: "recent_owner_activity")
     public static let pendingScheduledEmails = DomainClaimBlockedReason(rawValue: "pending_scheduled_emails")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -215,7 +256,10 @@ public struct DomainClaimBlockedReason: RawRepresentable, Hashable, Codable, Sen
 public struct CreateDomainRequestRegion: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let usEast1 = CreateDomainRequestRegion(rawValue: "us-east-1")
     public static let euWest1 = CreateDomainRequestRegion(rawValue: "eu-west-1")
     public static let saEast1 = CreateDomainRequestRegion(rawValue: "sa-east-1")
@@ -223,7 +267,7 @@ public struct CreateDomainRequestRegion: RawRepresentable, Hashable, Codable, Se
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -236,13 +280,16 @@ public struct CreateDomainRequestRegion: RawRepresentable, Hashable, Codable, Se
 public struct DomainCapabilitiesReceiving: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let enabled = DomainCapabilitiesReceiving(rawValue: "enabled")
     public static let disabled = DomainCapabilitiesReceiving(rawValue: "disabled")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -255,13 +302,16 @@ public struct DomainCapabilitiesReceiving: RawRepresentable, Hashable, Codable, 
 public struct DomainCapabilitiesSending: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let enabled = DomainCapabilitiesSending(rawValue: "enabled")
     public static let disabled = DomainCapabilitiesSending(rawValue: "disabled")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -274,7 +324,10 @@ public struct DomainCapabilitiesSending: RawRepresentable, Hashable, Codable, Se
 public struct ListDomainsItemStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let pending = ListDomainsItemStatus(rawValue: "pending")
     public static let verified = ListDomainsItemStatus(rawValue: "verified")
     public static let failed = ListDomainsItemStatus(rawValue: "failed")
@@ -284,7 +337,7 @@ public struct ListDomainsItemStatus: RawRepresentable, Hashable, Codable, Sendab
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -297,7 +350,10 @@ public struct ListDomainsItemStatus: RawRepresentable, Hashable, Codable, Sendab
 public struct CreateDomainResponseStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let pending = CreateDomainResponseStatus(rawValue: "pending")
     public static let verified = CreateDomainResponseStatus(rawValue: "verified")
     public static let failed = CreateDomainResponseStatus(rawValue: "failed")
@@ -307,7 +363,7 @@ public struct CreateDomainResponseStatus: RawRepresentable, Hashable, Codable, S
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -321,7 +377,10 @@ public struct CreateDomainResponseStatus: RawRepresentable, Hashable, Codable, S
 public struct CreateDomainClaimRequestRegion: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let usEast1 = CreateDomainClaimRequestRegion(rawValue: "us-east-1")
     public static let euWest1 = CreateDomainClaimRequestRegion(rawValue: "eu-west-1")
     public static let saEast1 = CreateDomainClaimRequestRegion(rawValue: "sa-east-1")
@@ -329,7 +388,7 @@ public struct CreateDomainClaimRequestRegion: RawRepresentable, Hashable, Codabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -342,7 +401,10 @@ public struct CreateDomainClaimRequestRegion: RawRepresentable, Hashable, Codabl
 public struct DomainClaimRegion: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let usEast1 = DomainClaimRegion(rawValue: "us-east-1")
     public static let euWest1 = DomainClaimRegion(rawValue: "eu-west-1")
     public static let saEast1 = DomainClaimRegion(rawValue: "sa-east-1")
@@ -350,7 +412,7 @@ public struct DomainClaimRegion: RawRepresentable, Hashable, Codable, Sendable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -363,7 +425,10 @@ public struct DomainClaimRegion: RawRepresentable, Hashable, Codable, Sendable, 
 public struct DomainRecordStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let pending = DomainRecordStatus(rawValue: "pending")
     public static let verified = DomainRecordStatus(rawValue: "verified")
     public static let failed = DomainRecordStatus(rawValue: "failed")
@@ -372,7 +437,7 @@ public struct DomainRecordStatus: RawRepresentable, Hashable, Codable, Sendable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -385,13 +450,16 @@ public struct DomainRecordStatus: RawRepresentable, Hashable, Codable, Sendable,
 public struct UpdateDomainOptionsTls: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let opportunistic = UpdateDomainOptionsTls(rawValue: "opportunistic")
     public static let enforced = UpdateDomainOptionsTls(rawValue: "enforced")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -405,13 +473,16 @@ public struct UpdateDomainOptionsTls: RawRepresentable, Hashable, Codable, Senda
 public struct CreateDomainRequestTls: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let opportunistic = CreateDomainRequestTls(rawValue: "opportunistic")
     public static let enforced = CreateDomainRequestTls(rawValue: "enforced")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -424,7 +495,10 @@ public struct CreateDomainRequestTls: RawRepresentable, Hashable, Codable, Senda
 public struct DomainClaimStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let pending = DomainClaimStatus(rawValue: "pending")
     public static let verified = DomainClaimStatus(rawValue: "verified")
     public static let completed = DomainClaimStatus(rawValue: "completed")
@@ -436,7 +510,7 @@ public struct DomainClaimStatus: RawRepresentable, Hashable, Codable, Sendable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -449,7 +523,10 @@ public struct DomainClaimStatus: RawRepresentable, Hashable, Codable, Sendable, 
 public struct DomainStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let pending = DomainStatus(rawValue: "pending")
     public static let verified = DomainStatus(rawValue: "verified")
     public static let failed = DomainStatus(rawValue: "failed")
@@ -459,7 +536,7 @@ public struct DomainStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWi
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -472,7 +549,10 @@ public struct DomainStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWi
 public struct DomainRecordType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let mx = DomainRecordType(rawValue: "MX")
     public static let txt = DomainRecordType(rawValue: "TXT")
     public static let cname = DomainRecordType(rawValue: "CNAME")
@@ -480,7 +560,7 @@ public struct DomainRecordType: RawRepresentable, Hashable, Codable, Sendable, S
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -494,7 +574,10 @@ public struct DomainRecordType: RawRepresentable, Hashable, Codable, Sendable, S
 public struct DomainRecordRecord: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let spf = DomainRecordRecord(rawValue: "SPF")
     public static let dkim = DomainRecordRecord(rawValue: "DKIM")
     public static let receiving = DomainRecordRecord(rawValue: "Receiving")
@@ -503,7 +586,7 @@ public struct DomainRecordRecord: RawRepresentable, Hashable, Codable, Sendable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -516,12 +599,15 @@ public struct DomainRecordRecord: RawRepresentable, Hashable, Codable, Sendable,
 public struct DomainClaimRecordType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let txt = DomainClaimRecordType(rawValue: "TXT")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

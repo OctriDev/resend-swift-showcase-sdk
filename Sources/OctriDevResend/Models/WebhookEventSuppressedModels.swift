@@ -3,7 +3,7 @@
 
 import Foundation
 
-// WebhookEventSuppressed domain models
+/// WebhookEventSuppressed domain models
 /// Typed representation of the `WebhookEventSuppressed` API schema.
 public struct WebhookEventSuppressed: Codable {
     /// Array of SMTP diagnostic responses from the receiving server, one entry per recipient.
@@ -22,33 +22,56 @@ public struct WebhookEventSuppressed: Codable {
         case type
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension WebhookEventSuppressed {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.diagnosticCode) else {
-            throw SdkValidationError(field: "diagnosticCode", code: "required", message: "Validation failed for 'diagnosticCode': value is required")
-        }
-        guard container.contains(.message) else {
-            throw SdkValidationError(field: "message", code: "required", message: "Validation failed for 'message': value is required")
-        }
-        guard container.contains(.reason) else {
-            throw SdkValidationError(field: "reason", code: "required", message: "Validation failed for 'reason': value is required")
-        }
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        self.diagnosticCode = try container.sdkDecodeRequired(.diagnosticCode)
-        self.message = try container.sdkDecodeRequired(.message)
-        self.reason = try container.sdkDecodeRequired(.reason)
-        self.type = try container.sdkDecodeRequired(.type)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension WebhookEventSuppressed {
-    public init(diagnosticCode: [String], message: String, reason: WebhookEventSuppressedReason, type: WebhookEventSuppressedType) {
+public extension WebhookEventSuppressed {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.diagnosticCode) else {
+            throw SdkValidationError(
+                field: "diagnosticCode",
+                code: "required",
+                message: "Validation failed for 'diagnosticCode': value is required"
+            )
+        }
+        guard container.contains(.message) else {
+            throw SdkValidationError(
+                field: "message",
+                code: "required",
+                message: "Validation failed for 'message': value is required"
+            )
+        }
+        guard container.contains(.reason) else {
+            throw SdkValidationError(
+                field: "reason",
+                code: "required",
+                message: "Validation failed for 'reason': value is required"
+            )
+        }
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        diagnosticCode = try container.sdkDecodeRequired(.diagnosticCode)
+        message = try container.sdkDecodeRequired(.message)
+        reason = try container.sdkDecodeRequired(.reason)
+        type = try container.sdkDecodeRequired(.type)
+    }
+}
+
+public extension WebhookEventSuppressed {
+    init(
+        diagnosticCode: [String],
+        message: String,
+        reason: WebhookEventSuppressedReason,
+        type: WebhookEventSuppressedType
+    ) {
         (self.diagnosticCode, self.message) = (diagnosticCode, message)
         (self.reason, self.type) = (reason, type)
     }
@@ -58,13 +81,16 @@ extension WebhookEventSuppressed {
 public struct WebhookEventSuppressedReason: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let previousBounce = WebhookEventSuppressedReason(rawValue: "previous_bounce")
     public static let previousComplaint = WebhookEventSuppressedReason(rawValue: "previous_complaint")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -77,13 +103,16 @@ public struct WebhookEventSuppressedReason: RawRepresentable, Hashable, Codable,
 public struct WebhookEventSuppressedType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let suppressed = WebhookEventSuppressedType(rawValue: "Suppressed")
     public static let onAccountSuppressionList = WebhookEventSuppressedType(rawValue: "OnAccountSuppressionList")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

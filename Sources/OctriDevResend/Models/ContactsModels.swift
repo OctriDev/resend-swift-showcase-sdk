@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Contacts domain models
+/// Contacts domain models
 /// Typed representation of the `CreateContactImportResponseSuccess` API schema.
 public struct CreateContactImportResponseSuccess: Codable {
     /// Type of the response object.
@@ -19,23 +19,23 @@ public struct CreateContactImportResponseSuccess: Codable {
     }
 
     init() {
-        (self.object, self.id) = (nil, nil)
+        (object, id) = (nil, nil)
     }
 }
 
-extension CreateContactImportResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension CreateContactImportResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        if let value = self.id {
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-extension CreateContactImportResponseSuccess {
-    public init(object: String? = nil, id: String? = nil) throws {
+public extension CreateContactImportResponseSuccess {
+    init(object: String? = nil, id: String? = nil) throws {
         self.init()
         (self.object, self.id) = (object, id)
         if let value = self.id {
@@ -61,21 +61,25 @@ public struct UpdateContactTopicsResponseSuccess: Codable {
     }
 
     init() {
-        (self.object, self.contactId, self.topics) = (nil, nil, nil)
+        (object, contactId, topics) = (nil, nil, nil)
     }
 }
 
-extension UpdateContactTopicsResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension UpdateContactTopicsResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.contactId = try container.sdkDecodeIfPresent(.contactId)
-        self.topics = try container.sdkDecodeIfPresent(.topics)
+        object = try container.sdkDecodeIfPresent(.object)
+        contactId = try container.sdkDecodeIfPresent(.contactId)
+        topics = try container.sdkDecodeIfPresent(.topics)
     }
 }
 
-extension UpdateContactTopicsResponseSuccess {
-    public init(object: String? = nil, contactId: String? = nil, topics: [UpdateContactTopicsResponseSuccessTopicsItem]? = nil) {
+public extension UpdateContactTopicsResponseSuccess {
+    init(
+        object: String? = nil,
+        contactId: String? = nil,
+        topics: [UpdateContactTopicsResponseSuccessTopicsItem]? = nil
+    ) {
         self.init()
         (self.object, self.contactId) = (object, contactId)
         self.topics = topics
@@ -99,21 +103,21 @@ public struct GetContactTopicsResponseSuccess: Codable {
     }
 
     init() {
-        (self.object, self.hasMore, self.data) = (nil, nil, nil)
+        (object, hasMore, data) = (nil, nil, nil)
     }
 }
 
-extension GetContactTopicsResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension GetContactTopicsResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        object = try container.sdkDecodeIfPresent(.object)
+        hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension GetContactTopicsResponseSuccess {
-    public init(object: String? = nil, hasMore: Bool? = nil, data: [GetContactTopicsResponseSuccessDataItem]? = nil) {
+public extension GetContactTopicsResponseSuccess {
+    init(object: String? = nil, hasMore: Bool? = nil, data: [GetContactTopicsResponseSuccessDataItem]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -133,20 +137,20 @@ public struct UpdateContactTopicsResponseSuccessTopicsItem: Codable {
     }
 
     init() {
-        (self.id, self.subscription) = (nil, nil)
+        (id, subscription) = (nil, nil)
     }
 }
 
-extension UpdateContactTopicsResponseSuccessTopicsItem {
-    public init(from decoder: Decoder) throws {
+public extension UpdateContactTopicsResponseSuccessTopicsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.subscription = try container.sdkDecodeIfPresent(.subscription)
+        id = try container.sdkDecodeIfPresent(.id)
+        subscription = try container.sdkDecodeIfPresent(.subscription)
     }
 }
 
-extension UpdateContactTopicsResponseSuccessTopicsItem {
-    public init(id: String? = nil, subscription: UpdateContactTopicsResponseSuccessTopicsItemSubscription? = nil) {
+public extension UpdateContactTopicsResponseSuccessTopicsItem {
+    init(id: String? = nil, subscription: UpdateContactTopicsResponseSuccessTopicsItemSubscription? = nil) {
         self.init()
         (self.id, self.subscription) = (id, subscription)
     }
@@ -167,20 +171,20 @@ public struct UpdateContactResponseSuccess: Codable {
     }
 
     init() {
-        (self.object, self.id) = (nil, nil)
+        (object, id) = (nil, nil)
     }
 }
 
-extension UpdateContactResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension UpdateContactResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-extension UpdateContactResponseSuccess {
-    public init(object: String? = nil, id: String? = nil) {
+public extension UpdateContactResponseSuccess {
+    init(object: String? = nil, id: String? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
     }
@@ -212,23 +216,29 @@ public struct UpdateContactOptions: Codable {
     }
 
     init() {
-        (self.email, self.firstName, self.lastName, self.unsubscribed, self.properties) = (nil, nil, nil, nil, nil)
+        (email, firstName, lastName, unsubscribed, properties) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension UpdateContactOptions {
-    public init(from decoder: Decoder) throws {
+public extension UpdateContactOptions {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.email = try container.sdkDecodeIfPresent(.email)
-        self.firstName = try container.sdkDecodeIfPresent(.firstName)
-        self.lastName = try container.sdkDecodeIfPresent(.lastName)
-        self.unsubscribed = try container.sdkDecodeIfPresent(.unsubscribed)
-        self.properties = try container.sdkDecodeIfPresent(.properties)
+        email = try container.sdkDecodeIfPresent(.email)
+        firstName = try container.sdkDecodeIfPresent(.firstName)
+        lastName = try container.sdkDecodeIfPresent(.lastName)
+        unsubscribed = try container.sdkDecodeIfPresent(.unsubscribed)
+        properties = try container.sdkDecodeIfPresent(.properties)
     }
 }
 
-extension UpdateContactOptions {
-    public init(email: String? = nil, firstName: String? = nil, lastName: String? = nil, unsubscribed: Bool? = nil, properties: [String: JSONValue?]? = nil) {
+public extension UpdateContactOptions {
+    init(
+        email: String? = nil,
+        firstName: String? = nil,
+        lastName: String? = nil,
+        unsubscribed: Bool? = nil,
+        properties: [String: JSONValue?]? = nil
+    ) {
         self.init()
         (self.email, self.firstName) = (email, firstName)
         (self.lastName, self.unsubscribed) = (lastName, unsubscribed)
@@ -246,19 +256,19 @@ public struct CreateContactOptionsSegmentsItem: Codable {
     }
 
     init() {
-        self.id = nil
+        id = nil
     }
 }
 
-extension CreateContactOptionsSegmentsItem {
-    public init(from decoder: Decoder) throws {
+public extension CreateContactOptionsSegmentsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
+        id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-extension CreateContactOptionsSegmentsItem {
-    public init(id: String? = nil) {
+public extension CreateContactOptionsSegmentsItem {
+    init(id: String? = nil) {
         self.init()
         self.id = id
     }
@@ -277,20 +287,20 @@ public struct UpdateContactTopicsOptionsTopicsItem: Codable {
     }
 
     init() {
-        (self.id, self.subscription) = (nil, nil)
+        (id, subscription) = (nil, nil)
     }
 }
 
-extension UpdateContactTopicsOptionsTopicsItem {
-    public init(from decoder: Decoder) throws {
+public extension UpdateContactTopicsOptionsTopicsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.subscription = try container.sdkDecodeIfPresent(.subscription)
+        id = try container.sdkDecodeIfPresent(.id)
+        subscription = try container.sdkDecodeIfPresent(.subscription)
     }
 }
 
-extension UpdateContactTopicsOptionsTopicsItem {
-    public init(id: String? = nil, subscription: UpdateContactTopicsOptionsTopicsItemSubscription? = nil) {
+public extension UpdateContactTopicsOptionsTopicsItem {
+    init(id: String? = nil, subscription: UpdateContactTopicsOptionsTopicsItemSubscription? = nil) {
         self.init()
         (self.id, self.subscription) = (id, subscription)
     }
@@ -311,20 +321,20 @@ public struct CreateContactResponseSuccess: Codable {
     }
 
     init() {
-        (self.object, self.id) = (nil, nil)
+        (object, id) = (nil, nil)
     }
 }
 
-extension CreateContactResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension CreateContactResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-extension CreateContactResponseSuccess {
-    public init(object: String? = nil, id: String? = nil) {
+public extension CreateContactResponseSuccess {
+    init(object: String? = nil, id: String? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
     }
@@ -349,21 +359,21 @@ public struct RemoveContactResponseSuccess: Codable {
     }
 
     init() {
-        (self.object, self.id, self.deleted) = (nil, nil, nil)
+        (object, id, deleted) = (nil, nil, nil)
     }
 }
 
-extension RemoveContactResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension RemoveContactResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.deleted = try container.sdkDecodeIfPresent(.deleted)
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-extension RemoveContactResponseSuccess {
-    public init(object: String? = nil, id: String? = nil, deleted: Bool? = nil) {
+public extension RemoveContactResponseSuccess {
+    init(object: String? = nil, id: String? = nil, deleted: Bool? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
         self.deleted = deleted
@@ -387,21 +397,21 @@ public struct ListContactSegmentsResponseSuccess: Codable {
     }
 
     init() {
-        (self.object, self.hasMore, self.data) = (nil, nil, nil)
+        (object, hasMore, data) = (nil, nil, nil)
     }
 }
 
-extension ListContactSegmentsResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension ListContactSegmentsResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        object = try container.sdkDecodeIfPresent(.object)
+        hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension ListContactSegmentsResponseSuccess {
-    public init(object: String? = nil, hasMore: Bool? = nil, data: [ListContactSegmentsResponseSuccessDataItem]? = nil) {
+public extension ListContactSegmentsResponseSuccess {
+    init(object: String? = nil, hasMore: Bool? = nil, data: [ListContactSegmentsResponseSuccessDataItem]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -438,28 +448,35 @@ public struct ContactImport: Codable {
     }
 
     init() {
-        (self.object, self.id, self.status, self.createdAt, self.completedAt) = (nil, nil, nil, nil, nil)
-        self.counts = nil
+        (object, id, status, createdAt, completedAt) = (nil, nil, nil, nil, nil)
+        counts = nil
     }
 }
 
-extension ContactImport {
-    public init(from decoder: Decoder) throws {
+public extension ContactImport {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        self.counts = try container.sdkDecodeIfPresent(.counts)
-        if let value = self.id {
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        status = try container.sdkDecodeIfPresent(.status)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        counts = try container.sdkDecodeIfPresent(.counts)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-extension ContactImport {
-    public init(object: String? = nil, id: String? = nil, status: ContactImportStatus? = nil, createdAt: String? = nil, completedAt: String? = nil, counts: ContactImportCounts? = nil) throws {
+public extension ContactImport {
+    init(
+        object: String? = nil,
+        id: String? = nil,
+        status: ContactImportStatus? = nil,
+        createdAt: String? = nil,
+        completedAt: String? = nil,
+        counts: ContactImportCounts? = nil
+    ) throws {
         self.init()
         (self.object, self.id) = (object, id)
         (self.status, self.createdAt) = (status, createdAt)
@@ -487,21 +504,21 @@ public struct AddContactToSegmentResponseSuccess: Codable {
     }
 
     init() {
-        (self.object, self.contactId, self.segmentId) = (nil, nil, nil)
+        (object, contactId, segmentId) = (nil, nil, nil)
     }
 }
 
-extension AddContactToSegmentResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension AddContactToSegmentResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.contactId = try container.sdkDecodeIfPresent(.contactId)
-        self.segmentId = try container.sdkDecodeIfPresent(.segmentId)
+        object = try container.sdkDecodeIfPresent(.object)
+        contactId = try container.sdkDecodeIfPresent(.contactId)
+        segmentId = try container.sdkDecodeIfPresent(.segmentId)
     }
 }
 
-extension AddContactToSegmentResponseSuccess {
-    public init(object: String? = nil, contactId: String? = nil, segmentId: String? = nil) {
+public extension AddContactToSegmentResponseSuccess {
+    init(object: String? = nil, contactId: String? = nil, segmentId: String? = nil) {
         self.init()
         (self.object, self.contactId) = (object, contactId)
         self.segmentId = segmentId
@@ -545,27 +562,36 @@ public struct GetContactResponseSuccess: Codable {
     }
 
     init() {
-        (self.object, self.id, self.email, self.firstName, self.lastName) = (nil, nil, nil, nil, nil)
-        (self.createdAt, self.unsubscribed, self.properties) = (nil, nil, nil)
+        (object, id, email, firstName, lastName) = (nil, nil, nil, nil, nil)
+        (createdAt, unsubscribed, properties) = (nil, nil, nil)
     }
 }
 
-extension GetContactResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension GetContactResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.email = try container.sdkDecodeIfPresent(.email)
-        self.firstName = try container.sdkDecodeIfPresent(.firstName)
-        self.lastName = try container.sdkDecodeIfPresent(.lastName)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.unsubscribed = try container.sdkDecodeIfPresent(.unsubscribed)
-        self.properties = try container.sdkDecodeIfPresent(.properties)
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        email = try container.sdkDecodeIfPresent(.email)
+        firstName = try container.sdkDecodeIfPresent(.firstName)
+        lastName = try container.sdkDecodeIfPresent(.lastName)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        unsubscribed = try container.sdkDecodeIfPresent(.unsubscribed)
+        properties = try container.sdkDecodeIfPresent(.properties)
     }
 }
 
-extension GetContactResponseSuccess {
-    public init(object: String? = nil, id: String? = nil, email: String? = nil, firstName: String? = nil, lastName: String? = nil, createdAt: String? = nil, unsubscribed: Bool? = nil, properties: [String: JSONValue]? = nil) {
+public extension GetContactResponseSuccess {
+    init(
+        object: String? = nil,
+        id: String? = nil,
+        email: String? = nil,
+        firstName: String? = nil,
+        lastName: String? = nil,
+        createdAt: String? = nil,
+        unsubscribed: Bool? = nil,
+        properties: [String: JSONValue]? = nil
+    ) {
         self.init()
         (self.object, self.id) = (object, id)
         (self.email, self.firstName) = (email, firstName)

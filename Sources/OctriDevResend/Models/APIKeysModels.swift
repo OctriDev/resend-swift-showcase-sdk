@@ -3,7 +3,7 @@
 
 import Foundation
 
-// APIKeys domain models
+/// APIKeys domain models
 /// Typed representation of the `ApiKey` API schema.
 public struct ApiKey: Codable {
     /// The ID of the API key.
@@ -25,22 +25,22 @@ public struct ApiKey: Codable {
     }
 
     init() {
-        (self.id, self.name, self.createdAt, self.lastUsedAt) = (nil, nil, nil, nil)
+        (id, name, createdAt, lastUsedAt) = (nil, nil, nil, nil)
     }
 }
 
-extension ApiKey {
-    public init(from decoder: Decoder) throws {
+public extension ApiKey {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.lastUsedAt = try container.sdkDecodeIfPresent(.lastUsedAt)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        lastUsedAt = try container.sdkDecodeIfPresent(.lastUsedAt)
     }
 }
 
-extension ApiKey {
-    public init(id: String? = nil, name: String? = nil, createdAt: String? = nil, lastUsedAt: String? = nil) {
+public extension ApiKey {
+    init(id: String? = nil, name: String? = nil, createdAt: String? = nil, lastUsedAt: String? = nil) {
         self.init()
         (self.id, self.name) = (id, name)
         (self.createdAt, self.lastUsedAt) = (createdAt, lastUsedAt)
@@ -60,20 +60,20 @@ public struct CreateApiKeyResponse: Codable {
     }
 
     init() {
-        (self.id, self.token) = (nil, nil)
+        (id, token) = (nil, nil)
     }
 }
 
-extension CreateApiKeyResponse {
-    public init(from decoder: Decoder) throws {
+public extension CreateApiKeyResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.token = try container.sdkDecodeIfPresent(.token)
+        id = try container.sdkDecodeIfPresent(.id)
+        token = try container.sdkDecodeIfPresent(.token)
     }
 }
 
-extension CreateApiKeyResponse {
-    public init(id: String? = nil, token: String? = nil) {
+public extension CreateApiKeyResponse {
+    init(id: String? = nil, token: String? = nil) {
         self.init()
         (self.id, self.token) = (id, token)
     }
@@ -96,21 +96,21 @@ public struct ListApiKeysResponse: Codable {
     }
 
     init() {
-        (self.object, self.hasMore, self.data) = (nil, nil, nil)
+        (object, hasMore, data) = (nil, nil, nil)
     }
 }
 
-extension ListApiKeysResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListApiKeysResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        object = try container.sdkDecodeIfPresent(.object)
+        hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension ListApiKeysResponse {
-    public init(object: String? = nil, hasMore: Bool? = nil, data: [ApiKey]? = nil) {
+public extension ListApiKeysResponse {
+    init(object: String? = nil, hasMore: Bool? = nil, data: [ApiKey]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -135,21 +135,21 @@ public struct DeleteApiKeyResponse: Codable {
     }
 
     init() {
-        (self.object, self.id, self.deleted) = (nil, nil, nil)
+        (object, id, deleted) = (nil, nil, nil)
     }
 }
 
-extension DeleteApiKeyResponse {
-    public init(from decoder: Decoder) throws {
+public extension DeleteApiKeyResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.deleted = try container.sdkDecodeIfPresent(.deleted)
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-extension DeleteApiKeyResponse {
-    public init(object: String? = nil, id: String? = nil, deleted: Bool? = nil) {
+public extension DeleteApiKeyResponse {
+    init(object: String? = nil, id: String? = nil, deleted: Bool? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
         self.deleted = deleted
@@ -170,20 +170,20 @@ public struct UpdateApiKeyResponse: Codable {
     }
 
     init() {
-        (self.object, self.id) = (nil, nil)
+        (object, id) = (nil, nil)
     }
 }
 
-extension UpdateApiKeyResponse {
-    public init(from decoder: Decoder) throws {
+public extension UpdateApiKeyResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-extension UpdateApiKeyResponse {
-    public init(object: String? = nil, id: String? = nil) {
+public extension UpdateApiKeyResponse {
+    init(object: String? = nil, id: String? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
     }
@@ -198,21 +198,27 @@ public struct UpdateApiKeyRequest: Codable {
         case name
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension UpdateApiKeyRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension UpdateApiKeyRequest {
-    public init(name: String) {
+public extension UpdateApiKeyRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+    }
+}
+
+public extension UpdateApiKeyRequest {
+    init(name: String) {
         self.name = name
     }
 }
@@ -234,23 +240,29 @@ public struct CreateApiKeyRequest: Codable {
         case domainId = "domain_id"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateApiKeyRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.permission = try container.sdkDecodeIfPresent(.permission)
-        self.domainId = try container.sdkDecodeIfPresent(.domainId)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateApiKeyRequest {
-    public init(name: String, permission: CreateApiKeyRequestPermission? = nil, domainId: String? = nil) {
+public extension CreateApiKeyRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        permission = try container.sdkDecodeIfPresent(.permission)
+        domainId = try container.sdkDecodeIfPresent(.domainId)
+    }
+}
+
+public extension CreateApiKeyRequest {
+    init(name: String, permission: CreateApiKeyRequestPermission? = nil, domainId: String? = nil) {
         (self.name, self.permission) = (name, permission)
         self.domainId = domainId
     }
@@ -261,13 +273,16 @@ extension CreateApiKeyRequest {
 public struct CreateApiKeyRequestPermission: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let fullAccess = CreateApiKeyRequestPermission(rawValue: "full_access")
     public static let sendingAccess = CreateApiKeyRequestPermission(rawValue: "sending_access")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

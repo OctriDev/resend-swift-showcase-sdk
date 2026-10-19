@@ -6,8 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AutomationsMethods {
-    /// Lists runs for a specific automation, with optional filtering by run status and cursor-based pagination. Use `status` to filter by run state, and use `after` or `before` to navigate the results.
+public extension AutomationsMethods {
+    /// Lists runs for a specific automation, with optional filtering by run status and cursor-based pagination. Use
+    /// `status` to filter by run state, and use `after` or `before` to navigate the results.
     ///
     /// - Parameters:
     /// - automationId: The ID of the automation.
@@ -16,31 +17,65 @@ extension AutomationsMethods {
     /// - limit: Number of items to return.
     /// - after: Return items after this cursor.
     /// - before: Return items before this cursor.
-    public static func automationsListRuns(config: ClientConfig, automationId: String, status: String? = nil, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListAutomationRunsResponse {
+    static func automationsListRuns(
+        config: ClientConfig,
+        automationId: String,
+        status: String? = nil,
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListAutomationRunsResponse {
         try sdkValidateUuid("automation_id", automationId)
 
-        if let limit = limit {
+        if let limit {
             try validateRange("limit", Double(limit), min: 1, max: 100)
         }
 
-        return try (await sdkRequest("GET", ["/automations/", sdkEncodePathSegment(sdkWireString(automationId)), "/runs"].joined(), config: config, query: [
-            SdkQueryParameter("status", value: status),
-            SdkQueryParameter("limit", value: limit),
-            SdkQueryParameter("after", value: after),
-            SdkQueryParameter("before", value: before),
-        ], decoder: .json, operationId: "automationsListRuns", options: requestOptions)).data
+        return try await (sdkRequest(
+            "GET",
+            ["/automations/", sdkEncodePathSegment(sdkWireString(automationId)), "/runs"].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("status", value: status),
+                SdkQueryParameter("limit", value: limit),
+                SdkQueryParameter("after", value: after),
+                SdkQueryParameter("before", value: before),
+            ],
+            decoder: .json,
+            operationId: "automationsListRuns",
+            options: requestOptions
+        )).data
     }
 
-    /// Retrieves a single run for a specific automation. Use the run details to inspect its status, timestamps, and step executions, which are returned in workflow graph order.
+    /// Retrieves a single run for a specific automation. Use the run details to inspect its status, timestamps, and
+    /// step executions, which are returned in workflow graph order.
     ///
     /// - Parameters:
     /// - automationId: The ID of the automation.
     /// - runId: The ID of the automation run.
-    public static func automationsGetRun(config: ClientConfig, automationId: String, runId: String, requestOptions: RequestOptions? = nil) async throws -> AutomationRun {
+    static func automationsGetRun(
+        config: ClientConfig,
+        automationId: String,
+        runId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AutomationRun {
         try sdkValidateUuid("automation_id", automationId)
 
         try sdkValidateUuid("run_id", runId)
 
-        return try (await sdkRequest("GET", ["/automations/", sdkEncodePathSegment(sdkWireString(automationId)), "/runs/", sdkEncodePathSegment(sdkWireString(runId))].joined(), config: config, decoder: .json, operationId: "automationsGetRun", options: requestOptions)).data
+        return try await (sdkRequest(
+            "GET",
+            [
+                "/automations/",
+                sdkEncodePathSegment(sdkWireString(automationId)),
+                "/runs/",
+                sdkEncodePathSegment(sdkWireString(runId)),
+            ].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "automationsGetRun",
+            options: requestOptions
+        )).data
     }
 }

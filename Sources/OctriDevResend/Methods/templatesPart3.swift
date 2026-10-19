@@ -6,16 +6,28 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension TemplatesMethods {
-    /// Retrieves a template by its ID or alias. Use the returned details to inspect the template content, variables, and publication status.
+public extension TemplatesMethods {
+    /// Retrieves a template by its ID or alias. Use the returned details to inspect the template content, variables,
+    /// and publication status.
     ///
     /// - Parameters:
     /// - id: The Template ID or alias.
-    public static func templatesGet(config: ClientConfig, id: String, requestOptions: RequestOptions? = nil) async throws -> Template {
-        return try (await sdkRequest("GET", ["/templates/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "templatesGet", options: requestOptions)).data
+    static func templatesGet(
+        config: ClientConfig,
+        id: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Template {
+        try await (sdkRequest(
+            "GET",
+            ["/templates/", sdkEncodePathSegment(sdkWireString(id))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "templatesGet",
+            options: requestOptions
+        )).data
     }
 
-    public struct TemplatesUpdateOptions: Codable {
+    struct TemplatesUpdateOptions: Codable {
         public var id: String
         public var name: String?
         public var alias: String?
@@ -31,7 +43,8 @@ extension TemplatesMethods {
         }
     }
 
-    /// Updates an existing template with the fields you provide. Use the `id` path parameter to select the template and send only the template properties you want to change.
+    /// Updates an existing template with the fields you provide. Use the `id` path parameter to select the template and
+    /// send only the template properties you want to change.
     ///
     /// - Parameters:
     /// - id: The Template ID or alias.
@@ -44,9 +57,21 @@ extension TemplatesMethods {
     /// - html: The HTML version of the template.
     /// - text: The plain text version of the template.
     /// - variables: Optional array value serialized in the `variables` wire field.
-    public static func templatesUpdate(config: ClientConfig, options: TemplatesUpdateOptions, requestOptions: RequestOptions? = nil) async throws -> UpdateTemplateResponseSuccess {
+    static func templatesUpdate(
+        config: ClientConfig,
+        options: TemplatesUpdateOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> UpdateTemplateResponseSuccess {
         let requestBody = TemplatesUpdateRequestBody(options: options)
 
-        return try (await sdkRequest("PATCH", ["/templates/", sdkEncodePathSegment(sdkWireString(options.id))].joined(), config: config, body: requestBody, decoder: .json, operationId: "templatesUpdate", options: requestOptions)).data
+        return try await (sdkRequest(
+            "PATCH",
+            ["/templates/", sdkEncodePathSegment(sdkWireString(options.id))].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "templatesUpdate",
+            options: requestOptions
+        )).data
     }
 }

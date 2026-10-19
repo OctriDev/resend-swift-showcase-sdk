@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Domains domain models
+/// Domains domain models
 /// Typed representation of the `ListDomainsResponse` API schema.
 public struct ListDomainsResponse: Codable {
     /// Type of the response object.
@@ -21,21 +21,21 @@ public struct ListDomainsResponse: Codable {
     }
 
     init() {
-        (self.object, self.hasMore, self.data) = (nil, nil, nil)
+        (object, hasMore, data) = (nil, nil, nil)
     }
 }
 
-extension ListDomainsResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListDomainsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        object = try container.sdkDecodeIfPresent(.object)
+        hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension ListDomainsResponse {
-    public init(object: String? = nil, hasMore: Bool? = nil, data: [ListDomainsItem]? = nil) {
+public extension ListDomainsResponse {
+    init(object: String? = nil, hasMore: Bool? = nil, data: [ListDomainsItem]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -71,26 +71,34 @@ public struct DomainRecord: Codable {
     }
 
     init() {
-        (self.record, self.name, self.type, self.ttl, self.status) = (nil, nil, nil, nil, nil)
-        (self.value, self.priority) = (nil, nil)
+        (record, name, type, ttl, status) = (nil, nil, nil, nil, nil)
+        (value, priority) = (nil, nil)
     }
 }
 
-extension DomainRecord {
-    public init(from decoder: Decoder) throws {
+public extension DomainRecord {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.record = try container.sdkDecodeIfPresent(.record)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.ttl = try container.sdkDecodeIfPresent(.ttl)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.value = try container.sdkDecodeIfPresent(.value)
-        self.priority = try container.sdkDecodeIfPresent(.priority)
+        record = try container.sdkDecodeIfPresent(.record)
+        name = try container.sdkDecodeIfPresent(.name)
+        type = try container.sdkDecodeIfPresent(.type)
+        ttl = try container.sdkDecodeIfPresent(.ttl)
+        status = try container.sdkDecodeIfPresent(.status)
+        value = try container.sdkDecodeIfPresent(.value)
+        priority = try container.sdkDecodeIfPresent(.priority)
     }
 }
 
-extension DomainRecord {
-    public init(record: DomainRecordRecord? = nil, name: String? = nil, type: DomainRecordType? = nil, ttl: String? = nil, status: DomainRecordStatus? = nil, value: String? = nil, priority: Int? = nil) {
+public extension DomainRecord {
+    init(
+        record: DomainRecordRecord? = nil,
+        name: String? = nil,
+        type: DomainRecordType? = nil,
+        ttl: String? = nil,
+        status: DomainRecordStatus? = nil,
+        value: String? = nil,
+        priority: Int? = nil
+    ) {
         self.init()
         (self.record, self.name) = (record, name)
         (self.type, self.ttl) = (type, ttl)
@@ -125,26 +133,39 @@ public struct CreateDomainClaimRequest: Codable {
         case trackingSubdomain = "tracking_subdomain"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateDomainClaimRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.customReturnPath = try container.sdkDecodeIfPresent(.customReturnPath)
-        self.openTracking = try container.sdkDecodeIfPresent(.openTracking)
-        self.clickTracking = try container.sdkDecodeIfPresent(.clickTracking)
-        self.trackingSubdomain = try container.sdkDecodeIfPresent(.trackingSubdomain)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateDomainClaimRequest {
-    public init(name: String, region: CreateDomainClaimRequestRegion? = nil, customReturnPath: String? = nil, openTracking: Bool? = nil, clickTracking: Bool? = nil, trackingSubdomain: String? = nil) {
+public extension CreateDomainClaimRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        region = try container.sdkDecodeIfPresent(.region)
+        customReturnPath = try container.sdkDecodeIfPresent(.customReturnPath)
+        openTracking = try container.sdkDecodeIfPresent(.openTracking)
+        clickTracking = try container.sdkDecodeIfPresent(.clickTracking)
+        trackingSubdomain = try container.sdkDecodeIfPresent(.trackingSubdomain)
+    }
+}
+
+public extension CreateDomainClaimRequest {
+    init(
+        name: String,
+        region: CreateDomainClaimRequestRegion? = nil,
+        customReturnPath: String? = nil,
+        openTracking: Bool? = nil,
+        clickTracking: Bool? = nil,
+        trackingSubdomain: String? = nil
+    ) {
         (self.name, self.region) = (name, region)
         (self.customReturnPath, self.openTracking) = (customReturnPath, openTracking)
         (self.clickTracking, self.trackingSubdomain) = (clickTracking, trackingSubdomain)
@@ -166,20 +187,20 @@ public struct VerifyDomainResponse: Codable {
     }
 
     init() {
-        (self.object, self.id) = (nil, nil)
+        (object, id) = (nil, nil)
     }
 }
 
-extension VerifyDomainResponse {
-    public init(from decoder: Decoder) throws {
+public extension VerifyDomainResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-extension VerifyDomainResponse {
-    public init(object: String? = nil, id: String? = nil) {
+public extension VerifyDomainResponse {
+    init(object: String? = nil, id: String? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
     }
@@ -221,27 +242,36 @@ public struct ListDomainsItem: Codable {
     }
 
     init() {
-        (self.id, self.name, self.status, self.createdAt, self.region) = (nil, nil, nil, nil, nil)
-        (self.openTracking, self.clickTracking, self.capabilities) = (nil, nil, nil)
+        (id, name, status, createdAt, region) = (nil, nil, nil, nil, nil)
+        (openTracking, clickTracking, capabilities) = (nil, nil, nil)
     }
 }
 
-extension ListDomainsItem {
-    public init(from decoder: Decoder) throws {
+public extension ListDomainsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.openTracking = try container.sdkDecodeIfPresent(.openTracking)
-        self.clickTracking = try container.sdkDecodeIfPresent(.clickTracking)
-        self.capabilities = try container.sdkDecodeIfPresent(.capabilities)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        status = try container.sdkDecodeIfPresent(.status)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        region = try container.sdkDecodeIfPresent(.region)
+        openTracking = try container.sdkDecodeIfPresent(.openTracking)
+        clickTracking = try container.sdkDecodeIfPresent(.clickTracking)
+        capabilities = try container.sdkDecodeIfPresent(.capabilities)
     }
 }
 
-extension ListDomainsItem {
-    public init(id: String? = nil, name: String? = nil, status: ListDomainsItemStatus? = nil, createdAt: String? = nil, region: String? = nil, openTracking: Bool? = nil, clickTracking: Bool? = nil, capabilities: DomainCapabilities? = nil) {
+public extension ListDomainsItem {
+    init(
+        id: String? = nil,
+        name: String? = nil,
+        status: ListDomainsItemStatus? = nil,
+        createdAt: String? = nil,
+        region: String? = nil,
+        openTracking: Bool? = nil,
+        clickTracking: Bool? = nil,
+        capabilities: DomainCapabilities? = nil
+    ) {
         self.init()
         (self.id, self.name) = (id, name)
         (self.status, self.createdAt) = (status, createdAt)
@@ -273,22 +303,22 @@ public struct DomainClaimRecord: Codable {
     }
 
     init() {
-        (self.type, self.name, self.value, self.ttl) = (nil, nil, nil, nil)
+        (type, name, value, ttl) = (nil, nil, nil, nil)
     }
 }
 
-extension DomainClaimRecord {
-    public init(from decoder: Decoder) throws {
+public extension DomainClaimRecord {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.value = try container.sdkDecodeIfPresent(.value)
-        self.ttl = try container.sdkDecodeIfPresent(.ttl)
+        type = try container.sdkDecodeIfPresent(.type)
+        name = try container.sdkDecodeIfPresent(.name)
+        value = try container.sdkDecodeIfPresent(.value)
+        ttl = try container.sdkDecodeIfPresent(.ttl)
     }
 }
 
-extension DomainClaimRecord {
-    public init(type: DomainClaimRecordType? = nil, name: String? = nil, value: String? = nil, ttl: String? = nil) {
+public extension DomainClaimRecord {
+    init(type: DomainClaimRecordType? = nil, name: String? = nil, value: String? = nil, ttl: String? = nil) {
         self.init()
         (self.type, self.name) = (type, name)
         (self.value, self.ttl) = (value, ttl)
@@ -310,20 +340,20 @@ public struct UpdateDomainResponseSuccess: Codable {
     }
 
     init() {
-        (self.id, self.object) = (nil, nil)
+        (id, object) = (nil, nil)
     }
 }
 
-extension UpdateDomainResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension UpdateDomainResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
     }
 }
 
-extension UpdateDomainResponseSuccess {
-    public init(id: String? = nil, object: String? = nil) {
+public extension UpdateDomainResponseSuccess {
+    init(id: String? = nil, object: String? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
     }
@@ -351,23 +381,29 @@ public struct UpdateDomainOptions: Codable {
     }
 
     init() {
-        (self.openTracking, self.clickTracking, self.tls, self.capabilities, self.trackingSubdomain) = (nil, nil, nil, nil, nil)
+        (openTracking, clickTracking, tls, capabilities, trackingSubdomain) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension UpdateDomainOptions {
-    public init(from decoder: Decoder) throws {
+public extension UpdateDomainOptions {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.openTracking = try container.sdkDecodeIfPresent(.openTracking)
-        self.clickTracking = try container.sdkDecodeIfPresent(.clickTracking)
-        self.tls = try container.sdkDecodeIfPresent(.tls)
-        self.capabilities = try container.sdkDecodeIfPresent(.capabilities)
-        self.trackingSubdomain = try container.sdkDecodeIfPresent(.trackingSubdomain)
+        openTracking = try container.sdkDecodeIfPresent(.openTracking)
+        clickTracking = try container.sdkDecodeIfPresent(.clickTracking)
+        tls = try container.sdkDecodeIfPresent(.tls)
+        capabilities = try container.sdkDecodeIfPresent(.capabilities)
+        trackingSubdomain = try container.sdkDecodeIfPresent(.trackingSubdomain)
     }
 }
 
-extension UpdateDomainOptions {
-    public init(openTracking: Bool? = nil, clickTracking: Bool? = nil, tls: UpdateDomainOptionsTls? = nil, capabilities: DomainCapabilities? = nil, trackingSubdomain: String? = nil) {
+public extension UpdateDomainOptions {
+    init(
+        openTracking: Bool? = nil,
+        clickTracking: Bool? = nil,
+        tls: UpdateDomainOptionsTls? = nil,
+        capabilities: DomainCapabilities? = nil,
+        trackingSubdomain: String? = nil
+    ) {
         self.init()
         (self.openTracking, self.clickTracking) = (openTracking, clickTracking)
         (self.tls, self.capabilities) = (tls, capabilities)
@@ -394,21 +430,21 @@ public struct DeleteDomainResponse: Codable {
     }
 
     init() {
-        (self.object, self.id, self.deleted) = (nil, nil, nil)
+        (object, id, deleted) = (nil, nil, nil)
     }
 }
 
-extension DeleteDomainResponse {
-    public init(from decoder: Decoder) throws {
+public extension DeleteDomainResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.deleted = try container.sdkDecodeIfPresent(.deleted)
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-extension DeleteDomainResponse {
-    public init(object: String? = nil, id: String? = nil, deleted: Bool? = nil) {
+public extension DeleteDomainResponse {
+    init(object: String? = nil, id: String? = nil, deleted: Bool? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
         self.deleted = deleted
@@ -463,31 +499,43 @@ public struct DomainClaim: Codable {
     }
 
     init() {
-        (self.object, self.id, self.name, self.status, self.domainId) = (nil, nil, nil, nil, nil)
-        (self.region, self.record, self.blockedReason, self.failureReason, self.createdAt) = (nil, nil, nil, nil, nil)
-        self.expiresAt = nil
+        (object, id, name, status, domainId) = (nil, nil, nil, nil, nil)
+        (region, record, blockedReason, failureReason, createdAt) = (nil, nil, nil, nil, nil)
+        expiresAt = nil
     }
 }
 
-extension DomainClaim {
-    public init(from decoder: Decoder) throws {
+public extension DomainClaim {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.domainId = try container.sdkDecodeIfPresent(.domainId)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.record = try container.sdkDecodeIfPresent(.record)
-        self.blockedReason = try container.sdkDecodeIfPresent(.blockedReason)
-        self.failureReason = try container.sdkDecodeIfPresent(.failureReason)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        status = try container.sdkDecodeIfPresent(.status)
+        domainId = try container.sdkDecodeIfPresent(.domainId)
+        region = try container.sdkDecodeIfPresent(.region)
+        record = try container.sdkDecodeIfPresent(.record)
+        blockedReason = try container.sdkDecodeIfPresent(.blockedReason)
+        failureReason = try container.sdkDecodeIfPresent(.failureReason)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        expiresAt = try container.sdkDecodeIfPresent(.expiresAt)
     }
 }
 
-extension DomainClaim {
-    public init(object: String? = nil, id: String? = nil, name: String? = nil, status: DomainClaimStatus? = nil, domainId: String? = nil, region: DomainClaimRegion? = nil, record: DomainClaimRecord? = nil, blockedReason: DomainClaimBlockedReason? = nil, failureReason: String? = nil, createdAt: String? = nil, expiresAt: String? = nil) {
+public extension DomainClaim {
+    init(
+        object: String? = nil,
+        id: String? = nil,
+        name: String? = nil,
+        status: DomainClaimStatus? = nil,
+        domainId: String? = nil,
+        region: DomainClaimRegion? = nil,
+        record: DomainClaimRecord? = nil,
+        blockedReason: DomainClaimBlockedReason? = nil,
+        failureReason: String? = nil,
+        createdAt: String? = nil,
+        expiresAt: String? = nil
+    ) {
         self.init()
         (self.object, self.id) = (object, id)
         (self.name, self.status) = (name, status)
@@ -536,23 +584,23 @@ public struct CreateDomainResponse: Codable {
     }
 
     init() {
-        (self.id, self.name, self.createdAt, self.status, self.capabilities) = (nil, nil, nil, nil, nil)
-        (self.records, self.region, self.openTracking, self.clickTracking, self.trackingSubdomain) = (nil, nil, nil, nil, nil)
+        (id, name, createdAt, status, capabilities) = (nil, nil, nil, nil, nil)
+        (records, region, openTracking, clickTracking, trackingSubdomain) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension CreateDomainResponse {
-    public init(from decoder: Decoder) throws {
+public extension CreateDomainResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.capabilities = try container.sdkDecodeIfPresent(.capabilities)
-        self.records = try container.sdkDecodeIfPresent(.records)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.openTracking = try container.sdkDecodeIfPresent(.openTracking)
-        self.clickTracking = try container.sdkDecodeIfPresent(.clickTracking)
-        self.trackingSubdomain = try container.sdkDecodeIfPresent(.trackingSubdomain)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        status = try container.sdkDecodeIfPresent(.status)
+        capabilities = try container.sdkDecodeIfPresent(.capabilities)
+        records = try container.sdkDecodeIfPresent(.records)
+        region = try container.sdkDecodeIfPresent(.region)
+        openTracking = try container.sdkDecodeIfPresent(.openTracking)
+        clickTracking = try container.sdkDecodeIfPresent(.clickTracking)
+        trackingSubdomain = try container.sdkDecodeIfPresent(.trackingSubdomain)
     }
 }

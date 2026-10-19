@@ -6,10 +6,14 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension InboxesMethods {
-    /// Lists threads in an inbox, ordered by most recent activity first. Use `folders`, `labels`, or `read` to filter the results, and use `after` or `before` to navigate by thread ID; you can pass only one cursor at a time.
+public extension InboxesMethods {
+    /// Lists threads in an inbox, ordered by most recent activity first. Use `folders`, `labels`, or `read` to filter
+    /// the results, and use `after` or `before` to navigate by thread ID; you can pass only one cursor at a time.
     ///
-    /// Returns the threads in an inbox, most recently active first. A thread is a conversation made up of one or more emails. The `after` and `before` cursors take a thread ID, and only one of them can be passed. A cursor that is not a UUID, such as a date, returns a 422 validation_error. A cursor thread that is not in the selected folders returns a 404. To find threads by text, sender, recipient, attachment, or date, use the search threads endpoint.
+    /// Returns the threads in an inbox, most recently active first. A thread is a conversation made up of one or more
+    /// emails. The `after` and `before` cursors take a thread ID, and only one of them can be passed. A cursor that is
+    /// not a UUID, such as a date, returns a 422 validation_error. A cursor thread that is not in the selected folders
+    /// returns a 404. To find threads by text, sender, recipient, attachment, or date, use the search threads endpoint.
     ///
     /// - Parameters:
     /// - inboxId: The Inbox ID. An email address is not accepted.
@@ -28,24 +32,42 @@ extension InboxesMethods {
     /// - limit: Number of items to return.
     /// - after: Return items after this cursor.
     /// - before: Return items before this cursor.
-    public static func inboxesListThreads(config: ClientConfig, inboxId: String, folders: [InboxesListThreadsParameterItem]? = nil, labels: [String]? = nil, read: Bool? = nil, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListInboxThreadsResponseSuccess {
+    static func inboxesListThreads(
+        config: ClientConfig,
+        inboxId: String,
+        folders: [InboxesListThreadsParameterItem]? = nil,
+        labels: [String]? = nil,
+        read: Bool? = nil,
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListInboxThreadsResponseSuccess {
         try sdkValidateUuid("inbox_id", inboxId)
 
-        if let labels = labels {
+        if let labels {
             try validateItems("labels", labels, max: 50)
         }
 
-        if let limit = limit {
+        if let limit {
             try validateRange("limit", Double(limit), min: 1, max: 100)
         }
 
-        return try (await sdkRequest("GET", ["/inboxes/", sdkEncodePathSegment(sdkWireString(inboxId)), "/threads"].joined(), config: config, query: [
-            SdkQueryParameter("folders", values: folders, style: "form", explode: false),
-            SdkQueryParameter("labels", values: labels, style: "form", explode: false),
-            SdkQueryParameter("read", value: read),
-            SdkQueryParameter("limit", value: limit),
-            SdkQueryParameter("after", value: after),
-            SdkQueryParameter("before", value: before),
-        ], decoder: .json, operationId: "inboxesListThreads", options: requestOptions)).data
+        return try await (sdkRequest(
+            "GET",
+            ["/inboxes/", sdkEncodePathSegment(sdkWireString(inboxId)), "/threads"].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("folders", values: folders, style: "form", explode: false),
+                SdkQueryParameter("labels", values: labels, style: "form", explode: false),
+                SdkQueryParameter("read", value: read),
+                SdkQueryParameter("limit", value: limit),
+                SdkQueryParameter("after", value: after),
+                SdkQueryParameter("before", value: before),
+            ],
+            decoder: .json,
+            operationId: "inboxesListThreads",
+            options: requestOptions
+        )).data
     }
 }

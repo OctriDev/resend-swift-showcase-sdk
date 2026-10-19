@@ -3,7 +3,7 @@
 
 import Foundation
 
-// WebhookDomainRecord domain models
+/// WebhookDomainRecord domain models
 /// Typed representation of the `WebhookDomainRecord` API schema.
 public struct WebhookDomainRecord: Codable {
     /// The purpose of the DNS record (SPF and DKIM for sending; Receiving MX for inbound emails; Tracking and
@@ -32,42 +32,76 @@ public struct WebhookDomainRecord: Codable {
         case priority
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension WebhookDomainRecord {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.record) else {
-            throw SdkValidationError(field: "record", code: "required", message: "Validation failed for 'record': value is required")
-        }
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        guard container.contains(.value) else {
-            throw SdkValidationError(field: "value", code: "required", message: "Validation failed for 'value': value is required")
-        }
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.ttl) else {
-            throw SdkValidationError(field: "ttl", code: "required", message: "Validation failed for 'ttl': value is required")
-        }
-        guard container.contains(.status) else {
-            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
-        }
-        self.record = try container.sdkDecodeRequired(.record)
-        self.name = try container.sdkDecodeRequired(.name)
-        self.value = try container.sdkDecodeRequired(.value)
-        self.type = try container.sdkDecodeRequired(.type)
-        self.ttl = try container.sdkDecodeRequired(.ttl)
-        self.status = try container.sdkDecodeRequired(.status)
-        self.priority = try container.sdkDecodeIfPresent(.priority)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension WebhookDomainRecord {
-    public init(record: WebhookDomainRecordRecord, name: String, value: String, type: WebhookDomainRecordType, ttl: String, status: WebhookDomainRecordStatus, priority: Int? = nil) {
+public extension WebhookDomainRecord {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.record) else {
+            throw SdkValidationError(
+                field: "record",
+                code: "required",
+                message: "Validation failed for 'record': value is required"
+            )
+        }
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        guard container.contains(.value) else {
+            throw SdkValidationError(
+                field: "value",
+                code: "required",
+                message: "Validation failed for 'value': value is required"
+            )
+        }
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.ttl) else {
+            throw SdkValidationError(
+                field: "ttl",
+                code: "required",
+                message: "Validation failed for 'ttl': value is required"
+            )
+        }
+        guard container.contains(.status) else {
+            throw SdkValidationError(
+                field: "status",
+                code: "required",
+                message: "Validation failed for 'status': value is required"
+            )
+        }
+        record = try container.sdkDecodeRequired(.record)
+        name = try container.sdkDecodeRequired(.name)
+        value = try container.sdkDecodeRequired(.value)
+        type = try container.sdkDecodeRequired(.type)
+        ttl = try container.sdkDecodeRequired(.ttl)
+        status = try container.sdkDecodeRequired(.status)
+        priority = try container.sdkDecodeIfPresent(.priority)
+    }
+}
+
+public extension WebhookDomainRecord {
+    init(
+        record: WebhookDomainRecordRecord,
+        name: String,
+        value: String,
+        type: WebhookDomainRecordType,
+        ttl: String,
+        status: WebhookDomainRecordStatus,
+        priority: Int? = nil
+    ) {
         (self.record, self.name) = (record, name)
         (self.value, self.type) = (value, type)
         (self.ttl, self.status) = (ttl, status)
@@ -79,7 +113,10 @@ extension WebhookDomainRecord {
 public struct WebhookDomainRecordType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let mx = WebhookDomainRecordType(rawValue: "MX")
     public static let txt = WebhookDomainRecordType(rawValue: "TXT")
     public static let cname = WebhookDomainRecordType(rawValue: "CNAME")
@@ -87,7 +124,7 @@ public struct WebhookDomainRecordType: RawRepresentable, Hashable, Codable, Send
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -100,7 +137,10 @@ public struct WebhookDomainRecordType: RawRepresentable, Hashable, Codable, Send
 public struct WebhookDomainRecordStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let pending = WebhookDomainRecordStatus(rawValue: "pending")
     public static let verified = WebhookDomainRecordStatus(rawValue: "verified")
     public static let failed = WebhookDomainRecordStatus(rawValue: "failed")
@@ -109,7 +149,7 @@ public struct WebhookDomainRecordStatus: RawRepresentable, Hashable, Codable, Se
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -123,7 +163,10 @@ public struct WebhookDomainRecordStatus: RawRepresentable, Hashable, Codable, Se
 public struct WebhookDomainRecordRecord: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let spf = WebhookDomainRecordRecord(rawValue: "SPF")
     public static let dkim = WebhookDomainRecordRecord(rawValue: "DKIM")
     public static let receivingMx = WebhookDomainRecordRecord(rawValue: "Receiving MX")
@@ -132,7 +175,7 @@ public struct WebhookDomainRecordRecord: RawRepresentable, Hashable, Codable, Se
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
