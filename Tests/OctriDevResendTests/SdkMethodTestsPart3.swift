@@ -52,7 +52,7 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try EmailsMethods.EmailsSendOptions(from: decoded("\"from\""), to: decoded("\"to\""), subject: decoded("\"subject\""))
+        var options = try EmailsMethods.EmailsSendOptions(from: decoded("\"user@example.com\""), to: decoded("\"to\""), subject: decoded("\"subject\""))
         options.idempotencyKey = try decoded("\"Idempotency-Key\"")
         options.bcc = try decoded("\"bcc\"")
         options.cc = try decoded("\"cc\"")

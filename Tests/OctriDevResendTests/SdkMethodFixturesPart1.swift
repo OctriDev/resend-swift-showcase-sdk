@@ -592,14 +592,14 @@ let sdkMethodFixture59Expected = String(
 
 let sdkMethodFixture60Value1 = String(
     data: Data(base64Encoded: [
-    "W3siZnJvbSI6ImZyb20iLCJ0byI6InRvIiwic3ViamVjdCI6InN1YmplY3QiLCJiY2MiOiJiY2MiLCJj",
-    "YyI6ImNjIiwicmVwbHlfdG8iOiJyZXBseV90byIsImh0bWwiOiJodG1sIiwidGV4dCI6InRleHQiLCJ0",
-    "ZW1wbGF0ZSI6eyJpZCI6ImlkLTEiLCJ2YXJpYWJsZXMiOnsidmFyaWFibGVOYW1lIjoiU2lnbiB1cCBu",
-    "b3ciLCJ2YXJpYWJsZU5hbWUyIjoxMjN9fSwiaGVhZGVycyI6e30sInNjaGVkdWxlZF9hdCI6IjIwMjQt",
-    "MDEtMDFUMDA6MDA6MDBaIiwiYXR0YWNobWVudHMiOlt7ImNvbnRlbnQiOiJaWGhoYlhCc1pRPT0iLCJm",
-    "aWxlbmFtZSI6IkV4YW1wbGUgTmFtZSIsInBhdGgiOiJwYXRoIiwiY29udGVudF90eXBlIjoiY29udGVu",
-    "dF90eXBlIiwiY29udGVudF9pZCI6ImNvbnRlbnQtMSJ9XSwidGFncyI6W3sibmFtZSI6IkV4YW1wbGUg",
-    "TmFtZSIsInZhbHVlIjoidmFsdWUifV0sInRvcGljX2lkIjoidG9waWMtMSJ9XQ==",
+    "W3siZnJvbSI6InVzZXJAZXhhbXBsZS5jb20iLCJ0byI6InRvIiwic3ViamVjdCI6InN1YmplY3QiLCJi",
+    "Y2MiOiJiY2MiLCJjYyI6ImNjIiwicmVwbHlfdG8iOiJyZXBseV90byIsImh0bWwiOiJodG1sIiwidGV4",
+    "dCI6InRleHQiLCJ0ZW1wbGF0ZSI6eyJpZCI6ImlkLTEiLCJ2YXJpYWJsZXMiOnsidmFyaWFibGVOYW1l",
+    "IjoiU2lnbiB1cCBub3ciLCJ2YXJpYWJsZU5hbWUyIjoxMjN9fSwiaGVhZGVycyI6e30sInNjaGVkdWxl",
+    "ZF9hdCI6IjIwMjQtMDEtMDFUMDA6MDA6MDBaIiwiYXR0YWNobWVudHMiOlt7ImNvbnRlbnQiOiJaWGho",
+    "YlhCc1pRPT0iLCJmaWxlbmFtZSI6IkV4YW1wbGUgTmFtZSIsInBhdGgiOiJwYXRoIiwiY29udGVudF90",
+    "eXBlIjoiY29udGVudF90eXBlIiwiY29udGVudF9pZCI6ImNvbnRlbnQtMSJ9XSwidGFncyI6W3sibmFt",
+    "ZSI6IkV4YW1wbGUgTmFtZSIsInZhbHVlIjoidmFsdWUifV0sInRvcGljX2lkIjoidG9waWMtMSJ9XQ==",
     ].joined())!,
     encoding: .utf8
 )!

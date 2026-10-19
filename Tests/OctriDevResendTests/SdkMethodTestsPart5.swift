@@ -144,7 +144,7 @@ extension SdkMethodTests {
         _ = client
         var options = try TemplatesMethods.TemplatesCreateOptions(name: decoded("\"Example Name\""), html: decoded("\"html\""))
         options.alias = try decoded("\"alias\"")
-        options.from = try decoded("\"from\"")
+        options.from = try decoded("\"user@example.com\"")
         options.subject = try decoded("\"subject\"")
         options.replyTo = try decoded("[\"reply_to\"]")
         options.text = try decoded("\"text\"")
@@ -262,7 +262,7 @@ extension SdkMethodTests {
         var options = try TemplatesMethods.TemplatesUpdateOptions(id: decoded("\"id-1\""))
         options.name = try decoded("\"Example Name\"")
         options.alias = try decoded("\"alias\"")
-        options.from = try decoded("\"from\"")
+        options.from = try decoded("\"user@example.com\"")
         options.subject = try decoded("\"subject\"")
         options.replyTo = try decoded("[\"reply_to\"]")
         options.html = try decoded("\"html\"")
