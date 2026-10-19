@@ -53,7 +53,7 @@ extension SdkMethodTests {
         }
         _ = client
         var options = try EmailsMethods.EmailsSendOptions(
-            from: decoded("\"from\""),
+            from: decoded("\"user@example.com\""),
             to: decoded("\"to\""),
             subject: decoded("\"subject\"")
         )
