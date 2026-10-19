@@ -6,9 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AudiencesMethods {
-    /// Deletes an audience selected by its ID. Use the Segments endpoints instead, because this audience operation is
-    /// deprecated. This operation is closing down and will be removed on a date not specified in the API definition.
+extension AudiencesMethods {
+    /// Deletes an audience selected by its ID. Use the Segments endpoints instead, because this audience operation is deprecated. This operation is closing down and will be removed on a date not specified in the API definition.
     ///
     /// Deprecated: Use Segments instead. These endpoints still work, but will be removed in the future.
     ///
@@ -16,23 +15,11 @@ public extension AudiencesMethods {
     /// - id: The Audience ID.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
-    static func audiencesRemove(
-        config: ClientConfig,
-        id: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> RemoveAudienceResponseSuccess {
-        try await (sdkRequest(
-            "DELETE",
-            ["/audiences/", sdkEncodePathSegment(sdkWireString(id))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "audiencesRemove",
-            options: requestOptions
-        )).data
+    public static func audiencesRemove(config: ClientConfig, id: String, requestOptions: RequestOptions? = nil) async throws -> RemoveAudienceResponseSuccess {
+        return try (await sdkRequest("DELETE", ["/audiences/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "audiencesRemove", options: requestOptions)).data
     }
 
-    /// Retrieves an audience by its ID. Use the Segments endpoints instead, because this audience operation is
-    /// deprecated. This operation is closing down and will be removed on a date not specified in the API definition.
+    /// Retrieves an audience by its ID. Use the Segments endpoints instead, because this audience operation is deprecated. This operation is closing down and will be removed on a date not specified in the API definition.
     ///
     /// Deprecated: Use Segments instead. These endpoints still work, but will be removed in the future.
     ///
@@ -40,18 +27,7 @@ public extension AudiencesMethods {
     /// - id: The Audience ID.
     ///
     /// - Warning: This operation is deprecated and may be removed in a future release.
-    static func audiencesGet(
-        config: ClientConfig,
-        id: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> GetAudienceResponseSuccess {
-        try await (sdkRequest(
-            "GET",
-            ["/audiences/", sdkEncodePathSegment(sdkWireString(id))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "audiencesGet",
-            options: requestOptions
-        )).data
+    public static func audiencesGet(config: ClientConfig, id: String, requestOptions: RequestOptions? = nil) async throws -> GetAudienceResponseSuccess {
+        return try (await sdkRequest("GET", ["/audiences/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "audiencesGet", options: requestOptions)).data
     }
 }

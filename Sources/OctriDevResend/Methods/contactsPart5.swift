@@ -6,9 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ContactsMethods {
-    /// Updates a contact identified by its ID or email address. Include only the profile, subscription, or custom
-    /// property fields you want to change.
+extension ContactsMethods {
+    /// Updates a contact identified by its ID or email address. Include only the profile, subscription, or custom property fields you want to change.
     ///
     /// - Parameters:
     /// - id: The Contact ID or email address.
@@ -18,52 +17,17 @@ public extension ContactsMethods {
     /// - unsubscribed: The Contact's global subscription status. If set to true,
     ///   the contact will be unsubscribed from all Broadcasts.
     /// - properties: A map of custom property keys and values to update.
-    static func contactsUpdate(
-        config: ClientConfig,
-        id: String,
-        email: String? = nil,
-        firstName: String? = nil,
-        lastName: String? = nil,
-        unsubscribed: Bool? = nil,
-        properties: [String: JSONValue?]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> UpdateContactResponseSuccess {
-        let requestBody = ContactsUpdateRequestBody(
-            email: email,
-            firstName: firstName,
-            lastName: lastName,
-            unsubscribed: unsubscribed,
-            properties: properties
-        )
+    public static func contactsUpdate(config: ClientConfig, id: String, email: String? = nil, firstName: String? = nil, lastName: String? = nil, unsubscribed: Bool? = nil, properties: [String: JSONValue?]? = nil, requestOptions: RequestOptions? = nil) async throws -> UpdateContactResponseSuccess {
+        let requestBody = ContactsUpdateRequestBody(email: email, firstName: firstName, lastName: lastName, unsubscribed: unsubscribed, properties: properties)
 
-        return try await (sdkRequest(
-            "PATCH",
-            ["/contacts/", sdkEncodePathSegment(sdkWireString(id))].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "contactsUpdate",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("PATCH", ["/contacts/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, body: requestBody, decoder: .json, operationId: "contactsUpdate", options: requestOptions)).data
     }
 
-    /// Deletes a contact identified by its ID or email address. Use this operation to remove the contact from the
-    /// contacts resource.
+    /// Deletes a contact identified by its ID or email address. Use this operation to remove the contact from the contacts resource.
     ///
     /// - Parameters:
     /// - id: The Contact ID or email address.
-    static func contactsRemove(
-        config: ClientConfig,
-        id: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> RemoveContactResponseSuccess {
-        try await (sdkRequest(
-            "DELETE",
-            ["/contacts/", sdkEncodePathSegment(sdkWireString(id))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "contactsRemove",
-            options: requestOptions
-        )).data
+    public static func contactsRemove(config: ClientConfig, id: String, requestOptions: RequestOptions? = nil) async throws -> RemoveContactResponseSuccess {
+        return try (await sdkRequest("DELETE", ["/contacts/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "contactsRemove", options: requestOptions)).data
     }
 }

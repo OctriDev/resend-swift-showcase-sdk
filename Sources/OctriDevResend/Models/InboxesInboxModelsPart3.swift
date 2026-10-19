@@ -3,47 +3,31 @@
 
 import Foundation
 
-/// InboxesInbox domain models
-public extension InboxAgent {
-    init(from decoder: Decoder) throws {
+// InboxesInbox domain models
+extension InboxAgent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.object) else {
-            throw SdkValidationError(
-                field: "object",
-                code: "required",
-                message: "Validation failed for 'object': value is required"
-            )
+            throw SdkValidationError(field: "object", code: "required", message: "Validation failed for 'object': value is required")
         }
         guard container.contains(.instructions) else {
-            throw SdkValidationError(
-                field: "instructions",
-                code: "required",
-                message: "Validation failed for 'instructions': value is required"
-            )
+            throw SdkValidationError(field: "instructions", code: "required", message: "Validation failed for 'instructions': value is required")
         }
         guard container.contains(.tone) else {
-            throw SdkValidationError(
-                field: "tone",
-                code: "required",
-                message: "Validation failed for 'tone': value is required"
-            )
+            throw SdkValidationError(field: "tone", code: "required", message: "Validation failed for 'tone': value is required")
         }
         guard container.contains(.enabledActions) else {
-            throw SdkValidationError(
-                field: "enabled_actions",
-                code: "required",
-                message: "Validation failed for 'enabled_actions': value is required"
-            )
+            throw SdkValidationError(field: "enabled_actions", code: "required", message: "Validation failed for 'enabled_actions': value is required")
         }
-        object = try container.sdkDecodeRequired(.object)
-        instructions = try container.sdkDecodeNullable(.instructions)
-        tone = try container.sdkDecodeNullable(.tone)
-        enabledActions = try container.sdkDecodeRequired(.enabledActions)
+        self.object = try container.sdkDecodeRequired(.object)
+        self.instructions = try container.sdkDecodeNullable(.instructions)
+        self.tone = try container.sdkDecodeNullable(.tone)
+        self.enabledActions = try container.sdkDecodeRequired(.enabledActions)
     }
 }
 
-public extension InboxAgent {
-    init(object: String, instructions: String?, tone: InboxAgentTone?, enabledActions: [InboxAgentEnabledActionsItem]) {
+extension InboxAgent {
+    public init(object: String, instructions: String?, tone: InboxAgentTone?, enabledActions: [InboxAgentEnabledActionsItem]) {
         (self.object, self.instructions) = (object, instructions)
         (self.tone, self.enabledActions) = (tone, enabledActions)
     }
@@ -78,34 +62,26 @@ public struct InboxThreadSearchResultVariant1Highlights: Codable {
     }
 
     init() {
-        (subject, body, from, to, cc) = (nil, nil, nil, nil, nil)
-        (bcc, attachments) = (nil, nil)
+        (self.subject, self.body, self.from, self.to, self.cc) = (nil, nil, nil, nil, nil)
+        (self.bcc, self.attachments) = (nil, nil)
     }
 }
 
-public extension InboxThreadSearchResultVariant1Highlights {
-    init(from decoder: Decoder) throws {
+extension InboxThreadSearchResultVariant1Highlights {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        subject = try container.sdkDecodeIfPresent(.subject)
-        body = try container.sdkDecodeIfPresent(.body)
-        from = try container.sdkDecodeIfPresent(.from)
-        to = try container.sdkDecodeIfPresent(.to)
-        cc = try container.sdkDecodeIfPresent(.cc)
-        bcc = try container.sdkDecodeIfPresent(.bcc)
-        attachments = try container.sdkDecodeIfPresent(.attachments)
+        self.subject = try container.sdkDecodeIfPresent(.subject)
+        self.body = try container.sdkDecodeIfPresent(.body)
+        self.from = try container.sdkDecodeIfPresent(.from)
+        self.to = try container.sdkDecodeIfPresent(.to)
+        self.cc = try container.sdkDecodeIfPresent(.cc)
+        self.bcc = try container.sdkDecodeIfPresent(.bcc)
+        self.attachments = try container.sdkDecodeIfPresent(.attachments)
     }
 }
 
-public extension InboxThreadSearchResultVariant1Highlights {
-    init(
-        subject: [String]? = nil,
-        body: [String]? = nil,
-        from: [String]? = nil,
-        to: [String]? = nil,
-        cc: [String]? = nil,
-        bcc: [String]? = nil,
-        attachments: [String]? = nil
-    ) {
+extension InboxThreadSearchResultVariant1Highlights {
+    public init(subject: [String]? = nil, body: [String]? = nil, from: [String]? = nil, to: [String]? = nil, cc: [String]? = nil, bcc: [String]? = nil, attachments: [String]? = nil) {
         self.init()
         (self.subject, self.body) = (subject, body)
         (self.from, self.to) = (from, to)
@@ -120,10 +96,7 @@ public extension InboxThreadSearchResultVariant1Highlights {
 public struct InboxThreadFolder: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let inbox = InboxThreadFolder(rawValue: "inbox")
     public static let archive = InboxThreadFolder(rawValue: "archive")
     public static let spam = InboxThreadFolder(rawValue: "spam")
@@ -132,7 +105,7 @@ public struct InboxThreadFolder: RawRepresentable, Hashable, Codable, Sendable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -145,10 +118,7 @@ public struct InboxThreadFolder: RawRepresentable, Hashable, Codable, Sendable, 
 public struct InboxAgentEnabledActionsItem: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let draftReply = InboxAgentEnabledActionsItem(rawValue: "draft_reply")
     public static let forwardThread = InboxAgentEnabledActionsItem(rawValue: "forward_thread")
     public static let addLabels = InboxAgentEnabledActionsItem(rawValue: "add_labels")
@@ -159,7 +129,7 @@ public struct InboxAgentEnabledActionsItem: RawRepresentable, Hashable, Codable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -173,16 +143,13 @@ public struct InboxAgentEnabledActionsItem: RawRepresentable, Hashable, Codable,
 public struct InboxDraftType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let standalone = InboxDraftType(rawValue: "standalone")
     public static let reply = InboxDraftType(rawValue: "reply")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -195,10 +162,7 @@ public struct InboxDraftType: RawRepresentable, Hashable, Codable, Sendable, Sdk
 public struct InboxThreadSummaryFolder: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let inbox = InboxThreadSummaryFolder(rawValue: "inbox")
     public static let archive = InboxThreadSummaryFolder(rawValue: "archive")
     public static let spam = InboxThreadSummaryFolder(rawValue: "spam")
@@ -207,7 +171,7 @@ public struct InboxThreadSummaryFolder: RawRepresentable, Hashable, Codable, Sen
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -220,10 +184,7 @@ public struct InboxThreadSummaryFolder: RawRepresentable, Hashable, Codable, Sen
 public struct InboxAgentTone: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let conciseProfessional = InboxAgentTone(rawValue: "concise_professional")
     public static let conciseCasual = InboxAgentTone(rawValue: "concise_casual")
     public static let expandedProfessional = InboxAgentTone(rawValue: "expanded_professional")
@@ -231,7 +192,7 @@ public struct InboxAgentTone: RawRepresentable, Hashable, Codable, Sendable, Sdk
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -245,16 +206,13 @@ public struct InboxAgentTone: RawRepresentable, Hashable, Codable, Sendable, Sdk
 public struct InboxDraftListItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let standalone = InboxDraftListItemType(rawValue: "standalone")
     public static let reply = InboxDraftListItemType(rawValue: "reply")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -268,16 +226,13 @@ public struct InboxDraftListItemType: RawRepresentable, Hashable, Codable, Senda
 public struct InboxThreadEmailDirection: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let inbound = InboxThreadEmailDirection(rawValue: "inbound")
     public static let outbound = InboxThreadEmailDirection(rawValue: "outbound")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

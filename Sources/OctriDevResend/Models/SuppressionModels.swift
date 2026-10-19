@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Suppression domain models
+// Suppression domain models
 /// Typed representation of the `SuppressionAddedEvent` API schema.
 public struct SuppressionAddedEvent: Codable {
     /// The event type.
@@ -20,49 +20,35 @@ public struct SuppressionAddedEvent: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension SuppressionAddedEvent {
-    init(from decoder: Decoder) throws {
+extension SuppressionAddedEvent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
         guard container.contains(.data) else {
-            throw SdkValidationError(
-                field: "data",
-                code: "required",
-                message: "Validation failed for 'data': value is required"
-            )
+            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        data = try container.sdkDecodeRequired(.data)
-        try sdkValidateRawEnum("type", type, SuppressionAddedEventType.allCases.map(\.rawValue))
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        self.type = try container.sdkDecodeRequired(.type)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.data = try container.sdkDecodeRequired(.data)
+            try sdkValidateRawEnum("type", self.type, SuppressionAddedEventType.allCases.map(\.rawValue))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
-public extension SuppressionAddedEvent {
-    init(type: SuppressionAddedEventType, createdAt: Date, data: SuppressionEventData) throws {
+extension SuppressionAddedEvent {
+    public init(type: SuppressionAddedEventType, createdAt: Date, data: SuppressionEventData) throws {
         (self.type, self.createdAt) = (type, createdAt)
         self.data = data
-        try sdkValidateRawEnum("type", self.type, SuppressionAddedEventType.allCases.map(\.rawValue))
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateRawEnum("type", self.type, SuppressionAddedEventType.allCases.map(\.rawValue))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
@@ -89,64 +75,42 @@ public struct SuppressionEventData: Codable {
         case createdAt = "created_at"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension SuppressionEventData {
-    init(from decoder: Decoder) throws {
+extension SuppressionEventData {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.email) else {
-            throw SdkValidationError(
-                field: "email",
-                code: "required",
-                message: "Validation failed for 'email': value is required"
-            )
+            throw SdkValidationError(field: "email", code: "required", message: "Validation failed for 'email': value is required")
         }
         guard container.contains(.origin) else {
-            throw SdkValidationError(
-                field: "origin",
-                code: "required",
-                message: "Validation failed for 'origin': value is required"
-            )
+            throw SdkValidationError(field: "origin", code: "required", message: "Validation failed for 'origin': value is required")
         }
         guard container.contains(.sourceId) else {
-            throw SdkValidationError(
-                field: "source_id",
-                code: "required",
-                message: "Validation failed for 'source_id': value is required"
-            )
+            throw SdkValidationError(field: "source_id", code: "required", message: "Validation failed for 'source_id': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        email = try container.sdkDecodeRequired(.email)
-        origin = try container.sdkDecodeRequired(.origin)
-        sourceId = try container.sdkDecodeNullable(.sourceId)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        self.id = try container.sdkDecodeRequired(.id)
+        self.email = try container.sdkDecodeRequired(.email)
+        self.origin = try container.sdkDecodeRequired(.origin)
+        self.sourceId = try container.sdkDecodeNullable(.sourceId)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
-public extension SuppressionEventData {
-    init(id: String, email: String, origin: SuppressionEventDataOrigin, sourceId: String?, createdAt: Date) throws {
+extension SuppressionEventData {
+    public init(id: String, email: String, origin: SuppressionEventDataOrigin, sourceId: String?, createdAt: Date) throws {
         (self.id, self.email) = (id, email)
         (self.origin, self.sourceId) = (origin, sourceId)
         self.createdAt = createdAt
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
@@ -166,49 +130,35 @@ public struct SuppressionRemovedEvent: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension SuppressionRemovedEvent {
-    init(from decoder: Decoder) throws {
+extension SuppressionRemovedEvent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
         guard container.contains(.data) else {
-            throw SdkValidationError(
-                field: "data",
-                code: "required",
-                message: "Validation failed for 'data': value is required"
-            )
+            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        data = try container.sdkDecodeRequired(.data)
-        try sdkValidateRawEnum("type", type, SuppressionRemovedEventType.allCases.map(\.rawValue))
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        self.type = try container.sdkDecodeRequired(.type)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.data = try container.sdkDecodeRequired(.data)
+            try sdkValidateRawEnum("type", self.type, SuppressionRemovedEventType.allCases.map(\.rawValue))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
-public extension SuppressionRemovedEvent {
-    init(type: SuppressionRemovedEventType, createdAt: Date, data: SuppressionEventData) throws {
+extension SuppressionRemovedEvent {
+    public init(type: SuppressionRemovedEventType, createdAt: Date, data: SuppressionEventData) throws {
         (self.type, self.createdAt) = (type, createdAt)
         self.data = data
-        try sdkValidateRawEnum("type", self.type, SuppressionRemovedEventType.allCases.map(\.rawValue))
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateRawEnum("type", self.type, SuppressionRemovedEventType.allCases.map(\.rawValue))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
@@ -216,17 +166,14 @@ public extension SuppressionRemovedEvent {
 public struct SuppressionEventDataOrigin: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let bounce = SuppressionEventDataOrigin(rawValue: "bounce")
     public static let complaint = SuppressionEventDataOrigin(rawValue: "complaint")
     public static let manual = SuppressionEventDataOrigin(rawValue: "manual")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Automations domain models
+// Automations domain models
 /// A step execution within an automation run.
 public struct AutomationRunStep: Codable {
     /// The key of the automation step.
@@ -38,36 +38,27 @@ public struct AutomationRunStep: Codable {
     }
 
     init() {
-        (key, type, status, startedAt, completedAt) = (nil, nil, nil, nil, nil)
-        (output, error, createdAt) = (nil, nil, nil)
+        (self.key, self.type, self.status, self.startedAt, self.completedAt) = (nil, nil, nil, nil, nil)
+        (self.output, self.error, self.createdAt) = (nil, nil, nil)
     }
 }
 
-public extension AutomationRunStep {
-    init(from decoder: Decoder) throws {
+extension AutomationRunStep {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        key = try container.sdkDecodeIfPresent(.key)
-        type = try container.sdkDecodeIfPresent(.type)
-        status = try container.sdkDecodeIfPresent(.status)
-        startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        output = try container.sdkDecodeIfPresent(.output)
-        error = try container.sdkDecodeIfPresent(.error)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.key = try container.sdkDecodeIfPresent(.key)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        self.output = try container.sdkDecodeIfPresent(.output)
+        self.error = try container.sdkDecodeIfPresent(.error)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
     }
 }
 
-public extension AutomationRunStep {
-    init(
-        key: String? = nil,
-        type: AutomationRunStepType? = nil,
-        status: String? = nil,
-        startedAt: String? = nil,
-        completedAt: String? = nil,
-        output: [String: JSONValue]? = nil,
-        error: [String: JSONValue]? = nil,
-        createdAt: String? = nil
-    ) {
+extension AutomationRunStep {
+    public init(key: String? = nil, type: AutomationRunStepType? = nil, status: String? = nil, startedAt: String? = nil, completedAt: String? = nil, output: [String: JSONValue]? = nil, error: [String: JSONValue]? = nil, createdAt: String? = nil) {
         self.init()
         (self.key, self.type) = (key, type)
         (self.status, self.startedAt) = (status, startedAt)
@@ -94,21 +85,21 @@ public struct DeleteAutomationResponse: Codable {
     }
 
     init() {
-        (object, id, deleted) = (nil, nil, nil)
+        (self.object, self.id, self.deleted) = (nil, nil, nil)
     }
 }
 
-public extension DeleteAutomationResponse {
-    init(from decoder: Decoder) throws {
+extension DeleteAutomationResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        id = try container.sdkDecodeIfPresent(.id)
-        deleted = try container.sdkDecodeIfPresent(.deleted)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-public extension DeleteAutomationResponse {
-    init(object: String? = nil, id: String? = nil, deleted: Bool? = nil) {
+extension DeleteAutomationResponse {
+    public init(object: String? = nil, id: String? = nil, deleted: Bool? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
         self.deleted = deleted
@@ -132,21 +123,21 @@ public struct ListAutomationRunsResponse: Codable {
     }
 
     init() {
-        (object, hasMore, data) = (nil, nil, nil)
+        (self.object, self.hasMore, self.data) = (nil, nil, nil)
     }
 }
 
-public extension ListAutomationRunsResponse {
-    init(from decoder: Decoder) throws {
+extension ListAutomationRunsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension ListAutomationRunsResponse {
-    init(object: String? = nil, hasMore: Bool? = nil, data: [AutomationRunListItem]? = nil) {
+extension ListAutomationRunsResponse {
+    public init(object: String? = nil, hasMore: Bool? = nil, data: [AutomationRunListItem]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -172,43 +163,29 @@ public struct AutomationStep: Codable {
         case config
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AutomationStep {
-    init(from decoder: Decoder) throws {
+extension AutomationStep {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.key) else {
-            throw SdkValidationError(
-                field: "key",
-                code: "required",
-                message: "Validation failed for 'key': value is required"
-            )
+            throw SdkValidationError(field: "key", code: "required", message: "Validation failed for 'key': value is required")
         }
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.config) else {
-            throw SdkValidationError(
-                field: "config",
-                code: "required",
-                message: "Validation failed for 'config': value is required"
-            )
+            throw SdkValidationError(field: "config", code: "required", message: "Validation failed for 'config': value is required")
         }
-        key = try container.sdkDecodeRequired(.key)
-        type = try container.sdkDecodeRequired(.type)
-        config = try container.sdkDecodeRequired(.config)
+        self.key = try container.sdkDecodeRequired(.key)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.config = try container.sdkDecodeRequired(.config)
     }
 }
 
-public extension AutomationStep {
-    init(key: String, type: AutomationStepType, config: [String: JSONValue]) {
+extension AutomationStep {
+    public init(key: String, type: AutomationStepType, config: [String: JSONValue]) {
         (self.key, self.type) = (key, type)
         self.config = config
     }
@@ -231,21 +208,21 @@ public struct ListAutomationsResponse: Codable {
     }
 
     init() {
-        (object, hasMore, data) = (nil, nil, nil)
+        (self.object, self.hasMore, self.data) = (nil, nil, nil)
     }
 }
 
-public extension ListAutomationsResponse {
-    init(from decoder: Decoder) throws {
+extension ListAutomationsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension ListAutomationsResponse {
-    init(object: String? = nil, hasMore: Bool? = nil, data: [AutomationListItem]? = nil) {
+extension ListAutomationsResponse {
+    public init(object: String? = nil, hasMore: Bool? = nil, data: [AutomationListItem]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -256,16 +233,13 @@ public extension ListAutomationsResponse {
 public struct AutomationListItemStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let enabled = AutomationListItemStatus(rawValue: "enabled")
     public static let disabled = AutomationListItemStatus(rawValue: "disabled")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -278,16 +252,13 @@ public struct AutomationListItemStatus: RawRepresentable, Hashable, Codable, Sen
 public struct AutomationStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let enabled = AutomationStatus(rawValue: "enabled")
     public static let disabled = AutomationStatus(rawValue: "disabled")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -300,16 +271,13 @@ public struct AutomationStatus: RawRepresentable, Hashable, Codable, Sendable, S
 public struct PatchAutomationRequestStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let enabled = PatchAutomationRequestStatus(rawValue: "enabled")
     public static let disabled = PatchAutomationRequestStatus(rawValue: "disabled")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -322,10 +290,7 @@ public struct PatchAutomationRequestStatus: RawRepresentable, Hashable, Codable,
 public struct AutomationRunStepType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let trigger = AutomationRunStepType(rawValue: "trigger")
     public static let sendEmail = AutomationRunStepType(rawValue: "send_email")
     public static let delay = AutomationRunStepType(rawValue: "delay")
@@ -337,7 +302,7 @@ public struct AutomationRunStepType: RawRepresentable, Hashable, Codable, Sendab
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -350,16 +315,13 @@ public struct AutomationRunStepType: RawRepresentable, Hashable, Codable, Sendab
 public struct CreateAutomationRequestStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let enabled = CreateAutomationRequestStatus(rawValue: "enabled")
     public static let disabled = CreateAutomationRequestStatus(rawValue: "disabled")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -372,10 +334,7 @@ public struct CreateAutomationRequestStatus: RawRepresentable, Hashable, Codable
 public struct AutomationConnectionType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let `default` = AutomationConnectionType(rawValue: "default")
     public static let conditionMet = AutomationConnectionType(rawValue: "condition_met")
     public static let conditionNotMet = AutomationConnectionType(rawValue: "condition_not_met")
@@ -384,7 +343,7 @@ public struct AutomationConnectionType: RawRepresentable, Hashable, Codable, Sen
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -397,10 +356,7 @@ public struct AutomationConnectionType: RawRepresentable, Hashable, Codable, Sen
 public struct AutomationRunStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let running = AutomationRunStatus(rawValue: "running")
     public static let completed = AutomationRunStatus(rawValue: "completed")
     public static let failed = AutomationRunStatus(rawValue: "failed")
@@ -408,7 +364,7 @@ public struct AutomationRunStatus: RawRepresentable, Hashable, Codable, Sendable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -421,10 +377,7 @@ public struct AutomationRunStatus: RawRepresentable, Hashable, Codable, Sendable
 public struct AutomationStepType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let trigger = AutomationStepType(rawValue: "trigger")
     public static let sendEmail = AutomationStepType(rawValue: "send_email")
     public static let delay = AutomationStepType(rawValue: "delay")
@@ -436,7 +389,7 @@ public struct AutomationStepType: RawRepresentable, Hashable, Codable, Sendable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -449,10 +402,7 @@ public struct AutomationStepType: RawRepresentable, Hashable, Codable, Sendable,
 public struct AutomationRunListItemStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let running = AutomationRunListItemStatus(rawValue: "running")
     public static let completed = AutomationRunListItemStatus(rawValue: "completed")
     public static let failed = AutomationRunListItemStatus(rawValue: "failed")
@@ -460,7 +410,7 @@ public struct AutomationRunListItemStatus: RawRepresentable, Hashable, Codable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -473,10 +423,7 @@ public struct AutomationRunListItemStatus: RawRepresentable, Hashable, Codable, 
 public struct AutomationStepResponseType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let trigger = AutomationStepResponseType(rawValue: "trigger")
     public static let sendEmail = AutomationStepResponseType(rawValue: "send_email")
     public static let delay = AutomationStepResponseType(rawValue: "delay")
@@ -488,7 +435,7 @@ public struct AutomationStepResponseType: RawRepresentable, Hashable, Codable, S
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

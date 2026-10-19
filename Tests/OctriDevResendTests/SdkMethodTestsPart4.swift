@@ -132,11 +132,7 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try InboxesMethods.InboxesReplyThreadEmailOptions(
-            inboxId: decoded("\"00000000-0000-4000-8000-000000000000\""),
-            threadId: decoded("\"00000000-0000-4000-8000-000000000000\""),
-            emailId: decoded("\"00000000-0000-4000-8000-000000000000\"")
-        )
+        var options = try InboxesMethods.InboxesReplyThreadEmailOptions(inboxId: decoded("\"00000000-0000-4000-8000-000000000000\""), threadId: decoded("\"00000000-0000-4000-8000-000000000000\""), emailId: decoded("\"00000000-0000-4000-8000-000000000000\""))
         options.idempotencyKey = try decoded("\"x\"")
         options.cc = try decoded("[\"billing@acme.com\"]")
         options.bcc = try decoded("[\"records@acme.com\"]")
@@ -164,8 +160,7 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try InboxesMethods
-            .InboxesSearchThreadsOptions(inboxId: decoded("\"00000000-0000-4000-8000-000000000000\""))
+        var options = try InboxesMethods.InboxesSearchThreadsOptions(inboxId: decoded("\"00000000-0000-4000-8000-000000000000\""))
         options.query = try decoded("\"invoice -draft\"")
         options.from = try decoded("[\"isabella@example.com\",\"carolina@example.com\"]")
         options.to = try decoded("[\"to\"]")
@@ -260,10 +255,7 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try InboxesMethods.InboxesUpdateDraftOptions(
-            inboxId: decoded("\"00000000-0000-4000-8000-000000000000\""),
-            draftId: decoded("\"00000000-0000-4000-8000-000000000000\"")
-        )
+        var options = try InboxesMethods.InboxesUpdateDraftOptions(inboxId: decoded("\"00000000-0000-4000-8000-000000000000\""), draftId: decoded("\"00000000-0000-4000-8000-000000000000\""))
         options.to = try decoded("[\"ada@example.org\"]")
         options.cc = try decoded("\"cc\"")
         options.bcc = try decoded("\"bcc\"")

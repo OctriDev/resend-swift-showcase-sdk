@@ -6,51 +6,25 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension EventsMethods {
-    /// Updates the payload schema for an existing event. Supply `schema` as a flat key/type map using `string`,
-    /// `number`, `boolean`, or `date`, or set it to `null` to clear the schema.
+extension EventsMethods {
+    /// Updates the payload schema for an existing event. Supply `schema` as a flat key/type map using `string`, `number`, `boolean`, or `date`, or set it to `null` to clear the schema.
     ///
     /// - Parameters:
     /// - identifier: The event ID (UUID) or event name.
     /// - schema: A flat key/type map defining the event payload schema. Set to
     ///   `null` to clear the schema. Supported types are `string`, `number`,
     ///   `boolean`, and `date`.
-    static func eventsUpdate(
-        config: ClientConfig,
-        identifier: String,
-        schema: [String: JSONValue]?,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> UpdateEventResponse {
+    public static func eventsUpdate(config: ClientConfig, identifier: String, schema: [String: JSONValue]?, requestOptions: RequestOptions? = nil) async throws -> UpdateEventResponse {
         let requestBody = EventsUpdateRequestBody(schema: schema)
 
-        return try await (sdkRequest(
-            "PATCH",
-            ["/events/", sdkEncodePathSegment(sdkWireString(identifier))].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "eventsUpdate",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("PATCH", ["/events/", sdkEncodePathSegment(sdkWireString(identifier))].joined(), config: config, body: requestBody, decoder: .json, operationId: "eventsUpdate", options: requestOptions)).data
     }
 
-    /// Deletes an event identified by its UUID or name. Use the `identifier` path parameter to specify which event to
-    /// remove; the response indicates whether the event was deleted.
+    /// Deletes an event identified by its UUID or name. Use the `identifier` path parameter to specify which event to remove; the response indicates whether the event was deleted.
     ///
     /// - Parameters:
     /// - identifier: The event ID (UUID) or event name.
-    static func eventsRemove(
-        config: ClientConfig,
-        identifier: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> RemoveEventResponse {
-        try await (sdkRequest(
-            "DELETE",
-            ["/events/", sdkEncodePathSegment(sdkWireString(identifier))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "eventsRemove",
-            options: requestOptions
-        )).data
+    public static func eventsRemove(config: ClientConfig, identifier: String, requestOptions: RequestOptions? = nil) async throws -> RemoveEventResponse {
+        return try (await sdkRequest("DELETE", ["/events/", sdkEncodePathSegment(sdkWireString(identifier))].joined(), config: config, decoder: .json, operationId: "eventsRemove", options: requestOptions)).data
     }
 }

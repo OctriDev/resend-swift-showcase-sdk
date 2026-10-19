@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// InboxThread domain models
+// InboxThread domain models
 /// The data of an `inbox.thread.unassigned` event.
 public struct InboxThreadUnassignedEventData: Codable {
     /// The email of the member the thread was assigned to.
@@ -29,65 +29,41 @@ public struct InboxThreadUnassignedEventData: Codable {
         case thread
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension InboxThreadUnassignedEventData {
-    init(from decoder: Decoder) throws {
+extension InboxThreadUnassignedEventData {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.previousAssigneeEmail) else {
-            throw SdkValidationError(
-                field: "previous_assignee_email",
-                code: "required",
-                message: "Validation failed for 'previous_assignee_email': value is required"
-            )
+            throw SdkValidationError(field: "previous_assignee_email", code: "required", message: "Validation failed for 'previous_assignee_email': value is required")
         }
         guard container.contains(.source) else {
-            throw SdkValidationError(
-                field: "source",
-                code: "required",
-                message: "Validation failed for 'source': value is required"
-            )
+            throw SdkValidationError(field: "source", code: "required", message: "Validation failed for 'source': value is required")
         }
         guard container.contains(.inboxId) else {
-            throw SdkValidationError(
-                field: "inbox_id",
-                code: "required",
-                message: "Validation failed for 'inbox_id': value is required"
-            )
+            throw SdkValidationError(field: "inbox_id", code: "required", message: "Validation failed for 'inbox_id': value is required")
         }
         guard container.contains(.threadId) else {
-            throw SdkValidationError(
-                field: "thread_id",
-                code: "required",
-                message: "Validation failed for 'thread_id': value is required"
-            )
+            throw SdkValidationError(field: "thread_id", code: "required", message: "Validation failed for 'thread_id': value is required")
         }
-        previousAssigneeEmail = try container.sdkDecodeNullable(.previousAssigneeEmail)
-        source = try container.sdkDecodeRequired(.source)
-        inboxId = try container.sdkDecodeRequired(.inboxId)
-        threadId = try container.sdkDecodeRequired(.threadId)
-        thread = try container.sdkDecodeIfPresent(.thread)
-        try sdkValidateUuid("inbox_id", inboxId)
-        try sdkValidateUuid("thread_id", threadId)
+        self.previousAssigneeEmail = try container.sdkDecodeNullable(.previousAssigneeEmail)
+        self.source = try container.sdkDecodeRequired(.source)
+        self.inboxId = try container.sdkDecodeRequired(.inboxId)
+        self.threadId = try container.sdkDecodeRequired(.threadId)
+        self.thread = try container.sdkDecodeIfPresent(.thread)
+            try sdkValidateUuid("inbox_id", self.inboxId)
+            try sdkValidateUuid("thread_id", self.threadId)
     }
 }
 
-public extension InboxThreadUnassignedEventData {
-    init(
-        previousAssigneeEmail: String?,
-        source: InboxEventSource,
-        inboxId: String,
-        threadId: String,
-        thread: InboxThreadSummary? = nil
-    ) throws {
+extension InboxThreadUnassignedEventData {
+    public init(previousAssigneeEmail: String?, source: InboxEventSource, inboxId: String, threadId: String, thread: InboxThreadSummary? = nil) throws {
         (self.previousAssigneeEmail, self.source) = (previousAssigneeEmail, source)
         (self.inboxId, self.threadId) = (inboxId, threadId)
         self.thread = thread
-        try sdkValidateUuid("inbox_id", self.inboxId)
-        try sdkValidateUuid("thread_id", self.threadId)
+            try sdkValidateUuid("inbox_id", self.inboxId)
+            try sdkValidateUuid("thread_id", self.threadId)
     }
 }
 
@@ -107,49 +83,35 @@ public struct InboxThreadCreatedEvent: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension InboxThreadCreatedEvent {
-    init(from decoder: Decoder) throws {
+extension InboxThreadCreatedEvent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
         guard container.contains(.data) else {
-            throw SdkValidationError(
-                field: "data",
-                code: "required",
-                message: "Validation failed for 'data': value is required"
-            )
+            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        data = try container.sdkDecodeRequired(.data)
-        try sdkValidateRawEnum("type", type, InboxThreadCreatedEventType.allCases.map(\.rawValue))
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        self.type = try container.sdkDecodeRequired(.type)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.data = try container.sdkDecodeRequired(.data)
+            try sdkValidateRawEnum("type", self.type, InboxThreadCreatedEventType.allCases.map(\.rawValue))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
-public extension InboxThreadCreatedEvent {
-    init(type: InboxThreadCreatedEventType, createdAt: Date, data: InboxThreadEmailEventData) throws {
+extension InboxThreadCreatedEvent {
+    public init(type: InboxThreadCreatedEventType, createdAt: Date, data: InboxThreadEmailEventData) throws {
         (self.type, self.createdAt) = (type, createdAt)
         self.data = data
-        try sdkValidateRawEnum("type", self.type, InboxThreadCreatedEventType.allCases.map(\.rawValue))
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateRawEnum("type", self.type, InboxThreadCreatedEventType.allCases.map(\.rawValue))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
@@ -182,69 +144,44 @@ public struct InboxThreadEmailEventData: Codable {
         case email
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension InboxThreadEmailEventData {
-    init(from decoder: Decoder) throws {
+extension InboxThreadEmailEventData {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.source) else {
-            throw SdkValidationError(
-                field: "source",
-                code: "required",
-                message: "Validation failed for 'source': value is required"
-            )
+            throw SdkValidationError(field: "source", code: "required", message: "Validation failed for 'source': value is required")
         }
         guard container.contains(.inboxId) else {
-            throw SdkValidationError(
-                field: "inbox_id",
-                code: "required",
-                message: "Validation failed for 'inbox_id': value is required"
-            )
+            throw SdkValidationError(field: "inbox_id", code: "required", message: "Validation failed for 'inbox_id': value is required")
         }
         guard container.contains(.threadId) else {
-            throw SdkValidationError(
-                field: "thread_id",
-                code: "required",
-                message: "Validation failed for 'thread_id': value is required"
-            )
+            throw SdkValidationError(field: "thread_id", code: "required", message: "Validation failed for 'thread_id': value is required")
         }
         guard container.contains(.emailId) else {
-            throw SdkValidationError(
-                field: "email_id",
-                code: "required",
-                message: "Validation failed for 'email_id': value is required"
-            )
+            throw SdkValidationError(field: "email_id", code: "required", message: "Validation failed for 'email_id': value is required")
         }
-        source = try container.sdkDecodeRequired(.source)
-        inboxId = try container.sdkDecodeRequired(.inboxId)
-        threadId = try container.sdkDecodeRequired(.threadId)
-        emailId = try container.sdkDecodeRequired(.emailId)
-        thread = try container.sdkDecodeIfPresent(.thread)
-        email = try container.sdkDecodeIfPresent(.email)
-        try sdkValidateUuid("inbox_id", inboxId)
-        try sdkValidateUuid("thread_id", threadId)
-        try sdkValidateUuid("email_id", emailId)
+        self.source = try container.sdkDecodeRequired(.source)
+        self.inboxId = try container.sdkDecodeRequired(.inboxId)
+        self.threadId = try container.sdkDecodeRequired(.threadId)
+        self.emailId = try container.sdkDecodeRequired(.emailId)
+        self.thread = try container.sdkDecodeIfPresent(.thread)
+        self.email = try container.sdkDecodeIfPresent(.email)
+            try sdkValidateUuid("inbox_id", self.inboxId)
+            try sdkValidateUuid("thread_id", self.threadId)
+            try sdkValidateUuid("email_id", self.emailId)
     }
 }
 
-public extension InboxThreadEmailEventData {
-    init(
-        source: InboxEventSource,
-        inboxId: String,
-        threadId: String,
-        emailId: String,
-        thread: InboxThreadSummary? = nil,
-        email: InboxEventEmail? = nil
-    ) throws {
+extension InboxThreadEmailEventData {
+    public init(source: InboxEventSource, inboxId: String, threadId: String, emailId: String, thread: InboxThreadSummary? = nil, email: InboxEventEmail? = nil) throws {
         (self.source, self.inboxId) = (source, inboxId)
         (self.threadId, self.emailId) = (threadId, emailId)
         (self.thread, self.email) = (thread, email)
-        try sdkValidateUuid("inbox_id", self.inboxId)
-        try sdkValidateUuid("thread_id", self.threadId)
-        try sdkValidateUuid("email_id", self.emailId)
+            try sdkValidateUuid("inbox_id", self.inboxId)
+            try sdkValidateUuid("thread_id", self.threadId)
+            try sdkValidateUuid("email_id", self.emailId)
     }
 }
 
@@ -280,84 +217,50 @@ public struct InboxThreadAssignedEventData: Codable {
         case thread
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension InboxThreadAssignedEventData {
-    init(from decoder: Decoder) throws {
+extension InboxThreadAssignedEventData {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.assigneeEmail) else {
-            throw SdkValidationError(
-                field: "assignee_email",
-                code: "required",
-                message: "Validation failed for 'assignee_email': value is required"
-            )
+            throw SdkValidationError(field: "assignee_email", code: "required", message: "Validation failed for 'assignee_email': value is required")
         }
         guard container.contains(.assignedByEmail) else {
-            throw SdkValidationError(
-                field: "assigned_by_email",
-                code: "required",
-                message: "Validation failed for 'assigned_by_email': value is required"
-            )
+            throw SdkValidationError(field: "assigned_by_email", code: "required", message: "Validation failed for 'assigned_by_email': value is required")
         }
         guard container.contains(.previousAssigneeEmail) else {
-            throw SdkValidationError(
-                field: "previous_assignee_email",
-                code: "required",
-                message: "Validation failed for 'previous_assignee_email': value is required"
-            )
+            throw SdkValidationError(field: "previous_assignee_email", code: "required", message: "Validation failed for 'previous_assignee_email': value is required")
         }
         guard container.contains(.source) else {
-            throw SdkValidationError(
-                field: "source",
-                code: "required",
-                message: "Validation failed for 'source': value is required"
-            )
+            throw SdkValidationError(field: "source", code: "required", message: "Validation failed for 'source': value is required")
         }
         guard container.contains(.inboxId) else {
-            throw SdkValidationError(
-                field: "inbox_id",
-                code: "required",
-                message: "Validation failed for 'inbox_id': value is required"
-            )
+            throw SdkValidationError(field: "inbox_id", code: "required", message: "Validation failed for 'inbox_id': value is required")
         }
         guard container.contains(.threadId) else {
-            throw SdkValidationError(
-                field: "thread_id",
-                code: "required",
-                message: "Validation failed for 'thread_id': value is required"
-            )
+            throw SdkValidationError(field: "thread_id", code: "required", message: "Validation failed for 'thread_id': value is required")
         }
-        assigneeEmail = try container.sdkDecodeNullable(.assigneeEmail)
-        assignedByEmail = try container.sdkDecodeNullable(.assignedByEmail)
-        previousAssigneeEmail = try container.sdkDecodeNullable(.previousAssigneeEmail)
-        source = try container.sdkDecodeRequired(.source)
-        inboxId = try container.sdkDecodeRequired(.inboxId)
-        threadId = try container.sdkDecodeRequired(.threadId)
-        thread = try container.sdkDecodeIfPresent(.thread)
-        try sdkValidateUuid("inbox_id", inboxId)
-        try sdkValidateUuid("thread_id", threadId)
+        self.assigneeEmail = try container.sdkDecodeNullable(.assigneeEmail)
+        self.assignedByEmail = try container.sdkDecodeNullable(.assignedByEmail)
+        self.previousAssigneeEmail = try container.sdkDecodeNullable(.previousAssigneeEmail)
+        self.source = try container.sdkDecodeRequired(.source)
+        self.inboxId = try container.sdkDecodeRequired(.inboxId)
+        self.threadId = try container.sdkDecodeRequired(.threadId)
+        self.thread = try container.sdkDecodeIfPresent(.thread)
+            try sdkValidateUuid("inbox_id", self.inboxId)
+            try sdkValidateUuid("thread_id", self.threadId)
     }
 }
 
-public extension InboxThreadAssignedEventData {
-    init(
-        assigneeEmail: String?,
-        assignedByEmail: String?,
-        previousAssigneeEmail: String?,
-        source: InboxEventSource,
-        inboxId: String,
-        threadId: String,
-        thread: InboxThreadSummary? = nil
-    ) throws {
+extension InboxThreadAssignedEventData {
+    public init(assigneeEmail: String?, assignedByEmail: String?, previousAssigneeEmail: String?, source: InboxEventSource, inboxId: String, threadId: String, thread: InboxThreadSummary? = nil) throws {
         (self.assigneeEmail, self.assignedByEmail) = (assigneeEmail, assignedByEmail)
         (self.previousAssigneeEmail, self.source) = (previousAssigneeEmail, source)
         (self.inboxId, self.threadId) = (inboxId, threadId)
         self.thread = thread
-        try sdkValidateUuid("inbox_id", self.inboxId)
-        try sdkValidateUuid("thread_id", self.threadId)
+            try sdkValidateUuid("inbox_id", self.inboxId)
+            try sdkValidateUuid("thread_id", self.threadId)
     }
 }
 
@@ -390,74 +293,45 @@ public struct InboxThreadFolderUpdatedEventData: Codable {
         case thread
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension InboxThreadFolderUpdatedEventData {
-    init(from decoder: Decoder) throws {
+extension InboxThreadFolderUpdatedEventData {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.from) else {
-            throw SdkValidationError(
-                field: "from",
-                code: "required",
-                message: "Validation failed for 'from': value is required"
-            )
+            throw SdkValidationError(field: "from", code: "required", message: "Validation failed for 'from': value is required")
         }
         guard container.contains(.to) else {
-            throw SdkValidationError(
-                field: "to",
-                code: "required",
-                message: "Validation failed for 'to': value is required"
-            )
+            throw SdkValidationError(field: "to", code: "required", message: "Validation failed for 'to': value is required")
         }
         guard container.contains(.source) else {
-            throw SdkValidationError(
-                field: "source",
-                code: "required",
-                message: "Validation failed for 'source': value is required"
-            )
+            throw SdkValidationError(field: "source", code: "required", message: "Validation failed for 'source': value is required")
         }
         guard container.contains(.inboxId) else {
-            throw SdkValidationError(
-                field: "inbox_id",
-                code: "required",
-                message: "Validation failed for 'inbox_id': value is required"
-            )
+            throw SdkValidationError(field: "inbox_id", code: "required", message: "Validation failed for 'inbox_id': value is required")
         }
         guard container.contains(.threadId) else {
-            throw SdkValidationError(
-                field: "thread_id",
-                code: "required",
-                message: "Validation failed for 'thread_id': value is required"
-            )
+            throw SdkValidationError(field: "thread_id", code: "required", message: "Validation failed for 'thread_id': value is required")
         }
-        from = try container.sdkDecodeRequired(.from)
-        to = try container.sdkDecodeRequired(.to)
-        source = try container.sdkDecodeRequired(.source)
-        inboxId = try container.sdkDecodeRequired(.inboxId)
-        threadId = try container.sdkDecodeRequired(.threadId)
-        thread = try container.sdkDecodeIfPresent(.thread)
-        try sdkValidateUuid("inbox_id", inboxId)
-        try sdkValidateUuid("thread_id", threadId)
+        self.from = try container.sdkDecodeRequired(.from)
+        self.to = try container.sdkDecodeRequired(.to)
+        self.source = try container.sdkDecodeRequired(.source)
+        self.inboxId = try container.sdkDecodeRequired(.inboxId)
+        self.threadId = try container.sdkDecodeRequired(.threadId)
+        self.thread = try container.sdkDecodeIfPresent(.thread)
+            try sdkValidateUuid("inbox_id", self.inboxId)
+            try sdkValidateUuid("thread_id", self.threadId)
     }
 }
 
-public extension InboxThreadFolderUpdatedEventData {
-    init(
-        from: InboxThreadFolderUpdatedEventDataFrom,
-        to: InboxThreadFolderUpdatedEventDataTo,
-        source: InboxEventSource,
-        inboxId: String,
-        threadId: String,
-        thread: InboxThreadSummary? = nil
-    ) throws {
+extension InboxThreadFolderUpdatedEventData {
+    public init(from: InboxThreadFolderUpdatedEventDataFrom, to: InboxThreadFolderUpdatedEventDataTo, source: InboxEventSource, inboxId: String, threadId: String, thread: InboxThreadSummary? = nil) throws {
         (self.from, self.to) = (from, to)
         (self.source, self.inboxId) = (source, inboxId)
         (self.threadId, self.thread) = (threadId, thread)
-        try sdkValidateUuid("inbox_id", self.inboxId)
-        try sdkValidateUuid("thread_id", self.threadId)
+            try sdkValidateUuid("inbox_id", self.inboxId)
+            try sdkValidateUuid("thread_id", self.threadId)
     }
 }
 
@@ -488,74 +362,45 @@ public struct InboxThreadLabelsUpdatedEventData: Codable {
         case thread
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension InboxThreadLabelsUpdatedEventData {
-    init(from decoder: Decoder) throws {
+extension InboxThreadLabelsUpdatedEventData {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.added) else {
-            throw SdkValidationError(
-                field: "added",
-                code: "required",
-                message: "Validation failed for 'added': value is required"
-            )
+            throw SdkValidationError(field: "added", code: "required", message: "Validation failed for 'added': value is required")
         }
         guard container.contains(.removed) else {
-            throw SdkValidationError(
-                field: "removed",
-                code: "required",
-                message: "Validation failed for 'removed': value is required"
-            )
+            throw SdkValidationError(field: "removed", code: "required", message: "Validation failed for 'removed': value is required")
         }
         guard container.contains(.source) else {
-            throw SdkValidationError(
-                field: "source",
-                code: "required",
-                message: "Validation failed for 'source': value is required"
-            )
+            throw SdkValidationError(field: "source", code: "required", message: "Validation failed for 'source': value is required")
         }
         guard container.contains(.inboxId) else {
-            throw SdkValidationError(
-                field: "inbox_id",
-                code: "required",
-                message: "Validation failed for 'inbox_id': value is required"
-            )
+            throw SdkValidationError(field: "inbox_id", code: "required", message: "Validation failed for 'inbox_id': value is required")
         }
         guard container.contains(.threadId) else {
-            throw SdkValidationError(
-                field: "thread_id",
-                code: "required",
-                message: "Validation failed for 'thread_id': value is required"
-            )
+            throw SdkValidationError(field: "thread_id", code: "required", message: "Validation failed for 'thread_id': value is required")
         }
-        added = try container.sdkDecodeRequired(.added)
-        removed = try container.sdkDecodeRequired(.removed)
-        source = try container.sdkDecodeRequired(.source)
-        inboxId = try container.sdkDecodeRequired(.inboxId)
-        threadId = try container.sdkDecodeRequired(.threadId)
-        thread = try container.sdkDecodeIfPresent(.thread)
-        try sdkValidateUuid("inbox_id", inboxId)
-        try sdkValidateUuid("thread_id", threadId)
+        self.added = try container.sdkDecodeRequired(.added)
+        self.removed = try container.sdkDecodeRequired(.removed)
+        self.source = try container.sdkDecodeRequired(.source)
+        self.inboxId = try container.sdkDecodeRequired(.inboxId)
+        self.threadId = try container.sdkDecodeRequired(.threadId)
+        self.thread = try container.sdkDecodeIfPresent(.thread)
+            try sdkValidateUuid("inbox_id", self.inboxId)
+            try sdkValidateUuid("thread_id", self.threadId)
     }
 }
 
-public extension InboxThreadLabelsUpdatedEventData {
-    init(
-        added: [InboxThreadLabel],
-        removed: [InboxThreadLabel],
-        source: InboxEventSource,
-        inboxId: String,
-        threadId: String,
-        thread: InboxThreadSummary? = nil
-    ) throws {
+extension InboxThreadLabelsUpdatedEventData {
+    public init(added: [InboxThreadLabel], removed: [InboxThreadLabel], source: InboxEventSource, inboxId: String, threadId: String, thread: InboxThreadSummary? = nil) throws {
         (self.added, self.removed) = (added, removed)
         (self.source, self.inboxId) = (source, inboxId)
         (self.threadId, self.thread) = (threadId, thread)
-        try sdkValidateUuid("inbox_id", self.inboxId)
-        try sdkValidateUuid("thread_id", self.threadId)
+            try sdkValidateUuid("inbox_id", self.inboxId)
+            try sdkValidateUuid("thread_id", self.threadId)
     }
 }
 
@@ -576,48 +421,34 @@ public struct InboxThreadLabelsUpdatedEvent: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension InboxThreadLabelsUpdatedEvent {
-    init(from decoder: Decoder) throws {
+extension InboxThreadLabelsUpdatedEvent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
         guard container.contains(.data) else {
-            throw SdkValidationError(
-                field: "data",
-                code: "required",
-                message: "Validation failed for 'data': value is required"
-            )
+            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        data = try container.sdkDecodeRequired(.data)
-        try sdkValidateRawEnum("type", type, InboxThreadLabelsUpdatedEventType.allCases.map(\.rawValue))
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        self.type = try container.sdkDecodeRequired(.type)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.data = try container.sdkDecodeRequired(.data)
+            try sdkValidateRawEnum("type", self.type, InboxThreadLabelsUpdatedEventType.allCases.map(\.rawValue))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
-public extension InboxThreadLabelsUpdatedEvent {
-    init(type: InboxThreadLabelsUpdatedEventType, createdAt: Date, data: InboxThreadLabelsUpdatedEventData) throws {
+extension InboxThreadLabelsUpdatedEvent {
+    public init(type: InboxThreadLabelsUpdatedEventType, createdAt: Date, data: InboxThreadLabelsUpdatedEventData) throws {
         (self.type, self.createdAt) = (type, createdAt)
         self.data = data
-        try sdkValidateRawEnum("type", self.type, InboxThreadLabelsUpdatedEventType.allCases.map(\.rawValue))
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateRawEnum("type", self.type, InboxThreadLabelsUpdatedEventType.allCases.map(\.rawValue))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }

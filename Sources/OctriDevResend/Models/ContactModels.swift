@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Contact domain models
+// Contact domain models
 /// Typed representation of the `ContactEventData` API schema.
 public struct ContactEventData: Codable {
     /// Unique identifier for the contact.
@@ -39,82 +39,50 @@ public struct ContactEventData: Codable {
         case lastName = "last_name"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ContactEventData {
-    init(from decoder: Decoder) throws {
+extension ContactEventData {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
         guard container.contains(.updatedAt) else {
-            throw SdkValidationError(
-                field: "updated_at",
-                code: "required",
-                message: "Validation failed for 'updated_at': value is required"
-            )
+            throw SdkValidationError(field: "updated_at", code: "required", message: "Validation failed for 'updated_at': value is required")
         }
         guard container.contains(.email) else {
-            throw SdkValidationError(
-                field: "email",
-                code: "required",
-                message: "Validation failed for 'email': value is required"
-            )
+            throw SdkValidationError(field: "email", code: "required", message: "Validation failed for 'email': value is required")
         }
         guard container.contains(.unsubscribed) else {
-            throw SdkValidationError(
-                field: "unsubscribed",
-                code: "required",
-                message: "Validation failed for 'unsubscribed': value is required"
-            )
+            throw SdkValidationError(field: "unsubscribed", code: "required", message: "Validation failed for 'unsubscribed': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        updatedAt = try container.sdkDecodeRequired(.updatedAt)
-        email = try container.sdkDecodeRequired(.email)
-        unsubscribed = try container.sdkDecodeRequired(.unsubscribed)
-        audienceId = try container.sdkDecodeIfPresent(.audienceId)
-        segmentIds = try container.sdkDecodeIfPresent(.segmentIds)
-        firstName = try container.sdkDecodeIfPresent(.firstName)
-        lastName = try container.sdkDecodeIfPresent(.lastName)
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
-        try sdkValidateDateTime("updated_at", sdkWireString(updatedAt))
+        self.id = try container.sdkDecodeRequired(.id)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.updatedAt = try container.sdkDecodeRequired(.updatedAt)
+        self.email = try container.sdkDecodeRequired(.email)
+        self.unsubscribed = try container.sdkDecodeRequired(.unsubscribed)
+        self.audienceId = try container.sdkDecodeIfPresent(.audienceId)
+        self.segmentIds = try container.sdkDecodeIfPresent(.segmentIds)
+        self.firstName = try container.sdkDecodeIfPresent(.firstName)
+        self.lastName = try container.sdkDecodeIfPresent(.lastName)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
     }
 }
 
-public extension ContactEventData {
-    init(
-        id: String,
-        createdAt: Date,
-        updatedAt: Date,
-        email: String,
-        unsubscribed: Bool,
-        audienceId: String? = nil,
-        segmentIds: [String]? = nil,
-        firstName: String? = nil,
-        lastName: String? = nil
-    ) throws {
+extension ContactEventData {
+    public init(id: String, createdAt: Date, updatedAt: Date, email: String, unsubscribed: Bool, audienceId: String? = nil, segmentIds: [String]? = nil, firstName: String? = nil, lastName: String? = nil) throws {
         (self.id, self.createdAt) = (id, createdAt)
         (self.updatedAt, self.email) = (updatedAt, email)
         (self.unsubscribed, self.audienceId) = (unsubscribed, audienceId)
         (self.segmentIds, self.firstName) = (segmentIds, firstName)
         self.lastName = lastName
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
-        try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
     }
 }
 
@@ -134,49 +102,35 @@ public struct ContactCreatedEvent: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ContactCreatedEvent {
-    init(from decoder: Decoder) throws {
+extension ContactCreatedEvent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
         guard container.contains(.data) else {
-            throw SdkValidationError(
-                field: "data",
-                code: "required",
-                message: "Validation failed for 'data': value is required"
-            )
+            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        data = try container.sdkDecodeRequired(.data)
-        try sdkValidateRawEnum("type", type, ContactCreatedEventType.allCases.map(\.rawValue))
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        self.type = try container.sdkDecodeRequired(.type)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.data = try container.sdkDecodeRequired(.data)
+            try sdkValidateRawEnum("type", self.type, ContactCreatedEventType.allCases.map(\.rawValue))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
-public extension ContactCreatedEvent {
-    init(type: ContactCreatedEventType, createdAt: Date, data: ContactEventData) throws {
+extension ContactCreatedEvent {
+    public init(type: ContactCreatedEventType, createdAt: Date, data: ContactEventData) throws {
         (self.type, self.createdAt) = (type, createdAt)
         self.data = data
-        try sdkValidateRawEnum("type", self.type, ContactCreatedEventType.allCases.map(\.rawValue))
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateRawEnum("type", self.type, ContactCreatedEventType.allCases.map(\.rawValue))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
@@ -196,49 +150,35 @@ public struct ContactDeletedEvent: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ContactDeletedEvent {
-    init(from decoder: Decoder) throws {
+extension ContactDeletedEvent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
         guard container.contains(.data) else {
-            throw SdkValidationError(
-                field: "data",
-                code: "required",
-                message: "Validation failed for 'data': value is required"
-            )
+            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        data = try container.sdkDecodeRequired(.data)
-        try sdkValidateRawEnum("type", type, ContactDeletedEventType.allCases.map(\.rawValue))
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        self.type = try container.sdkDecodeRequired(.type)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.data = try container.sdkDecodeRequired(.data)
+            try sdkValidateRawEnum("type", self.type, ContactDeletedEventType.allCases.map(\.rawValue))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
-public extension ContactDeletedEvent {
-    init(type: ContactDeletedEventType, createdAt: Date, data: ContactEventData) throws {
+extension ContactDeletedEvent {
+    public init(type: ContactDeletedEventType, createdAt: Date, data: ContactEventData) throws {
         (self.type, self.createdAt) = (type, createdAt)
         self.data = data
-        try sdkValidateRawEnum("type", self.type, ContactDeletedEventType.allCases.map(\.rawValue))
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateRawEnum("type", self.type, ContactDeletedEventType.allCases.map(\.rawValue))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
@@ -258,49 +198,35 @@ public struct ContactUpdatedEvent: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ContactUpdatedEvent {
-    init(from decoder: Decoder) throws {
+extension ContactUpdatedEvent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
         guard container.contains(.data) else {
-            throw SdkValidationError(
-                field: "data",
-                code: "required",
-                message: "Validation failed for 'data': value is required"
-            )
+            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        data = try container.sdkDecodeRequired(.data)
-        try sdkValidateRawEnum("type", type, ContactUpdatedEventType.allCases.map(\.rawValue))
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        self.type = try container.sdkDecodeRequired(.type)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.data = try container.sdkDecodeRequired(.data)
+            try sdkValidateRawEnum("type", self.type, ContactUpdatedEventType.allCases.map(\.rawValue))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
-public extension ContactUpdatedEvent {
-    init(type: ContactUpdatedEventType, createdAt: Date, data: ContactEventData) throws {
+extension ContactUpdatedEvent {
+    public init(type: ContactUpdatedEventType, createdAt: Date, data: ContactEventData) throws {
         (self.type, self.createdAt) = (type, createdAt)
         self.data = data
-        try sdkValidateRawEnum("type", self.type, ContactUpdatedEventType.allCases.map(\.rawValue))
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateRawEnum("type", self.type, ContactUpdatedEventType.allCases.map(\.rawValue))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 

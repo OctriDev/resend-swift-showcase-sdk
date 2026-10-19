@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ContactsMethods {
-    struct ContactsCreateOptions: Codable {
+extension ContactsMethods {
+    public struct ContactsCreateOptions: Codable {
         public var email: String
         public var firstName: String?
         public var lastName: String?
@@ -22,8 +22,7 @@ public extension ContactsMethods {
         }
     }
 
-    /// Creates a contact with an email address and optional profile, subscription, and grouping details. Include
-    /// `email`; you can also set custom `properties`, add `segments`, or configure `topics`.
+    /// Creates a contact with an email address and optional profile, subscription, and grouping details. Include `email`; you can also set custom `properties`, add `segments`, or configure `topics`.
     ///
     /// - Parameters:
     /// - email: Email address of the contact.
@@ -36,43 +35,24 @@ public extension ContactsMethods {
     /// - topics: Array of topic subscriptions for the contact.
     /// - audienceId: Unique identifier of the audience to which the contact
     ///   belongs.
-    static func contactsCreate(
-        config: ClientConfig,
-        options: ContactsCreateOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> CreateContactResponseSuccess {
+    public static func contactsCreate(config: ClientConfig, options: ContactsCreateOptions, requestOptions: RequestOptions? = nil) async throws -> CreateContactResponseSuccess {
         let requestBody = ContactsCreateRequestBody(options: options)
 
-        return try await (sdkRequest(
-            "POST",
-            "/contacts",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "contactsCreate",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("POST", "/contacts", config: config, body: requestBody, decoder: .json, operationId: "contactsCreate", options: requestOptions)).data
     }
 
-    /// Lists contacts, with each result including contact information. Use `after` or `before` to navigate results by
-    /// cursor, and `limit` to control the number of items returned.
+    /// Lists contacts, with each result including contact information. Use `after` or `before` to navigate results by cursor, and `limit` to control the number of items returned.
     ///
     /// - Parameters:
     /// - limit: Number of items to return.
     /// - after: Return items after this cursor.
     /// - before: Return items before this cursor.
-    static func contactsList(
-        config: ClientConfig,
-        limit: Int? = nil,
-        after: String? = nil,
-        before: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ListContactsResponseSuccess {
-        if let limit {
+    public static func contactsList(config: ClientConfig, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListContactsResponseSuccess {
+        if let limit = limit {
             try validateRange("limit", Double(limit), min: 1, max: 100)
         }
 
-        return try await (sdkRequest("GET", "/contacts", config: config, query: [
+        return try (await sdkRequest("GET", "/contacts", config: config, query: [
             SdkQueryParameter("limit", value: limit),
             SdkQueryParameter("after", value: after),
             SdkQueryParameter("before", value: before),

@@ -6,16 +6,10 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension InboxesMethods {
-    /// Updates a thread’s read state, folder, or labels. Supply at least one of `read`, `folder`, `add_label_ids`, or
-    /// `remove_label_ids`; changes apply in that order and are not atomic, so earlier changes may remain applied if a
-    /// later label operation fails.
+extension InboxesMethods {
+    /// Updates a thread’s read state, folder, or labels. Supply at least one of `read`, `folder`, `add_label_ids`, or `remove_label_ids`; changes apply in that order and are not atomic, so earlier changes may remain applied if a later label operation fails.
     ///
-    /// Marks a thread read or unread, moves it to a folder, or adds and removes labels. At least one of `read`,
-    /// `folder`, `add_label_ids`, or `remove_label_ids` is required. A label ID cannot be both added and removed in the
-    /// same request. Removing a label from a thread keeps the label itself. Moving a thread out of `trash` restores it
-    /// and clears its deletion deadline. The changes apply in this order: `read`, `folder`, added labels, removed
-    /// labels. They are not atomic, so a 404 for a label leaves the earlier changes applied.
+    /// Marks a thread read or unread, moves it to a folder, or adds and removes labels. At least one of `read`, `folder`, `add_label_ids`, or `remove_label_ids` is required. A label ID cannot be both added and removed in the same request. Removing a label from a thread keeps the label itself. Moving a thread out of `trash` restores it and clears its deletion deadline. The changes apply in this order: `read`, `folder`, added labels, removed labels. They are not atomic, so a 404 for a label leaves the earlier changes applied.
     ///
     /// - Parameters:
     /// - inboxId: The Inbox ID. An email address is not accepted.
@@ -28,48 +22,21 @@ public extension InboxesMethods {
     /// - removeLabelIds: Label IDs to remove from the thread. Between 1 and 10 IDs.
     ///   The labels themselves are kept. A label ID that does not exist in the inbox
     ///   returns a 404.
-    static func inboxesUpdateThread(
-        config: ClientConfig,
-        inboxId: String,
-        threadId: String,
-        read: Bool? = nil,
-        folder: UpdateInboxThreadOptionsFolder? = nil,
-        addLabelIds: [String]? = nil,
-        removeLabelIds: [String]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> InboxThreadSummary {
+    public static func inboxesUpdateThread(config: ClientConfig, inboxId: String, threadId: String, read: Bool? = nil, folder: UpdateInboxThreadOptionsFolder? = nil, addLabelIds: [String]? = nil, removeLabelIds: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> InboxThreadSummary {
         try sdkValidateUuid("inbox_id", inboxId)
 
         try sdkValidateUuid("thread_id", threadId)
 
-        if let addLabelIds {
+        if let addLabelIds = addLabelIds {
             try validateItems("add_label_ids", addLabelIds, min: 1, max: 10)
         }
 
-        if let removeLabelIds {
+        if let removeLabelIds = removeLabelIds {
             try validateItems("remove_label_ids", removeLabelIds, min: 1, max: 10)
         }
 
-        let requestBody = InboxesUpdateThreadRequestBody(
-            read: read,
-            folder: folder,
-            addLabelIds: addLabelIds,
-            removeLabelIds: removeLabelIds
-        )
+        let requestBody = InboxesUpdateThreadRequestBody(read: read, folder: folder, addLabelIds: addLabelIds, removeLabelIds: removeLabelIds)
 
-        return try await (sdkRequest(
-            "PATCH",
-            [
-                "/inboxes/",
-                sdkEncodePathSegment(sdkWireString(inboxId)),
-                "/threads/",
-                sdkEncodePathSegment(sdkWireString(threadId)),
-            ].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "inboxesUpdateThread",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("PATCH", ["/inboxes/", sdkEncodePathSegment(sdkWireString(inboxId)), "/threads/", sdkEncodePathSegment(sdkWireString(threadId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "inboxesUpdateThread", options: requestOptions)).data
     }
 }

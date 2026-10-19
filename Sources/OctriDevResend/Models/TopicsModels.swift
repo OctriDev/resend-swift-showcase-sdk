@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Topics domain models
+// Topics domain models
 /// Typed representation of the `UpdateTopicOptions` API schema.
 public struct UpdateTopicOptions: Codable {
     /// The name of the topic. Max 50 characters.
@@ -20,27 +20,27 @@ public struct UpdateTopicOptions: Codable {
     }
 
     init() {
-        (name, description, visibility) = (nil, nil, nil)
+        (self.name, self.description, self.visibility) = (nil, nil, nil)
     }
 }
 
-public extension UpdateTopicOptions {
-    init(from decoder: Decoder) throws {
+extension UpdateTopicOptions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        visibility = try container.sdkDecodeIfPresent(.visibility)
-        if let value = name {
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.visibility = try container.sdkDecodeIfPresent(.visibility)
+        if let value = self.name {
             try validateLength("name", value, min: nil, max: 50)
         }
-        if let value = description {
+        if let value = self.description {
             try validateLength("description", value, min: nil, max: 200)
         }
     }
 }
 
-public extension UpdateTopicOptions {
-    init(name: String? = nil, description: String? = nil, visibility: UpdateTopicOptionsVisibility? = nil) throws {
+extension UpdateTopicOptions {
+    public init(name: String? = nil, description: String? = nil, visibility: UpdateTopicOptionsVisibility? = nil) throws {
         self.init()
         (self.name, self.description) = (name, description)
         self.visibility = visibility
@@ -68,20 +68,20 @@ public struct UpdateTopicResponseSuccess: Codable {
     }
 
     init() {
-        (id, object) = (nil, nil)
+        (self.id, self.object) = (nil, nil)
     }
 }
 
-public extension UpdateTopicResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension UpdateTopicResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.object = try container.sdkDecodeIfPresent(.object)
     }
 }
 
-public extension UpdateTopicResponseSuccess {
-    init(id: String? = nil, object: String? = nil) {
+extension UpdateTopicResponseSuccess {
+    public init(id: String? = nil, object: String? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
     }
@@ -104,26 +104,30 @@ public struct ListTopicsResponseSuccess: Codable {
     }
 
     init() {
-        (object, hasMore, data) = (nil, nil, nil)
+        (self.object, self.hasMore, self.data) = (nil, nil, nil)
     }
 }
 
-public extension ListTopicsResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension ListTopicsResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension ListTopicsResponseSuccess {
-    init(object: String? = nil, hasMore: Bool? = nil, data: [ListTopicsResponseSuccessDataItem]? = nil) {
+extension ListTopicsResponseSuccess {
+    public init(object: String? = nil, hasMore: Bool? = nil, data: [ListTopicsResponseSuccessDataItem]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
     }
 }
+
+
+
+
 
 /// Typed representation of the `CreateTopicOptions` API schema.
 public struct CreateTopicOptions: Codable {
@@ -144,54 +148,43 @@ public struct CreateTopicOptions: Codable {
         case visibility
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateTopicOptions {
-    init(from decoder: Decoder) throws {
+extension CreateTopicOptions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.defaultSubscription) else {
-            throw SdkValidationError(
-                field: "default_subscription",
-                code: "required",
-                message: "Validation failed for 'default_subscription': value is required"
-            )
+            throw SdkValidationError(field: "default_subscription", code: "required", message: "Validation failed for 'default_subscription': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        defaultSubscription = try container.sdkDecodeRequired(.defaultSubscription)
-        description = try container.sdkDecodeIfPresent(.description)
-        visibility = try container.sdkDecodeIfPresent(.visibility)
-        try validateLength("name", name, min: nil, max: 50)
-        if let value = description {
-            try validateLength("description", value, min: nil, max: 200)
-        }
-    }
-}
-
-public extension CreateTopicOptions {
-    init(
-        name: String,
-        defaultSubscription: CreateTopicOptionsDefaultSubscription,
-        description: String? = nil,
-        visibility: CreateTopicOptionsVisibility? = nil
-    ) throws {
-        (self.name, self.defaultSubscription) = (name, defaultSubscription)
-        (self.description, self.visibility) = (description, visibility)
-        try validateLength("name", self.name, min: nil, max: 50)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.defaultSubscription = try container.sdkDecodeRequired(.defaultSubscription)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.visibility = try container.sdkDecodeIfPresent(.visibility)
+            try validateLength("name", self.name, min: nil, max: 50)
         if let value = self.description {
             try validateLength("description", value, min: nil, max: 200)
         }
     }
 }
+
+extension CreateTopicOptions {
+    public init(name: String, defaultSubscription: CreateTopicOptionsDefaultSubscription, description: String? = nil, visibility: CreateTopicOptionsVisibility? = nil) throws {
+        (self.name, self.defaultSubscription) = (name, defaultSubscription)
+        (self.description, self.visibility) = (description, visibility)
+            try validateLength("name", self.name, min: nil, max: 50)
+        if let value = self.description {
+            try validateLength("description", value, min: nil, max: 200)
+        }
+    }
+}
+
+
+
+
 
 /// Required object value serialized in the `data[]` wire field.
 public struct ListTopicsResponseSuccessDataItem: Codable {
@@ -219,32 +212,25 @@ public struct ListTopicsResponseSuccessDataItem: Codable {
     }
 
     init() {
-        (id, name, description, defaultSubscription, visibility) = (nil, nil, nil, nil, nil)
-        createdAt = nil
+        (self.id, self.name, self.description, self.defaultSubscription, self.visibility) = (nil, nil, nil, nil, nil)
+        self.createdAt = nil
     }
 }
 
-public extension ListTopicsResponseSuccessDataItem {
-    init(from decoder: Decoder) throws {
+extension ListTopicsResponseSuccessDataItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        defaultSubscription = try container.sdkDecodeIfPresent(.defaultSubscription)
-        visibility = try container.sdkDecodeIfPresent(.visibility)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.defaultSubscription = try container.sdkDecodeIfPresent(.defaultSubscription)
+        self.visibility = try container.sdkDecodeIfPresent(.visibility)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
     }
 }
 
-public extension ListTopicsResponseSuccessDataItem {
-    init(
-        id: String? = nil,
-        name: String? = nil,
-        description: String? = nil,
-        defaultSubscription: ListTopicsResponseSuccessDataItemDefaultSubscription? = nil,
-        visibility: ListTopicsResponseSuccessDataItemVisibility? = nil,
-        createdAt: String? = nil
-    ) {
+extension ListTopicsResponseSuccessDataItem {
+    public init(id: String? = nil, name: String? = nil, description: String? = nil, defaultSubscription: ListTopicsResponseSuccessDataItemDefaultSubscription? = nil, visibility: ListTopicsResponseSuccessDataItemVisibility? = nil, createdAt: String? = nil) {
         self.init()
         (self.id, self.name) = (id, name)
         (self.description, self.defaultSubscription) = (description, defaultSubscription)
@@ -267,24 +253,28 @@ public struct CreateTopicResponseSuccess: Codable {
     }
 
     init() {
-        (id, object) = (nil, nil)
+        (self.id, self.object) = (nil, nil)
     }
 }
 
-public extension CreateTopicResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension CreateTopicResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.object = try container.sdkDecodeIfPresent(.object)
     }
 }
 
-public extension CreateTopicResponseSuccess {
-    init(id: String? = nil, object: String? = nil) {
+extension CreateTopicResponseSuccess {
+    public init(id: String? = nil, object: String? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
     }
 }
+
+
+
+
 
 /// Typed representation of the `GetTopicResponseSuccess` API schema.
 public struct GetTopicResponseSuccess: Codable {
@@ -318,34 +308,26 @@ public struct GetTopicResponseSuccess: Codable {
     }
 
     init() {
-        (id, object, name, description, defaultSubscription) = (nil, nil, nil, nil, nil)
-        (visibility, createdAt) = (nil, nil)
+        (self.id, self.object, self.name, self.description, self.defaultSubscription) = (nil, nil, nil, nil, nil)
+        (self.visibility, self.createdAt) = (nil, nil)
     }
 }
 
-public extension GetTopicResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension GetTopicResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        object = try container.sdkDecodeIfPresent(.object)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        defaultSubscription = try container.sdkDecodeIfPresent(.defaultSubscription)
-        visibility = try container.sdkDecodeIfPresent(.visibility)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.defaultSubscription = try container.sdkDecodeIfPresent(.defaultSubscription)
+        self.visibility = try container.sdkDecodeIfPresent(.visibility)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
     }
 }
 
-public extension GetTopicResponseSuccess {
-    init(
-        id: String? = nil,
-        object: String? = nil,
-        name: String? = nil,
-        description: String? = nil,
-        defaultSubscription: GetTopicResponseSuccessDefaultSubscription? = nil,
-        visibility: GetTopicResponseSuccessVisibility? = nil,
-        createdAt: String? = nil
-    ) {
+extension GetTopicResponseSuccess {
+    public init(id: String? = nil, object: String? = nil, name: String? = nil, description: String? = nil, defaultSubscription: GetTopicResponseSuccessDefaultSubscription? = nil, visibility: GetTopicResponseSuccessVisibility? = nil, createdAt: String? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
         (self.name, self.description) = (name, description)
@@ -373,21 +355,21 @@ public struct RemoveTopicResponseSuccess: Codable {
     }
 
     init() {
-        (id, object, deleted) = (nil, nil, nil)
+        (self.id, self.object, self.deleted) = (nil, nil, nil)
     }
 }
 
-public extension RemoveTopicResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension RemoveTopicResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        object = try container.sdkDecodeIfPresent(.object)
-        deleted = try container.sdkDecodeIfPresent(.deleted)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-public extension RemoveTopicResponseSuccess {
-    init(id: String? = nil, object: String? = nil, deleted: Bool? = nil) {
+extension RemoveTopicResponseSuccess {
+    public init(id: String? = nil, object: String? = nil, deleted: Bool? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
         self.deleted = deleted
@@ -398,16 +380,13 @@ public extension RemoveTopicResponseSuccess {
 public struct UpdateTopicOptionsVisibility: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let `public` = UpdateTopicOptionsVisibility(rawValue: "public")
     public static let `private` = UpdateTopicOptionsVisibility(rawValue: "private")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -417,20 +396,16 @@ public struct UpdateTopicOptionsVisibility: RawRepresentable, Hashable, Codable,
 }
 
 /// The default subscription status for the topic.
-public struct GetTopicResponseSuccessDefaultSubscription: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct GetTopicResponseSuccessDefaultSubscription: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let optIn = GetTopicResponseSuccessDefaultSubscription(rawValue: "opt_in")
     public static let optOut = GetTopicResponseSuccessDefaultSubscription(rawValue: "opt_out")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -440,20 +415,16 @@ public struct GetTopicResponseSuccessDefaultSubscription: RawRepresentable, Hash
 }
 
 /// The visibility of the topic.
-public struct ListTopicsResponseSuccessDataItemVisibility: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct ListTopicsResponseSuccessDataItemVisibility: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let `public` = ListTopicsResponseSuccessDataItemVisibility(rawValue: "public")
     public static let `private` = ListTopicsResponseSuccessDataItemVisibility(rawValue: "private")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -467,16 +438,13 @@ public struct ListTopicsResponseSuccessDataItemVisibility: RawRepresentable, Has
 public struct CreateTopicOptionsVisibility: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let `public` = CreateTopicOptionsVisibility(rawValue: "public")
     public static let `private` = CreateTopicOptionsVisibility(rawValue: "private")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -489,16 +457,13 @@ public struct CreateTopicOptionsVisibility: RawRepresentable, Hashable, Codable,
 public struct CreateTopicOptionsDefaultSubscription: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let optIn = CreateTopicOptionsDefaultSubscription(rawValue: "opt_in")
     public static let optOut = CreateTopicOptionsDefaultSubscription(rawValue: "opt_out")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -511,16 +476,13 @@ public struct CreateTopicOptionsDefaultSubscription: RawRepresentable, Hashable,
 public struct GetTopicResponseSuccessVisibility: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let `public` = GetTopicResponseSuccessVisibility(rawValue: "public")
     public static let `private` = GetTopicResponseSuccessVisibility(rawValue: "private")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -530,20 +492,16 @@ public struct GetTopicResponseSuccessVisibility: RawRepresentable, Hashable, Cod
 }
 
 /// The default subscription status for the topic.
-public struct ListTopicsResponseSuccessDataItemDefaultSubscription: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct ListTopicsResponseSuccessDataItemDefaultSubscription: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let optIn = ListTopicsResponseSuccessDataItemDefaultSubscription(rawValue: "opt_in")
     public static let optOut = ListTopicsResponseSuccessDataItemDefaultSubscription(rawValue: "opt_out")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

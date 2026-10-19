@@ -6,32 +6,18 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AutomationsMethods {
-    /// Retrieves a single automation and its active workflow version. Use the automation details to inspect its status,
-    /// timestamps, steps, and connections.
+extension AutomationsMethods {
+    /// Retrieves a single automation and its active workflow version. Use the automation details to inspect its status, timestamps, steps, and connections.
     ///
     /// - Parameters:
     /// - automationId: The ID of the automation.
-    static func automationsGet(
-        config: ClientConfig,
-        automationId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Automation {
+    public static func automationsGet(config: ClientConfig, automationId: String, requestOptions: RequestOptions? = nil) async throws -> Automation {
         try sdkValidateUuid("automation_id", automationId)
 
-        return try await (sdkRequest(
-            "GET",
-            ["/automations/", sdkEncodePathSegment(sdkWireString(automationId))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "automationsGet",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("GET", ["/automations/", sdkEncodePathSegment(sdkWireString(automationId))].joined(), config: config, decoder: .json, operationId: "automationsGet", options: requestOptions)).data
     }
 
-    /// Updates an automation's name, status, or workflow graph. Supply at least one of `name`, `status`, or both
-    /// `steps` and `connections`; workflow graph updates require both arrays together. Provide between 1 and 150 steps
-    /// when updating the graph.
+    /// Updates an automation's name, status, or workflow graph. Supply at least one of `name`, `status`, or both `steps` and `connections`; workflow graph updates require both arrays together. Provide between 1 and 150 steps when updating the graph.
     ///
     /// - Parameters:
     /// - automationId: The ID of the automation.
@@ -41,40 +27,19 @@ public extension AutomationsMethods {
     ///   together with `connections`.
     /// - connections: The connections between steps in the automation graph. Must
     ///   be provided together with `steps`.
-    static func automationsUpdate(
-        config: ClientConfig,
-        automationId: String,
-        name: String? = nil,
-        status: PatchAutomationRequestStatus? = nil,
-        steps: [AutomationStep]? = nil,
-        connections: [AutomationConnection]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> PatchAutomationResponse {
+    public static func automationsUpdate(config: ClientConfig, automationId: String, name: String? = nil, status: PatchAutomationRequestStatus? = nil, steps: [AutomationStep]? = nil, connections: [AutomationConnection]? = nil, requestOptions: RequestOptions? = nil) async throws -> PatchAutomationResponse {
         try sdkValidateUuid("automation_id", automationId)
 
-        if let name {
+        if let name = name {
             try validateLength("name", name, min: 1)
         }
 
-        if let steps {
+        if let steps = steps {
             try validateItems("steps", steps, min: 1, max: 150)
         }
 
-        let requestBody = AutomationsUpdateRequestBody(
-            name: name,
-            status: status,
-            steps: steps,
-            connections: connections
-        )
+        let requestBody = AutomationsUpdateRequestBody(name: name, status: status, steps: steps, connections: connections)
 
-        return try await (sdkRequest(
-            "PATCH",
-            ["/automations/", sdkEncodePathSegment(sdkWireString(automationId))].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "automationsUpdate",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("PATCH", ["/automations/", sdkEncodePathSegment(sdkWireString(automationId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "automationsUpdate", options: requestOptions)).data
     }
 }

@@ -6,42 +6,21 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension InboxesMethods {
-    /// Retrieves a specific email from an inbox thread. Use the inbox, thread, and email identifiers to select the
-    /// message whose details you need.
+extension InboxesMethods {
+    /// Retrieves a specific email from an inbox thread. Use the inbox, thread, and email identifiers to select the message whose details you need.
     ///
     /// - Parameters:
     /// - inboxId: The Inbox ID. An email address is not accepted.
     /// - threadId: The Thread ID.
     /// - emailId: The Email ID, as returned in `data[].id` by the list thread
     ///   emails endpoint.
-    static func inboxesGetThreadEmail(
-        config: ClientConfig,
-        inboxId: String,
-        threadId: String,
-        emailId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> InboxThreadEmail {
+    public static func inboxesGetThreadEmail(config: ClientConfig, inboxId: String, threadId: String, emailId: String, requestOptions: RequestOptions? = nil) async throws -> InboxThreadEmail {
         try sdkValidateUuid("inbox_id", inboxId)
 
         try sdkValidateUuid("thread_id", threadId)
 
         try sdkValidateUuid("email_id", emailId)
 
-        return try await (sdkRequest(
-            "GET",
-            [
-                "/inboxes/",
-                sdkEncodePathSegment(sdkWireString(inboxId)),
-                "/threads/",
-                sdkEncodePathSegment(sdkWireString(threadId)),
-                "/emails/",
-                sdkEncodePathSegment(sdkWireString(emailId)),
-            ].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "inboxesGetThreadEmail",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("GET", ["/inboxes/", sdkEncodePathSegment(sdkWireString(inboxId)), "/threads/", sdkEncodePathSegment(sdkWireString(threadId)), "/emails/", sdkEncodePathSegment(sdkWireString(emailId))].joined(), config: config, decoder: .json, operationId: "inboxesGetThreadEmail", options: requestOptions)).data
     }
 }

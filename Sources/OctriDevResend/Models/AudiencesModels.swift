@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Audiences domain models
+// Audiences domain models
 /// Typed representation of the `GetAudienceResponseSuccess` API schema.
 public struct GetAudienceResponseSuccess: Codable {
     /// The ID of the audience.
@@ -27,22 +27,22 @@ public struct GetAudienceResponseSuccess: Codable {
     }
 
     init() {
-        (id, object, name, createdAt) = (nil, nil, nil, nil)
+        (self.id, self.object, self.name, self.createdAt) = (nil, nil, nil, nil)
     }
 }
 
-public extension GetAudienceResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension GetAudienceResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        object = try container.sdkDecodeIfPresent(.object)
-        name = try container.sdkDecodeIfPresent(.name)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
     }
 }
 
-public extension GetAudienceResponseSuccess {
-    init(id: String? = nil, object: String? = nil, name: String? = nil, createdAt: String? = nil) {
+extension GetAudienceResponseSuccess {
+    public init(id: String? = nil, object: String? = nil, name: String? = nil, createdAt: String? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
         (self.name, self.createdAt) = (name, createdAt)
@@ -58,27 +58,21 @@ public struct CreateAudienceOptions: Codable {
         case name
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateAudienceOptions {
-    init(from decoder: Decoder) throws {
+extension CreateAudienceOptions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
+        self.name = try container.sdkDecodeRequired(.name)
     }
 }
 
-public extension CreateAudienceOptions {
-    init(name: String) {
+extension CreateAudienceOptions {
+    public init(name: String) {
         self.name = name
     }
 }
@@ -102,21 +96,21 @@ public struct ListAudiencesResponseSuccessDataItem: Codable {
     }
 
     init() {
-        (id, name, createdAt) = (nil, nil, nil)
+        (self.id, self.name, self.createdAt) = (nil, nil, nil)
     }
 }
 
-public extension ListAudiencesResponseSuccessDataItem {
-    init(from decoder: Decoder) throws {
+extension ListAudiencesResponseSuccessDataItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
     }
 }
 
-public extension ListAudiencesResponseSuccessDataItem {
-    init(id: String? = nil, name: String? = nil, createdAt: String? = nil) {
+extension ListAudiencesResponseSuccessDataItem {
+    public init(id: String? = nil, name: String? = nil, createdAt: String? = nil) {
         self.init()
         (self.id, self.name) = (id, name)
         self.createdAt = createdAt
@@ -142,21 +136,21 @@ public struct CreateAudienceResponseSuccess: Codable {
     }
 
     init() {
-        (id, object, name) = (nil, nil, nil)
+        (self.id, self.object, self.name) = (nil, nil, nil)
     }
 }
 
-public extension CreateAudienceResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension CreateAudienceResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        object = try container.sdkDecodeIfPresent(.object)
-        name = try container.sdkDecodeIfPresent(.name)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-public extension CreateAudienceResponseSuccess {
-    init(id: String? = nil, object: String? = nil, name: String? = nil) {
+extension CreateAudienceResponseSuccess {
+    public init(id: String? = nil, object: String? = nil, name: String? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
         self.name = name
@@ -182,21 +176,21 @@ public struct RemoveAudienceResponseSuccess: Codable {
     }
 
     init() {
-        (id, object, deleted) = (nil, nil, nil)
+        (self.id, self.object, self.deleted) = (nil, nil, nil)
     }
 }
 
-public extension RemoveAudienceResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension RemoveAudienceResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        object = try container.sdkDecodeIfPresent(.object)
-        deleted = try container.sdkDecodeIfPresent(.deleted)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-public extension RemoveAudienceResponseSuccess {
-    init(id: String? = nil, object: String? = nil, deleted: Bool? = nil) {
+extension RemoveAudienceResponseSuccess {
+    public init(id: String? = nil, object: String? = nil, deleted: Bool? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
         self.deleted = deleted
@@ -217,20 +211,20 @@ public struct ListAudiencesResponseSuccess: Codable {
     }
 
     init() {
-        (object, data) = (nil, nil)
+        (self.object, self.data) = (nil, nil)
     }
 }
 
-public extension ListAudiencesResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension ListAudiencesResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension ListAudiencesResponseSuccess {
-    init(object: String? = nil, data: [ListAudiencesResponseSuccessDataItem]? = nil) {
+extension ListAudiencesResponseSuccess {
+    public init(object: String? = nil, data: [ListAudiencesResponseSuccessDataItem]? = nil) {
         self.init()
         (self.object, self.data) = (object, data)
     }

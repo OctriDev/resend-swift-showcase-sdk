@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension BroadcastsMethods {
-    struct BroadcastsUpdateOptions: Codable {
+extension BroadcastsMethods {
+    public struct BroadcastsUpdateOptions: Codable {
         public var id: String
         public var name: String?
         public var audienceId: String?
@@ -25,8 +25,7 @@ public extension BroadcastsMethods {
         }
     }
 
-    /// Updates the name, audience, sender, content, or topic of an existing broadcast. Supply only the fields you want
-    /// to change; use `segment_id` instead of the deprecated `audience_id` field.
+    /// Updates the name, audience, sender, content, or topic of an existing broadcast. Supply only the fields you want to change; use `segment_id` instead of the deprecated `audience_id` field.
     ///
     /// - Parameters:
     /// - id: The Broadcast ID.
@@ -42,21 +41,9 @@ public extension BroadcastsMethods {
     /// - html: The HTML version of the message.
     /// - text: The plain text version of the message.
     /// - topicId: The topic ID that the broadcast will be scoped to.
-    static func broadcastsUpdate(
-        config: ClientConfig,
-        options: BroadcastsUpdateOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> UpdateBroadcastResponseSuccess {
+    public static func broadcastsUpdate(config: ClientConfig, options: BroadcastsUpdateOptions, requestOptions: RequestOptions? = nil) async throws -> UpdateBroadcastResponseSuccess {
         let requestBody = BroadcastsUpdateRequestBody(options: options)
 
-        return try await (sdkRequest(
-            "PATCH",
-            ["/broadcasts/", sdkEncodePathSegment(sdkWireString(options.id))].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "broadcastsUpdate",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("PATCH", ["/broadcasts/", sdkEncodePathSegment(sdkWireString(options.id))].joined(), config: config, body: requestBody, decoder: .json, operationId: "broadcastsUpdate", options: requestOptions)).data
     }
 }

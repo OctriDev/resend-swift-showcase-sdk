@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Templates domain models
+// Templates domain models
 /// Typed representation of the `Template` API schema.
 public struct Template: Codable {
     /// The type of object.
@@ -63,54 +63,37 @@ public struct Template: Codable {
     }
 
     init() {
-        (object, id, currentVersionId, name, alias) = (nil, nil, nil, nil, nil)
-        (from, subject, replyTo, html, text) = (nil, nil, nil, nil, nil)
-        (variables, createdAt, updatedAt, status, publishedAt) = (nil, nil, nil, nil, nil)
-        hasUnpublishedVersions = nil
+        (self.object, self.id, self.currentVersionId, self.name, self.alias) = (nil, nil, nil, nil, nil)
+        (self.from, self.subject, self.replyTo, self.html, self.text) = (nil, nil, nil, nil, nil)
+        (self.variables, self.createdAt, self.updatedAt, self.status, self.publishedAt) = (nil, nil, nil, nil, nil)
+        self.hasUnpublishedVersions = nil
     }
 }
 
-public extension Template {
-    init(from decoder: Decoder) throws {
+extension Template {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        id = try container.sdkDecodeIfPresent(.id)
-        currentVersionId = try container.sdkDecodeIfPresent(.currentVersionId)
-        name = try container.sdkDecodeIfPresent(.name)
-        alias = try container.sdkDecodeIfPresent(.alias)
-        from = try container.sdkDecodeIfPresent(.from)
-        subject = try container.sdkDecodeIfPresent(.subject)
-        replyTo = try container.sdkDecodeIfPresent(.replyTo)
-        html = try container.sdkDecodeIfPresent(.html)
-        text = try container.sdkDecodeIfPresent(.text)
-        variables = try container.sdkDecodeIfPresent(.variables)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        status = try container.sdkDecodeIfPresent(.status)
-        publishedAt = try container.sdkDecodeIfPresent(.publishedAt)
-        hasUnpublishedVersions = try container.sdkDecodeIfPresent(.hasUnpublishedVersions)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.currentVersionId = try container.sdkDecodeIfPresent(.currentVersionId)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.alias = try container.sdkDecodeIfPresent(.alias)
+        self.from = try container.sdkDecodeIfPresent(.from)
+        self.subject = try container.sdkDecodeIfPresent(.subject)
+        self.replyTo = try container.sdkDecodeIfPresent(.replyTo)
+        self.html = try container.sdkDecodeIfPresent(.html)
+        self.text = try container.sdkDecodeIfPresent(.text)
+        self.variables = try container.sdkDecodeIfPresent(.variables)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.publishedAt = try container.sdkDecodeIfPresent(.publishedAt)
+        self.hasUnpublishedVersions = try container.sdkDecodeIfPresent(.hasUnpublishedVersions)
     }
 }
 
-public extension Template {
-    init(
-        object: String? = nil,
-        id: String? = nil,
-        currentVersionId: String? = nil,
-        name: String? = nil,
-        alias: String? = nil,
-        from: String? = nil,
-        subject: String? = nil,
-        replyTo: [String]? = nil,
-        html: String? = nil,
-        text: String? = nil,
-        variables: [TemplateVariable]? = nil,
-        createdAt: String? = nil,
-        updatedAt: String? = nil,
-        status: TemplateStatus? = nil,
-        publishedAt: String? = nil,
-        hasUnpublishedVersions: Bool? = nil
-    ) {
+extension Template {
+    public init(object: String? = nil, id: String? = nil, currentVersionId: String? = nil, name: String? = nil, alias: String? = nil, from: String? = nil, subject: String? = nil, replyTo: [String]? = nil, html: String? = nil, text: String? = nil, variables: [TemplateVariable]? = nil, createdAt: String? = nil, updatedAt: String? = nil, status: TemplateStatus? = nil, publishedAt: String? = nil, hasUnpublishedVersions: Bool? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
         (self.currentVersionId, self.name) = (currentVersionId, name)
@@ -132,41 +115,25 @@ public indirect enum TemplateVariableFallbackValue {
 }
 
 extension TemplateVariableFallbackValue: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for TemplateVariableFallbackValue"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for TemplateVariableFallbackValue")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension TemplateVariableFallbackValue {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) {
-            return .stringValue(value)
-        }
-        if let value = try? container.decode(Double.self) {
-            return .doubleValue(value)
-        }
-        if let value = try? container.decode(Bool.self) {
-            return .boolValue(value)
-        }
-        if let value = try? container.decode([String: JSONValue].self) {
-            return .jsonValue(value)
-        }
-        if let value = try? container.decode([JSONValue].self) {
-            return .jSonValueList(value)
-        }
+        if let value = try? container.decode(String.self) { return .stringValue(value) }
+        if let value = try? container.decode(Double.self) { return .doubleValue(value) }
+        if let value = try? container.decode(Bool.self) { return .boolValue(value) }
+        if let value = try? container.decode([String: JSONValue].self) { return .jsonValue(value) }
+        if let value = try? container.decode([JSONValue].self) { return .jSonValueList(value) }
         return nil
     }
 }
@@ -197,10 +164,7 @@ extension TemplateVariableFallbackValue: SdkNumericValueConvertible {
 public struct TemplateVariableInputType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let string = TemplateVariableInputType(rawValue: "string")
     public static let number = TemplateVariableInputType(rawValue: "number")
     public static let boolean = TemplateVariableInputType(rawValue: "boolean")
@@ -209,7 +173,7 @@ public struct TemplateVariableInputType: RawRepresentable, Hashable, Codable, Se
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -222,16 +186,13 @@ public struct TemplateVariableInputType: RawRepresentable, Hashable, Codable, Se
 public struct TemplateStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let draft = TemplateStatus(rawValue: "draft")
     public static let published = TemplateStatus(rawValue: "published")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -244,16 +205,13 @@ public struct TemplateStatus: RawRepresentable, Hashable, Codable, Sendable, Sdk
 public struct TemplateListItemStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let draft = TemplateListItemStatus(rawValue: "draft")
     public static let published = TemplateListItemStatus(rawValue: "published")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -266,10 +224,7 @@ public struct TemplateListItemStatus: RawRepresentable, Hashable, Codable, Senda
 public struct TemplateVariableType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let string = TemplateVariableType(rawValue: "string")
     public static let number = TemplateVariableType(rawValue: "number")
     public static let boolean = TemplateVariableType(rawValue: "boolean")
@@ -278,7 +233,7 @@ public struct TemplateVariableType: RawRepresentable, Hashable, Codable, Sendabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

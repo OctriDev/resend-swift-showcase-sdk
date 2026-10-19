@@ -6,9 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ContactsMethods {
-    /// Creates a contact import from a CSV file. Include the file and optionally provide a column mapping, conflict
-    /// strategy, segments, or topic subscriptions for imported contacts.
+extension ContactsMethods {
+    /// Creates a contact import from a CSV file. Include the file and optionally provide a column mapping, conflict strategy, segments, or topic subscriptions for imported contacts.
     ///
     /// - Parameters:
     /// - file: CSV file to import. Maximum size is 50MB.
@@ -20,64 +19,39 @@ public extension ContactsMethods {
     /// - segments: JSON-encoded array of segments to add imported contacts to.
     /// - topics: JSON-encoded array of topic subscriptions to apply to imported
     ///   contacts. Each `subscription` must be `opt_in` or `opt_out`.
-    static func contactsCreateImport(
-        config: ClientConfig,
-        file: SdkUploadFile,
-        columnMap: String? = nil,
-        onConflict: CreateContactImportOptionsOnConflict? = nil,
-        segments: String? = nil,
-        topics: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> CreateContactImportResponseSuccess {
+    public static func contactsCreateImport(config: ClientConfig, file: SdkUploadFile, columnMap: String? = nil, onConflict: CreateContactImportOptionsOnConflict? = nil, segments: String? = nil, topics: String? = nil, requestOptions: RequestOptions? = nil) async throws -> CreateContactImportResponseSuccess {
         var multipartParts: [SdkMultipartField] = []
         multipartParts.append(.file("file", file))
-        if let columnMap {
+        if let columnMap = columnMap {
             multipartParts.append(.scalar("column_map", columnMap))
         }
-        if let onConflict {
+        if let onConflict = onConflict {
             multipartParts.append(.scalar("on_conflict", onConflict))
         }
-        if let segments {
+        if let segments = segments {
             multipartParts.append(.scalar("segments", segments))
         }
-        if let topics {
+        if let topics = topics {
             multipartParts.append(.scalar("topics", topics))
         }
         let multipart = sdkEncodeMultipart(multipartParts)
 
-        return try await (sdkRequest(
-            "POST",
-            "/contacts/imports",
-            config: config,
-            rawBody: multipart.data,
-            contentType: multipart.contentType,
-            decoder: .json,
-            operationId: "contactsCreateImport",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("POST", "/contacts/imports", config: config, rawBody: multipart.data, contentType: multipart.contentType, decoder: .json, operationId: "contactsCreateImport", options: requestOptions)).data
     }
 
-    /// Lists contact imports and their processing information. Use `status` to filter by import state, and `after` or
-    /// `before` to navigate results by cursor.
+    /// Lists contact imports and their processing information. Use `status` to filter by import state, and `after` or `before` to navigate results by cursor.
     ///
     /// - Parameters:
     /// - status: Filter contact imports by status.
     /// - limit: Number of items to return.
     /// - after: Return items after this cursor.
     /// - before: Return items before this cursor.
-    static func contactsListImports(
-        config: ClientConfig,
-        status: ContactsListImportsParameter? = nil,
-        limit: Int? = nil,
-        after: String? = nil,
-        before: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ListContactImportsResponseSuccess {
-        if let limit {
+    public static func contactsListImports(config: ClientConfig, status: ContactsListImportsParameter? = nil, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListContactImportsResponseSuccess {
+        if let limit = limit {
             try validateRange("limit", Double(limit), min: 1, max: 100)
         }
 
-        return try await (sdkRequest("GET", "/contacts/imports", config: config, query: [
+        return try (await sdkRequest("GET", "/contacts/imports", config: config, query: [
             SdkQueryParameter("status", value: status),
             SdkQueryParameter("limit", value: limit),
             SdkQueryParameter("after", value: after),
