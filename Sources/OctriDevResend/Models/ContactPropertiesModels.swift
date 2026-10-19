@@ -3,29 +3,39 @@
 
 import Foundation
 
-// ContactProperties domain models
+/// ContactProperties domain models
 public indirect enum ListContactPropertiesResponseSuccessDataItemFallbackValue {
     case stringValue(String)
     case doubleValue(Double)
 }
 
 extension ListContactPropertiesResponseSuccessDataItemFallbackValue: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for ListContactPropertiesResponseSuccessDataItemFallbackValue")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for ListContactPropertiesResponseSuccessDataItemFallbackValue"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension ListContactPropertiesResponseSuccessDataItemFallbackValue {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode(Double.self) { return .doubleValue(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode(Double.self) {
+            return .doubleValue(value)
+        }
         return nil
     }
 }
@@ -80,25 +90,32 @@ public struct GetContactPropertyResponseSuccess: Codable {
     }
 
     init() {
-        (self.object, self.id, self.key, self.type, self.fallbackValue) = (nil, nil, nil, nil, nil)
-        self.createdAt = nil
+        (object, id, key, type, fallbackValue) = (nil, nil, nil, nil, nil)
+        createdAt = nil
     }
 }
 
-extension GetContactPropertyResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension GetContactPropertyResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.key = try container.sdkDecodeIfPresent(.key)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.fallbackValue = try container.sdkDecodeIfPresent(.fallbackValue)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        key = try container.sdkDecodeIfPresent(.key)
+        type = try container.sdkDecodeIfPresent(.type)
+        fallbackValue = try container.sdkDecodeIfPresent(.fallbackValue)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
     }
 }
 
-extension GetContactPropertyResponseSuccess {
-    public init(object: String? = nil, id: String? = nil, key: String? = nil, type: String? = nil, fallbackValue: GetContactPropertyResponseSuccessFallbackValue? = nil, createdAt: String? = nil) {
+public extension GetContactPropertyResponseSuccess {
+    init(
+        object: String? = nil,
+        id: String? = nil,
+        key: String? = nil,
+        type: String? = nil,
+        fallbackValue: GetContactPropertyResponseSuccessFallbackValue? = nil,
+        createdAt: String? = nil
+    ) {
         self.init()
         (self.object, self.id) = (object, id)
         (self.key, self.type) = (key, type)
@@ -112,22 +129,32 @@ public indirect enum UpdateContactPropertyOptionsFallbackValue {
 }
 
 extension UpdateContactPropertyOptionsFallbackValue: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for UpdateContactPropertyOptionsFallbackValue")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for UpdateContactPropertyOptionsFallbackValue"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension UpdateContactPropertyOptionsFallbackValue {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode(Double.self) { return .doubleValue(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode(Double.self) {
+            return .doubleValue(value)
+        }
         return nil
     }
 }
@@ -174,23 +201,29 @@ public struct ListContactPropertiesResponseSuccessDataItem: Codable {
     }
 
     init() {
-        (self.id, self.key, self.type, self.fallbackValue, self.createdAt) = (nil, nil, nil, nil, nil)
+        (id, key, type, fallbackValue, createdAt) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension ListContactPropertiesResponseSuccessDataItem {
-    public init(from decoder: Decoder) throws {
+public extension ListContactPropertiesResponseSuccessDataItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.key = try container.sdkDecodeIfPresent(.key)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.fallbackValue = try container.sdkDecodeIfPresent(.fallbackValue)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        id = try container.sdkDecodeIfPresent(.id)
+        key = try container.sdkDecodeIfPresent(.key)
+        type = try container.sdkDecodeIfPresent(.type)
+        fallbackValue = try container.sdkDecodeIfPresent(.fallbackValue)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
     }
 }
 
-extension ListContactPropertiesResponseSuccessDataItem {
-    public init(id: String? = nil, key: String? = nil, type: String? = nil, fallbackValue: ListContactPropertiesResponseSuccessDataItemFallbackValue? = nil, createdAt: String? = nil) {
+public extension ListContactPropertiesResponseSuccessDataItem {
+    init(
+        id: String? = nil,
+        key: String? = nil,
+        type: String? = nil,
+        fallbackValue: ListContactPropertiesResponseSuccessDataItemFallbackValue? = nil,
+        createdAt: String? = nil
+    ) {
         self.init()
         (self.id, self.key) = (id, key)
         (self.type, self.fallbackValue) = (type, fallbackValue)
@@ -213,20 +246,20 @@ public struct CreateContactPropertyResponseSuccess: Codable {
     }
 
     init() {
-        (self.id, self.object) = (nil, nil)
+        (id, object) = (nil, nil)
     }
 }
 
-extension CreateContactPropertyResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension CreateContactPropertyResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
     }
 }
 
-extension CreateContactPropertyResponseSuccess {
-    public init(id: String? = nil, object: String? = nil) {
+public extension CreateContactPropertyResponseSuccess {
+    init(id: String? = nil, object: String? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
     }
@@ -238,22 +271,32 @@ public indirect enum GetContactPropertyResponseSuccessFallbackValue {
 }
 
 extension GetContactPropertyResponseSuccessFallbackValue: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for GetContactPropertyResponseSuccessFallbackValue")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for GetContactPropertyResponseSuccessFallbackValue"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension GetContactPropertyResponseSuccessFallbackValue {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode(Double.self) { return .doubleValue(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode(Double.self) {
+            return .doubleValue(value)
+        }
         return nil
     }
 }
@@ -287,19 +330,19 @@ public struct UpdateContactPropertyOptions: Codable {
     }
 
     init() {
-        self.fallbackValue = nil
+        fallbackValue = nil
     }
 }
 
-extension UpdateContactPropertyOptions {
-    public init(from decoder: Decoder) throws {
+public extension UpdateContactPropertyOptions {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.fallbackValue = try container.sdkDecodeIfPresent(.fallbackValue)
+        fallbackValue = try container.sdkDecodeIfPresent(.fallbackValue)
     }
 }
 
-extension UpdateContactPropertyOptions {
-    public init(fallbackValue: UpdateContactPropertyOptionsFallbackValue? = nil) {
+public extension UpdateContactPropertyOptions {
+    init(fallbackValue: UpdateContactPropertyOptionsFallbackValue? = nil) {
         self.init()
         self.fallbackValue = fallbackValue
     }
@@ -324,21 +367,21 @@ public struct RemoveContactPropertyResponseSuccess: Codable {
     }
 
     init() {
-        (self.id, self.object, self.deleted) = (nil, nil, nil)
+        (id, object, deleted) = (nil, nil, nil)
     }
 }
 
-extension RemoveContactPropertyResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension RemoveContactPropertyResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.deleted = try container.sdkDecodeIfPresent(.deleted)
+        id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
+        deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-extension RemoveContactPropertyResponseSuccess {
-    public init(id: String? = nil, object: String? = nil, deleted: Bool? = nil) {
+public extension RemoveContactPropertyResponseSuccess {
+    init(id: String? = nil, object: String? = nil, deleted: Bool? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
         self.deleted = deleted
@@ -351,22 +394,32 @@ public indirect enum CreateContactPropertyOptionsFallbackValue {
 }
 
 extension CreateContactPropertyOptionsFallbackValue: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for CreateContactPropertyOptionsFallbackValue")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for CreateContactPropertyOptionsFallbackValue"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension CreateContactPropertyOptionsFallbackValue {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode(Double.self) { return .doubleValue(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode(Double.self) {
+            return .doubleValue(value)
+        }
         return nil
     }
 }
@@ -407,21 +460,21 @@ public struct ListContactPropertiesResponseSuccess: Codable {
     }
 
     init() {
-        (self.object, self.hasMore, self.data) = (nil, nil, nil)
+        (object, hasMore, data) = (nil, nil, nil)
     }
 }
 
-extension ListContactPropertiesResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension ListContactPropertiesResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        object = try container.sdkDecodeIfPresent(.object)
+        hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension ListContactPropertiesResponseSuccess {
-    public init(object: String? = nil, hasMore: Bool? = nil, data: [ListContactPropertiesResponseSuccessDataItem]? = nil) {
+public extension ListContactPropertiesResponseSuccess {
+    init(object: String? = nil, hasMore: Bool? = nil, data: [ListContactPropertiesResponseSuccessDataItem]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -443,20 +496,20 @@ public struct UpdateContactPropertyResponseSuccess: Codable {
     }
 
     init() {
-        (self.id, self.object) = (nil, nil)
+        (id, object) = (nil, nil)
     }
 }
 
-extension UpdateContactPropertyResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension UpdateContactPropertyResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
     }
 }
 
-extension UpdateContactPropertyResponseSuccess {
-    public init(id: String? = nil, object: String? = nil) {
+public extension UpdateContactPropertyResponseSuccess {
+    init(id: String? = nil, object: String? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
     }
@@ -478,26 +531,40 @@ public struct CreateContactPropertyOptions: Codable {
         case fallbackValue = "fallback_value"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateContactPropertyOptions {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.key) else {
-            throw SdkValidationError(field: "key", code: "required", message: "Validation failed for 'key': value is required")
-        }
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        self.key = try container.sdkDecodeRequired(.key)
-        self.type = try container.sdkDecodeRequired(.type)
-        self.fallbackValue = try container.sdkDecodeIfPresent(.fallbackValue)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateContactPropertyOptions {
-    public init(key: String, type: CreateContactPropertyOptionsType, fallbackValue: CreateContactPropertyOptionsFallbackValue? = nil) {
+public extension CreateContactPropertyOptions {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.key) else {
+            throw SdkValidationError(
+                field: "key",
+                code: "required",
+                message: "Validation failed for 'key': value is required"
+            )
+        }
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        key = try container.sdkDecodeRequired(.key)
+        type = try container.sdkDecodeRequired(.type)
+        fallbackValue = try container.sdkDecodeIfPresent(.fallbackValue)
+    }
+}
+
+public extension CreateContactPropertyOptions {
+    init(
+        key: String,
+        type: CreateContactPropertyOptionsType,
+        fallbackValue: CreateContactPropertyOptionsFallbackValue? = nil
+    ) {
         (self.key, self.type) = (key, type)
         self.fallbackValue = fallbackValue
     }
@@ -507,13 +574,16 @@ extension CreateContactPropertyOptions {
 public struct CreateContactPropertyOptionsType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let string = CreateContactPropertyOptionsType(rawValue: "string")
     public static let number = CreateContactPropertyOptionsType(rawValue: "number")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

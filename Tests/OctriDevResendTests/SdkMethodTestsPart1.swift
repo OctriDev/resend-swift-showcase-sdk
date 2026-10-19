@@ -353,7 +353,11 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try BroadcastsMethods.BroadcastsCreateOptions(segmentId: decoded("\"segment-1\""), from: decoded("\"user@example.com\""), subject: decoded("\"subject\""))
+        var options = try BroadcastsMethods.BroadcastsCreateOptions(
+            segmentId: decoded("\"segment-1\""),
+            from: decoded("\"user@example.com\""),
+            subject: decoded("\"subject\"")
+        )
         options.name = try decoded("\"Example Name\"")
         options.audienceId = try decoded("\"audience-1\"")
         options.replyTo = try decoded("[\"reply_to\"]")

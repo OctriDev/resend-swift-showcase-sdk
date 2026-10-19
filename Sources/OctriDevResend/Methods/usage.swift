@@ -7,10 +7,21 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum UsageMethods {
-    /// Retrieves current account usage and plan limits. Use the response to review consumption and limits across email, contacts, segments, broadcasts, AI credits, automation runs, domains, and rate limits.
+    /// Retrieves current account usage and plan limits. Use the response to review consumption and limits across email,
+    /// contacts, segments, broadcasts, AI credits, automation runs, domains, and rate limits.
     ///
     /// Retrieve your account's current usage and plan limits.
-    public static func usageGet(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> GetUsageResponseSuccess {
-        return try (await sdkRequest("GET", "/usage", config: config, decoder: .json, operationId: "usageGet", options: requestOptions)).data
+    public static func usageGet(
+        config: ClientConfig,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GetUsageResponseSuccess {
+        try await (sdkRequest(
+            "GET",
+            "/usage",
+            config: config,
+            decoder: .json,
+            operationId: "usageGet",
+            options: requestOptions
+        )).data
     }
 }

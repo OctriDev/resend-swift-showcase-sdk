@@ -3,7 +3,7 @@
 
 import Foundation
 
-// InboxesList domain models
+/// InboxesList domain models
 /// Typed representation of the `ListInboxThreadsResponseSuccess` API schema.
 public struct ListInboxThreadsResponseSuccess: Codable {
     /// Type of the response object.
@@ -21,29 +21,43 @@ public struct ListInboxThreadsResponseSuccess: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ListInboxThreadsResponseSuccess {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.object) else {
-            throw SdkValidationError(field: "object", code: "required", message: "Validation failed for 'object': value is required")
-        }
-        guard container.contains(.hasMore) else {
-            throw SdkValidationError(field: "has_more", code: "required", message: "Validation failed for 'has_more': value is required")
-        }
-        guard container.contains(.data) else {
-            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
-        }
-        self.object = try container.sdkDecodeRequired(.object)
-        self.hasMore = try container.sdkDecodeRequired(.hasMore)
-        self.data = try container.sdkDecodeRequired(.data)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ListInboxThreadsResponseSuccess {
-    public init(object: String, hasMore: Bool, data: [InboxThread]) {
+public extension ListInboxThreadsResponseSuccess {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.object) else {
+            throw SdkValidationError(
+                field: "object",
+                code: "required",
+                message: "Validation failed for 'object': value is required"
+            )
+        }
+        guard container.contains(.hasMore) else {
+            throw SdkValidationError(
+                field: "has_more",
+                code: "required",
+                message: "Validation failed for 'has_more': value is required"
+            )
+        }
+        guard container.contains(.data) else {
+            throw SdkValidationError(
+                field: "data",
+                code: "required",
+                message: "Validation failed for 'data': value is required"
+            )
+        }
+        object = try container.sdkDecodeRequired(.object)
+        hasMore = try container.sdkDecodeRequired(.hasMore)
+        data = try container.sdkDecodeRequired(.data)
+    }
+}
+
+public extension ListInboxThreadsResponseSuccess {
+    init(object: String, hasMore: Bool, data: [InboxThread]) {
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
     }
@@ -65,29 +79,43 @@ public struct ListInboxesResponseSuccess: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ListInboxesResponseSuccess {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.object) else {
-            throw SdkValidationError(field: "object", code: "required", message: "Validation failed for 'object': value is required")
-        }
-        guard container.contains(.hasMore) else {
-            throw SdkValidationError(field: "has_more", code: "required", message: "Validation failed for 'has_more': value is required")
-        }
-        guard container.contains(.data) else {
-            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
-        }
-        self.object = try container.sdkDecodeRequired(.object)
-        self.hasMore = try container.sdkDecodeRequired(.hasMore)
-        self.data = try container.sdkDecodeRequired(.data)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ListInboxesResponseSuccess {
-    public init(object: String, hasMore: Bool, data: [ListInboxesResponseSuccessDataItem]) {
+public extension ListInboxesResponseSuccess {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.object) else {
+            throw SdkValidationError(
+                field: "object",
+                code: "required",
+                message: "Validation failed for 'object': value is required"
+            )
+        }
+        guard container.contains(.hasMore) else {
+            throw SdkValidationError(
+                field: "has_more",
+                code: "required",
+                message: "Validation failed for 'has_more': value is required"
+            )
+        }
+        guard container.contains(.data) else {
+            throw SdkValidationError(
+                field: "data",
+                code: "required",
+                message: "Validation failed for 'data': value is required"
+            )
+        }
+        object = try container.sdkDecodeRequired(.object)
+        hasMore = try container.sdkDecodeRequired(.hasMore)
+        data = try container.sdkDecodeRequired(.data)
+    }
+}
+
+public extension ListInboxesResponseSuccess {
+    init(object: String, hasMore: Bool, data: [ListInboxesResponseSuccessDataItem]) {
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
     }
@@ -106,25 +134,35 @@ public struct ListInboxLabelsResponseSuccess: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ListInboxLabelsResponseSuccess {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.object) else {
-            throw SdkValidationError(field: "object", code: "required", message: "Validation failed for 'object': value is required")
-        }
-        guard container.contains(.data) else {
-            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
-        }
-        self.object = try container.sdkDecodeRequired(.object)
-        self.data = try container.sdkDecodeRequired(.data)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ListInboxLabelsResponseSuccess {
-    public init(object: String, data: [InboxLabel]) {
+public extension ListInboxLabelsResponseSuccess {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.object) else {
+            throw SdkValidationError(
+                field: "object",
+                code: "required",
+                message: "Validation failed for 'object': value is required"
+            )
+        }
+        guard container.contains(.data) else {
+            throw SdkValidationError(
+                field: "data",
+                code: "required",
+                message: "Validation failed for 'data': value is required"
+            )
+        }
+        object = try container.sdkDecodeRequired(.object)
+        data = try container.sdkDecodeRequired(.data)
+    }
+}
+
+public extension ListInboxLabelsResponseSuccess {
+    init(object: String, data: [InboxLabel]) {
         (self.object, self.data) = (object, data)
     }
 }
@@ -145,29 +183,43 @@ public struct ListInboxThreadEmailsResponseSuccess: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ListInboxThreadEmailsResponseSuccess {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.object) else {
-            throw SdkValidationError(field: "object", code: "required", message: "Validation failed for 'object': value is required")
-        }
-        guard container.contains(.hasMore) else {
-            throw SdkValidationError(field: "has_more", code: "required", message: "Validation failed for 'has_more': value is required")
-        }
-        guard container.contains(.data) else {
-            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
-        }
-        self.object = try container.sdkDecodeRequired(.object)
-        self.hasMore = try container.sdkDecodeRequired(.hasMore)
-        self.data = try container.sdkDecodeRequired(.data)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ListInboxThreadEmailsResponseSuccess {
-    public init(object: String, hasMore: Bool, data: [InboxThreadEmail]) {
+public extension ListInboxThreadEmailsResponseSuccess {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.object) else {
+            throw SdkValidationError(
+                field: "object",
+                code: "required",
+                message: "Validation failed for 'object': value is required"
+            )
+        }
+        guard container.contains(.hasMore) else {
+            throw SdkValidationError(
+                field: "has_more",
+                code: "required",
+                message: "Validation failed for 'has_more': value is required"
+            )
+        }
+        guard container.contains(.data) else {
+            throw SdkValidationError(
+                field: "data",
+                code: "required",
+                message: "Validation failed for 'data': value is required"
+            )
+        }
+        object = try container.sdkDecodeRequired(.object)
+        hasMore = try container.sdkDecodeRequired(.hasMore)
+        data = try container.sdkDecodeRequired(.data)
+    }
+}
+
+public extension ListInboxThreadEmailsResponseSuccess {
+    init(object: String, hasMore: Bool, data: [InboxThreadEmail]) {
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
     }
@@ -204,49 +256,75 @@ public struct ListInboxesResponseSuccessDataItem: Codable {
         case lastReceived = "last_received"
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension ListInboxesResponseSuccessDataItem {
-    public init(from decoder: Decoder) throws {
+public extension ListInboxesResponseSuccessDataItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
         }
         guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
         }
         guard container.contains(.emailAddress) else {
-            throw SdkValidationError(field: "email_address", code: "required", message: "Validation failed for 'email_address': value is required")
+            throw SdkValidationError(
+                field: "email_address",
+                code: "required",
+                message: "Validation failed for 'email_address': value is required"
+            )
         }
         guard container.contains(.fromName) else {
-            throw SdkValidationError(field: "from_name", code: "required", message: "Validation failed for 'from_name': value is required")
+            throw SdkValidationError(
+                field: "from_name",
+                code: "required",
+                message: "Validation failed for 'from_name': value is required"
+            )
         }
         guard container.contains(.unread) else {
-            throw SdkValidationError(field: "unread", code: "required", message: "Validation failed for 'unread': value is required")
+            throw SdkValidationError(
+                field: "unread",
+                code: "required",
+                message: "Validation failed for 'unread': value is required"
+            )
         }
         guard container.contains(.lastReceived) else {
-            throw SdkValidationError(field: "last_received", code: "required", message: "Validation failed for 'last_received': value is required")
+            throw SdkValidationError(
+                field: "last_received",
+                code: "required",
+                message: "Validation failed for 'last_received': value is required"
+            )
         }
-        self.id = try container.sdkDecodeRequired(.id)
-        self.name = try container.sdkDecodeNullable(.name)
-        self.emailAddress = try container.sdkDecodeRequired(.emailAddress)
-        self.fromName = try container.sdkDecodeNullable(.fromName)
-        self.unread = try container.sdkDecodeRequired(.unread)
-        self.lastReceived = try container.sdkDecodeNullable(.lastReceived)
-            try sdkValidateUuid("id", self.id)
-        if let value = self.lastReceived {
+        id = try container.sdkDecodeRequired(.id)
+        name = try container.sdkDecodeNullable(.name)
+        emailAddress = try container.sdkDecodeRequired(.emailAddress)
+        fromName = try container.sdkDecodeNullable(.fromName)
+        unread = try container.sdkDecodeRequired(.unread)
+        lastReceived = try container.sdkDecodeNullable(.lastReceived)
+        try sdkValidateUuid("id", id)
+        if let value = lastReceived {
             try sdkValidateDateTime("last_received", sdkWireString(value))
         }
     }
 }
 
-extension ListInboxesResponseSuccessDataItem {
-    public init(id: String, name: String?, emailAddress: String, fromName: String?, unread: Int, lastReceived: Date?) throws {
+public extension ListInboxesResponseSuccessDataItem {
+    init(id: String, name: String?, emailAddress: String, fromName: String?, unread: Int, lastReceived: Date?) throws {
         (self.id, self.name) = (id, name)
         (self.emailAddress, self.fromName) = (emailAddress, fromName)
         (self.unread, self.lastReceived) = (unread, lastReceived)
-            try sdkValidateUuid("id", self.id)
+        try sdkValidateUuid("id", self.id)
         if let value = self.lastReceived {
             try sdkValidateDateTime("last_received", sdkWireString(value))
         }
@@ -269,29 +347,43 @@ public struct ListInboxDraftsResponseSuccess: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ListInboxDraftsResponseSuccess {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.object) else {
-            throw SdkValidationError(field: "object", code: "required", message: "Validation failed for 'object': value is required")
-        }
-        guard container.contains(.hasMore) else {
-            throw SdkValidationError(field: "has_more", code: "required", message: "Validation failed for 'has_more': value is required")
-        }
-        guard container.contains(.data) else {
-            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
-        }
-        self.object = try container.sdkDecodeRequired(.object)
-        self.hasMore = try container.sdkDecodeRequired(.hasMore)
-        self.data = try container.sdkDecodeRequired(.data)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ListInboxDraftsResponseSuccess {
-    public init(object: String, hasMore: Bool, data: [InboxDraftListItem]) {
+public extension ListInboxDraftsResponseSuccess {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.object) else {
+            throw SdkValidationError(
+                field: "object",
+                code: "required",
+                message: "Validation failed for 'object': value is required"
+            )
+        }
+        guard container.contains(.hasMore) else {
+            throw SdkValidationError(
+                field: "has_more",
+                code: "required",
+                message: "Validation failed for 'has_more': value is required"
+            )
+        }
+        guard container.contains(.data) else {
+            throw SdkValidationError(
+                field: "data",
+                code: "required",
+                message: "Validation failed for 'data': value is required"
+            )
+        }
+        object = try container.sdkDecodeRequired(.object)
+        hasMore = try container.sdkDecodeRequired(.hasMore)
+        data = try container.sdkDecodeRequired(.data)
+    }
+}
+
+public extension ListInboxDraftsResponseSuccess {
+    init(object: String, hasMore: Bool, data: [InboxDraftListItem]) {
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
     }

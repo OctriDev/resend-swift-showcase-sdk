@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Emails domain models
+/// Emails domain models
 /// Typed representation of the `CreateBatchEmailsResponse` API schema.
 public struct CreateBatchEmailsResponse: Codable {
     /// Optional array value serialized in the `data` wire field.
@@ -14,19 +14,19 @@ public struct CreateBatchEmailsResponse: Codable {
     }
 
     init() {
-        self.data = nil
+        data = nil
     }
 }
 
-extension CreateBatchEmailsResponse {
-    public init(from decoder: Decoder) throws {
+public extension CreateBatchEmailsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension CreateBatchEmailsResponse {
-    public init(data: [CreateBatchEmailsResponseDataItem]? = nil) {
+public extension CreateBatchEmailsResponse {
+    init(data: [CreateBatchEmailsResponseDataItem]? = nil) {
         self.init()
         self.data = data
     }
@@ -42,19 +42,19 @@ public struct CreateBatchEmailsResponseDataItem: Codable {
     }
 
     init() {
-        self.id = nil
+        id = nil
     }
 }
 
-extension CreateBatchEmailsResponseDataItem {
-    public init(from decoder: Decoder) throws {
+public extension CreateBatchEmailsResponseDataItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
+        id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-extension CreateBatchEmailsResponseDataItem {
-    public init(id: String? = nil) {
+public extension CreateBatchEmailsResponseDataItem {
+    init(id: String? = nil) {
         self.init()
         self.id = id
     }
@@ -66,22 +66,32 @@ public indirect enum SendEmailRequestReplyTo {
 }
 
 extension SendEmailRequestReplyTo: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for SendEmailRequestReplyTo")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for SendEmailRequestReplyTo"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension SendEmailRequestReplyTo {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode([String].self) { return .stringList(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode([String].self) {
+            return .stringList(value)
+        }
         return nil
     }
 }
@@ -115,21 +125,21 @@ public struct ShareEmailResponse: Codable {
     }
 
     init() {
-        (self.object, self.id, self.url) = (nil, nil, nil)
+        (object, id, url) = (nil, nil, nil)
     }
 }
 
-extension ShareEmailResponse {
-    public init(from decoder: Decoder) throws {
+public extension ShareEmailResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.url = try container.sdkDecodeIfPresent(.url)
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        url = try container.sdkDecodeIfPresent(.url)
     }
 }
 
-extension ShareEmailResponse {
-    public init(object: String? = nil, id: String? = nil, url: String? = nil) {
+public extension ShareEmailResponse {
+    init(object: String? = nil, id: String? = nil, url: String? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
         self.url = url
@@ -170,27 +180,36 @@ public struct GetEmailsMetricsResponse: Codable {
     }
 
     init() {
-        (self.object, self.startDate, self.endDate, self.metrics, self.dimensions) = (nil, nil, nil, nil, nil)
-        (self.granularity, self.totals, self.data) = (nil, nil, nil)
+        (object, startDate, endDate, metrics, dimensions) = (nil, nil, nil, nil, nil)
+        (granularity, totals, data) = (nil, nil, nil)
     }
 }
 
-extension GetEmailsMetricsResponse {
-    public init(from decoder: Decoder) throws {
+public extension GetEmailsMetricsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.startDate = try container.sdkDecodeIfPresent(.startDate)
-        self.endDate = try container.sdkDecodeIfPresent(.endDate)
-        self.metrics = try container.sdkDecodeIfPresent(.metrics)
-        self.dimensions = try container.sdkDecodeIfPresent(.dimensions)
-        self.granularity = try container.sdkDecodeIfPresent(.granularity)
-        self.totals = try container.sdkDecodeIfPresent(.totals)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        object = try container.sdkDecodeIfPresent(.object)
+        startDate = try container.sdkDecodeIfPresent(.startDate)
+        endDate = try container.sdkDecodeIfPresent(.endDate)
+        metrics = try container.sdkDecodeIfPresent(.metrics)
+        dimensions = try container.sdkDecodeIfPresent(.dimensions)
+        granularity = try container.sdkDecodeIfPresent(.granularity)
+        totals = try container.sdkDecodeIfPresent(.totals)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension GetEmailsMetricsResponse {
-    public init(object: String? = nil, startDate: String? = nil, endDate: String? = nil, metrics: [String]? = nil, dimensions: [GetEmailsMetricsResponseDimensionsItem]? = nil, granularity: GetEmailsMetricsResponseGranularity? = nil, totals: [String: Double]? = nil, data: [EmailMetricsDataRow]? = nil) {
+public extension GetEmailsMetricsResponse {
+    init(
+        object: String? = nil,
+        startDate: String? = nil,
+        endDate: String? = nil,
+        metrics: [String]? = nil,
+        dimensions: [GetEmailsMetricsResponseDimensionsItem]? = nil,
+        granularity: GetEmailsMetricsResponseGranularity? = nil,
+        totals: [String: Double]? = nil,
+        data: [EmailMetricsDataRow]? = nil
+    ) {
         self.init()
         (self.object, self.startDate) = (object, startDate)
         (self.endDate, self.metrics) = (endDate, metrics)
@@ -249,40 +268,69 @@ public struct SendEmailRequest: Codable {
         case topicId = "topic_id"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension SendEmailRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.from) else {
-            throw SdkValidationError(field: "from", code: "required", message: "Validation failed for 'from': value is required")
-        }
-        guard container.contains(.to) else {
-            throw SdkValidationError(field: "to", code: "required", message: "Validation failed for 'to': value is required")
-        }
-        guard container.contains(.subject) else {
-            throw SdkValidationError(field: "subject", code: "required", message: "Validation failed for 'subject': value is required")
-        }
-        self.from = try container.sdkDecodeRequired(.from)
-        self.to = try container.sdkDecodeRequired(.to)
-        self.subject = try container.sdkDecodeRequired(.subject)
-        self.bcc = try container.sdkDecodeIfPresent(.bcc)
-        self.cc = try container.sdkDecodeIfPresent(.cc)
-        self.replyTo = try container.sdkDecodeIfPresent(.replyTo)
-        self.html = try container.sdkDecodeIfPresent(.html)
-        self.text = try container.sdkDecodeIfPresent(.text)
-        self.template = try container.sdkDecodeIfPresent(.template)
-        self.headers = try container.sdkDecodeIfPresent(.headers)
-        self.scheduledAt = try container.sdkDecodeIfPresent(.scheduledAt)
-        self.attachments = try container.sdkDecodeIfPresent(.attachments)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.topicId = try container.sdkDecodeIfPresent(.topicId)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension SendEmailRequest {
-    public init(from: String, to: SendEmailRequestTo, subject: String, bcc: SendEmailRequestBcc? = nil, cc: SendEmailRequestCc? = nil, replyTo: SendEmailRequestReplyTo? = nil, html: String? = nil, text: String? = nil, template: EmailTemplateInput? = nil, headers: [String: JSONValue]? = nil, scheduledAt: String? = nil, attachments: [Attachment]? = nil, tags: [Tag]? = nil, topicId: String? = nil) {
+public extension SendEmailRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.from) else {
+            throw SdkValidationError(
+                field: "from",
+                code: "required",
+                message: "Validation failed for 'from': value is required"
+            )
+        }
+        guard container.contains(.to) else {
+            throw SdkValidationError(
+                field: "to",
+                code: "required",
+                message: "Validation failed for 'to': value is required"
+            )
+        }
+        guard container.contains(.subject) else {
+            throw SdkValidationError(
+                field: "subject",
+                code: "required",
+                message: "Validation failed for 'subject': value is required"
+            )
+        }
+        from = try container.sdkDecodeRequired(.from)
+        to = try container.sdkDecodeRequired(.to)
+        subject = try container.sdkDecodeRequired(.subject)
+        bcc = try container.sdkDecodeIfPresent(.bcc)
+        cc = try container.sdkDecodeIfPresent(.cc)
+        replyTo = try container.sdkDecodeIfPresent(.replyTo)
+        html = try container.sdkDecodeIfPresent(.html)
+        text = try container.sdkDecodeIfPresent(.text)
+        template = try container.sdkDecodeIfPresent(.template)
+        headers = try container.sdkDecodeIfPresent(.headers)
+        scheduledAt = try container.sdkDecodeIfPresent(.scheduledAt)
+        attachments = try container.sdkDecodeIfPresent(.attachments)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        topicId = try container.sdkDecodeIfPresent(.topicId)
+    }
+}
+
+public extension SendEmailRequest {
+    init(
+        from: String,
+        to: SendEmailRequestTo,
+        subject: String,
+        bcc: SendEmailRequestBcc? = nil,
+        cc: SendEmailRequestCc? = nil,
+        replyTo: SendEmailRequestReplyTo? = nil,
+        html: String? = nil,
+        text: String? = nil,
+        template: EmailTemplateInput? = nil,
+        headers: [String: JSONValue]? = nil,
+        scheduledAt: String? = nil,
+        attachments: [Attachment]? = nil,
+        tags: [Tag]? = nil,
+        topicId: String? = nil
+    ) {
         (self.from, self.to) = (from, to)
         (self.subject, self.bcc) = (subject, bcc)
         (self.cc, self.replyTo) = (cc, replyTo)
@@ -299,22 +347,32 @@ public indirect enum SendEmailRequestBcc {
 }
 
 extension SendEmailRequestBcc: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for SendEmailRequestBcc")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for SendEmailRequestBcc"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension SendEmailRequestBcc {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode([String].self) { return .stringList(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode([String].self) {
+            return .stringList(value)
+        }
         return nil
     }
 }
@@ -344,20 +402,20 @@ public struct Tag: Codable {
     }
 
     init() {
-        (self.name, self.value) = (nil, nil)
+        (name, value) = (nil, nil)
     }
 }
 
-extension Tag {
-    public init(from decoder: Decoder) throws {
+public extension Tag {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.value = try container.sdkDecodeIfPresent(.value)
+        name = try container.sdkDecodeIfPresent(.name)
+        value = try container.sdkDecodeIfPresent(.value)
     }
 }
 
-extension Tag {
-    public init(name: String? = nil, value: String? = nil) {
+public extension Tag {
+    init(name: String? = nil, value: String? = nil) {
         self.init()
         (self.name, self.value) = (name, value)
     }
@@ -369,22 +427,32 @@ public indirect enum SendEmailRequestTo {
 }
 
 extension SendEmailRequestTo: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for SendEmailRequestTo")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for SendEmailRequestTo"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension SendEmailRequestTo {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode([String].self) { return .stringList(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode([String].self) {
+            return .stringList(value)
+        }
         return nil
     }
 }
@@ -427,35 +495,42 @@ public struct EmailMetricsDataRow: Codable {
     }
 
     init() {
-        (self.period, self.domainId, self.domainName, self.emailId, self.broadcastId) = (nil, nil, nil, nil, nil)
-        self.broadcastName = nil
+        (period, domainId, domainName, emailId, broadcastId) = (nil, nil, nil, nil, nil)
+        broadcastName = nil
     }
 }
 
-extension EmailMetricsDataRow {
-    public init(from decoder: Decoder) throws {
+public extension EmailMetricsDataRow {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.period = try container.sdkDecodeIfPresent(.period)
-        self.domainId = try container.sdkDecodeIfPresent(.domainId)
-        self.domainName = try container.sdkDecodeIfPresent(.domainName)
-        self.emailId = try container.sdkDecodeIfPresent(.emailId)
-        self.broadcastId = try container.sdkDecodeIfPresent(.broadcastId)
-        self.broadcastName = try container.sdkDecodeIfPresent(.broadcastName)
+        period = try container.sdkDecodeIfPresent(.period)
+        domainId = try container.sdkDecodeIfPresent(.domainId)
+        domainName = try container.sdkDecodeIfPresent(.domainName)
+        emailId = try container.sdkDecodeIfPresent(.emailId)
+        broadcastId = try container.sdkDecodeIfPresent(.broadcastId)
+        broadcastName = try container.sdkDecodeIfPresent(.broadcastName)
         additionalProperties = try decoder.sdkAdditionalProperties(besides: CodingKeys.self)
-        if let value = self.domainId {
+        if let value = domainId {
             try sdkValidateUuid("domain_id", value)
         }
-        if let value = self.emailId {
+        if let value = emailId {
             try sdkValidateUuid("email_id", value)
         }
-        if let value = self.broadcastId {
+        if let value = broadcastId {
             try sdkValidateUuid("broadcast_id", value)
         }
     }
 }
 
-extension EmailMetricsDataRow {
-    public init(period: String? = nil, domainId: String? = nil, domainName: String? = nil, emailId: String? = nil, broadcastId: String? = nil, broadcastName: String? = nil) throws {
+public extension EmailMetricsDataRow {
+    init(
+        period: String? = nil,
+        domainId: String? = nil,
+        domainName: String? = nil,
+        emailId: String? = nil,
+        broadcastId: String? = nil,
+        broadcastName: String? = nil
+    ) throws {
         self.init()
         (self.period, self.domainId) = (period, domainId)
         (self.domainName, self.emailId) = (domainName, emailId)
@@ -472,8 +547,8 @@ extension EmailMetricsDataRow {
     }
 }
 
-extension EmailMetricsDataRow {
-    public func encode(to encoder: Encoder) throws {
+public extension EmailMetricsDataRow {
+    func encode(to encoder: Encoder) throws {
         try encoder.sdkEncodeAdditionalProperties(additionalProperties)
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(period, forKey: .period)
@@ -491,22 +566,32 @@ public indirect enum EmailTemplateInputVariablesValue {
 }
 
 extension EmailTemplateInputVariablesValue: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for EmailTemplateInputVariablesValue")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for EmailTemplateInputVariablesValue"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension EmailTemplateInputVariablesValue {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode(Double.self) { return .doubleValue(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode(Double.self) {
+            return .doubleValue(value)
+        }
         return nil
     }
 }

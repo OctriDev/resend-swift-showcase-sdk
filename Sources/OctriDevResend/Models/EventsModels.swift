@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Events domain models
+/// Events domain models
 /// Typed representation of the `UpdateEventResponse` API schema.
 public struct UpdateEventResponse: Codable {
     /// Type of the response object.
@@ -18,23 +18,23 @@ public struct UpdateEventResponse: Codable {
     }
 
     init() {
-        (self.object, self.id) = (nil, nil)
+        (object, id) = (nil, nil)
     }
 }
 
-extension UpdateEventResponse {
-    public init(from decoder: Decoder) throws {
+public extension UpdateEventResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        if let value = self.id {
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-extension UpdateEventResponse {
-    public init(object: String? = nil, id: String? = nil) throws {
+public extension UpdateEventResponse {
+    init(object: String? = nil, id: String? = nil) throws {
         self.init()
         (self.object, self.id) = (object, id)
         if let value = self.id {
@@ -60,21 +60,21 @@ public struct ListEventsResponse: Codable {
     }
 
     init() {
-        (self.object, self.hasMore, self.data) = (nil, nil, nil)
+        (object, hasMore, data) = (nil, nil, nil)
     }
 }
 
-extension ListEventsResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListEventsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        object = try container.sdkDecodeIfPresent(.object)
+        hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension ListEventsResponse {
-    public init(object: String? = nil, hasMore: Bool? = nil, data: [EventSummary]? = nil) {
+public extension ListEventsResponse {
+    init(object: String? = nil, hasMore: Bool? = nil, data: [EventSummary]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -110,28 +110,35 @@ public struct Event: Codable {
     }
 
     init() {
-        (self.object, self.id, self.name, self.schema, self.createdAt) = (nil, nil, nil, nil, nil)
-        self.updatedAt = nil
+        (object, id, name, schema, createdAt) = (nil, nil, nil, nil, nil)
+        updatedAt = nil
     }
 }
 
-extension Event {
-    public init(from decoder: Decoder) throws {
+public extension Event {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.schema = try container.sdkDecodeIfPresent(.schema)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        if let value = self.id {
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        schema = try container.sdkDecodeIfPresent(.schema)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-extension Event {
-    public init(object: String? = nil, id: String? = nil, name: String? = nil, schema: [String: JSONValue]? = nil, createdAt: String? = nil, updatedAt: String? = nil) throws {
+public extension Event {
+    init(
+        object: String? = nil,
+        id: String? = nil,
+        name: String? = nil,
+        schema: [String: JSONValue]? = nil,
+        createdAt: String? = nil,
+        updatedAt: String? = nil
+    ) throws {
         self.init()
         (self.object, self.id) = (object, id)
         (self.name, self.schema) = (name, schema)
@@ -156,23 +163,23 @@ public struct CreateEventResponse: Codable {
     }
 
     init() {
-        (self.object, self.id) = (nil, nil)
+        (object, id) = (nil, nil)
     }
 }
 
-extension CreateEventResponse {
-    public init(from decoder: Decoder) throws {
+public extension CreateEventResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        if let value = self.id {
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-extension CreateEventResponse {
-    public init(object: String? = nil, id: String? = nil) throws {
+public extension CreateEventResponse {
+    init(object: String? = nil, id: String? = nil) throws {
         self.init()
         (self.object, self.id) = (object, id)
         if let value = self.id {
@@ -195,20 +202,20 @@ public struct SendEventResponse: Codable {
     }
 
     init() {
-        (self.object, self.event) = (nil, nil)
+        (object, event) = (nil, nil)
     }
 }
 
-extension SendEventResponse {
-    public init(from decoder: Decoder) throws {
+public extension SendEventResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.event = try container.sdkDecodeIfPresent(.event)
+        object = try container.sdkDecodeIfPresent(.object)
+        event = try container.sdkDecodeIfPresent(.event)
     }
 }
 
-extension SendEventResponse {
-    public init(object: String? = nil, event: String? = nil) {
+public extension SendEventResponse {
+    init(object: String? = nil, event: String? = nil) {
         self.init()
         (self.object, self.event) = (object, event)
     }
@@ -224,21 +231,27 @@ public struct UpdateEventRequest: Codable {
         case schema
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension UpdateEventRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.schema) else {
-            throw SdkValidationError(field: "schema", code: "required", message: "Validation failed for 'schema': value is required")
-        }
-        self.schema = try container.sdkDecodeNullable(.schema)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension UpdateEventRequest {
-    public init(schema: [String: JSONValue]?) {
+public extension UpdateEventRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.schema) else {
+            throw SdkValidationError(
+                field: "schema",
+                code: "required",
+                message: "Validation failed for 'schema': value is required"
+            )
+        }
+        schema = try container.sdkDecodeNullable(.schema)
+    }
+}
+
+public extension UpdateEventRequest {
+    init(schema: [String: JSONValue]?) {
         self.schema = schema
     }
 }
@@ -256,22 +269,28 @@ public struct CreateEventRequest: Codable {
         case schema
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateEventRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.schema = try container.sdkDecodeIfPresent(.schema)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateEventRequest {
-    public init(name: String, schema: [String: JSONValue]? = nil) {
+public extension CreateEventRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        schema = try container.sdkDecodeIfPresent(.schema)
+    }
+}
+
+public extension CreateEventRequest {
+    init(name: String, schema: [String: JSONValue]? = nil) {
         (self.name, self.schema) = (name, schema)
     }
 }
@@ -301,26 +320,32 @@ public struct EventSummary: Codable {
     }
 
     init() {
-        (self.id, self.name, self.schema, self.createdAt, self.updatedAt) = (nil, nil, nil, nil, nil)
+        (id, name, schema, createdAt, updatedAt) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension EventSummary {
-    public init(from decoder: Decoder) throws {
+public extension EventSummary {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.schema = try container.sdkDecodeIfPresent(.schema)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        if let value = self.id {
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        schema = try container.sdkDecodeIfPresent(.schema)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-extension EventSummary {
-    public init(id: String? = nil, name: String? = nil, schema: [String: JSONValue]? = nil, createdAt: String? = nil, updatedAt: String? = nil) throws {
+public extension EventSummary {
+    init(
+        id: String? = nil,
+        name: String? = nil,
+        schema: [String: JSONValue]? = nil,
+        createdAt: String? = nil,
+        updatedAt: String? = nil
+    ) throws {
         self.init()
         (self.id, self.name) = (id, name)
         (self.schema, self.createdAt) = (schema, createdAt)
@@ -349,24 +374,24 @@ public struct RemoveEventResponse: Codable {
     }
 
     init() {
-        (self.object, self.id, self.deleted) = (nil, nil, nil)
+        (object, id, deleted) = (nil, nil, nil)
     }
 }
 
-extension RemoveEventResponse {
-    public init(from decoder: Decoder) throws {
+public extension RemoveEventResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.deleted = try container.sdkDecodeIfPresent(.deleted)
-        if let value = self.id {
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        deleted = try container.sdkDecodeIfPresent(.deleted)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-extension RemoveEventResponse {
-    public init(object: String? = nil, id: String? = nil, deleted: Bool? = nil) throws {
+public extension RemoveEventResponse {
+    init(object: String? = nil, id: String? = nil, deleted: Bool? = nil) throws {
         self.init()
         (self.object, self.id) = (object, id)
         self.deleted = deleted
@@ -394,30 +419,36 @@ public struct SendEventRequest: Codable {
         case payload
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension SendEventRequest {
-    public init(from decoder: Decoder) throws {
+public extension SendEventRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.event) else {
-            throw SdkValidationError(field: "event", code: "required", message: "Validation failed for 'event': value is required")
+            throw SdkValidationError(
+                field: "event",
+                code: "required",
+                message: "Validation failed for 'event': value is required"
+            )
         }
-        self.event = try container.sdkDecodeRequired(.event)
-        self.contactId = try container.sdkDecodeIfPresent(.contactId)
-        self.email = try container.sdkDecodeIfPresent(.email)
-        self.payload = try container.sdkDecodeIfPresent(.payload)
-        if let value = self.contactId {
+        event = try container.sdkDecodeRequired(.event)
+        contactId = try container.sdkDecodeIfPresent(.contactId)
+        email = try container.sdkDecodeIfPresent(.email)
+        payload = try container.sdkDecodeIfPresent(.payload)
+        if let value = contactId {
             try sdkValidateUuid("contact_id", value)
         }
-        if let value = self.email {
+        if let value = email {
             try sdkValidateEmail("email", value)
         }
     }
 }
 
-extension SendEventRequest {
-    public init(event: String, contactId: String? = nil, email: String? = nil, payload: [String: JSONValue]? = nil) throws {
+public extension SendEventRequest {
+    init(event: String, contactId: String? = nil, email: String? = nil, payload: [String: JSONValue]? = nil) throws {
         (self.event, self.contactId) = (event, contactId)
         (self.email, self.payload) = (email, payload)
         if let value = self.contactId {

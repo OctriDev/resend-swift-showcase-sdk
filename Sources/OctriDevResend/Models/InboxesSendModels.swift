@@ -3,7 +3,7 @@
 
 import Foundation
 
-// InboxesSend domain models
+/// InboxesSend domain models
 /// Typed representation of the `SendInboxDraftOptions` API schema.
 public struct SendInboxDraftOptions: Codable {
     /// Custom headers to add to the email. The `In-Reply-To`, `References` and `Reply-To` headers are set by Resend
@@ -18,19 +18,19 @@ public struct SendInboxDraftOptions: Codable {
     }
 
     init() {
-        self.headers = nil
+        headers = nil
     }
 }
 
-extension SendInboxDraftOptions {
-    public init(from decoder: Decoder) throws {
+public extension SendInboxDraftOptions {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.headers = try container.sdkDecodeIfPresent(.headers)
+        headers = try container.sdkDecodeIfPresent(.headers)
     }
 }
 
-extension SendInboxDraftOptions {
-    public init(headers: [String: String]? = nil) {
+public extension SendInboxDraftOptions {
+    init(headers: [String: String]? = nil) {
         self.init()
         self.headers = headers
     }
@@ -46,23 +46,29 @@ public struct SendInboxDraftResponseSuccess: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension SendInboxDraftResponseSuccess {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
-        }
-        self.id = try container.sdkDecodeRequired(.id)
-            try sdkValidateUuid("id", self.id)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension SendInboxDraftResponseSuccess {
-    public init(id: String) throws {
+public extension SendInboxDraftResponseSuccess {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.id) else {
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
+        }
+        id = try container.sdkDecodeRequired(.id)
+        try sdkValidateUuid("id", id)
+    }
+}
+
+public extension SendInboxDraftResponseSuccess {
+    init(id: String) throws {
         self.id = id
-            try sdkValidateUuid("id", self.id)
+        try sdkValidateUuid("id", self.id)
     }
 }

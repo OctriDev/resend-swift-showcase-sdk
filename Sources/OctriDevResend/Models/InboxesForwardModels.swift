@@ -3,7 +3,7 @@
 
 import Foundation
 
-// InboxesForward domain models
+/// InboxesForward domain models
 /// Typed representation of the `ForwardInboxThreadEmailOptions` API schema.
 public struct ForwardInboxThreadEmailOptions: Codable {
     /// Recipient email address. For multiple addresses, send as an array of strings. Must name at least one
@@ -55,31 +55,46 @@ public struct ForwardInboxThreadEmailOptions: Codable {
         case headers
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension ForwardInboxThreadEmailOptions {
-    public init(from decoder: Decoder) throws {
+public extension ForwardInboxThreadEmailOptions {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.to) else {
-            throw SdkValidationError(field: "to", code: "required", message: "Validation failed for 'to': value is required")
+            throw SdkValidationError(
+                field: "to",
+                code: "required",
+                message: "Validation failed for 'to': value is required"
+            )
         }
-        self.to = try container.sdkDecodeRequired(.to)
-        self.cc = try container.sdkDecodeIfPresent(.cc)
-        self.bcc = try container.sdkDecodeIfPresent(.bcc)
-        self.html = try container.sdkDecodeIfPresent(.html)
-        self.text = try container.sdkDecodeIfPresent(.text)
-        self.subject = try container.sdkDecodeIfPresent(.subject)
-        self.attachments = try container.sdkDecodeIfPresent(.attachments)
-        self.headers = try container.sdkDecodeIfPresent(.headers)
-        if let value = self.subject {
+        to = try container.sdkDecodeRequired(.to)
+        cc = try container.sdkDecodeIfPresent(.cc)
+        bcc = try container.sdkDecodeIfPresent(.bcc)
+        html = try container.sdkDecodeIfPresent(.html)
+        text = try container.sdkDecodeIfPresent(.text)
+        subject = try container.sdkDecodeIfPresent(.subject)
+        attachments = try container.sdkDecodeIfPresent(.attachments)
+        headers = try container.sdkDecodeIfPresent(.headers)
+        if let value = subject {
             try validateLength("subject", value, min: 1, max: 2000)
         }
     }
 }
 
-extension ForwardInboxThreadEmailOptions {
-    public init(to: ForwardInboxThreadEmailOptionsTo, cc: ForwardInboxThreadEmailOptionsCc? = nil, bcc: ForwardInboxThreadEmailOptionsBcc? = nil, html: String? = nil, text: String? = nil, subject: String? = nil, attachments: [Attachment]? = nil, headers: [String: String]? = nil) throws {
+public extension ForwardInboxThreadEmailOptions {
+    init(
+        to: ForwardInboxThreadEmailOptionsTo,
+        cc: ForwardInboxThreadEmailOptionsCc? = nil,
+        bcc: ForwardInboxThreadEmailOptionsBcc? = nil,
+        html: String? = nil,
+        text: String? = nil,
+        subject: String? = nil,
+        attachments: [Attachment]? = nil,
+        headers: [String: String]? = nil
+    ) throws {
         (self.to, self.cc) = (to, cc)
         (self.bcc, self.html) = (bcc, html)
         (self.text, self.subject) = (text, subject)
@@ -100,24 +115,30 @@ public struct ForwardInboxThreadEmailResponseSuccess: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ForwardInboxThreadEmailResponseSuccess {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
-        }
-        self.id = try container.sdkDecodeRequired(.id)
-            try sdkValidateUuid("id", self.id)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ForwardInboxThreadEmailResponseSuccess {
-    public init(id: String) throws {
+public extension ForwardInboxThreadEmailResponseSuccess {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.id) else {
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
+        }
+        id = try container.sdkDecodeRequired(.id)
+        try sdkValidateUuid("id", id)
+    }
+}
+
+public extension ForwardInboxThreadEmailResponseSuccess {
+    init(id: String) throws {
         self.id = id
-            try sdkValidateUuid("id", self.id)
+        try sdkValidateUuid("id", self.id)
     }
 }
 
@@ -128,23 +149,35 @@ public indirect enum ForwardInboxThreadEmailOptionsBcc {
 }
 
 extension ForwardInboxThreadEmailOptionsBcc: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for ForwardInboxThreadEmailOptionsBcc")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for ForwardInboxThreadEmailOptionsBcc"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension ForwardInboxThreadEmailOptionsBcc {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode([String].self) { return .stringList(value) }
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode([String].self) {
+            return .stringList(value)
+        }
+        if let value = try? container.decode(JSONValue.self) {
+            return .jsonValue(value)
+        }
         return nil
     }
 }
@@ -167,23 +200,35 @@ public indirect enum ForwardInboxThreadEmailOptionsCc {
 }
 
 extension ForwardInboxThreadEmailOptionsCc: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for ForwardInboxThreadEmailOptionsCc")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for ForwardInboxThreadEmailOptionsCc"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension ForwardInboxThreadEmailOptionsCc {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode([String].self) { return .stringList(value) }
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode([String].self) {
+            return .stringList(value)
+        }
+        if let value = try? container.decode(JSONValue.self) {
+            return .jsonValue(value)
+        }
         return nil
     }
 }
@@ -205,22 +250,32 @@ public indirect enum ForwardInboxThreadEmailOptionsTo {
 }
 
 extension ForwardInboxThreadEmailOptionsTo: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for ForwardInboxThreadEmailOptionsTo")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for ForwardInboxThreadEmailOptionsTo"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension ForwardInboxThreadEmailOptionsTo {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode([String].self) { return .stringList(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode([String].self) {
+            return .stringList(value)
+        }
         return nil
     }
 }
