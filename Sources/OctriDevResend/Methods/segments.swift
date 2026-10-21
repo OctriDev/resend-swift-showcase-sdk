@@ -7,3 +7,43 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum SegmentsMethods {}
+
+extension SegmentsMethods {
+    /// Creates a segment. Provide a `name` and optionally specify the audience and filter conditions for the segment.
+    ///
+    /// - Parameters:
+    /// - name: The name of the segment.
+    /// - audienceId: The ID of the audience this segment belongs to.
+    /// - filter: Filter conditions for the segment.
+    public static func segmentsCreate(config: ClientConfig, name: String, audienceId: String? = nil, filter: [String: JSONValue]? = nil, requestOptions: RequestOptions? = nil) async throws -> CreateSegmentResponseSuccess {
+        let requestBody = SegmentsCreateRequestBody(name: name, audienceId: audienceId, filter: filter)
+
+        return try (await sdkRequest("POST", "/segments", config: config, body: requestBody, decoder: .json, operationId: "segmentsCreate", options: requestOptions)).data
+    }
+
+    /// Lists segments. Use `limit` to control the number of results and `after` or `before` to navigate the results with cursors.
+    ///
+    /// - Parameters:
+    /// - limit: Number of items to return.
+    /// - after: Return items after this cursor.
+    /// - before: Return items before this cursor.
+    public static func segmentsList(config: ClientConfig, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListSegmentsResponseSuccess {
+        if let limit = limit {
+            try validateRange("limit", Double(limit), min: 1, max: 100)
+        }
+
+        return try (await sdkRequest("GET", "/segments", config: config, query: [
+            SdkQueryParameter("limit", value: limit),
+            SdkQueryParameter("after", value: after),
+            SdkQueryParameter("before", value: before),
+        ], decoder: .json, operationId: "segmentsList", options: requestOptions)).data
+    }
+
+    /// Retrieves a segment by its identifier. Use the segment ID to look up a specific segment and its filter conditions.
+    ///
+    /// - Parameters:
+    /// - id: The Segment ID.
+    public static func segmentsGet(config: ClientConfig, id: String, requestOptions: RequestOptions? = nil) async throws -> GetSegmentResponseSuccess {
+        return try (await sdkRequest("GET", ["/segments/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "segmentsGet", options: requestOptions)).data
+    }
+}

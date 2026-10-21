@@ -7,3 +7,57 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum ContactsMethods {}
+
+extension ContactsMethods {
+    public struct ContactsCreateOptions: Codable {
+        public var email: String
+        public var firstName: String?
+        public var lastName: String?
+        public var unsubscribed: Bool?
+        public var properties: [String: JSONValue?]?
+        public var segments: [CreateContactOptionsSegmentsItem]?
+        public var topics: [CreateContactOptionsTopicsItem]?
+        public var audienceId: String?
+
+        public init(email: String) {
+            self.email = email
+        }
+    }
+
+    /// Creates a contact with an email address and optional profile, subscription, and grouping details. Include `email`; you can also set custom `properties`, add `segments`, or configure `topics`.
+    ///
+    /// - Parameters:
+    /// - email: Email address of the contact.
+    /// - firstName: First name of the contact.
+    /// - lastName: Last name of the contact.
+    /// - unsubscribed: The Contact's global subscription status. If set to true,
+    ///   the contact will be unsubscribed from all Broadcasts.
+    /// - properties: A map of custom property keys and values to create.
+    /// - segments: Array of segment IDs to add the contact to.
+    /// - topics: Array of topic subscriptions for the contact.
+    /// - audienceId: Unique identifier of the audience to which the contact
+    ///   belongs.
+    public static func contactsCreate(config: ClientConfig, options: ContactsCreateOptions, requestOptions: RequestOptions? = nil) async throws -> CreateContactResponseSuccess {
+        let requestBody = ContactsCreateRequestBody(options: options)
+
+        return try (await sdkRequest("POST", "/contacts", config: config, body: requestBody, decoder: .json, operationId: "contactsCreate", options: requestOptions)).data
+    }
+
+    /// Lists contacts, with each result including contact information. Use `after` or `before` to navigate results by cursor, and `limit` to control the number of items returned.
+    ///
+    /// - Parameters:
+    /// - limit: Number of items to return.
+    /// - after: Return items after this cursor.
+    /// - before: Return items before this cursor.
+    public static func contactsList(config: ClientConfig, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListContactsResponseSuccess {
+        if let limit = limit {
+            try validateRange("limit", Double(limit), min: 1, max: 100)
+        }
+
+        return try (await sdkRequest("GET", "/contacts", config: config, query: [
+            SdkQueryParameter("limit", value: limit),
+            SdkQueryParameter("after", value: after),
+            SdkQueryParameter("before", value: before),
+        ], decoder: .json, operationId: "contactsList", options: requestOptions)).data
+    }
+}

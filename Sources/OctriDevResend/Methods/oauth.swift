@@ -28,7 +28,7 @@ public enum OauthMethods {
     ///
     /// - Parameters:
     /// - oauthGrantId: The OAuth grant ID.
-    public static func revokeGrant(config: ClientConfig, oauthGrantId: String, requestOptions: RequestOptions? = nil) async throws -> RevokeOAuthGrantResponse {
-        return try (await sdkRequest("DELETE", ["/oauth/grants/", sdkEncodePathSegment(sdkWireString(oauthGrantId))].joined(), config: config, decoder: .json, operationId: "revokeGrant", options: requestOptions)).data
+    public static func revokeOauthGrant(config: ClientConfig, oauthGrantId: String, requestOptions: RequestOptions? = nil) async throws -> RevokeOAuthGrantResponse {
+        return try (await sdkRequest("DELETE", ["/oauth/grants/", sdkEncodePathSegment(sdkWireString(oauthGrantId))].joined(), config: config, decoder: .json, operationId: "revokeOauthGrant", options: requestOptions)).data
     }
 }

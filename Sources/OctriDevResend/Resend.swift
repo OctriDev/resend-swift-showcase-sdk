@@ -189,6 +189,6 @@ public class OauthNamespace {
 
 /// Revokes an OAuth grant, removing the authorization associated with it. Supply the grant's ID to identify which authorization to revoke. The response includes the revocation time and reason.
     public func revokeGrant(oauthGrantId: String, requestOptions: RequestOptions? = nil) async throws -> RevokeOAuthGrantResponse {
-        return try await OauthMethods.revokeGrant(config: config, oauthGrantId: oauthGrantId, requestOptions: requestOptions)
+        return try await OauthMethods.revokeOauthGrant(config: config, oauthGrantId: oauthGrantId, requestOptions: requestOptions)
     }
 }

@@ -7,3 +7,41 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum DomainsMethods {}
+
+extension DomainsMethods {
+    public struct DomainsCreateOptions: Codable {
+        public var name: String
+        public var region: CreateDomainRequestRegion?
+        public var customReturnPath: String?
+        public var openTracking: Bool?
+        public var clickTracking: Bool?
+        public var tls: CreateDomainRequestTls?
+        public var capabilities: DomainCapabilities?
+        public var trackingSubdomain: String?
+
+        public init(name: String) {
+            self.name = name
+        }
+    }
+
+    /// Creates a domain for sending or receiving email. Supply `name` and configure the sending region, tracking options, TLS mode, and capabilities as needed; at least one domain capability must be enabled.
+    ///
+    /// - Parameters:
+    /// - name: The name of the domain you want to create.
+    /// - region: The region where emails will be sent from. Possible values are
+    ///   us-east-1 | eu-west-1 | sa-east-1 | ap-northeast-1
+    /// - customReturnPath: For advanced use cases, choose a subdomain for the
+    ///   Return-Path address. Defaults to 'send' (i.e., send.yourdomain.tld).
+    /// - openTracking: Track the open rate of each email.
+    /// - clickTracking: Track clicks within the body of each HTML email.
+    /// - tls: TLS mode. Opportunistic attempts secure connection but falls back to
+    ///   unencrypted. Enforced requires TLS or email won't be sent.
+    /// - capabilities: Configure the domain capabilities for sending and receiving
+    ///   emails. At least one capability must be enabled.
+    /// - trackingSubdomain: The subdomain to use for click and open tracking.
+    public static func domainsCreate(config: ClientConfig, options: DomainsCreateOptions, requestOptions: RequestOptions? = nil) async throws -> CreateDomainResponse {
+        let requestBody = DomainsCreateRequestBody(options: options)
+
+        return try (await sdkRequest("POST", "/domains", config: config, body: requestBody, decoder: .json, operationId: "domainsCreate", options: requestOptions)).data
+    }
+}

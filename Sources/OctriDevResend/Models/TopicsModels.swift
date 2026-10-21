@@ -125,10 +125,6 @@ extension ListTopicsResponseSuccess {
     }
 }
 
-
-
-
-
 /// Typed representation of the `CreateTopicOptions` API schema.
 public struct CreateTopicOptions: Codable {
     /// The name of the topic. Max 50 characters.
@@ -181,10 +177,6 @@ extension CreateTopicOptions {
         }
     }
 }
-
-
-
-
 
 /// Required object value serialized in the `data[]` wire field.
 public struct ListTopicsResponseSuccessDataItem: Codable {
@@ -271,10 +263,6 @@ extension CreateTopicResponseSuccess {
         (self.id, self.object) = (id, object)
     }
 }
-
-
-
-
 
 /// Typed representation of the `GetTopicResponseSuccess` API schema.
 public struct GetTopicResponseSuccess: Codable {

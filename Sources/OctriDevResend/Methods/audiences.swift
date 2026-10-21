@@ -7,3 +7,28 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum AudiencesMethods {}
+
+extension AudiencesMethods {
+    /// Creates an audience with the name you provide. Use the Segments endpoints instead, because this audience operation is deprecated. This operation is closing down and will be removed on a date not specified in the API definition.
+    ///
+    /// Deprecated: Use Segments instead. These endpoints still work, but will be removed in the future.
+    ///
+    /// - Parameters:
+    /// - name: The name of the audience you want to create.
+    ///
+    /// - Warning: This operation is deprecated and may be removed in a future release.
+    public static func audiencesCreate(config: ClientConfig, name: String, requestOptions: RequestOptions? = nil) async throws -> CreateAudienceResponseSuccess {
+        let requestBody = AudiencesCreateRequestBody(name: name)
+
+        return try (await sdkRequest("POST", "/audiences", config: config, body: requestBody, decoder: .json, operationId: "audiencesCreate", options: requestOptions)).data
+    }
+
+    /// Lists audiences with their identifiers, names, and creation timestamps. Use the Segments endpoints instead, because this audience operation is deprecated. This operation is closing down and will be removed on a date not specified in the API definition.
+    ///
+    /// Deprecated: Use Segments instead. These endpoints still work, but will be removed in the future.
+    ///
+    /// - Warning: This operation is deprecated and may be removed in a future release.
+    public static func audiencesList(config: ClientConfig, requestOptions: RequestOptions? = nil) async throws -> ListAudiencesResponseSuccess {
+        return try (await sdkRequest("GET", "/audiences", config: config, decoder: .json, operationId: "audiencesList", options: requestOptions)).data
+    }
+}

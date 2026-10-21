@@ -7,3 +7,43 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum AutomationsMethods {}
+
+extension AutomationsMethods {
+    /// Creates an automation workflow from its name, steps, and connections. Supply at least one step, including a `trigger` step, and configure each step with its key, type, and configuration. A 201 response returns the new automation's identifier.
+    ///
+    /// - Parameters:
+    /// - name: The name of the automation.
+    /// - steps: The steps that compose the automation workflow. Must include at
+    ///   least one `trigger` step.
+    /// - connections: The connections between steps in the automation graph.
+    /// - status: The initial status of the automation. Defaults to `disabled`.
+    public static func automationsCreate(config: ClientConfig, name: String, steps: [AutomationStep], connections: [AutomationConnection], status: CreateAutomationRequestStatus? = nil, requestOptions: RequestOptions? = nil) async throws -> CreateAutomationResponse {
+        try validateLength("name", name, min: 1)
+
+        try validateItems("steps", steps, min: 1, max: 150)
+
+        let requestBody = AutomationsCreateRequestBody(name: name, steps: steps, connections: connections, status: status)
+
+        return try (await sdkRequest("POST", "/automations", config: config, body: requestBody, decoder: .json, operationId: "automationsCreate", options: requestOptions)).data
+    }
+
+    /// Lists automations, with optional filtering by status and cursor-based pagination. Use `status` to select enabled or disabled automations, and use `after` or `before` to navigate results.
+    ///
+    /// - Parameters:
+    /// - status: Filter automations by status.
+    /// - limit: Number of items to return.
+    /// - after: Return items after this cursor.
+    /// - before: Return items before this cursor.
+    public static func automationsList(config: ClientConfig, status: AutomationsListParameter? = nil, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListAutomationsResponse {
+        if let limit = limit {
+            try validateRange("limit", Double(limit), min: 1, max: 100)
+        }
+
+        return try (await sdkRequest("GET", "/automations", config: config, query: [
+            SdkQueryParameter("status", value: status),
+            SdkQueryParameter("limit", value: limit),
+            SdkQueryParameter("after", value: after),
+            SdkQueryParameter("before", value: before),
+        ], decoder: .json, operationId: "automationsList", options: requestOptions)).data
+    }
+}

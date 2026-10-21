@@ -4485,9 +4485,9 @@
       }
     },
     {
-      "id": "revokeGrant:revokeGrant",
-      "operationId": "revokeGrant",
-      "methodName": "revokeGrant",
+      "id": "revokeOauthGrant:revokeOauthGrant",
+      "operationId": "revokeOauthGrant",
+      "methodName": "revokeOauthGrant",
       "namespace": [
         "oauth"
       ],

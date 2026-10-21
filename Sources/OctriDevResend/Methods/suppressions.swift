@@ -7,3 +7,43 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum SuppressionsMethods {}
+
+extension SuppressionsMethods {
+    /// Creates a suppression for an email address. Supply the required `email` value to add that address to the suppression list.
+    ///
+    /// - Parameters:
+    /// - email: Email address to suppress.
+    public static func suppressionsAdd(config: ClientConfig, email: String, requestOptions: RequestOptions? = nil) async throws -> CreateSuppressionResponseSuccess {
+        let requestBody = SuppressionsAddRequestBody(email: email)
+
+        return try (await sdkRequest("POST", "/suppressions", config: config, body: requestBody, decoder: .json, operationId: "suppressionsAdd", options: requestOptions)).data
+    }
+
+    /// Lists suppressions, with an optional filter for their origin. Use `after` or `before` to navigate results and `limit` to control the number of suppressions returned per request.
+    ///
+    /// - Parameters:
+    /// - origin: Filter suppressions by origin.
+    /// - limit: Number of items to return.
+    /// - after: Return items after this cursor.
+    /// - before: Return items before this cursor.
+    public static func suppressionsList(config: ClientConfig, origin: SuppressionsListParameter? = nil, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListSuppressionsResponseSuccess {
+        if let limit = limit {
+            try validateRange("limit", Double(limit), min: 1, max: 100)
+        }
+
+        return try (await sdkRequest("GET", "/suppressions", config: config, query: [
+            SdkQueryParameter("origin", value: origin),
+            SdkQueryParameter("limit", value: limit),
+            SdkQueryParameter("after", value: after),
+            SdkQueryParameter("before", value: before),
+        ], decoder: .json, operationId: "suppressionsList", options: requestOptions)).data
+    }
+
+    /// Retrieves a single suppression by its identifier or email address. Use `suppression` to look up the matching suppression record.
+    ///
+    /// - Parameters:
+    /// - suppression: The Suppression ID or email address.
+    public static func suppressionsGet(config: ClientConfig, suppression: String, requestOptions: RequestOptions? = nil) async throws -> GetSuppressionResponseSuccess {
+        return try (await sdkRequest("GET", ["/suppressions/", sdkEncodePathSegment(sdkWireString(suppression))].joined(), config: config, decoder: .json, operationId: "suppressionsGet", options: requestOptions)).data
+    }
+}
