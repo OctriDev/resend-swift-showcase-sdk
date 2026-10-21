@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Domains domain models
+/// Domains domain models
 /// Typed representation of the `CreateDomainResponse` API schema.
 public struct CreateDomainResponse: Codable {
     /// The ID of the domain.
@@ -42,29 +42,40 @@ public struct CreateDomainResponse: Codable {
     }
 
     init() {
-        (self.id, self.name, self.createdAt, self.status, self.capabilities) = (nil, nil, nil, nil, nil)
-        (self.records, self.region, self.openTracking, self.clickTracking, self.trackingSubdomain) = (nil, nil, nil, nil, nil)
+        (id, name, createdAt, status, capabilities) = (nil, nil, nil, nil, nil)
+        (records, region, openTracking, clickTracking, trackingSubdomain) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension CreateDomainResponse {
-    public init(from decoder: Decoder) throws {
+public extension CreateDomainResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.capabilities = try container.sdkDecodeIfPresent(.capabilities)
-        self.records = try container.sdkDecodeIfPresent(.records)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.openTracking = try container.sdkDecodeIfPresent(.openTracking)
-        self.clickTracking = try container.sdkDecodeIfPresent(.clickTracking)
-        self.trackingSubdomain = try container.sdkDecodeIfPresent(.trackingSubdomain)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        status = try container.sdkDecodeIfPresent(.status)
+        capabilities = try container.sdkDecodeIfPresent(.capabilities)
+        records = try container.sdkDecodeIfPresent(.records)
+        region = try container.sdkDecodeIfPresent(.region)
+        openTracking = try container.sdkDecodeIfPresent(.openTracking)
+        clickTracking = try container.sdkDecodeIfPresent(.clickTracking)
+        trackingSubdomain = try container.sdkDecodeIfPresent(.trackingSubdomain)
     }
 }
 
-extension CreateDomainResponse {
-    public init(id: String? = nil, name: String? = nil, createdAt: String? = nil, status: CreateDomainResponseStatus? = nil, capabilities: DomainCapabilities? = nil, records: [DomainRecord]? = nil, region: String? = nil, openTracking: Bool? = nil, clickTracking: Bool? = nil, trackingSubdomain: String? = nil) {
+public extension CreateDomainResponse {
+    init(
+        id: String? = nil,
+        name: String? = nil,
+        createdAt: String? = nil,
+        status: CreateDomainResponseStatus? = nil,
+        capabilities: DomainCapabilities? = nil,
+        records: [DomainRecord]? = nil,
+        region: String? = nil,
+        openTracking: Bool? = nil,
+        clickTracking: Bool? = nil,
+        trackingSubdomain: String? = nil
+    ) {
         self.init()
         (self.id, self.name) = (id, name)
         (self.createdAt, self.status) = (createdAt, status)
@@ -107,28 +118,43 @@ public struct CreateDomainRequest: Codable {
         case trackingSubdomain = "tracking_subdomain"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateDomainRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.customReturnPath = try container.sdkDecodeIfPresent(.customReturnPath)
-        self.openTracking = try container.sdkDecodeIfPresent(.openTracking)
-        self.clickTracking = try container.sdkDecodeIfPresent(.clickTracking)
-        self.tls = try container.sdkDecodeIfPresent(.tls)
-        self.capabilities = try container.sdkDecodeIfPresent(.capabilities)
-        self.trackingSubdomain = try container.sdkDecodeIfPresent(.trackingSubdomain)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateDomainRequest {
-    public init(name: String, region: CreateDomainRequestRegion? = nil, customReturnPath: String? = nil, openTracking: Bool? = nil, clickTracking: Bool? = nil, tls: CreateDomainRequestTls? = nil, capabilities: DomainCapabilities? = nil, trackingSubdomain: String? = nil) {
+public extension CreateDomainRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        region = try container.sdkDecodeIfPresent(.region)
+        customReturnPath = try container.sdkDecodeIfPresent(.customReturnPath)
+        openTracking = try container.sdkDecodeIfPresent(.openTracking)
+        clickTracking = try container.sdkDecodeIfPresent(.clickTracking)
+        tls = try container.sdkDecodeIfPresent(.tls)
+        capabilities = try container.sdkDecodeIfPresent(.capabilities)
+        trackingSubdomain = try container.sdkDecodeIfPresent(.trackingSubdomain)
+    }
+}
+
+public extension CreateDomainRequest {
+    init(
+        name: String,
+        region: CreateDomainRequestRegion? = nil,
+        customReturnPath: String? = nil,
+        openTracking: Bool? = nil,
+        clickTracking: Bool? = nil,
+        tls: CreateDomainRequestTls? = nil,
+        capabilities: DomainCapabilities? = nil,
+        trackingSubdomain: String? = nil
+    ) {
         (self.name, self.region) = (name, region)
         (self.customReturnPath, self.openTracking) = (customReturnPath, openTracking)
         (self.clickTracking, self.tls) = (clickTracking, tls)
@@ -141,7 +167,10 @@ extension CreateDomainRequest {
 public struct CreateDomainRequestRegion: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let usEast1 = CreateDomainRequestRegion(rawValue: "us-east-1")
     public static let euWest1 = CreateDomainRequestRegion(rawValue: "eu-west-1")
     public static let saEast1 = CreateDomainRequestRegion(rawValue: "sa-east-1")
@@ -149,7 +178,7 @@ public struct CreateDomainRequestRegion: RawRepresentable, Hashable, Codable, Se
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -162,7 +191,10 @@ public struct CreateDomainRequestRegion: RawRepresentable, Hashable, Codable, Se
 public struct CreateDomainResponseStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let pending = CreateDomainResponseStatus(rawValue: "pending")
     public static let verified = CreateDomainResponseStatus(rawValue: "verified")
     public static let failed = CreateDomainResponseStatus(rawValue: "failed")
@@ -172,7 +204,7 @@ public struct CreateDomainResponseStatus: RawRepresentable, Hashable, Codable, S
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -186,13 +218,16 @@ public struct CreateDomainResponseStatus: RawRepresentable, Hashable, Codable, S
 public struct CreateDomainRequestTls: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let opportunistic = CreateDomainRequestTls(rawValue: "opportunistic")
     public static let enforced = CreateDomainRequestTls(rawValue: "enforced")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

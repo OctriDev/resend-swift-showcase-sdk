@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Automations domain models
+/// Automations domain models
 /// Typed representation of the `DuplicateAutomationResponse` API schema.
 public struct DuplicateAutomationResponse: Codable {
     /// Type of the response object.
@@ -18,20 +18,20 @@ public struct DuplicateAutomationResponse: Codable {
     }
 
     init() {
-        (self.object, self.id) = (nil, nil)
+        (object, id) = (nil, nil)
     }
 }
 
-extension DuplicateAutomationResponse {
-    public init(from decoder: Decoder) throws {
+public extension DuplicateAutomationResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-extension DuplicateAutomationResponse {
-    public init(object: String? = nil, id: String? = nil) {
+public extension DuplicateAutomationResponse {
+    init(object: String? = nil, id: String? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
     }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Webhooks domain models
+/// Webhooks domain models
 /// Typed representation of the `ListWebhookEventAttemptsResponse` API schema.
 public struct ListWebhookEventAttemptsResponse: Codable {
     /// Type of the response object.
@@ -21,21 +21,21 @@ public struct ListWebhookEventAttemptsResponse: Codable {
     }
 
     init() {
-        (self.object, self.hasMore, self.data) = (nil, nil, nil)
+        (object, hasMore, data) = (nil, nil, nil)
     }
 }
 
-extension ListWebhookEventAttemptsResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListWebhookEventAttemptsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        object = try container.sdkDecodeIfPresent(.object)
+        hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension ListWebhookEventAttemptsResponse {
-    public init(object: String? = nil, hasMore: Bool? = nil, data: [ListWebhookEventAttemptsResponseDataItem]? = nil) {
+public extension ListWebhookEventAttemptsResponse {
+    init(object: String? = nil, hasMore: Bool? = nil, data: [ListWebhookEventAttemptsResponseDataItem]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -65,25 +65,25 @@ public struct ListWebhookEventAttemptsResponseDataItem: Codable {
     }
 
     init() {
-        (self.id, self.httpStatusCode, self.response, self.sentAt) = (nil, nil, nil, nil)
+        (id, httpStatusCode, response, sentAt) = (nil, nil, nil, nil)
     }
 }
 
-extension ListWebhookEventAttemptsResponseDataItem {
-    public init(from decoder: Decoder) throws {
+public extension ListWebhookEventAttemptsResponseDataItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.httpStatusCode = try container.sdkDecodeIfPresent(.httpStatusCode)
-        self.response = try container.sdkDecodeIfPresent(.response)
-        self.sentAt = try container.sdkDecodeIfPresent(.sentAt)
-        if let value = self.sentAt {
+        id = try container.sdkDecodeIfPresent(.id)
+        httpStatusCode = try container.sdkDecodeIfPresent(.httpStatusCode)
+        response = try container.sdkDecodeIfPresent(.response)
+        sentAt = try container.sdkDecodeIfPresent(.sentAt)
+        if let value = sentAt {
             try sdkValidateDateTime("sent_at", sdkWireString(value))
         }
     }
 }
 
-extension ListWebhookEventAttemptsResponseDataItem {
-    public init(id: String? = nil, httpStatusCode: Int? = nil, response: String? = nil, sentAt: Date? = nil) throws {
+public extension ListWebhookEventAttemptsResponseDataItem {
+    init(id: String? = nil, httpStatusCode: Int? = nil, response: String? = nil, sentAt: Date? = nil) throws {
         self.init()
         (self.id, self.httpStatusCode) = (id, httpStatusCode)
         (self.response, self.sentAt) = (response, sentAt)

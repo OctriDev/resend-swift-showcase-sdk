@@ -8,8 +8,10 @@ import Foundation
 #endif
 public enum ApiKeysMethods {}
 
-extension ApiKeysMethods {
-    /// Creates a new API key. Supply a `name` and choose whether the key has full access or is restricted to sending emails; a sending-only key can be limited to a specific domain. The response includes the key token, so store it securely when you create the key.
+public extension ApiKeysMethods {
+    /// Creates a new API key. Supply a `name` and choose whether the key has full access or is restricted to sending
+    /// emails; a sending-only key can be limited to a specific domain. The response includes the key token, so store it
+    /// securely when you create the key.
     ///
     /// - Parameters:
     /// - name: The API key name.
@@ -18,24 +20,45 @@ extension ApiKeysMethods {
     ///   update any resource. * sending_access - Can only send emails.
     /// - domainId: Restrict an API key to send emails only from a specific domain.
     ///   Only used when the permission is sending_access.
-    public static func apiKeysCreate(config: ClientConfig, name: String, permission: CreateApiKeyRequestPermission? = nil, domainId: String? = nil, requestOptions: RequestOptions? = nil) async throws -> CreateApiKeyResponse {
+    static func apiKeysCreate(
+        config: ClientConfig,
+        name: String,
+        permission: CreateApiKeyRequestPermission? = nil,
+        domainId: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateApiKeyResponse {
         let requestBody = ApiKeysCreateRequestBody(name: name, permission: permission, domainId: domainId)
 
-        return try (await sdkRequest("POST", "/api-keys", config: config, body: requestBody, decoder: .json, operationId: "apiKeysCreate", options: requestOptions)).data
+        return try await (sdkRequest(
+            "POST",
+            "/api-keys",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "apiKeysCreate",
+            options: requestOptions
+        )).data
     }
 
-    /// Lists API keys available to the authenticated user. Use `after` or `before` to navigate the results with a cursor, and `limit` to control the number of items returned.
+    /// Lists API keys available to the authenticated user. Use `after` or `before` to navigate the results with a
+    /// cursor, and `limit` to control the number of items returned.
     ///
     /// - Parameters:
     /// - limit: Number of items to return.
     /// - after: Return items after this cursor.
     /// - before: Return items before this cursor.
-    public static func apiKeysList(config: ClientConfig, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListApiKeysResponse {
-        if let limit = limit {
+    static func apiKeysList(
+        config: ClientConfig,
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListApiKeysResponse {
+        if let limit {
             try validateRange("limit", Double(limit), min: 1, max: 100)
         }
 
-        return try (await sdkRequest("GET", "/api-keys", config: config, query: [
+        return try await (sdkRequest("GET", "/api-keys", config: config, query: [
             SdkQueryParameter("limit", value: limit),
             SdkQueryParameter("after", value: after),
             SdkQueryParameter("before", value: before),

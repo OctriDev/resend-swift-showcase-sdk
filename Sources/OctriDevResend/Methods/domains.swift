@@ -8,8 +8,8 @@ import Foundation
 #endif
 public enum DomainsMethods {}
 
-extension DomainsMethods {
-    public struct DomainsCreateOptions: Codable {
+public extension DomainsMethods {
+    struct DomainsCreateOptions: Codable {
         public var name: String
         public var region: CreateDomainRequestRegion?
         public var customReturnPath: String?
@@ -24,7 +24,8 @@ extension DomainsMethods {
         }
     }
 
-    /// Creates a domain for sending or receiving email. Supply `name` and configure the sending region, tracking options, TLS mode, and capabilities as needed; at least one domain capability must be enabled.
+    /// Creates a domain for sending or receiving email. Supply `name` and configure the sending region, tracking
+    /// options, TLS mode, and capabilities as needed; at least one domain capability must be enabled.
     ///
     /// - Parameters:
     /// - name: The name of the domain you want to create.
@@ -39,9 +40,21 @@ extension DomainsMethods {
     /// - capabilities: Configure the domain capabilities for sending and receiving
     ///   emails. At least one capability must be enabled.
     /// - trackingSubdomain: The subdomain to use for click and open tracking.
-    public static func domainsCreate(config: ClientConfig, options: DomainsCreateOptions, requestOptions: RequestOptions? = nil) async throws -> CreateDomainResponse {
+    static func domainsCreate(
+        config: ClientConfig,
+        options: DomainsCreateOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateDomainResponse {
         let requestBody = DomainsCreateRequestBody(options: options)
 
-        return try (await sdkRequest("POST", "/domains", config: config, body: requestBody, decoder: .json, operationId: "domainsCreate", options: requestOptions)).data
+        return try await (sdkRequest(
+            "POST",
+            "/domains",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "domainsCreate",
+            options: requestOptions
+        )).data
     }
 }

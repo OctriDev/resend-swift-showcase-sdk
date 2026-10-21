@@ -6,10 +6,12 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension InboxesMethods {
-    /// Updates the name or color of an inbox label. Supply only the fields you want to change; omitted fields keep their current values, and a new name must remain unique on the inbox without regard to case.
+public extension InboxesMethods {
+    /// Updates the name or color of an inbox label. Supply only the fields you want to change; omitted fields keep
+    /// their current values, and a new name must remain unique on the inbox without regard to case.
     ///
-    /// Renames or recolors a label. Omitted fields keep their current value. A new name must not match another label on the inbox, compared without case, or the request returns a 422 validation_error.
+    /// Renames or recolors a label. Omitted fields keep their current value. A new name must not match another label on
+    /// the inbox, compared without case, or the request returns a 422 validation_error.
     ///
     /// - Parameters:
     /// - inboxId: The Inbox ID. An email address is not accepted.
@@ -19,21 +21,41 @@ extension InboxesMethods {
     ///   without case.
     /// - color: A new color for the label, as a `#RRGGBB` hex color. It is stored
     ///   in uppercase.
-    public static func inboxesUpdateLabel(config: ClientConfig, inboxId: String, labelId: String, name: String? = nil, color: String? = nil, requestOptions: RequestOptions? = nil) async throws -> UpdateInboxLabelResponseSuccess {
+    static func inboxesUpdateLabel(
+        config: ClientConfig,
+        inboxId: String,
+        labelId: String,
+        name: String? = nil,
+        color: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> UpdateInboxLabelResponseSuccess {
         try sdkValidateUuid("inbox_id", inboxId)
 
         try sdkValidateUuid("label_id", labelId)
 
-        if let name = name {
+        if let name {
             try validateLength("name", name, min: 1, max: 64)
         }
 
-        if let color = color {
+        if let color {
             try sdkValidatePattern("color", color, sdkPatternf01b4765958d)
         }
 
         let requestBody = InboxesUpdateLabelRequestBody(name: name, color: color)
 
-        return try (await sdkRequest("PATCH", ["/inboxes/", sdkEncodePathSegment(sdkWireString(inboxId)), "/labels/", sdkEncodePathSegment(sdkWireString(labelId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "inboxesUpdateLabel", options: requestOptions)).data
+        return try await (sdkRequest(
+            "PATCH",
+            [
+                "/inboxes/",
+                sdkEncodePathSegment(sdkWireString(inboxId)),
+                "/labels/",
+                sdkEncodePathSegment(sdkWireString(labelId)),
+            ].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "inboxesUpdateLabel",
+            options: requestOptions
+        )).data
     }
 }

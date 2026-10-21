@@ -6,12 +6,24 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension EmailsMethods {
-    /// Cancels the scheduled send of an email. Use `email_id` to identify the email whose scheduled delivery you want to cancel; the response includes the email's current details and latest event.
+public extension EmailsMethods {
+    /// Cancels the scheduled send of an email. Use `email_id` to identify the email whose scheduled delivery you want
+    /// to cancel; the response includes the email's current details and latest event.
     ///
     /// - Parameters:
     /// - emailId: The ID of the email.
-    public static func emailsCancel(config: ClientConfig, emailId: String, requestOptions: RequestOptions? = nil) async throws -> Email {
-        return try (await sdkRequest("POST", ["/emails/", sdkEncodePathSegment(sdkWireString(emailId)), "/cancel"].joined(), config: config, decoder: .json, operationId: "emailsCancel", options: requestOptions)).data
+    static func emailsCancel(
+        config: ClientConfig,
+        emailId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Email {
+        try await (sdkRequest(
+            "POST",
+            ["/emails/", sdkEncodePathSegment(sdkWireString(emailId)), "/cancel"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "emailsCancel",
+            options: requestOptions
+        )).data
     }
 }

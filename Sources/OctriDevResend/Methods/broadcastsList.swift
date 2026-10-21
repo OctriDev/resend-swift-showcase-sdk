@@ -6,38 +6,69 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension BroadcastsMethods {
-    /// Lists broadcasts and their delivery or scheduling information. Use `after` or `before` to navigate results by cursor, and `limit` to control the number of items returned.
+public extension BroadcastsMethods {
+    /// Lists broadcasts and their delivery or scheduling information. Use `after` or `before` to navigate results by
+    /// cursor, and `limit` to control the number of items returned.
     ///
     /// - Parameters:
     /// - limit: Number of items to return.
     /// - after: Return items after this cursor.
     /// - before: Return items before this cursor.
-    public static func broadcastsList(config: ClientConfig, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListBroadcastsResponseSuccess {
-        if let limit = limit {
+    static func broadcastsList(
+        config: ClientConfig,
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListBroadcastsResponseSuccess {
+        if let limit {
             try validateRange("limit", Double(limit), min: 1, max: 100)
         }
 
-        return try (await sdkRequest("GET", "/broadcasts", config: config, query: [
+        return try await (sdkRequest("GET", "/broadcasts", config: config, query: [
             SdkQueryParameter("limit", value: limit),
             SdkQueryParameter("after", value: after),
             SdkQueryParameter("before", value: before),
         ], decoder: .json, operationId: "broadcastsList", options: requestOptions)).data
     }
 
-    /// Deletes an existing broadcast that is in draft status. Use this operation to remove a draft broadcast that you no longer need.
+    /// Deletes an existing broadcast that is in draft status. Use this operation to remove a draft broadcast that you
+    /// no longer need.
     ///
     /// - Parameters:
     /// - id: The Broadcast ID.
-    public static func broadcastsRemove(config: ClientConfig, id: String, requestOptions: RequestOptions? = nil) async throws -> RemoveBroadcastResponseSuccess {
-        return try (await sdkRequest("DELETE", ["/broadcasts/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "broadcastsRemove", options: requestOptions)).data
+    static func broadcastsRemove(
+        config: ClientConfig,
+        id: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> RemoveBroadcastResponseSuccess {
+        try await (sdkRequest(
+            "DELETE",
+            ["/broadcasts/", sdkEncodePathSegment(sdkWireString(id))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "broadcastsRemove",
+            options: requestOptions
+        )).data
     }
 
-    /// Retrieves a single broadcast by its identifier. Use this endpoint to inspect the broadcast's audience, sender, content, and delivery status.
+    /// Retrieves a single broadcast by its identifier. Use this endpoint to inspect the broadcast's audience, sender,
+    /// content, and delivery status.
     ///
     /// - Parameters:
     /// - id: The Broadcast ID.
-    public static func broadcastsGet(config: ClientConfig, id: String, requestOptions: RequestOptions? = nil) async throws -> GetBroadcastResponseSuccess {
-        return try (await sdkRequest("GET", ["/broadcasts/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "broadcastsGet", options: requestOptions)).data
+    static func broadcastsGet(
+        config: ClientConfig,
+        id: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GetBroadcastResponseSuccess {
+        try await (sdkRequest(
+            "GET",
+            ["/broadcasts/", sdkEncodePathSegment(sdkWireString(id))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "broadcastsGet",
+            options: requestOptions
+        )).data
     }
 }

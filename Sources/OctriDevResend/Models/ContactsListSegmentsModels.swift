@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Contacts domain models
+/// Contacts domain models
 /// Typed representation of the `ListContactSegmentsResponseSuccess` API schema.
 public struct ListContactSegmentsResponseSuccess: Codable {
     /// Type of the response object.
@@ -21,21 +21,21 @@ public struct ListContactSegmentsResponseSuccess: Codable {
     }
 
     init() {
-        (self.object, self.hasMore, self.data) = (nil, nil, nil)
+        (object, hasMore, data) = (nil, nil, nil)
     }
 }
 
-extension ListContactSegmentsResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension ListContactSegmentsResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        object = try container.sdkDecodeIfPresent(.object)
+        hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension ListContactSegmentsResponseSuccess {
-    public init(object: String? = nil, hasMore: Bool? = nil, data: [ListContactSegmentsResponseSuccessDataItem]? = nil) {
+public extension ListContactSegmentsResponseSuccess {
+    init(object: String? = nil, hasMore: Bool? = nil, data: [ListContactSegmentsResponseSuccessDataItem]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -59,21 +59,21 @@ public struct ListContactSegmentsResponseSuccessDataItem: Codable {
     }
 
     init() {
-        (self.id, self.name, self.createdAt) = (nil, nil, nil)
+        (id, name, createdAt) = (nil, nil, nil)
     }
 }
 
-extension ListContactSegmentsResponseSuccessDataItem {
-    public init(from decoder: Decoder) throws {
+public extension ListContactSegmentsResponseSuccessDataItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
     }
 }
 
-extension ListContactSegmentsResponseSuccessDataItem {
-    public init(id: String? = nil, name: String? = nil, createdAt: String? = nil) {
+public extension ListContactSegmentsResponseSuccessDataItem {
+    init(id: String? = nil, name: String? = nil, createdAt: String? = nil) {
         self.init()
         (self.id, self.name) = (id, name)
         self.createdAt = createdAt

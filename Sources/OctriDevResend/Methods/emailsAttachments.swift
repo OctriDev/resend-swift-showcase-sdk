@@ -6,8 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension EmailsMethods {
-    /// Lists the attachments for a sent email. Use `email_id` to select the email and `after` or `before` to paginate through its attachments; these cursor parameters cannot be used together.
+public extension EmailsMethods {
+    /// Lists the attachments for a sent email. Use `email_id` to select the email and `after` or `before` to paginate
+    /// through its attachments; these cursor parameters cannot be used together.
     ///
     /// - Parameters:
     /// - emailId: The ID of the email.
@@ -16,34 +17,67 @@ extension EmailsMethods {
     ///   be used with 'before'.
     /// - before: Pagination cursor to fetch results before this attachment ID.
     ///   Cannot be used with 'after'.
-    public static func emailsListAttachments(config: ClientConfig, emailId: String, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListAttachmentsResponse {
+    static func emailsListAttachments(
+        config: ClientConfig,
+        emailId: String,
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListAttachmentsResponse {
         try sdkValidateUuid("email_id", emailId)
 
-        if let after = after {
+        if let after {
             try sdkValidateUuid("after", after)
         }
 
-        if let before = before {
+        if let before {
             try sdkValidateUuid("before", before)
         }
 
-        return try (await sdkRequest("GET", ["/emails/", sdkEncodePathSegment(sdkWireString(emailId)), "/attachments"].joined(), config: config, query: [
-            SdkQueryParameter("limit", value: limit),
-            SdkQueryParameter("after", value: after),
-            SdkQueryParameter("before", value: before),
-        ], decoder: .json, operationId: "emailsListAttachments", options: requestOptions)).data
+        return try await (sdkRequest(
+            "GET",
+            ["/emails/", sdkEncodePathSegment(sdkWireString(emailId)), "/attachments"].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("limit", value: limit),
+                SdkQueryParameter("after", value: after),
+                SdkQueryParameter("before", value: before),
+            ],
+            decoder: .json,
+            operationId: "emailsListAttachments",
+            options: requestOptions
+        )).data
     }
 
-    /// Retrieves a single attachment for a sent email. Use `email_id` and `attachment_id` to identify the email and attachment; the response includes a signed download URL and its expiration time.
+    /// Retrieves a single attachment for a sent email. Use `email_id` and `attachment_id` to identify the email and
+    /// attachment; the response includes a signed download URL and its expiration time.
     ///
     /// - Parameters:
     /// - emailId: The ID of the email.
     /// - attachmentId: The ID of the attachment.
-    public static func emailsGetAttachment(config: ClientConfig, emailId: String, attachmentId: String, requestOptions: RequestOptions? = nil) async throws -> RetrievedAttachment {
+    static func emailsGetAttachment(
+        config: ClientConfig,
+        emailId: String,
+        attachmentId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> RetrievedAttachment {
         try sdkValidateUuid("email_id", emailId)
 
         try sdkValidateUuid("attachment_id", attachmentId)
 
-        return try (await sdkRequest("GET", ["/emails/", sdkEncodePathSegment(sdkWireString(emailId)), "/attachments/", sdkEncodePathSegment(sdkWireString(attachmentId))].joined(), config: config, decoder: .json, operationId: "emailsGetAttachment", options: requestOptions)).data
+        return try await (sdkRequest(
+            "GET",
+            [
+                "/emails/",
+                sdkEncodePathSegment(sdkWireString(emailId)),
+                "/attachments/",
+                sdkEncodePathSegment(sdkWireString(attachmentId)),
+            ].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "emailsGetAttachment",
+            options: requestOptions
+        )).data
     }
 }

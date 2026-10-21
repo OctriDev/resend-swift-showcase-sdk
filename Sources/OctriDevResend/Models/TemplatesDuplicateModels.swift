@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Templates domain models
+/// Templates domain models
 /// Typed representation of the `DuplicateTemplateResponseSuccess` API schema.
 public struct DuplicateTemplateResponseSuccess: Codable {
     /// The ID of the duplicated template.
@@ -18,20 +18,20 @@ public struct DuplicateTemplateResponseSuccess: Codable {
     }
 
     init() {
-        (self.id, self.object) = (nil, nil)
+        (id, object) = (nil, nil)
     }
 }
 
-extension DuplicateTemplateResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension DuplicateTemplateResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
     }
 }
 
-extension DuplicateTemplateResponseSuccess {
-    public init(id: String? = nil, object: String? = nil) {
+public extension DuplicateTemplateResponseSuccess {
+    init(id: String? = nil, object: String? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
     }

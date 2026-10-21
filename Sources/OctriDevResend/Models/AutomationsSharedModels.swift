@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Automations domain models
+/// Automations domain models
 /// A connection between two steps in the automation graph.
 public struct AutomationConnection: Codable {
     /// The `key` of the source step.
@@ -19,26 +19,36 @@ public struct AutomationConnection: Codable {
         case type
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AutomationConnection {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.from) else {
-            throw SdkValidationError(field: "from", code: "required", message: "Validation failed for 'from': value is required")
-        }
-        guard container.contains(.to) else {
-            throw SdkValidationError(field: "to", code: "required", message: "Validation failed for 'to': value is required")
-        }
-        self.from = try container.sdkDecodeRequired(.from)
-        self.to = try container.sdkDecodeRequired(.to)
-        self.type = try container.sdkDecodeIfPresent(.type)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AutomationConnection {
-    public init(from: String, to: String, type: AutomationConnectionType? = nil) {
+public extension AutomationConnection {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.from) else {
+            throw SdkValidationError(
+                field: "from",
+                code: "required",
+                message: "Validation failed for 'from': value is required"
+            )
+        }
+        guard container.contains(.to) else {
+            throw SdkValidationError(
+                field: "to",
+                code: "required",
+                message: "Validation failed for 'to': value is required"
+            )
+        }
+        from = try container.sdkDecodeRequired(.from)
+        to = try container.sdkDecodeRequired(.to)
+        type = try container.sdkDecodeIfPresent(.type)
+    }
+}
+
+public extension AutomationConnection {
+    init(from: String, to: String, type: AutomationConnectionType? = nil) {
         (self.from, self.to) = (from, to)
         self.type = type
     }
@@ -63,29 +73,43 @@ public struct AutomationStep: Codable {
         case config
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AutomationStep {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.key) else {
-            throw SdkValidationError(field: "key", code: "required", message: "Validation failed for 'key': value is required")
-        }
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.config) else {
-            throw SdkValidationError(field: "config", code: "required", message: "Validation failed for 'config': value is required")
-        }
-        self.key = try container.sdkDecodeRequired(.key)
-        self.type = try container.sdkDecodeRequired(.type)
-        self.config = try container.sdkDecodeRequired(.config)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AutomationStep {
-    public init(key: String, type: AutomationStepType, config: [String: JSONValue]) {
+public extension AutomationStep {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.key) else {
+            throw SdkValidationError(
+                field: "key",
+                code: "required",
+                message: "Validation failed for 'key': value is required"
+            )
+        }
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.config) else {
+            throw SdkValidationError(
+                field: "config",
+                code: "required",
+                message: "Validation failed for 'config': value is required"
+            )
+        }
+        key = try container.sdkDecodeRequired(.key)
+        type = try container.sdkDecodeRequired(.type)
+        config = try container.sdkDecodeRequired(.config)
+    }
+}
+
+public extension AutomationStep {
+    init(key: String, type: AutomationStepType, config: [String: JSONValue]) {
         (self.key, self.type) = (key, type)
         self.config = config
     }
@@ -95,7 +119,10 @@ extension AutomationStep {
 public struct AutomationConnectionType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let `default` = AutomationConnectionType(rawValue: "default")
     public static let conditionMet = AutomationConnectionType(rawValue: "condition_met")
     public static let conditionNotMet = AutomationConnectionType(rawValue: "condition_not_met")
@@ -104,7 +131,7 @@ public struct AutomationConnectionType: RawRepresentable, Hashable, Codable, Sen
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -117,7 +144,10 @@ public struct AutomationConnectionType: RawRepresentable, Hashable, Codable, Sen
 public struct AutomationStepType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let trigger = AutomationStepType(rawValue: "trigger")
     public static let sendEmail = AutomationStepType(rawValue: "send_email")
     public static let delay = AutomationStepType(rawValue: "delay")
@@ -129,7 +159,7 @@ public struct AutomationStepType: RawRepresentable, Hashable, Codable, Sendable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

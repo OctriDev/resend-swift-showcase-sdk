@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Broadcasts domain models
+/// Broadcasts domain models
 /// Typed representation of the `GetBroadcastResponseSuccess` API schema.
 public struct GetBroadcastResponseSuccess: Codable {
     /// Unique identifier for the broadcast.
@@ -68,35 +68,51 @@ public struct GetBroadcastResponseSuccess: Codable {
     }
 
     init() {
-        (self.id, self.name, self.audienceId, self.segmentId, self.from) = (nil, nil, nil, nil, nil)
-        (self.subject, self.replyTo, self.previewText, self.status, self.createdAt) = (nil, nil, nil, nil, nil)
-        (self.scheduledAt, self.sentAt, self.text, self.html, self.topicId) = (nil, nil, nil, nil, nil)
+        (id, name, audienceId, segmentId, from) = (nil, nil, nil, nil, nil)
+        (subject, replyTo, previewText, status, createdAt) = (nil, nil, nil, nil, nil)
+        (scheduledAt, sentAt, text, html, topicId) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension GetBroadcastResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension GetBroadcastResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.audienceId = try container.sdkDecodeIfPresent(.audienceId)
-        self.segmentId = try container.sdkDecodeIfPresent(.segmentId)
-        self.from = try container.sdkDecodeIfPresent(.from)
-        self.subject = try container.sdkDecodeIfPresent(.subject)
-        self.replyTo = try container.sdkDecodeIfPresent(.replyTo)
-        self.previewText = try container.sdkDecodeIfPresent(.previewText)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.scheduledAt = try container.sdkDecodeIfPresent(.scheduledAt)
-        self.sentAt = try container.sdkDecodeIfPresent(.sentAt)
-        self.text = try container.sdkDecodeIfPresent(.text)
-        self.html = try container.sdkDecodeIfPresent(.html)
-        self.topicId = try container.sdkDecodeIfPresent(.topicId)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        audienceId = try container.sdkDecodeIfPresent(.audienceId)
+        segmentId = try container.sdkDecodeIfPresent(.segmentId)
+        from = try container.sdkDecodeIfPresent(.from)
+        subject = try container.sdkDecodeIfPresent(.subject)
+        replyTo = try container.sdkDecodeIfPresent(.replyTo)
+        previewText = try container.sdkDecodeIfPresent(.previewText)
+        status = try container.sdkDecodeIfPresent(.status)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        scheduledAt = try container.sdkDecodeIfPresent(.scheduledAt)
+        sentAt = try container.sdkDecodeIfPresent(.sentAt)
+        text = try container.sdkDecodeIfPresent(.text)
+        html = try container.sdkDecodeIfPresent(.html)
+        topicId = try container.sdkDecodeIfPresent(.topicId)
     }
 }
 
-extension GetBroadcastResponseSuccess {
-    public init(id: String? = nil, name: String? = nil, audienceId: String? = nil, segmentId: String? = nil, from: String? = nil, subject: String? = nil, replyTo: [String]? = nil, previewText: String? = nil, status: String? = nil, createdAt: String? = nil, scheduledAt: String? = nil, sentAt: String? = nil, text: String? = nil, html: String? = nil, topicId: String? = nil) {
+public extension GetBroadcastResponseSuccess {
+    init(
+        id: String? = nil,
+        name: String? = nil,
+        audienceId: String? = nil,
+        segmentId: String? = nil,
+        from: String? = nil,
+        subject: String? = nil,
+        replyTo: [String]? = nil,
+        previewText: String? = nil,
+        status: String? = nil,
+        createdAt: String? = nil,
+        scheduledAt: String? = nil,
+        sentAt: String? = nil,
+        text: String? = nil,
+        html: String? = nil,
+        topicId: String? = nil
+    ) {
         self.init()
         (self.id, self.name) = (id, name)
         (self.audienceId, self.segmentId) = (audienceId, segmentId)

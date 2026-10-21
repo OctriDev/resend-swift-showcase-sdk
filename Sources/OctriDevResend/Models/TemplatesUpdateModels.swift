@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Templates domain models
+/// Templates domain models
 /// Typed representation of the `UpdateTemplateOptions` API schema.
 public struct UpdateTemplateOptions: Codable {
     /// The name of the template.
@@ -35,27 +35,36 @@ public struct UpdateTemplateOptions: Codable {
     }
 
     init() {
-        (self.name, self.alias, self.from, self.subject, self.replyTo) = (nil, nil, nil, nil, nil)
-        (self.html, self.text, self.variables) = (nil, nil, nil)
+        (name, alias, from, subject, replyTo) = (nil, nil, nil, nil, nil)
+        (html, text, variables) = (nil, nil, nil)
     }
 }
 
-extension UpdateTemplateOptions {
-    public init(from decoder: Decoder) throws {
+public extension UpdateTemplateOptions {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.alias = try container.sdkDecodeIfPresent(.alias)
-        self.from = try container.sdkDecodeIfPresent(.from)
-        self.subject = try container.sdkDecodeIfPresent(.subject)
-        self.replyTo = try container.sdkDecodeIfPresent(.replyTo)
-        self.html = try container.sdkDecodeIfPresent(.html)
-        self.text = try container.sdkDecodeIfPresent(.text)
-        self.variables = try container.sdkDecodeIfPresent(.variables)
+        name = try container.sdkDecodeIfPresent(.name)
+        alias = try container.sdkDecodeIfPresent(.alias)
+        from = try container.sdkDecodeIfPresent(.from)
+        subject = try container.sdkDecodeIfPresent(.subject)
+        replyTo = try container.sdkDecodeIfPresent(.replyTo)
+        html = try container.sdkDecodeIfPresent(.html)
+        text = try container.sdkDecodeIfPresent(.text)
+        variables = try container.sdkDecodeIfPresent(.variables)
     }
 }
 
-extension UpdateTemplateOptions {
-    public init(name: String? = nil, alias: String? = nil, from: String? = nil, subject: String? = nil, replyTo: [String]? = nil, html: String? = nil, text: String? = nil, variables: [TemplateVariableInput]? = nil) {
+public extension UpdateTemplateOptions {
+    init(
+        name: String? = nil,
+        alias: String? = nil,
+        from: String? = nil,
+        subject: String? = nil,
+        replyTo: [String]? = nil,
+        html: String? = nil,
+        text: String? = nil,
+        variables: [TemplateVariableInput]? = nil
+    ) {
         self.init()
         (self.name, self.alias) = (name, alias)
         (self.from, self.subject) = (from, subject)
@@ -78,20 +87,20 @@ public struct UpdateTemplateResponseSuccess: Codable {
     }
 
     init() {
-        (self.id, self.object) = (nil, nil)
+        (id, object) = (nil, nil)
     }
 }
 
-extension UpdateTemplateResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension UpdateTemplateResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
     }
 }
 
-extension UpdateTemplateResponseSuccess {
-    public init(id: String? = nil, object: String? = nil) {
+public extension UpdateTemplateResponseSuccess {
+    init(id: String? = nil, object: String? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
     }

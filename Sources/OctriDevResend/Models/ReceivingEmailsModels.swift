@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ReceivingEmails domain models
+/// ReceivingEmails domain models
 /// Typed representation of the `GetReceivedEmailResponse` API schema.
 public struct GetReceivedEmailResponse: Codable {
     /// The type of object.
@@ -71,41 +71,57 @@ public struct GetReceivedEmailResponse: Codable {
     }
 
     init() {
-        (self.object, self.id, self.to, self.from, self.subject) = (nil, nil, nil, nil, nil)
-        (self.messageId, self.bcc, self.cc, self.replyTo, self.receivedFor) = (nil, nil, nil, nil, nil)
-        (self.html, self.text, self.headers, self.createdAt, self.attachments) = (nil, nil, nil, nil, nil)
+        (object, id, to, from, subject) = (nil, nil, nil, nil, nil)
+        (messageId, bcc, cc, replyTo, receivedFor) = (nil, nil, nil, nil, nil)
+        (html, text, headers, createdAt, attachments) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension GetReceivedEmailResponse {
-    public init(from decoder: Decoder) throws {
+public extension GetReceivedEmailResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.to = try container.sdkDecodeIfPresent(.to)
-        self.from = try container.sdkDecodeIfPresent(.from)
-        self.subject = try container.sdkDecodeIfPresent(.subject)
-        self.messageId = try container.sdkDecodeIfPresent(.messageId)
-        self.bcc = try container.sdkDecodeIfPresent(.bcc)
-        self.cc = try container.sdkDecodeIfPresent(.cc)
-        self.replyTo = try container.sdkDecodeIfPresent(.replyTo)
-        self.receivedFor = try container.sdkDecodeIfPresent(.receivedFor)
-        self.html = try container.sdkDecodeIfPresent(.html)
-        self.text = try container.sdkDecodeIfPresent(.text)
-        self.headers = try container.sdkDecodeIfPresent(.headers)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.attachments = try container.sdkDecodeIfPresent(.attachments)
-        if let value = self.id {
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        to = try container.sdkDecodeIfPresent(.to)
+        from = try container.sdkDecodeIfPresent(.from)
+        subject = try container.sdkDecodeIfPresent(.subject)
+        messageId = try container.sdkDecodeIfPresent(.messageId)
+        bcc = try container.sdkDecodeIfPresent(.bcc)
+        cc = try container.sdkDecodeIfPresent(.cc)
+        replyTo = try container.sdkDecodeIfPresent(.replyTo)
+        receivedFor = try container.sdkDecodeIfPresent(.receivedFor)
+        html = try container.sdkDecodeIfPresent(.html)
+        text = try container.sdkDecodeIfPresent(.text)
+        headers = try container.sdkDecodeIfPresent(.headers)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        attachments = try container.sdkDecodeIfPresent(.attachments)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
-        if let value = self.createdAt {
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-extension GetReceivedEmailResponse {
-    public init(object: String? = nil, id: String? = nil, to: [String]? = nil, from: String? = nil, subject: String? = nil, messageId: String? = nil, bcc: [String]? = nil, cc: [String]? = nil, replyTo: [String]? = nil, receivedFor: [String]? = nil, html: String? = nil, text: String? = nil, headers: [String: JSONValue]? = nil, createdAt: Date? = nil, attachments: [GetReceivedEmailResponseAttachmentsItem]? = nil) throws {
+public extension GetReceivedEmailResponse {
+    init(
+        object: String? = nil,
+        id: String? = nil,
+        to: [String]? = nil,
+        from: String? = nil,
+        subject: String? = nil,
+        messageId: String? = nil,
+        bcc: [String]? = nil,
+        cc: [String]? = nil,
+        replyTo: [String]? = nil,
+        receivedFor: [String]? = nil,
+        html: String? = nil,
+        text: String? = nil,
+        headers: [String: JSONValue]? = nil,
+        createdAt: Date? = nil,
+        attachments: [GetReceivedEmailResponseAttachmentsItem]? = nil
+    ) throws {
         self.init()
         (self.object, self.id) = (object, id)
         (self.to, self.from) = (to, from)
@@ -149,28 +165,35 @@ public struct GetReceivedEmailResponseAttachmentsItem: Codable {
     }
 
     init() {
-        (self.id, self.filename, self.contentType, self.contentId, self.contentDisposition) = (nil, nil, nil, nil, nil)
-        self.size = nil
+        (id, filename, contentType, contentId, contentDisposition) = (nil, nil, nil, nil, nil)
+        size = nil
     }
 }
 
-extension GetReceivedEmailResponseAttachmentsItem {
-    public init(from decoder: Decoder) throws {
+public extension GetReceivedEmailResponseAttachmentsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.filename = try container.sdkDecodeIfPresent(.filename)
-        self.contentType = try container.sdkDecodeIfPresent(.contentType)
-        self.contentId = try container.sdkDecodeIfPresent(.contentId)
-        self.contentDisposition = try container.sdkDecodeIfPresent(.contentDisposition)
-        self.size = try container.sdkDecodeIfPresent(.size)
-        if let value = self.id {
+        id = try container.sdkDecodeIfPresent(.id)
+        filename = try container.sdkDecodeIfPresent(.filename)
+        contentType = try container.sdkDecodeIfPresent(.contentType)
+        contentId = try container.sdkDecodeIfPresent(.contentId)
+        contentDisposition = try container.sdkDecodeIfPresent(.contentDisposition)
+        size = try container.sdkDecodeIfPresent(.size)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-extension GetReceivedEmailResponseAttachmentsItem {
-    public init(id: String? = nil, filename: String? = nil, contentType: String? = nil, contentId: String? = nil, contentDisposition: GetReceivedEmailResponseAttachmentsItemContentDisposition? = nil, size: Int? = nil) throws {
+public extension GetReceivedEmailResponseAttachmentsItem {
+    init(
+        id: String? = nil,
+        filename: String? = nil,
+        contentType: String? = nil,
+        contentId: String? = nil,
+        contentDisposition: GetReceivedEmailResponseAttachmentsItemContentDisposition? = nil,
+        size: Int? = nil
+    ) throws {
         self.init()
         (self.id, self.filename) = (id, filename)
         (self.contentType, self.contentId) = (contentType, contentId)
@@ -224,35 +247,46 @@ public struct ListReceivedEmailsResponseDataItem: Codable {
     }
 
     init() {
-        (self.id, self.to, self.from, self.subject, self.messageId) = (nil, nil, nil, nil, nil)
-        (self.bcc, self.cc, self.replyTo, self.createdAt, self.attachments) = (nil, nil, nil, nil, nil)
+        (id, to, from, subject, messageId) = (nil, nil, nil, nil, nil)
+        (bcc, cc, replyTo, createdAt, attachments) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension ListReceivedEmailsResponseDataItem {
-    public init(from decoder: Decoder) throws {
+public extension ListReceivedEmailsResponseDataItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.to = try container.sdkDecodeIfPresent(.to)
-        self.from = try container.sdkDecodeIfPresent(.from)
-        self.subject = try container.sdkDecodeIfPresent(.subject)
-        self.messageId = try container.sdkDecodeIfPresent(.messageId)
-        self.bcc = try container.sdkDecodeIfPresent(.bcc)
-        self.cc = try container.sdkDecodeIfPresent(.cc)
-        self.replyTo = try container.sdkDecodeIfPresent(.replyTo)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.attachments = try container.sdkDecodeIfPresent(.attachments)
-        if let value = self.id {
+        id = try container.sdkDecodeIfPresent(.id)
+        to = try container.sdkDecodeIfPresent(.to)
+        from = try container.sdkDecodeIfPresent(.from)
+        subject = try container.sdkDecodeIfPresent(.subject)
+        messageId = try container.sdkDecodeIfPresent(.messageId)
+        bcc = try container.sdkDecodeIfPresent(.bcc)
+        cc = try container.sdkDecodeIfPresent(.cc)
+        replyTo = try container.sdkDecodeIfPresent(.replyTo)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        attachments = try container.sdkDecodeIfPresent(.attachments)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
-        if let value = self.createdAt {
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-extension ListReceivedEmailsResponseDataItem {
-    public init(id: String? = nil, to: [String]? = nil, from: String? = nil, subject: String? = nil, messageId: String? = nil, bcc: [String]? = nil, cc: [String]? = nil, replyTo: [String]? = nil, createdAt: Date? = nil, attachments: [ListReceivedEmailsResponseDataItemAttachmentsItem]? = nil) throws {
+public extension ListReceivedEmailsResponseDataItem {
+    init(
+        id: String? = nil,
+        to: [String]? = nil,
+        from: String? = nil,
+        subject: String? = nil,
+        messageId: String? = nil,
+        bcc: [String]? = nil,
+        cc: [String]? = nil,
+        replyTo: [String]? = nil,
+        createdAt: Date? = nil,
+        attachments: [ListReceivedEmailsResponseDataItemAttachmentsItem]? = nil
+    ) throws {
         self.init()
         (self.id, self.to) = (id, to)
         (self.from, self.subject) = (from, subject)
@@ -293,28 +327,35 @@ public struct ListReceivedEmailsResponseDataItemAttachmentsItem: Codable {
     }
 
     init() {
-        (self.id, self.filename, self.contentType, self.contentId, self.contentDisposition) = (nil, nil, nil, nil, nil)
-        self.size = nil
+        (id, filename, contentType, contentId, contentDisposition) = (nil, nil, nil, nil, nil)
+        size = nil
     }
 }
 
-extension ListReceivedEmailsResponseDataItemAttachmentsItem {
-    public init(from decoder: Decoder) throws {
+public extension ListReceivedEmailsResponseDataItemAttachmentsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.filename = try container.sdkDecodeIfPresent(.filename)
-        self.contentType = try container.sdkDecodeIfPresent(.contentType)
-        self.contentId = try container.sdkDecodeIfPresent(.contentId)
-        self.contentDisposition = try container.sdkDecodeIfPresent(.contentDisposition)
-        self.size = try container.sdkDecodeIfPresent(.size)
-        if let value = self.id {
+        id = try container.sdkDecodeIfPresent(.id)
+        filename = try container.sdkDecodeIfPresent(.filename)
+        contentType = try container.sdkDecodeIfPresent(.contentType)
+        contentId = try container.sdkDecodeIfPresent(.contentId)
+        contentDisposition = try container.sdkDecodeIfPresent(.contentDisposition)
+        size = try container.sdkDecodeIfPresent(.size)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-extension ListReceivedEmailsResponseDataItemAttachmentsItem {
-    public init(id: String? = nil, filename: String? = nil, contentType: String? = nil, contentId: String? = nil, contentDisposition: ListReceivedEmailsResponseDataItemAttachmentsItemContentDisposition? = nil, size: Int? = nil) throws {
+public extension ListReceivedEmailsResponseDataItemAttachmentsItem {
+    init(
+        id: String? = nil,
+        filename: String? = nil,
+        contentType: String? = nil,
+        contentId: String? = nil,
+        contentDisposition: ListReceivedEmailsResponseDataItemAttachmentsItemContentDisposition? = nil,
+        size: Int? = nil
+    ) throws {
         self.init()
         (self.id, self.filename) = (id, filename)
         (self.contentType, self.contentId) = (contentType, contentId)
@@ -342,21 +383,21 @@ public struct ListReceivedEmailsResponse: Codable {
     }
 
     init() {
-        (self.object, self.hasMore, self.data) = (nil, nil, nil)
+        (object, hasMore, data) = (nil, nil, nil)
     }
 }
 
-extension ListReceivedEmailsResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListReceivedEmailsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        object = try container.sdkDecodeIfPresent(.object)
+        hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension ListReceivedEmailsResponse {
-    public init(object: String? = nil, hasMore: Bool? = nil, data: [ListReceivedEmailsResponseDataItem]? = nil) {
+public extension ListReceivedEmailsResponse {
+    init(object: String? = nil, hasMore: Bool? = nil, data: [ListReceivedEmailsResponseDataItem]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -364,16 +405,21 @@ extension ListReceivedEmailsResponse {
 }
 
 /// How the attachment should be displayed.
-public struct ListReceivedEmailsResponseDataItemAttachmentsItemContentDisposition: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct ListReceivedEmailsResponseDataItemAttachmentsItemContentDisposition: RawRepresentable, Hashable, Codable,
+    Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let inline = ListReceivedEmailsResponseDataItemAttachmentsItemContentDisposition(rawValue: "inline")
-    public static let attachment = ListReceivedEmailsResponseDataItemAttachmentsItemContentDisposition(rawValue: "attachment")
+    public static let attachment =
+        ListReceivedEmailsResponseDataItemAttachmentsItemContentDisposition(rawValue: "attachment")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -383,16 +429,20 @@ public struct ListReceivedEmailsResponseDataItemAttachmentsItemContentDispositio
 }
 
 /// How the attachment should be displayed.
-public struct GetReceivedEmailResponseAttachmentsItemContentDisposition: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct GetReceivedEmailResponseAttachmentsItemContentDisposition: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let inline = GetReceivedEmailResponseAttachmentsItemContentDisposition(rawValue: "inline")
     public static let attachment = GetReceivedEmailResponseAttachmentsItemContentDisposition(rawValue: "attachment")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

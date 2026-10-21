@@ -8,21 +8,36 @@ import Foundation
 #endif
 public enum WebhooksMethods {}
 
-extension WebhooksMethods {
-    /// Creates a webhook subscription that delivers selected event types to a specified endpoint. Provide an `endpoint` URL and at least one event type in `events` to configure the subscription.
+public extension WebhooksMethods {
+    /// Creates a webhook subscription that delivers selected event types to a specified endpoint. Provide an `endpoint`
+    /// URL and at least one event type in `events` to configure the subscription.
     ///
     /// - Parameters:
     /// - endpoint: The URL where webhook events will be sent.
     /// - events: Array of event types to subscribe to.
-    public static func webhooksCreate(config: ClientConfig, endpoint: String, events: [String], requestOptions: RequestOptions? = nil) async throws -> CreateWebhookResponse {
+    static func webhooksCreate(
+        config: ClientConfig,
+        endpoint: String,
+        events: [String],
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateWebhookResponse {
         try validateItems("events", events, min: 1)
 
         let requestBody = WebhooksCreateRequestBody(endpoint: endpoint, events: events)
 
-        return try (await sdkRequest("POST", "/webhooks", config: config, body: requestBody, decoder: .json, operationId: "webhooksCreate", options: requestOptions)).data
+        return try await (sdkRequest(
+            "POST",
+            "/webhooks",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "webhooksCreate",
+            options: requestOptions
+        )).data
     }
 
-    /// Lists webhooks configured for your account. Use the pagination cursors to retrieve results before or after a webhook in the list; provide no more than one cursor at a time.
+    /// Lists webhooks configured for your account. Use the pagination cursors to retrieve results before or after a
+    /// webhook in the list; provide no more than one cursor at a time.
     ///
     /// - Parameters:
     /// - limit: Maximum number of webhooks to return.
@@ -30,29 +45,47 @@ extension WebhooksMethods {
     ///   used with 'before'.
     /// - before: Pagination cursor to fetch results before this webhook ID. Cannot
     ///   be used with 'after'.
-    public static func webhooksList(config: ClientConfig, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListWebhooksResponse {
-        if let after = after {
+    static func webhooksList(
+        config: ClientConfig,
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListWebhooksResponse {
+        if let after {
             try sdkValidateUuid("after", after)
         }
 
-        if let before = before {
+        if let before {
             try sdkValidateUuid("before", before)
         }
 
-        return try (await sdkRequest("GET", "/webhooks", config: config, query: [
+        return try await (sdkRequest("GET", "/webhooks", config: config, query: [
             SdkQueryParameter("limit", value: limit),
             SdkQueryParameter("after", value: after),
             SdkQueryParameter("before", value: before),
         ], decoder: .json, operationId: "webhooksList", options: requestOptions)).data
     }
 
-    /// Retrieves a webhook by its identifier. Use this endpoint to inspect the webhook's endpoint URL, subscribed event types, status, creation timestamp, and signing secret.
+    /// Retrieves a webhook by its identifier. Use this endpoint to inspect the webhook's endpoint URL, subscribed event
+    /// types, status, creation timestamp, and signing secret.
     ///
     /// - Parameters:
     /// - webhookId: The Webhook ID.
-    public static func webhooksGet(config: ClientConfig, webhookId: String, requestOptions: RequestOptions? = nil) async throws -> GetWebhookResponse {
+    static func webhooksGet(
+        config: ClientConfig,
+        webhookId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GetWebhookResponse {
         try sdkValidateUuid("webhook_id", webhookId)
 
-        return try (await sdkRequest("GET", ["/webhooks/", sdkEncodePathSegment(sdkWireString(webhookId))].joined(), config: config, decoder: .json, operationId: "webhooksGet", options: requestOptions)).data
+        return try await (sdkRequest(
+            "GET",
+            ["/webhooks/", sdkEncodePathSegment(sdkWireString(webhookId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "webhooksGet",
+            options: requestOptions
+        )).data
     }
 }

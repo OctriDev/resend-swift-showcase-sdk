@@ -6,25 +6,48 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension InboxesMethods {
-    /// Moves a thread to the `trash` folder and schedules it for deletion in 30 days. The move is reversible; update the thread’s `folder` to `inbox`, `archive`, or `spam` to restore it and clear the deletion deadline.
+public extension InboxesMethods {
+    /// Moves a thread to the `trash` folder and schedules it for deletion in 30 days. The move is reversible; update
+    /// the thread’s `folder` to `inbox`, `archive`, or `spam` to restore it and clear the deletion deadline.
     ///
-    /// Moves the thread to `trash` and schedules it for deletion in 30 days. This is reversible. To restore the thread, update its `folder` to `inbox`, `archive`, or `spam`, which also clears the deletion deadline.
+    /// Moves the thread to `trash` and schedules it for deletion in 30 days. This is reversible. To restore the thread,
+    /// update its `folder` to `inbox`, `archive`, or `spam`, which also clears the deletion deadline.
     ///
     /// - Parameters:
     /// - inboxId: The Inbox ID. An email address is not accepted.
     /// - threadId: The Thread ID.
-    public static func inboxesRemoveThread(config: ClientConfig, inboxId: String, threadId: String, requestOptions: RequestOptions? = nil) async throws -> RemoveInboxThreadResponseSuccess {
+    static func inboxesRemoveThread(
+        config: ClientConfig,
+        inboxId: String,
+        threadId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> RemoveInboxThreadResponseSuccess {
         try sdkValidateUuid("inbox_id", inboxId)
 
         try sdkValidateUuid("thread_id", threadId)
 
-        return try (await sdkRequest("DELETE", ["/inboxes/", sdkEncodePathSegment(sdkWireString(inboxId)), "/threads/", sdkEncodePathSegment(sdkWireString(threadId))].joined(), config: config, decoder: .json, operationId: "inboxesRemoveThread", options: requestOptions)).data
+        return try await (sdkRequest(
+            "DELETE",
+            [
+                "/inboxes/",
+                sdkEncodePathSegment(sdkWireString(inboxId)),
+                "/threads/",
+                sdkEncodePathSegment(sdkWireString(threadId)),
+            ].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "inboxesRemoveThread",
+            options: requestOptions
+        )).data
     }
 
-    /// Lists the messages in a thread, ordered from oldest to newest. Use `after` with the last message ID to retrieve a newer page, or `before` with the first message ID to retrieve an older page; pass only one cursor at a time.
+    /// Lists the messages in a thread, ordered from oldest to newest. Use `after` with the last message ID to retrieve
+    /// a newer page, or `before` with the first message ID to retrieve an older page; pass only one cursor at a time.
     ///
-    /// Returns the messages of a thread, oldest first. Pass the `id` of the last message as `after` to get the next, newer page. Pass the `id` of the first message as `before` to get the previous, older page. Passing both `after` and `before`, or a cursor that is not a UUID, returns a 422. A cursor that is not a message of the thread returns a 404.
+    /// Returns the messages of a thread, oldest first. Pass the `id` of the last message as `after` to get the next,
+    /// newer page. Pass the `id` of the first message as `before` to get the previous, older page. Passing both `after`
+    /// and `before`, or a cursor that is not a UUID, returns a 422. A cursor that is not a message of the thread
+    /// returns a 404.
     ///
     /// - Parameters:
     /// - inboxId: The Inbox ID. An email address is not accepted.
@@ -32,19 +55,41 @@ extension InboxesMethods {
     /// - limit: Number of items to return.
     /// - after: Return items after this cursor.
     /// - before: Return items before this cursor.
-    public static func inboxesListThreadEmails(config: ClientConfig, inboxId: String, threadId: String, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListInboxThreadEmailsResponseSuccess {
+    static func inboxesListThreadEmails(
+        config: ClientConfig,
+        inboxId: String,
+        threadId: String,
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListInboxThreadEmailsResponseSuccess {
         try sdkValidateUuid("inbox_id", inboxId)
 
         try sdkValidateUuid("thread_id", threadId)
 
-        if let limit = limit {
+        if let limit {
             try validateRange("limit", Double(limit), min: 1, max: 100)
         }
 
-        return try (await sdkRequest("GET", ["/inboxes/", sdkEncodePathSegment(sdkWireString(inboxId)), "/threads/", sdkEncodePathSegment(sdkWireString(threadId)), "/emails"].joined(), config: config, query: [
-            SdkQueryParameter("limit", value: limit),
-            SdkQueryParameter("after", value: after),
-            SdkQueryParameter("before", value: before),
-        ], decoder: .json, operationId: "inboxesListThreadEmails", options: requestOptions)).data
+        return try await (sdkRequest(
+            "GET",
+            [
+                "/inboxes/",
+                sdkEncodePathSegment(sdkWireString(inboxId)),
+                "/threads/",
+                sdkEncodePathSegment(sdkWireString(threadId)),
+                "/emails",
+            ].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("limit", value: limit),
+                SdkQueryParameter("after", value: after),
+                SdkQueryParameter("before", value: before),
+            ],
+            decoder: .json,
+            operationId: "inboxesListThreadEmails",
+            options: requestOptions
+        )).data
     }
 }

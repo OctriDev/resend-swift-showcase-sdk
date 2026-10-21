@@ -6,12 +6,24 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension TemplatesMethods {
-    /// Creates a duplicate of a template selected by its ID or alias. Use this operation when you want a separate template based on an existing one.
+public extension TemplatesMethods {
+    /// Creates a duplicate of a template selected by its ID or alias. Use this operation when you want a separate
+    /// template based on an existing one.
     ///
     /// - Parameters:
     /// - id: The Template ID or alias.
-    public static func templatesDuplicate(config: ClientConfig, id: String, requestOptions: RequestOptions? = nil) async throws -> DuplicateTemplateResponseSuccess {
-        return try (await sdkRequest("POST", ["/templates/", sdkEncodePathSegment(sdkWireString(id)), "/duplicate"].joined(), config: config, decoder: .json, operationId: "templatesDuplicate", options: requestOptions)).data
+    static func templatesDuplicate(
+        config: ClientConfig,
+        id: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DuplicateTemplateResponseSuccess {
+        try await (sdkRequest(
+            "POST",
+            ["/templates/", sdkEncodePathSegment(sdkWireString(id)), "/duplicate"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "templatesDuplicate",
+            options: requestOptions
+        )).data
     }
 }

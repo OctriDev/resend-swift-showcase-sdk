@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Contacts domain models
+/// Contacts domain models
 /// Typed representation of the `RemoveContactResponseSuccess` API schema.
 public struct RemoveContactResponseSuccess: Codable {
     /// Type of the response object.
@@ -23,21 +23,21 @@ public struct RemoveContactResponseSuccess: Codable {
     }
 
     init() {
-        (self.object, self.id, self.deleted) = (nil, nil, nil)
+        (object, id, deleted) = (nil, nil, nil)
     }
 }
 
-extension RemoveContactResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension RemoveContactResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.deleted = try container.sdkDecodeIfPresent(.deleted)
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-extension RemoveContactResponseSuccess {
-    public init(object: String? = nil, id: String? = nil, deleted: Bool? = nil) {
+public extension RemoveContactResponseSuccess {
+    init(object: String? = nil, id: String? = nil, deleted: Bool? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
         self.deleted = deleted

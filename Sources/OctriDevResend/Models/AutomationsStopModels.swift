@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Automations domain models
+/// Automations domain models
 /// Typed representation of the `StopAutomationResponse` API schema.
 public struct StopAutomationResponse: Codable {
     /// Type of the response object.
@@ -22,21 +22,21 @@ public struct StopAutomationResponse: Codable {
     }
 
     init() {
-        (self.object, self.id, self.status) = (nil, nil, nil)
+        (object, id, status) = (nil, nil, nil)
     }
 }
 
-extension StopAutomationResponse {
-    public init(from decoder: Decoder) throws {
+public extension StopAutomationResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.status = try container.sdkDecodeIfPresent(.status)
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        status = try container.sdkDecodeIfPresent(.status)
     }
 }
 
-extension StopAutomationResponse {
-    public init(object: String? = nil, id: String? = nil, status: String? = nil) {
+public extension StopAutomationResponse {
+    init(object: String? = nil, id: String? = nil, status: String? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
         self.status = status

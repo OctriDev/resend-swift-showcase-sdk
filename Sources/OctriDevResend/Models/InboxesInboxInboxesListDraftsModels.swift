@@ -3,7 +3,7 @@
 
 import Foundation
 
-// InboxesInbox domain models
+/// InboxesInbox domain models
 /// Typed representation of the `InboxDraftListItem` API schema.
 public struct InboxDraftListItem: Codable {
     /// The ID of the draft.
@@ -52,50 +52,64 @@ public struct InboxDraftListItem: Codable {
         case attachments
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension InboxDraftListItem {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeRequired(.id)
-        self.type = try container.sdkDecodeRequired(.type)
-        self.to = try container.sdkDecodeNullable(.to)
-        self.cc = try container.sdkDecodeRequired(.cc)
-        self.bcc = try container.sdkDecodeRequired(.bcc)
-        self.subject = try container.sdkDecodeNullable(.subject)
-        self.snippet = try container.sdkDecodeNullable(.snippet)
-        self.threadId = try container.sdkDecodeNullable(.threadId)
-        self.replyToEmailId = try container.sdkDecodeNullable(.replyToEmailId)
-        self.updatedAt = try container.sdkDecodeRequired(.updatedAt)
-        self.attachments = try container.sdkDecodeRequired(.attachments)
-            try sdkValidateUuid("id", self.id)
-        if let value = self.threadId {
-            try sdkValidateUuid("thread_id", value)
-        }
-        if let value = self.replyToEmailId {
-            try sdkValidateUuid("reply_to_email_id", value)
-        }
-            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension InboxDraftListItem {
-    public init(id: String, type: InboxDraftListItemType, to: [String]?, cc: [String], bcc: [String], subject: String?, snippet: String?, threadId: String?, replyToEmailId: String?, updatedAt: Date, attachments: [InboxDraftAttachment]) throws {
+public extension InboxDraftListItem {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.sdkDecodeRequired(.id)
+        type = try container.sdkDecodeRequired(.type)
+        to = try container.sdkDecodeNullable(.to)
+        cc = try container.sdkDecodeRequired(.cc)
+        bcc = try container.sdkDecodeRequired(.bcc)
+        subject = try container.sdkDecodeNullable(.subject)
+        snippet = try container.sdkDecodeNullable(.snippet)
+        threadId = try container.sdkDecodeNullable(.threadId)
+        replyToEmailId = try container.sdkDecodeNullable(.replyToEmailId)
+        updatedAt = try container.sdkDecodeRequired(.updatedAt)
+        attachments = try container.sdkDecodeRequired(.attachments)
+        try sdkValidateUuid("id", id)
+        if let value = threadId {
+            try sdkValidateUuid("thread_id", value)
+        }
+        if let value = replyToEmailId {
+            try sdkValidateUuid("reply_to_email_id", value)
+        }
+        try sdkValidateDateTime("updated_at", sdkWireString(updatedAt))
+    }
+}
+
+public extension InboxDraftListItem {
+    init(
+        id: String,
+        type: InboxDraftListItemType,
+        to: [String]?,
+        cc: [String],
+        bcc: [String],
+        subject: String?,
+        snippet: String?,
+        threadId: String?,
+        replyToEmailId: String?,
+        updatedAt: Date,
+        attachments: [InboxDraftAttachment]
+    ) throws {
         (self.id, self.type) = (id, type)
         (self.to, self.cc) = (to, cc)
         (self.bcc, self.subject) = (bcc, subject)
         (self.snippet, self.threadId) = (snippet, threadId)
         (self.replyToEmailId, self.updatedAt) = (replyToEmailId, updatedAt)
         self.attachments = attachments
-            try sdkValidateUuid("id", self.id)
+        try sdkValidateUuid("id", self.id)
         if let value = self.threadId {
             try sdkValidateUuid("thread_id", value)
         }
         if let value = self.replyToEmailId {
             try sdkValidateUuid("reply_to_email_id", value)
         }
-            try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
+        try sdkValidateDateTime("updated_at", sdkWireString(self.updatedAt))
     }
 }
 
@@ -104,13 +118,16 @@ extension InboxDraftListItem {
 public struct InboxDraftListItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let standalone = InboxDraftListItemType(rawValue: "standalone")
     public static let reply = InboxDraftListItemType(rawValue: "reply")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

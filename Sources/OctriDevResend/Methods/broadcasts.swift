@@ -8,8 +8,8 @@ import Foundation
 #endif
 public enum BroadcastsMethods {}
 
-extension BroadcastsMethods {
-    public struct BroadcastsCreateOptions: Codable {
+public extension BroadcastsMethods {
+    struct BroadcastsCreateOptions: Codable {
         public var segmentId: String
         public var from: String
         public var subject: String
@@ -30,7 +30,8 @@ extension BroadcastsMethods {
         }
     }
 
-    /// Creates a broadcast with sender, subject, and segment details. Include `from`, `subject`, and `segment_id`; optionally provide message content, reply addresses, a topic, or sending and scheduling settings.
+    /// Creates a broadcast with sender, subject, and segment details. Include `from`, `subject`, and `segment_id`;
+    /// optionally provide message content, reply addresses, a topic, or sending and scheduling settings.
     ///
     /// - Parameters:
     /// - segmentId: Unique identifier of the segment this broadcast will be sent
@@ -48,9 +49,21 @@ extension BroadcastsMethods {
     /// - send: Whether to send the broadcast immediately or keep it as a draft.
     /// - scheduledAt: Schedule time to send the broadcast. Can only be used if
     ///   `send` is true.
-    public static func broadcastsCreate(config: ClientConfig, options: BroadcastsCreateOptions, requestOptions: RequestOptions? = nil) async throws -> CreateBroadcastResponseSuccess {
+    static func broadcastsCreate(
+        config: ClientConfig,
+        options: BroadcastsCreateOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateBroadcastResponseSuccess {
         let requestBody = BroadcastsCreateRequestBody(options: options)
 
-        return try (await sdkRequest("POST", "/broadcasts", config: config, body: requestBody, decoder: .json, operationId: "broadcastsCreate", options: requestOptions)).data
+        return try await (sdkRequest(
+            "POST",
+            "/broadcasts",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "broadcastsCreate",
+            options: requestOptions
+        )).data
     }
 }

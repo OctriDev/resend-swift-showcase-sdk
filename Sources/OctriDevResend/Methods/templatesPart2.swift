@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension TemplatesMethods {
-    public struct TemplatesCreateOptions: Codable {
+public extension TemplatesMethods {
+    struct TemplatesCreateOptions: Codable {
         public var name: String
         public var html: String
         public var alias: String?
@@ -23,7 +23,8 @@ extension TemplatesMethods {
         }
     }
 
-    /// Creates a new email template from its name and HTML content. Supply `name` and `html`; you can also set sender details, reply-to addresses, plain-text content, and template variables.
+    /// Creates a new email template from its name and HTML content. Supply `name` and `html`; you can also set sender
+    /// details, reply-to addresses, plain-text content, and template variables.
     ///
     /// - Parameters:
     /// - name: The name of the template.
@@ -35,24 +36,43 @@ extension TemplatesMethods {
     /// - replyTo: Reply-to email addresses.
     /// - text: The plain text version of the template.
     /// - variables: Optional array value serialized in the `variables` wire field.
-    public static func templatesCreate(config: ClientConfig, options: TemplatesCreateOptions, requestOptions: RequestOptions? = nil) async throws -> CreateTemplateResponseSuccess {
+    static func templatesCreate(
+        config: ClientConfig,
+        options: TemplatesCreateOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateTemplateResponseSuccess {
         let requestBody = TemplatesCreateRequestBody(options: options)
 
-        return try (await sdkRequest("POST", "/templates", config: config, body: requestBody, decoder: .json, operationId: "templatesCreate", options: requestOptions)).data
+        return try await (sdkRequest(
+            "POST",
+            "/templates",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "templatesCreate",
+            options: requestOptions
+        )).data
     }
 
-    /// Lists templates available to the authenticated user. Use `after` or `before` to navigate the results with a cursor, and `limit` to control the number of templates returned.
+    /// Lists templates available to the authenticated user. Use `after` or `before` to navigate the results with a
+    /// cursor, and `limit` to control the number of templates returned.
     ///
     /// - Parameters:
     /// - limit: Number of items to return.
     /// - after: Return items after this cursor.
     /// - before: Return items before this cursor.
-    public static func templatesList(config: ClientConfig, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListTemplatesResponseSuccess {
-        if let limit = limit {
+    static func templatesList(
+        config: ClientConfig,
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListTemplatesResponseSuccess {
+        if let limit {
             try validateRange("limit", Double(limit), min: 1, max: 100)
         }
 
-        return try (await sdkRequest("GET", "/templates", config: config, query: [
+        return try await (sdkRequest("GET", "/templates", config: config, query: [
             SdkQueryParameter("limit", value: limit),
             SdkQueryParameter("after", value: after),
             SdkQueryParameter("before", value: before),

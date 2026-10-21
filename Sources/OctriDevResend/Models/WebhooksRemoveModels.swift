@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Webhooks domain models
+/// Webhooks domain models
 /// Typed representation of the `DeleteWebhookResponse` API schema.
 public struct DeleteWebhookResponse: Codable {
     /// The type of object.
@@ -23,24 +23,24 @@ public struct DeleteWebhookResponse: Codable {
     }
 
     init() {
-        (self.object, self.id, self.deleted) = (nil, nil, nil)
+        (object, id, deleted) = (nil, nil, nil)
     }
 }
 
-extension DeleteWebhookResponse {
-    public init(from decoder: Decoder) throws {
+public extension DeleteWebhookResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.deleted = try container.sdkDecodeIfPresent(.deleted)
-        if let value = self.id {
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        deleted = try container.sdkDecodeIfPresent(.deleted)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-extension DeleteWebhookResponse {
-    public init(object: String? = nil, id: String? = nil, deleted: Bool? = nil) throws {
+public extension DeleteWebhookResponse {
+    init(object: String? = nil, id: String? = nil, deleted: Bool? = nil) throws {
         self.init()
         (self.object, self.id) = (object, id)
         self.deleted = deleted

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Domains domain models
+/// Domains domain models
 /// Typed representation of the `DeleteDomainResponse` API schema.
 public struct DeleteDomainResponse: Codable {
     /// The type of object.
@@ -23,21 +23,21 @@ public struct DeleteDomainResponse: Codable {
     }
 
     init() {
-        (self.object, self.id, self.deleted) = (nil, nil, nil)
+        (object, id, deleted) = (nil, nil, nil)
     }
 }
 
-extension DeleteDomainResponse {
-    public init(from decoder: Decoder) throws {
+public extension DeleteDomainResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.deleted = try container.sdkDecodeIfPresent(.deleted)
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-extension DeleteDomainResponse {
-    public init(object: String? = nil, id: String? = nil, deleted: Bool? = nil) {
+public extension DeleteDomainResponse {
+    init(object: String? = nil, id: String? = nil, deleted: Bool? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
         self.deleted = deleted
