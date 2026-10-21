@@ -6,26 +6,14 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension BroadcastsMethods {
-    /// Creates a new draft broadcast with the same segment, topic, sender, subject, reply-to, preview text, and content
-    /// as the source. The copy is named after the source with " (copy)" appended, truncated to 70 characters.
+extension BroadcastsMethods {
+    /// Creates a new draft broadcast with the same segment, topic, sender, subject, reply-to, preview text, and content as the source. The copy is named after the source with " (copy)" appended, truncated to 70 characters.
     ///
     /// - Parameters:
     /// - id: The Broadcast ID.
-    static func broadcastsDuplicate(
-        config: ClientConfig,
-        id: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DuplicateBroadcastResponseSuccess {
+    public static func broadcastsDuplicate(config: ClientConfig, id: String, requestOptions: RequestOptions? = nil) async throws -> DuplicateBroadcastResponseSuccess {
         try sdkValidateUuid("id", id)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/broadcasts/", sdkEncodePathSegment(sdkWireString(id)), "/duplicate"].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "broadcastsDuplicate",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("POST", ["/broadcasts/", sdkEncodePathSegment(sdkWireString(id)), "/duplicate"].joined(), config: config, decoder: .json, operationId: "broadcastsDuplicate", options: requestOptions)).data
     }
 }

@@ -52,11 +52,7 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try EmailsMethods.EmailsSendOptions(
-            from: decoded("\"user@example.com\""),
-            to: decoded("\"to\""),
-            subject: decoded("\"subject\"")
-        )
+        var options = try EmailsMethods.EmailsSendOptions(from: decoded("\"user@example.com\""), to: decoded("\"to\""), subject: decoded("\"subject\""))
         options.idempotencyKey = try decoded("\"Idempotency-Key\"")
         options.bcc = try decoded("\"bcc\"")
         options.cc = try decoded("\"cc\"")
@@ -344,8 +340,7 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try InboxesMethods
-            .InboxesCreateDraftOptions(inboxId: decoded("\"00000000-0000-4000-8000-000000000000\""))
+        var options = try InboxesMethods.InboxesCreateDraftOptions(inboxId: decoded("\"00000000-0000-4000-8000-000000000000\""))
         options.idempotencyKey = try decoded("\"x\"")
         options.to = try decoded("[\"ada@example.org\"]")
         options.cc = try decoded("\"cc\"")
@@ -394,12 +389,7 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try InboxesMethods.InboxesForwardThreadEmailOptions(
-            inboxId: decoded("\"00000000-0000-4000-8000-000000000000\""),
-            threadId: decoded("\"00000000-0000-4000-8000-000000000000\""),
-            emailId: decoded("\"00000000-0000-4000-8000-000000000000\""),
-            to: decoded("[\"colleague@example.org\"]")
-        )
+        var options = try InboxesMethods.InboxesForwardThreadEmailOptions(inboxId: decoded("\"00000000-0000-4000-8000-000000000000\""), threadId: decoded("\"00000000-0000-4000-8000-000000000000\""), emailId: decoded("\"00000000-0000-4000-8000-000000000000\""), to: decoded("[\"colleague@example.org\"]"))
         options.idempotencyKey = try decoded("\"x\"")
         options.cc = try decoded("[\"billing@acme.com\"]")
         options.bcc = try decoded("[\"records@acme.com\"]")

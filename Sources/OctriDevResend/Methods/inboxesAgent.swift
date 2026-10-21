@@ -6,37 +6,22 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension InboxesMethods {
-    /// Retrieves the agent settings for an inbox. An inbox without a configured agent has null `instructions` and
-    /// `tone` values and an empty `enabled_actions` array.
+extension InboxesMethods {
+    /// Retrieves the agent settings for an inbox. An inbox without a configured agent has null `instructions` and `tone` values and an empty `enabled_actions` array.
     ///
-    /// Returns the agent settings of the inbox. An inbox without a configured agent returns empty settings:
-    /// `instructions` and `tone` are null and `enabled_actions` is an empty array.
+    /// Returns the agent settings of the inbox. An inbox without a configured agent returns empty settings: `instructions` and `tone` are null and `enabled_actions` is an empty array.
     ///
     /// - Parameters:
     /// - inboxId: The Inbox ID. An email address is not accepted.
-    static func inboxesGetAgent(
-        config: ClientConfig,
-        inboxId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> InboxAgent {
+    public static func inboxesGetAgent(config: ClientConfig, inboxId: String, requestOptions: RequestOptions? = nil) async throws -> InboxAgent {
         try sdkValidateUuid("inbox_id", inboxId)
 
-        return try await (sdkRequest(
-            "GET",
-            ["/inboxes/", sdkEncodePathSegment(sdkWireString(inboxId)), "/agent"].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "inboxesGetAgent",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("GET", ["/inboxes/", sdkEncodePathSegment(sdkWireString(inboxId)), "/agent"].joined(), config: config, decoder: .json, operationId: "inboxesGetAgent", options: requestOptions)).data
     }
 
-    /// Updates the agent settings for an inbox, creating an agent if one is not configured. Provide at least one of
-    /// `instructions`, `tone`, or `enabled_actions`; omitted fields keep their current values.
+    /// Updates the agent settings for an inbox, creating an agent if one is not configured. Provide at least one of `instructions`, `tone`, or `enabled_actions`; omitted fields keep their current values.
     ///
-    /// Updates the agent settings of the inbox. The agent is created when the inbox has none. Omitted fields keep their
-    /// current value.
+    /// Updates the agent settings of the inbox. The agent is created when the inbox has none. Omitted fields keep their current value.
     ///
     /// - Parameters:
     /// - inboxId: The Inbox ID. An email address is not accepted.
@@ -47,34 +32,15 @@ public extension InboxesMethods {
     /// - tone: The tone the agent writes in. Send null to clear the tone.
     /// - enabledActions: The actions the agent can take. Replaces the whole set.
     ///   Duplicates are removed. Send an empty array to disable all actions.
-    static func inboxesUpdateAgent(
-        config: ClientConfig,
-        inboxId: String,
-        instructions: SdkOptional<String>? = nil,
-        tone: SdkOptional<UpdateInboxAgentOptionsTone>? = nil,
-        enabledActions: [UpdateInboxAgentOptionsEnabledActionsItem]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> UpdateInboxAgentResponseSuccess {
+    public static func inboxesUpdateAgent(config: ClientConfig, inboxId: String, instructions: SdkOptional<String>? = nil, tone: SdkOptional<UpdateInboxAgentOptionsTone>? = nil, enabledActions: [UpdateInboxAgentOptionsEnabledActionsItem]? = nil, requestOptions: RequestOptions? = nil) async throws -> UpdateInboxAgentResponseSuccess {
         try sdkValidateUuid("inbox_id", inboxId)
 
         if let instructions = instructions?.valueOrNil {
             try validateLength("instructions", instructions, min: 1, max: 4000)
         }
 
-        let requestBody = InboxesUpdateAgentRequestBody(
-            instructions: instructions,
-            tone: tone,
-            enabledActions: enabledActions
-        )
+        let requestBody = InboxesUpdateAgentRequestBody(instructions: instructions, tone: tone, enabledActions: enabledActions)
 
-        return try await (sdkRequest(
-            "PATCH",
-            ["/inboxes/", sdkEncodePathSegment(sdkWireString(inboxId)), "/agent"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "inboxesUpdateAgent",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("PATCH", ["/inboxes/", sdkEncodePathSegment(sdkWireString(inboxId)), "/agent"].joined(), config: config, body: requestBody, decoder: .json, operationId: "inboxesUpdateAgent", options: requestOptions)).data
     }
 }

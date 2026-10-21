@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Automations domain models
+// Automations domain models
 /// Typed representation of the `AutomationRun` API schema.
 public struct AutomationRun: Codable {
     /// Type of the response object.
@@ -36,34 +36,26 @@ public struct AutomationRun: Codable {
     }
 
     init() {
-        (object, id, status, startedAt, completedAt) = (nil, nil, nil, nil, nil)
-        (createdAt, steps) = (nil, nil)
+        (self.object, self.id, self.status, self.startedAt, self.completedAt) = (nil, nil, nil, nil, nil)
+        (self.createdAt, self.steps) = (nil, nil)
     }
 }
 
-public extension AutomationRun {
-    init(from decoder: Decoder) throws {
+extension AutomationRun {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        id = try container.sdkDecodeIfPresent(.id)
-        status = try container.sdkDecodeIfPresent(.status)
-        startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        steps = try container.sdkDecodeIfPresent(.steps)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.steps = try container.sdkDecodeIfPresent(.steps)
     }
 }
 
-public extension AutomationRun {
-    init(
-        object: String? = nil,
-        id: String? = nil,
-        status: AutomationRunStatus? = nil,
-        startedAt: String? = nil,
-        completedAt: String? = nil,
-        createdAt: String? = nil,
-        steps: [AutomationRunStep]? = nil
-    ) {
+extension AutomationRun {
+    public init(object: String? = nil, id: String? = nil, status: AutomationRunStatus? = nil, startedAt: String? = nil, completedAt: String? = nil, createdAt: String? = nil, steps: [AutomationRunStep]? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
         (self.status, self.startedAt) = (status, startedAt)
@@ -106,36 +98,27 @@ public struct AutomationRunStep: Codable {
     }
 
     init() {
-        (key, type, status, startedAt, completedAt) = (nil, nil, nil, nil, nil)
-        (output, error, createdAt) = (nil, nil, nil)
+        (self.key, self.type, self.status, self.startedAt, self.completedAt) = (nil, nil, nil, nil, nil)
+        (self.output, self.error, self.createdAt) = (nil, nil, nil)
     }
 }
 
-public extension AutomationRunStep {
-    init(from decoder: Decoder) throws {
+extension AutomationRunStep {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        key = try container.sdkDecodeIfPresent(.key)
-        type = try container.sdkDecodeIfPresent(.type)
-        status = try container.sdkDecodeIfPresent(.status)
-        startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        output = try container.sdkDecodeIfPresent(.output)
-        error = try container.sdkDecodeIfPresent(.error)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.key = try container.sdkDecodeIfPresent(.key)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        self.output = try container.sdkDecodeIfPresent(.output)
+        self.error = try container.sdkDecodeIfPresent(.error)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
     }
 }
 
-public extension AutomationRunStep {
-    init(
-        key: String? = nil,
-        type: AutomationRunStepType? = nil,
-        status: String? = nil,
-        startedAt: String? = nil,
-        completedAt: String? = nil,
-        output: [String: JSONValue]? = nil,
-        error: [String: JSONValue]? = nil,
-        createdAt: String? = nil
-    ) {
+extension AutomationRunStep {
+    public init(key: String? = nil, type: AutomationRunStepType? = nil, status: String? = nil, startedAt: String? = nil, completedAt: String? = nil, output: [String: JSONValue]? = nil, error: [String: JSONValue]? = nil, createdAt: String? = nil) {
         self.init()
         (self.key, self.type) = (key, type)
         (self.status, self.startedAt) = (status, startedAt)
@@ -148,10 +131,7 @@ public extension AutomationRunStep {
 public struct AutomationRunStepType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let trigger = AutomationRunStepType(rawValue: "trigger")
     public static let sendEmail = AutomationRunStepType(rawValue: "send_email")
     public static let delay = AutomationRunStepType(rawValue: "delay")
@@ -163,7 +143,7 @@ public struct AutomationRunStepType: RawRepresentable, Hashable, Codable, Sendab
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -176,10 +156,7 @@ public struct AutomationRunStepType: RawRepresentable, Hashable, Codable, Sendab
 public struct AutomationRunStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let running = AutomationRunStatus(rawValue: "running")
     public static let completed = AutomationRunStatus(rawValue: "completed")
     public static let failed = AutomationRunStatus(rawValue: "failed")
@@ -187,7 +164,7 @@ public struct AutomationRunStatus: RawRepresentable, Hashable, Codable, Sendable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

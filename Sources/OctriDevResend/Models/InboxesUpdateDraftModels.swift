@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// InboxesUpdate domain models
+// InboxesUpdate domain models
 /// Send at least one of `to`, `cc`, `bcc`, `subject`, `text`, `html` or `attachments`. Omitted fields are left
 /// unchanged. Setting `text` or `html` replaces the whole body, so the body part you omit becomes `null`. The
 /// merged draft must contain at least one non-empty field, and its combined recipients cannot exceed 50.
@@ -43,37 +43,29 @@ public struct UpdateInboxDraftOptions: Codable {
     }
 
     init() {
-        (to, cc, bcc, subject, html) = (nil, nil, nil, nil, nil)
-        (text, attachments) = (nil, nil)
+        (self.to, self.cc, self.bcc, self.subject, self.html) = (nil, nil, nil, nil, nil)
+        (self.text, self.attachments) = (nil, nil)
     }
 }
 
-public extension UpdateInboxDraftOptions {
-    init(from decoder: Decoder) throws {
+extension UpdateInboxDraftOptions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        to = try container.sdkDecodeIfPresent(.to)
-        cc = try container.sdkDecodeIfPresent(.cc)
-        bcc = try container.sdkDecodeIfPresent(.bcc)
-        subject = try container.sdkDecodeIfPresent(.subject)
-        html = try container.sdkDecodeIfPresent(.html)
-        text = try container.sdkDecodeIfPresent(.text)
-        attachments = try container.sdkDecodeIfPresent(.attachments)
-        if let value = subject {
+        self.to = try container.sdkDecodeIfPresent(.to)
+        self.cc = try container.sdkDecodeIfPresent(.cc)
+        self.bcc = try container.sdkDecodeIfPresent(.bcc)
+        self.subject = try container.sdkDecodeIfPresent(.subject)
+        self.html = try container.sdkDecodeIfPresent(.html)
+        self.text = try container.sdkDecodeIfPresent(.text)
+        self.attachments = try container.sdkDecodeIfPresent(.attachments)
+        if let value = self.subject {
             try validateLength("subject", value, min: 1, max: 2000)
         }
     }
 }
 
-public extension UpdateInboxDraftOptions {
-    init(
-        to: UpdateInboxDraftOptionsTo? = nil,
-        cc: UpdateInboxDraftOptionsCc? = nil,
-        bcc: UpdateInboxDraftOptionsBcc? = nil,
-        subject: String? = nil,
-        html: String? = nil,
-        text: String? = nil,
-        attachments: [InboxDraftAttachmentInput]? = nil
-    ) throws {
+extension UpdateInboxDraftOptions {
+    public init(to: UpdateInboxDraftOptionsTo? = nil, cc: UpdateInboxDraftOptionsCc? = nil, bcc: UpdateInboxDraftOptionsBcc? = nil, subject: String? = nil, html: String? = nil, text: String? = nil, attachments: [InboxDraftAttachmentInput]? = nil) throws {
         self.init()
         (self.to, self.cc) = (to, cc)
         (self.bcc, self.subject) = (bcc, subject)
@@ -92,35 +84,23 @@ public indirect enum UpdateInboxDraftOptionsCc {
 }
 
 extension UpdateInboxDraftOptionsCc: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for UpdateInboxDraftOptionsCc"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for UpdateInboxDraftOptionsCc")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension UpdateInboxDraftOptionsCc {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) {
-            return .stringValue(value)
-        }
-        if let value = try? container.decode([String].self) {
-            return .stringList(value)
-        }
-        if let value = try? container.decode(JSONValue.self) {
-            return .jsonValue(value)
-        }
+        if let value = try? container.decode(String.self) { return .stringValue(value) }
+        if let value = try? container.decode([String].self) { return .stringList(value) }
+        if let value = try? container.decode(JSONValue.self) { return .jsonValue(value) }
         return nil
     }
 }
@@ -143,35 +123,23 @@ public indirect enum UpdateInboxDraftOptionsTo {
 }
 
 extension UpdateInboxDraftOptionsTo: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for UpdateInboxDraftOptionsTo"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for UpdateInboxDraftOptionsTo")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension UpdateInboxDraftOptionsTo {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) {
-            return .stringValue(value)
-        }
-        if let value = try? container.decode([String].self) {
-            return .stringList(value)
-        }
-        if let value = try? container.decode(JSONValue.self) {
-            return .jsonValue(value)
-        }
+        if let value = try? container.decode(String.self) { return .stringValue(value) }
+        if let value = try? container.decode([String].self) { return .stringList(value) }
+        if let value = try? container.decode(JSONValue.self) { return .jsonValue(value) }
         return nil
     }
 }
@@ -194,35 +162,23 @@ public indirect enum UpdateInboxDraftOptionsBcc {
 }
 
 extension UpdateInboxDraftOptionsBcc: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for UpdateInboxDraftOptionsBcc"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for UpdateInboxDraftOptionsBcc")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension UpdateInboxDraftOptionsBcc {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) {
-            return .stringValue(value)
-        }
-        if let value = try? container.decode([String].self) {
-            return .stringList(value)
-        }
-        if let value = try? container.decode(JSONValue.self) {
-            return .jsonValue(value)
-        }
+        if let value = try? container.decode(String.self) { return .stringValue(value) }
+        if let value = try? container.decode([String].self) { return .stringList(value) }
+        if let value = try? container.decode(JSONValue.self) { return .jsonValue(value) }
         return nil
     }
 }

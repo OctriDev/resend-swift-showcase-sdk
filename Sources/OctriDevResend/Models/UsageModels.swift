@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Usage domain models
+// Usage domain models
 /// Optional object value serialized in the `segments` wire field.
 public struct GetUsageResponseSuccessSegments: Codable {
     /// Segments currently created.
@@ -17,20 +17,20 @@ public struct GetUsageResponseSuccessSegments: Codable {
     }
 
     init() {
-        (used, limit) = (nil, nil)
+        (self.used, self.limit) = (nil, nil)
     }
 }
 
-public extension GetUsageResponseSuccessSegments {
-    init(from decoder: Decoder) throws {
+extension GetUsageResponseSuccessSegments {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        used = try container.sdkDecodeIfPresent(.used)
-        limit = try container.sdkDecodeIfPresent(.limit)
+        self.used = try container.sdkDecodeIfPresent(.used)
+        self.limit = try container.sdkDecodeIfPresent(.limit)
     }
 }
 
-public extension GetUsageResponseSuccessSegments {
-    init(used: Int? = nil, limit: Int? = nil) {
+extension GetUsageResponseSuccessSegments {
+    public init(used: Int? = nil, limit: Int? = nil) {
         self.init()
         (self.used, self.limit) = (used, limit)
     }
@@ -49,20 +49,20 @@ public struct GetUsageResponseSuccessEmails: Codable {
     }
 
     init() {
-        (daily, monthly) = (nil, nil)
+        (self.daily, self.monthly) = (nil, nil)
     }
 }
 
-public extension GetUsageResponseSuccessEmails {
-    init(from decoder: Decoder) throws {
+extension GetUsageResponseSuccessEmails {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        daily = try container.sdkDecodeIfPresent(.daily)
-        monthly = try container.sdkDecodeIfPresent(.monthly)
+        self.daily = try container.sdkDecodeIfPresent(.daily)
+        self.monthly = try container.sdkDecodeIfPresent(.monthly)
     }
 }
 
-public extension GetUsageResponseSuccessEmails {
-    init(daily: GetUsageResponseSuccessEmailsDaily? = nil, monthly: GetUsageResponseSuccessEmailsMonthly? = nil) {
+extension GetUsageResponseSuccessEmails {
+    public init(daily: GetUsageResponseSuccessEmailsDaily? = nil, monthly: GetUsageResponseSuccessEmailsMonthly? = nil) {
         self.init()
         (self.daily, self.monthly) = (daily, monthly)
     }
@@ -90,23 +90,23 @@ public struct GetUsageResponseSuccessEmailsDaily: Codable {
     }
 
     init() {
-        (used, limit, sent, received, resetsAt) = (nil, nil, nil, nil, nil)
+        (self.used, self.limit, self.sent, self.received, self.resetsAt) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension GetUsageResponseSuccessEmailsDaily {
-    init(from decoder: Decoder) throws {
+extension GetUsageResponseSuccessEmailsDaily {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        used = try container.sdkDecodeIfPresent(.used)
-        limit = try container.sdkDecodeIfPresent(.limit)
-        sent = try container.sdkDecodeIfPresent(.sent)
-        received = try container.sdkDecodeIfPresent(.received)
-        resetsAt = try container.sdkDecodeIfPresent(.resetsAt)
+        self.used = try container.sdkDecodeIfPresent(.used)
+        self.limit = try container.sdkDecodeIfPresent(.limit)
+        self.sent = try container.sdkDecodeIfPresent(.sent)
+        self.received = try container.sdkDecodeIfPresent(.received)
+        self.resetsAt = try container.sdkDecodeIfPresent(.resetsAt)
     }
 }
 
-public extension GetUsageResponseSuccessEmailsDaily {
-    init(used: Int? = nil, limit: Int? = nil, sent: Int? = nil, received: Int? = nil, resetsAt: String? = nil) {
+extension GetUsageResponseSuccessEmailsDaily {
+    public init(used: Int? = nil, limit: Int? = nil, sent: Int? = nil, received: Int? = nil, resetsAt: String? = nil) {
         self.init()
         (self.used, self.limit) = (used, limit)
         (self.sent, self.received) = (sent, received)
@@ -130,21 +130,21 @@ public struct GetUsageResponseSuccessAutomationRuns: Codable {
     }
 
     init() {
-        (used, limit, resetsAt) = (nil, nil, nil)
+        (self.used, self.limit, self.resetsAt) = (nil, nil, nil)
     }
 }
 
-public extension GetUsageResponseSuccessAutomationRuns {
-    init(from decoder: Decoder) throws {
+extension GetUsageResponseSuccessAutomationRuns {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        used = try container.sdkDecodeIfPresent(.used)
-        limit = try container.sdkDecodeIfPresent(.limit)
-        resetsAt = try container.sdkDecodeIfPresent(.resetsAt)
+        self.used = try container.sdkDecodeIfPresent(.used)
+        self.limit = try container.sdkDecodeIfPresent(.limit)
+        self.resetsAt = try container.sdkDecodeIfPresent(.resetsAt)
     }
 }
 
-public extension GetUsageResponseSuccessAutomationRuns {
-    init(used: Int? = nil, limit: Int? = nil, resetsAt: String? = nil) {
+extension GetUsageResponseSuccessAutomationRuns {
+    public init(used: Int? = nil, limit: Int? = nil, resetsAt: String? = nil) {
         self.init()
         (self.used, self.limit) = (used, limit)
         self.resetsAt = resetsAt
@@ -164,20 +164,20 @@ public struct GetUsageResponseSuccessBroadcasts: Codable {
     }
 
     init() {
-        (used, limit) = (nil, nil)
+        (self.used, self.limit) = (nil, nil)
     }
 }
 
-public extension GetUsageResponseSuccessBroadcasts {
-    init(from decoder: Decoder) throws {
+extension GetUsageResponseSuccessBroadcasts {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        used = try container.sdkDecodeIfPresent(.used)
-        limit = try container.sdkDecodeIfPresent(.limit)
+        self.used = try container.sdkDecodeIfPresent(.used)
+        self.limit = try container.sdkDecodeIfPresent(.limit)
     }
 }
 
-public extension GetUsageResponseSuccessBroadcasts {
-    init(used: Int? = nil, limit: JSONValue? = nil) {
+extension GetUsageResponseSuccessBroadcasts {
+    public init(used: Int? = nil, limit: JSONValue? = nil) {
         self.init()
         (self.used, self.limit) = (used, limit)
     }
@@ -196,20 +196,20 @@ public struct GetUsageResponseSuccessDomains: Codable {
     }
 
     init() {
-        (used, limit) = (nil, nil)
+        (self.used, self.limit) = (nil, nil)
     }
 }
 
-public extension GetUsageResponseSuccessDomains {
-    init(from decoder: Decoder) throws {
+extension GetUsageResponseSuccessDomains {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        used = try container.sdkDecodeIfPresent(.used)
-        limit = try container.sdkDecodeIfPresent(.limit)
+        self.used = try container.sdkDecodeIfPresent(.used)
+        self.limit = try container.sdkDecodeIfPresent(.limit)
     }
 }
 
-public extension GetUsageResponseSuccessDomains {
-    init(used: Int? = nil, limit: Int? = nil) {
+extension GetUsageResponseSuccessDomains {
+    public init(used: Int? = nil, limit: Int? = nil) {
         self.init()
         (self.used, self.limit) = (used, limit)
     }
@@ -250,38 +250,28 @@ public struct GetUsageResponseSuccess: Codable {
     }
 
     init() {
-        (object, emails, contacts, segments, broadcasts) = (nil, nil, nil, nil, nil)
-        (aiCredits, automationRuns, domains, rateLimit) = (nil, nil, nil, nil)
+        (self.object, self.emails, self.contacts, self.segments, self.broadcasts) = (nil, nil, nil, nil, nil)
+        (self.aiCredits, self.automationRuns, self.domains, self.rateLimit) = (nil, nil, nil, nil)
     }
 }
 
-public extension GetUsageResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension GetUsageResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        emails = try container.sdkDecodeIfPresent(.emails)
-        contacts = try container.sdkDecodeIfPresent(.contacts)
-        segments = try container.sdkDecodeIfPresent(.segments)
-        broadcasts = try container.sdkDecodeIfPresent(.broadcasts)
-        aiCredits = try container.sdkDecodeIfPresent(.aiCredits)
-        automationRuns = try container.sdkDecodeIfPresent(.automationRuns)
-        domains = try container.sdkDecodeIfPresent(.domains)
-        rateLimit = try container.sdkDecodeIfPresent(.rateLimit)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.emails = try container.sdkDecodeIfPresent(.emails)
+        self.contacts = try container.sdkDecodeIfPresent(.contacts)
+        self.segments = try container.sdkDecodeIfPresent(.segments)
+        self.broadcasts = try container.sdkDecodeIfPresent(.broadcasts)
+        self.aiCredits = try container.sdkDecodeIfPresent(.aiCredits)
+        self.automationRuns = try container.sdkDecodeIfPresent(.automationRuns)
+        self.domains = try container.sdkDecodeIfPresent(.domains)
+        self.rateLimit = try container.sdkDecodeIfPresent(.rateLimit)
     }
 }
 
-public extension GetUsageResponseSuccess {
-    init(
-        object: String? = nil,
-        emails: GetUsageResponseSuccessEmails? = nil,
-        contacts: GetUsageResponseSuccessContacts? = nil,
-        segments: GetUsageResponseSuccessSegments? = nil,
-        broadcasts: GetUsageResponseSuccessBroadcasts? = nil,
-        aiCredits: GetUsageResponseSuccessAiCredits? = nil,
-        automationRuns: GetUsageResponseSuccessAutomationRuns? = nil,
-        domains: GetUsageResponseSuccessDomains? = nil,
-        rateLimit: GetUsageResponseSuccessRateLimit? = nil
-    ) {
+extension GetUsageResponseSuccess {
+    public init(object: String? = nil, emails: GetUsageResponseSuccessEmails? = nil, contacts: GetUsageResponseSuccessContacts? = nil, segments: GetUsageResponseSuccessSegments? = nil, broadcasts: GetUsageResponseSuccessBroadcasts? = nil, aiCredits: GetUsageResponseSuccessAiCredits? = nil, automationRuns: GetUsageResponseSuccessAutomationRuns? = nil, domains: GetUsageResponseSuccessDomains? = nil, rateLimit: GetUsageResponseSuccessRateLimit? = nil) {
         self.init()
         (self.object, self.emails) = (object, emails)
         (self.contacts, self.segments) = (contacts, segments)
@@ -313,23 +303,23 @@ public struct GetUsageResponseSuccessEmailsMonthly: Codable {
     }
 
     init() {
-        (used, limit, sent, received, resetsAt) = (nil, nil, nil, nil, nil)
+        (self.used, self.limit, self.sent, self.received, self.resetsAt) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension GetUsageResponseSuccessEmailsMonthly {
-    init(from decoder: Decoder) throws {
+extension GetUsageResponseSuccessEmailsMonthly {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        used = try container.sdkDecodeIfPresent(.used)
-        limit = try container.sdkDecodeIfPresent(.limit)
-        sent = try container.sdkDecodeIfPresent(.sent)
-        received = try container.sdkDecodeIfPresent(.received)
-        resetsAt = try container.sdkDecodeIfPresent(.resetsAt)
+        self.used = try container.sdkDecodeIfPresent(.used)
+        self.limit = try container.sdkDecodeIfPresent(.limit)
+        self.sent = try container.sdkDecodeIfPresent(.sent)
+        self.received = try container.sdkDecodeIfPresent(.received)
+        self.resetsAt = try container.sdkDecodeIfPresent(.resetsAt)
     }
 }
 
-public extension GetUsageResponseSuccessEmailsMonthly {
-    init(used: Int? = nil, limit: Int? = nil, sent: Int? = nil, received: Int? = nil, resetsAt: String? = nil) {
+extension GetUsageResponseSuccessEmailsMonthly {
+    public init(used: Int? = nil, limit: Int? = nil, sent: Int? = nil, received: Int? = nil, resetsAt: String? = nil) {
         self.init()
         (self.used, self.limit) = (used, limit)
         (self.sent, self.received) = (sent, received)
@@ -353,21 +343,21 @@ public struct GetUsageResponseSuccessAiCredits: Codable {
     }
 
     init() {
-        (used, limit, nextIncreaseAt) = (nil, nil, nil)
+        (self.used, self.limit, self.nextIncreaseAt) = (nil, nil, nil)
     }
 }
 
-public extension GetUsageResponseSuccessAiCredits {
-    init(from decoder: Decoder) throws {
+extension GetUsageResponseSuccessAiCredits {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        used = try container.sdkDecodeIfPresent(.used)
-        limit = try container.sdkDecodeIfPresent(.limit)
-        nextIncreaseAt = try container.sdkDecodeIfPresent(.nextIncreaseAt)
+        self.used = try container.sdkDecodeIfPresent(.used)
+        self.limit = try container.sdkDecodeIfPresent(.limit)
+        self.nextIncreaseAt = try container.sdkDecodeIfPresent(.nextIncreaseAt)
     }
 }
 
-public extension GetUsageResponseSuccessAiCredits {
-    init(used: Int? = nil, limit: Int? = nil, nextIncreaseAt: String? = nil) {
+extension GetUsageResponseSuccessAiCredits {
+    public init(used: Int? = nil, limit: Int? = nil, nextIncreaseAt: String? = nil) {
         self.init()
         (self.used, self.limit) = (used, limit)
         self.nextIncreaseAt = nextIncreaseAt
@@ -387,20 +377,20 @@ public struct GetUsageResponseSuccessRateLimit: Codable {
     }
 
     init() {
-        (limit, duration) = (nil, nil)
+        (self.limit, self.duration) = (nil, nil)
     }
 }
 
-public extension GetUsageResponseSuccessRateLimit {
-    init(from decoder: Decoder) throws {
+extension GetUsageResponseSuccessRateLimit {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        limit = try container.sdkDecodeIfPresent(.limit)
-        duration = try container.sdkDecodeIfPresent(.duration)
+        self.limit = try container.sdkDecodeIfPresent(.limit)
+        self.duration = try container.sdkDecodeIfPresent(.duration)
     }
 }
 
-public extension GetUsageResponseSuccessRateLimit {
-    init(limit: Int? = nil, duration: String? = nil) {
+extension GetUsageResponseSuccessRateLimit {
+    public init(limit: Int? = nil, duration: String? = nil) {
         self.init()
         (self.limit, self.duration) = (limit, duration)
     }
@@ -419,20 +409,20 @@ public struct GetUsageResponseSuccessContacts: Codable {
     }
 
     init() {
-        (used, limit) = (nil, nil)
+        (self.used, self.limit) = (nil, nil)
     }
 }
 
-public extension GetUsageResponseSuccessContacts {
-    init(from decoder: Decoder) throws {
+extension GetUsageResponseSuccessContacts {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        used = try container.sdkDecodeIfPresent(.used)
-        limit = try container.sdkDecodeIfPresent(.limit)
+        self.used = try container.sdkDecodeIfPresent(.used)
+        self.limit = try container.sdkDecodeIfPresent(.limit)
     }
 }
 
-public extension GetUsageResponseSuccessContacts {
-    init(used: Int? = nil, limit: Int? = nil) {
+extension GetUsageResponseSuccessContacts {
+    public init(used: Int? = nil, limit: Int? = nil) {
         self.init()
         (self.used, self.limit) = (used, limit)
     }

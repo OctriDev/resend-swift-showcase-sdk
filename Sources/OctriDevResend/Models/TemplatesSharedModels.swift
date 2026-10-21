@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Templates domain models
+// Templates domain models
 /// Typed representation of the `TemplateVariableInput` API schema.
 public struct TemplateVariableInput: Codable {
     /// The key of the variable.
@@ -19,36 +19,26 @@ public struct TemplateVariableInput: Codable {
         case fallbackValue = "fallback_value"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension TemplateVariableInput {
-    init(from decoder: Decoder) throws {
+extension TemplateVariableInput {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.key) else {
-            throw SdkValidationError(
-                field: "key",
-                code: "required",
-                message: "Validation failed for 'key': value is required"
-            )
+            throw SdkValidationError(field: "key", code: "required", message: "Validation failed for 'key': value is required")
         }
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
-        key = try container.sdkDecodeRequired(.key)
-        type = try container.sdkDecodeRequired(.type)
-        fallbackValue = try container.sdkDecodeIfPresent(.fallbackValue)
+        self.key = try container.sdkDecodeRequired(.key)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.fallbackValue = try container.sdkDecodeIfPresent(.fallbackValue)
     }
 }
 
-public extension TemplateVariableInput {
-    init(key: String, type: TemplateVariableInputType, fallbackValue: TemplateVariableInputFallbackValue? = nil) {
+extension TemplateVariableInput {
+    public init(key: String, type: TemplateVariableInputType, fallbackValue: TemplateVariableInputFallbackValue? = nil) {
         (self.key, self.type) = (key, type)
         self.fallbackValue = fallbackValue
     }
@@ -63,41 +53,25 @@ public indirect enum TemplateVariableInputFallbackValue {
 }
 
 extension TemplateVariableInputFallbackValue: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for TemplateVariableInputFallbackValue"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for TemplateVariableInputFallbackValue")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension TemplateVariableInputFallbackValue {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) {
-            return .stringValue(value)
-        }
-        if let value = try? container.decode(Double.self) {
-            return .doubleValue(value)
-        }
-        if let value = try? container.decode(Bool.self) {
-            return .boolValue(value)
-        }
-        if let value = try? container.decode([String: JSONValue].self) {
-            return .jsonValue(value)
-        }
-        if let value = try? container.decode([JSONValue].self) {
-            return .jSonValueList(value)
-        }
+        if let value = try? container.decode(String.self) { return .stringValue(value) }
+        if let value = try? container.decode(Double.self) { return .doubleValue(value) }
+        if let value = try? container.decode(Bool.self) { return .boolValue(value) }
+        if let value = try? container.decode([String: JSONValue].self) { return .jsonValue(value) }
+        if let value = try? container.decode([JSONValue].self) { return .jSonValueList(value) }
         return nil
     }
 }
@@ -128,10 +102,7 @@ extension TemplateVariableInputFallbackValue: SdkNumericValueConvertible {
 public struct TemplateVariableInputType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let string = TemplateVariableInputType(rawValue: "string")
     public static let number = TemplateVariableInputType(rawValue: "number")
     public static let boolean = TemplateVariableInputType(rawValue: "boolean")
@@ -140,7 +111,7 @@ public struct TemplateVariableInputType: RawRepresentable, Hashable, Codable, Se
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

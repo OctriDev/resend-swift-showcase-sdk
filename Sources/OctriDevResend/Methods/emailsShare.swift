@@ -6,30 +6,16 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension EmailsMethods {
-    /// Creates a shareable link for a sent or received email. Use `email_id` to select the email and optionally set
-    /// `expires_in` to a duration of up to 48 hours; the default is 48 hours.
+extension EmailsMethods {
+    /// Creates a shareable link for a sent or received email. Use `email_id` to select the email and optionally set `expires_in` to a duration of up to 48 hours; the default is 48 hours.
     ///
     /// - Parameters:
     /// - emailId: The ID of the email.
     /// - expiresIn: How long the link stays valid for, as a duration like `10m`, `2
     ///   hours`, or `1 day`. Defaults to `48h` and cannot exceed 48 hours.
-    static func emailsShare(
-        config: ClientConfig,
-        emailId: String,
-        expiresIn: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ShareEmailResponse {
+    public static func emailsShare(config: ClientConfig, emailId: String, expiresIn: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ShareEmailResponse {
         let requestBody = EmailsShareRequestBody(expiresIn: expiresIn)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/emails/", sdkEncodePathSegment(sdkWireString(emailId)), "/share"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "emailsShare",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("POST", ["/emails/", sdkEncodePathSegment(sdkWireString(emailId)), "/share"].joined(), config: config, body: requestBody, decoder: .json, operationId: "emailsShare", options: requestOptions)).data
     }
 }

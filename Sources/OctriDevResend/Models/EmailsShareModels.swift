@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Emails domain models
+// Emails domain models
 /// Typed representation of the `ShareEmailResponse` API schema.
 public struct ShareEmailResponse: Codable {
     /// The type of object.
@@ -23,21 +23,21 @@ public struct ShareEmailResponse: Codable {
     }
 
     init() {
-        (object, id, url) = (nil, nil, nil)
+        (self.object, self.id, self.url) = (nil, nil, nil)
     }
 }
 
-public extension ShareEmailResponse {
-    init(from decoder: Decoder) throws {
+extension ShareEmailResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        id = try container.sdkDecodeIfPresent(.id)
-        url = try container.sdkDecodeIfPresent(.url)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.url = try container.sdkDecodeIfPresent(.url)
     }
 }
 
-public extension ShareEmailResponse {
-    init(object: String? = nil, id: String? = nil, url: String? = nil) {
+extension ShareEmailResponse {
+    public init(object: String? = nil, id: String? = nil, url: String? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
         self.url = url
@@ -55,19 +55,19 @@ public struct ShareEmailOptions: Codable {
     }
 
     init() {
-        expiresIn = nil
+        self.expiresIn = nil
     }
 }
 
-public extension ShareEmailOptions {
-    init(from decoder: Decoder) throws {
+extension ShareEmailOptions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        expiresIn = try container.sdkDecodeIfPresent(.expiresIn)
+        self.expiresIn = try container.sdkDecodeIfPresent(.expiresIn)
     }
 }
 
-public extension ShareEmailOptions {
-    init(expiresIn: String? = nil) {
+extension ShareEmailOptions {
+    public init(expiresIn: String? = nil) {
         self.init()
         self.expiresIn = expiresIn
     }

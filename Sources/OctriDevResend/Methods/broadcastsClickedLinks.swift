@@ -6,41 +6,25 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension BroadcastsMethods {
-    /// Lists the links clicked in a broadcast and their click counts. Use the cursor parameters to retrieve results
-    /// before or after a position in the list.
+extension BroadcastsMethods {
+    /// Lists the links clicked in a broadcast and their click counts. Use the cursor parameters to retrieve results before or after a position in the list.
     ///
     /// - Parameters:
     /// - id: The Broadcast ID.
     /// - limit: Number of items to return.
     /// - after: Return items after this cursor.
     /// - before: Return items before this cursor.
-    static func broadcastsListClickedLinks(
-        config: ClientConfig,
-        id: String,
-        limit: Int? = nil,
-        after: String? = nil,
-        before: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ListBroadcastClickedLinksResponseSuccess {
+    public static func broadcastsListClickedLinks(config: ClientConfig, id: String, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListBroadcastClickedLinksResponseSuccess {
         try sdkValidateUuid("id", id)
 
-        if let limit {
+        if let limit = limit {
             try validateRange("limit", Double(limit), min: 1, max: 100)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            ["/broadcasts/", sdkEncodePathSegment(sdkWireString(id)), "/clicked-links"].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("limit", value: limit),
-                SdkQueryParameter("after", value: after),
-                SdkQueryParameter("before", value: before),
-            ],
-            decoder: .json,
-            operationId: "broadcastsListClickedLinks",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("GET", ["/broadcasts/", sdkEncodePathSegment(sdkWireString(id)), "/clicked-links"].joined(), config: config, query: [
+            SdkQueryParameter("limit", value: limit),
+            SdkQueryParameter("after", value: after),
+            SdkQueryParameter("before", value: before),
+        ], decoder: .json, operationId: "broadcastsListClickedLinks", options: requestOptions)).data
     }
 }

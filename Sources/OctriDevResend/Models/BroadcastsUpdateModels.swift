@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Broadcasts domain models
+// Broadcasts domain models
 /// Typed representation of the `UpdateBroadcastResponseSuccess` API schema.
 public struct UpdateBroadcastResponseSuccess: Codable {
     /// The ID of the broadcast.
@@ -19,20 +19,20 @@ public struct UpdateBroadcastResponseSuccess: Codable {
     }
 
     init() {
-        (id, object) = (nil, nil)
+        (self.id, self.object) = (nil, nil)
     }
 }
 
-public extension UpdateBroadcastResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension UpdateBroadcastResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.object = try container.sdkDecodeIfPresent(.object)
     }
 }
 
-public extension UpdateBroadcastResponseSuccess {
-    init(id: String? = nil, object: String? = nil) {
+extension UpdateBroadcastResponseSuccess {
+    public init(id: String? = nil, object: String? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
     }
@@ -75,40 +75,29 @@ public struct UpdateBroadcastOptions: Codable {
     }
 
     init() {
-        (name, audienceId, segmentId, from, subject) = (nil, nil, nil, nil, nil)
-        (replyTo, previewText, html, text, topicId) = (nil, nil, nil, nil, nil)
+        (self.name, self.audienceId, self.segmentId, self.from, self.subject) = (nil, nil, nil, nil, nil)
+        (self.replyTo, self.previewText, self.html, self.text, self.topicId) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension UpdateBroadcastOptions {
-    init(from decoder: Decoder) throws {
+extension UpdateBroadcastOptions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        audienceId = try container.sdkDecodeIfPresent(.audienceId)
-        segmentId = try container.sdkDecodeIfPresent(.segmentId)
-        from = try container.sdkDecodeIfPresent(.from)
-        subject = try container.sdkDecodeIfPresent(.subject)
-        replyTo = try container.sdkDecodeIfPresent(.replyTo)
-        previewText = try container.sdkDecodeIfPresent(.previewText)
-        html = try container.sdkDecodeIfPresent(.html)
-        text = try container.sdkDecodeIfPresent(.text)
-        topicId = try container.sdkDecodeIfPresent(.topicId)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.audienceId = try container.sdkDecodeIfPresent(.audienceId)
+        self.segmentId = try container.sdkDecodeIfPresent(.segmentId)
+        self.from = try container.sdkDecodeIfPresent(.from)
+        self.subject = try container.sdkDecodeIfPresent(.subject)
+        self.replyTo = try container.sdkDecodeIfPresent(.replyTo)
+        self.previewText = try container.sdkDecodeIfPresent(.previewText)
+        self.html = try container.sdkDecodeIfPresent(.html)
+        self.text = try container.sdkDecodeIfPresent(.text)
+        self.topicId = try container.sdkDecodeIfPresent(.topicId)
     }
 }
 
-public extension UpdateBroadcastOptions {
-    init(
-        name: String? = nil,
-        audienceId: String? = nil,
-        segmentId: String? = nil,
-        from: String? = nil,
-        subject: String? = nil,
-        replyTo: [String]? = nil,
-        previewText: String? = nil,
-        html: String? = nil,
-        text: String? = nil,
-        topicId: String? = nil
-    ) {
+extension UpdateBroadcastOptions {
+    public init(name: String? = nil, audienceId: String? = nil, segmentId: String? = nil, from: String? = nil, subject: String? = nil, replyTo: [String]? = nil, previewText: String? = nil, html: String? = nil, text: String? = nil, topicId: String? = nil) {
         self.init()
         (self.name, self.audienceId) = (name, audienceId)
         (self.segmentId, self.from) = (segmentId, from)

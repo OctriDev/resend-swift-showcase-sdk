@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Contacts domain models
+// Contacts domain models
 /// Typed representation of the `ListContactImportsResponseSuccess` API schema.
 public struct ListContactImportsResponseSuccess: Codable {
     /// Type of the response object.
@@ -21,21 +21,21 @@ public struct ListContactImportsResponseSuccess: Codable {
     }
 
     init() {
-        (object, hasMore, data) = (nil, nil, nil)
+        (self.object, self.hasMore, self.data) = (nil, nil, nil)
     }
 }
 
-public extension ListContactImportsResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension ListContactImportsResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension ListContactImportsResponseSuccess {
-    init(object: String? = nil, hasMore: Bool? = nil, data: [ContactImport]? = nil) {
+extension ListContactImportsResponseSuccess {
+    public init(object: String? = nil, hasMore: Bool? = nil, data: [ContactImport]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data

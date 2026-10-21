@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Contacts domain models
+// Contacts domain models
 /// Typed representation of the `GetContactTopicsResponseSuccess` API schema.
 public struct GetContactTopicsResponseSuccess: Codable {
     /// Type of the response object.
@@ -21,21 +21,21 @@ public struct GetContactTopicsResponseSuccess: Codable {
     }
 
     init() {
-        (object, hasMore, data) = (nil, nil, nil)
+        (self.object, self.hasMore, self.data) = (nil, nil, nil)
     }
 }
 
-public extension GetContactTopicsResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension GetContactTopicsResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension GetContactTopicsResponseSuccess {
-    init(object: String? = nil, hasMore: Bool? = nil, data: [GetContactTopicsResponseSuccessDataItem]? = nil) {
+extension GetContactTopicsResponseSuccess {
+    public init(object: String? = nil, hasMore: Bool? = nil, data: [GetContactTopicsResponseSuccessDataItem]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -61,27 +61,22 @@ public struct GetContactTopicsResponseSuccessDataItem: Codable {
     }
 
     init() {
-        (id, name, description, subscription) = (nil, nil, nil, nil)
+        (self.id, self.name, self.description, self.subscription) = (nil, nil, nil, nil)
     }
 }
 
-public extension GetContactTopicsResponseSuccessDataItem {
-    init(from decoder: Decoder) throws {
+extension GetContactTopicsResponseSuccessDataItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        subscription = try container.sdkDecodeIfPresent(.subscription)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.subscription = try container.sdkDecodeIfPresent(.subscription)
     }
 }
 
-public extension GetContactTopicsResponseSuccessDataItem {
-    init(
-        id: String? = nil,
-        name: String? = nil,
-        description: String? = nil,
-        subscription: GetContactTopicsResponseSuccessDataItemSubscription? = nil
-    ) {
+extension GetContactTopicsResponseSuccessDataItem {
+    public init(id: String? = nil, name: String? = nil, description: String? = nil, subscription: GetContactTopicsResponseSuccessDataItemSubscription? = nil) {
         self.init()
         (self.id, self.name) = (id, name)
         (self.description, self.subscription) = (description, subscription)
@@ -89,20 +84,16 @@ public extension GetContactTopicsResponseSuccessDataItem {
 }
 
 /// The subscription status for this topic.
-public struct GetContactTopicsResponseSuccessDataItemSubscription: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct GetContactTopicsResponseSuccessDataItemSubscription: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let optIn = GetContactTopicsResponseSuccessDataItemSubscription(rawValue: "opt_in")
     public static let optOut = GetContactTopicsResponseSuccessDataItemSubscription(rawValue: "opt_out")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

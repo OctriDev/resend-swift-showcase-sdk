@@ -6,41 +6,25 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension SegmentsMethods {
-    /// Lists the contacts in a segment. Use `after` or `before` to navigate results with cursors, and `limit` to
-    /// control the number of contacts returned.
+extension SegmentsMethods {
+    /// Lists the contacts in a segment. Use `after` or `before` to navigate results with cursors, and `limit` to control the number of contacts returned.
     ///
     /// - Parameters:
     /// - id: The Segment ID.
     /// - limit: Number of items to return.
     /// - after: Return items after this cursor.
     /// - before: Return items before this cursor.
-    static func segmentsListContacts(
-        config: ClientConfig,
-        id: String,
-        limit: Int? = nil,
-        after: String? = nil,
-        before: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ListContactsResponseSuccess {
+    public static func segmentsListContacts(config: ClientConfig, id: String, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListContactsResponseSuccess {
         try sdkValidateUuid("id", id)
 
-        if let limit {
+        if let limit = limit {
             try validateRange("limit", Double(limit), min: 1, max: 100)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            ["/segments/", sdkEncodePathSegment(sdkWireString(id)), "/contacts"].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("limit", value: limit),
-                SdkQueryParameter("after", value: after),
-                SdkQueryParameter("before", value: before),
-            ],
-            decoder: .json,
-            operationId: "segmentsListContacts",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("GET", ["/segments/", sdkEncodePathSegment(sdkWireString(id)), "/contacts"].joined(), config: config, query: [
+            SdkQueryParameter("limit", value: limit),
+            SdkQueryParameter("after", value: after),
+            SdkQueryParameter("before", value: before),
+        ], decoder: .json, operationId: "segmentsListContacts", options: requestOptions)).data
     }
 }

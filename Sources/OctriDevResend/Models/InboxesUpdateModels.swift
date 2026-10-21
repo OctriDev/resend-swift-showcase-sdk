@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// InboxesUpdate domain models
+// InboxesUpdate domain models
 /// Typed representation of the `UpdateInboxResponseSuccess` API schema.
 public struct UpdateInboxResponseSuccess: Codable {
     /// The object type.
@@ -18,38 +18,28 @@ public struct UpdateInboxResponseSuccess: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension UpdateInboxResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension UpdateInboxResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.object) else {
-            throw SdkValidationError(
-                field: "object",
-                code: "required",
-                message: "Validation failed for 'object': value is required"
-            )
+            throw SdkValidationError(field: "object", code: "required", message: "Validation failed for 'object': value is required")
         }
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
-        object = try container.sdkDecodeRequired(.object)
-        id = try container.sdkDecodeRequired(.id)
-        try sdkValidateUuid("id", id)
+        self.object = try container.sdkDecodeRequired(.object)
+        self.id = try container.sdkDecodeRequired(.id)
+            try sdkValidateUuid("id", self.id)
     }
 }
 
-public extension UpdateInboxResponseSuccess {
-    init(object: String, id: String) throws {
+extension UpdateInboxResponseSuccess {
+    public init(object: String, id: String) throws {
         (self.object, self.id) = (object, id)
-        try sdkValidateUuid("id", self.id)
+            try sdkValidateUuid("id", self.id)
     }
 }
 
@@ -70,26 +60,26 @@ public struct UpdateInboxOptions: Codable {
     }
 
     init() {
-        (name, fromName) = (nil, nil)
+        (self.name, self.fromName) = (nil, nil)
     }
 }
 
-public extension UpdateInboxOptions {
-    init(from decoder: Decoder) throws {
+extension UpdateInboxOptions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        fromName = try container.sdkDecodeIfPresent(.fromName)
-        if let value = name {
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.fromName = try container.sdkDecodeIfPresent(.fromName)
+        if let value = self.name {
             try validateLength("name", value, min: 1, max: 64)
         }
-        if let value = fromName {
+        if let value = self.fromName {
             try validateLength("from_name", value, min: nil, max: 78)
         }
     }
 }
 
-public extension UpdateInboxOptions {
-    init(name: String? = nil, fromName: String? = nil) throws {
+extension UpdateInboxOptions {
+    public init(name: String? = nil, fromName: String? = nil) throws {
         self.init()
         (self.name, self.fromName) = (name, fromName)
         if let value = self.name {

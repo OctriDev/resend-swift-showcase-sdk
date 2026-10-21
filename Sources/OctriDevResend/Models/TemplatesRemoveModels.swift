@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Templates domain models
+// Templates domain models
 /// Typed representation of the `RemoveTemplateResponseSuccess` API schema.
 public struct RemoveTemplateResponseSuccess: Codable {
     /// Type of the response object.
@@ -22,21 +22,21 @@ public struct RemoveTemplateResponseSuccess: Codable {
     }
 
     init() {
-        (object, id, deleted) = (nil, nil, nil)
+        (self.object, self.id, self.deleted) = (nil, nil, nil)
     }
 }
 
-public extension RemoveTemplateResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension RemoveTemplateResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        id = try container.sdkDecodeIfPresent(.id)
-        deleted = try container.sdkDecodeIfPresent(.deleted)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-public extension RemoveTemplateResponseSuccess {
-    init(object: String? = nil, id: String? = nil, deleted: Bool? = nil) {
+extension RemoveTemplateResponseSuccess {
+    public init(object: String? = nil, id: String? = nil, deleted: Bool? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
         self.deleted = deleted

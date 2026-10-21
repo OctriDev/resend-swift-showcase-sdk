@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Broadcasts domain models
+// Broadcasts domain models
 /// Required object value serialized in the `clicked_links[]` wire field.
 public struct ListBroadcastRecipientsResponseSuccessDataItemClickedLinksItem: Codable {
     /// The clicked URL.
@@ -19,27 +19,26 @@ public struct ListBroadcastRecipientsResponseSuccessDataItemClickedLinksItem: Co
     }
 
     init() {
-        (url, clicks) = (nil, nil)
+        (self.url, self.clicks) = (nil, nil)
     }
 }
 
-public extension ListBroadcastRecipientsResponseSuccessDataItemClickedLinksItem {
-    init(from decoder: Decoder) throws {
+extension ListBroadcastRecipientsResponseSuccessDataItemClickedLinksItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        url = try container.sdkDecodeIfPresent(.url)
-        clicks = try container.sdkDecodeIfPresent(.clicks)
+        self.url = try container.sdkDecodeIfPresent(.url)
+        self.clicks = try container.sdkDecodeIfPresent(.clicks)
     }
 }
 
-public extension ListBroadcastRecipientsResponseSuccessDataItemClickedLinksItem {
-    init(url: String? = nil, clicks: Int? = nil) {
+extension ListBroadcastRecipientsResponseSuccessDataItemClickedLinksItem {
+    public init(url: String? = nil, clicks: Int? = nil) {
         self.init()
         (self.url, self.clicks) = (url, clicks)
     }
 }
 
-public typealias ListBroadcastRecipientsResponseSuccessDataItemClickedLinksList =
-    [ListBroadcastRecipientsResponseSuccessDataItemClickedLinksItem]
+public typealias ListBroadcastRecipientsResponseSuccessDataItemClickedLinksList = [ListBroadcastRecipientsResponseSuccessDataItemClickedLinksItem]
 
 /// Required object value serialized in the `data[]` wire field.
 public struct ListBroadcastRecipientsResponseSuccessDataItem: Codable {
@@ -70,32 +69,25 @@ public struct ListBroadcastRecipientsResponseSuccessDataItem: Codable {
     }
 
     init() {
-        (id, contactId, email, count, bounceType) = (nil, nil, nil, nil, nil)
-        clickedLinks = nil
+        (self.id, self.contactId, self.email, self.count, self.bounceType) = (nil, nil, nil, nil, nil)
+        self.clickedLinks = nil
     }
 }
 
-public extension ListBroadcastRecipientsResponseSuccessDataItem {
-    init(from decoder: Decoder) throws {
+extension ListBroadcastRecipientsResponseSuccessDataItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        contactId = try container.sdkDecodeIfPresent(.contactId)
-        email = try container.sdkDecodeIfPresent(.email)
-        count = try container.sdkDecodeIfPresent(.count)
-        bounceType = try container.sdkDecodeIfPresent(.bounceType)
-        clickedLinks = try container.sdkDecodeIfPresent(.clickedLinks)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.contactId = try container.sdkDecodeIfPresent(.contactId)
+        self.email = try container.sdkDecodeIfPresent(.email)
+        self.count = try container.sdkDecodeIfPresent(.count)
+        self.bounceType = try container.sdkDecodeIfPresent(.bounceType)
+        self.clickedLinks = try container.sdkDecodeIfPresent(.clickedLinks)
     }
 }
 
-public extension ListBroadcastRecipientsResponseSuccessDataItem {
-    init(
-        id: String? = nil,
-        contactId: String? = nil,
-        email: String? = nil,
-        count: Int? = nil,
-        bounceType: ListBroadcastRecipientsResponseSuccessDataItemBounceType? = nil,
-        clickedLinks: ListBroadcastRecipientsResponseSuccessDataItemClickedLinksList? = nil
-    ) {
+extension ListBroadcastRecipientsResponseSuccessDataItem {
+    public init(id: String? = nil, contactId: String? = nil, email: String? = nil, count: Int? = nil, bounceType: ListBroadcastRecipientsResponseSuccessDataItemBounceType? = nil, clickedLinks: ListBroadcastRecipientsResponseSuccessDataItemClickedLinksList? = nil) {
         self.init()
         (self.id, self.contactId) = (id, contactId)
         (self.email, self.count) = (email, count)
@@ -120,21 +112,21 @@ public struct ListBroadcastRecipientsResponseSuccess: Codable {
     }
 
     init() {
-        (object, hasMore, data) = (nil, nil, nil)
+        (self.object, self.hasMore, self.data) = (nil, nil, nil)
     }
 }
 
-public extension ListBroadcastRecipientsResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension ListBroadcastRecipientsResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension ListBroadcastRecipientsResponseSuccess {
-    init(object: String? = nil, hasMore: Bool? = nil, data: [ListBroadcastRecipientsResponseSuccessDataItem]? = nil) {
+extension ListBroadcastRecipientsResponseSuccess {
+    public init(object: String? = nil, hasMore: Bool? = nil, data: [ListBroadcastRecipientsResponseSuccessDataItem]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -142,21 +134,17 @@ public extension ListBroadcastRecipientsResponseSuccess {
 }
 
 /// The type of bounce. Only present when `type` is `bounced`.
-public struct ListBroadcastRecipientsResponseSuccessDataItemBounceType: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct ListBroadcastRecipientsResponseSuccessDataItemBounceType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let permanent = ListBroadcastRecipientsResponseSuccessDataItemBounceType(rawValue: "permanent")
     public static let transient = ListBroadcastRecipientsResponseSuccessDataItemBounceType(rawValue: "transient")
     public static let undetermined = ListBroadcastRecipientsResponseSuccessDataItemBounceType(rawValue: "undetermined")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

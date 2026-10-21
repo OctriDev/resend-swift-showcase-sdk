@@ -6,35 +6,20 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension EmailsMethods {
-    /// Submits a batch of email messages for sending, with up to 100 emails in the batch. Each message requires `from`,
-    /// `to`, and `subject`; the response includes an ID for each submitted email.
+extension EmailsMethods {
+    /// Submits a batch of email messages for sending, with up to 100 emails in the batch. Each message requires `from`, `to`, and `subject`; the response includes an ID for each submitted email.
     ///
     /// - Parameters:
     /// - idempotencyKey: A unique identifier for the request to ensure emails are
     ///   only sent once. [Learn
     ///   more](https://resend.com/docs/dashboard/emails/idempotency-keys)
-    static func emailsSendBatch(
-        config: ClientConfig,
-        idempotencyKey: String? = nil,
-        body: [SendEmailRequest]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> CreateBatchEmailsResponse {
-        if let idempotencyKey {
+    public static func emailsSendBatch(config: ClientConfig, idempotencyKey: String? = nil, body: [SendEmailRequest]? = nil, requestOptions: RequestOptions? = nil) async throws -> CreateBatchEmailsResponse {
+        if let idempotencyKey = idempotencyKey {
             try validateLength("Idempotency-Key", idempotencyKey, max: 256)
         }
 
-        return try await (sdkRequest(
-            "POST",
-            "/emails/batch",
-            config: config,
-            rawBody: (body.map { try sdkEncodeBody($0, contentType: "application/json") }),
-            decoder: .json,
-            operationId: "emailsSendBatch",
-            extraHeaders: sdkHeaders([
-                ("Idempotency-Key", sdkHeaderValue(idempotencyKey)),
-            ]),
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("POST", "/emails/batch", config: config, rawBody: (try body.map { try sdkEncodeBody($0, contentType: "application/json") }), decoder: .json, operationId: "emailsSendBatch", extraHeaders: sdkHeaders([
+            ("Idempotency-Key", sdkHeaderValue(idempotencyKey)),
+        ]), options: requestOptions)).data
     }
 }

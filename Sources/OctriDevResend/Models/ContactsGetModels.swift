@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Contacts domain models
+// Contacts domain models
 /// Typed representation of the `GetContactResponseSuccess` API schema.
 public struct GetContactResponseSuccess: Codable {
     /// Type of the response object.
@@ -41,36 +41,27 @@ public struct GetContactResponseSuccess: Codable {
     }
 
     init() {
-        (object, id, email, firstName, lastName) = (nil, nil, nil, nil, nil)
-        (createdAt, unsubscribed, properties) = (nil, nil, nil)
+        (self.object, self.id, self.email, self.firstName, self.lastName) = (nil, nil, nil, nil, nil)
+        (self.createdAt, self.unsubscribed, self.properties) = (nil, nil, nil)
     }
 }
 
-public extension GetContactResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension GetContactResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        id = try container.sdkDecodeIfPresent(.id)
-        email = try container.sdkDecodeIfPresent(.email)
-        firstName = try container.sdkDecodeIfPresent(.firstName)
-        lastName = try container.sdkDecodeIfPresent(.lastName)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        unsubscribed = try container.sdkDecodeIfPresent(.unsubscribed)
-        properties = try container.sdkDecodeIfPresent(.properties)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.email = try container.sdkDecodeIfPresent(.email)
+        self.firstName = try container.sdkDecodeIfPresent(.firstName)
+        self.lastName = try container.sdkDecodeIfPresent(.lastName)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.unsubscribed = try container.sdkDecodeIfPresent(.unsubscribed)
+        self.properties = try container.sdkDecodeIfPresent(.properties)
     }
 }
 
-public extension GetContactResponseSuccess {
-    init(
-        object: String? = nil,
-        id: String? = nil,
-        email: String? = nil,
-        firstName: String? = nil,
-        lastName: String? = nil,
-        createdAt: String? = nil,
-        unsubscribed: Bool? = nil,
-        properties: [String: JSONValue]? = nil
-    ) {
+extension GetContactResponseSuccess {
+    public init(object: String? = nil, id: String? = nil, email: String? = nil, firstName: String? = nil, lastName: String? = nil, createdAt: String? = nil, unsubscribed: Bool? = nil, properties: [String: JSONValue]? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
         (self.email, self.firstName) = (email, firstName)

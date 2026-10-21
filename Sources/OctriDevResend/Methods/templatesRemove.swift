@@ -6,24 +6,12 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension TemplatesMethods {
-    /// Deletes a template selected by its ID or alias. Use this operation when you want to remove the template; the
-    /// response indicates whether it was deleted.
+extension TemplatesMethods {
+    /// Deletes a template selected by its ID or alias. Use this operation when you want to remove the template; the response indicates whether it was deleted.
     ///
     /// - Parameters:
     /// - id: The Template ID or alias.
-    static func templatesRemove(
-        config: ClientConfig,
-        id: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> RemoveTemplateResponseSuccess {
-        try await (sdkRequest(
-            "DELETE",
-            ["/templates/", sdkEncodePathSegment(sdkWireString(id))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "templatesRemove",
-            options: requestOptions
-        )).data
+    public static func templatesRemove(config: ClientConfig, id: String, requestOptions: RequestOptions? = nil) async throws -> RemoveTemplateResponseSuccess {
+        return try (await sdkRequest("DELETE", ["/templates/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "templatesRemove", options: requestOptions)).data
     }
 }

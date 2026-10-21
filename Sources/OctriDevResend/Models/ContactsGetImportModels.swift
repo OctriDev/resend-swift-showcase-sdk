@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Contacts domain models
+// Contacts domain models
 /// Typed representation of the `GetContactImportResponseSuccess` API schema.
 public struct GetContactImportResponseSuccess: Codable {
     /// Type of the response object.
@@ -34,35 +34,28 @@ public struct GetContactImportResponseSuccess: Codable {
     }
 
     init() {
-        (object, id, status, createdAt, completedAt) = (nil, nil, nil, nil, nil)
-        counts = nil
+        (self.object, self.id, self.status, self.createdAt, self.completedAt) = (nil, nil, nil, nil, nil)
+        self.counts = nil
     }
 }
 
-public extension GetContactImportResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension GetContactImportResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        id = try container.sdkDecodeIfPresent(.id)
-        status = try container.sdkDecodeIfPresent(.status)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        counts = try container.sdkDecodeIfPresent(.counts)
-        if let value = id {
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        self.counts = try container.sdkDecodeIfPresent(.counts)
+        if let value = self.id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-public extension GetContactImportResponseSuccess {
-    init(
-        object: String? = nil,
-        id: String? = nil,
-        status: ContactImportStatus? = nil,
-        createdAt: String? = nil,
-        completedAt: String? = nil,
-        counts: ContactImportCounts? = nil
-    ) throws {
+extension GetContactImportResponseSuccess {
+    public init(object: String? = nil, id: String? = nil, status: ContactImportStatus? = nil, createdAt: String? = nil, completedAt: String? = nil, counts: ContactImportCounts? = nil) throws {
         self.init()
         (self.object, self.id) = (object, id)
         (self.status, self.createdAt) = (status, createdAt)

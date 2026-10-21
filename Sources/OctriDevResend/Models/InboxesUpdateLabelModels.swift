@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// InboxesUpdate domain models
+// InboxesUpdate domain models
 /// Typed representation of the `UpdateInboxLabelOptions` API schema.
 public struct UpdateInboxLabelOptions: Codable {
     /// A new name for the label. Max 64 characters. Leading and trailing whitespace is trimmed. Must not match
@@ -20,26 +20,26 @@ public struct UpdateInboxLabelOptions: Codable {
     }
 
     init() {
-        (name, color) = (nil, nil)
+        (self.name, self.color) = (nil, nil)
     }
 }
 
-public extension UpdateInboxLabelOptions {
-    init(from decoder: Decoder) throws {
+extension UpdateInboxLabelOptions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        color = try container.sdkDecodeIfPresent(.color)
-        if let value = name {
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.color = try container.sdkDecodeIfPresent(.color)
+        if let value = self.name {
             try validateLength("name", value, min: 1, max: 64)
         }
-        if let value = color {
+        if let value = self.color {
             try sdkValidatePattern("color", value, sdkPatternf01b4765958d)
         }
     }
 }
 
-public extension UpdateInboxLabelOptions {
-    init(name: String? = nil, color: String? = nil) throws {
+extension UpdateInboxLabelOptions {
+    public init(name: String? = nil, color: String? = nil) throws {
         self.init()
         (self.name, self.color) = (name, color)
         if let value = self.name {
@@ -65,37 +65,27 @@ public struct UpdateInboxLabelResponseSuccess: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension UpdateInboxLabelResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension UpdateInboxLabelResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.object) else {
-            throw SdkValidationError(
-                field: "object",
-                code: "required",
-                message: "Validation failed for 'object': value is required"
-            )
+            throw SdkValidationError(field: "object", code: "required", message: "Validation failed for 'object': value is required")
         }
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
-        object = try container.sdkDecodeRequired(.object)
-        id = try container.sdkDecodeRequired(.id)
-        try sdkValidateUuid("id", id)
+        self.object = try container.sdkDecodeRequired(.object)
+        self.id = try container.sdkDecodeRequired(.id)
+            try sdkValidateUuid("id", self.id)
     }
 }
 
-public extension UpdateInboxLabelResponseSuccess {
-    init(object: String, id: String) throws {
+extension UpdateInboxLabelResponseSuccess {
+    public init(object: String, id: String) throws {
         (self.object, self.id) = (object, id)
-        try sdkValidateUuid("id", self.id)
+            try sdkValidateUuid("id", self.id)
     }
 }

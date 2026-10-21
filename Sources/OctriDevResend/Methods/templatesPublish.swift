@@ -6,24 +6,12 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension TemplatesMethods {
-    /// Publishes a template selected by its ID or alias. Use this operation to make the template's current version
-    /// published.
+extension TemplatesMethods {
+    /// Publishes a template selected by its ID or alias. Use this operation to make the template's current version published.
     ///
     /// - Parameters:
     /// - id: The Template ID or alias.
-    static func templatesPublish(
-        config: ClientConfig,
-        id: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> PublishTemplateResponseSuccess {
-        try await (sdkRequest(
-            "POST",
-            ["/templates/", sdkEncodePathSegment(sdkWireString(id)), "/publish"].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "templatesPublish",
-            options: requestOptions
-        )).data
+    public static func templatesPublish(config: ClientConfig, id: String, requestOptions: RequestOptions? = nil) async throws -> PublishTemplateResponseSuccess {
+        return try (await sdkRequest("POST", ["/templates/", sdkEncodePathSegment(sdkWireString(id)), "/publish"].joined(), config: config, decoder: .json, operationId: "templatesPublish", options: requestOptions)).data
     }
 }

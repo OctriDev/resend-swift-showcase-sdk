@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Webhooks domain models
+// Webhooks domain models
 /// Typed representation of the `UpdateWebhookResponse` API schema.
 public struct UpdateWebhookResponse: Codable {
     /// The type of object.
@@ -19,23 +19,23 @@ public struct UpdateWebhookResponse: Codable {
     }
 
     init() {
-        (object, id) = (nil, nil)
+        (self.object, self.id) = (nil, nil)
     }
 }
 
-public extension UpdateWebhookResponse {
-    init(from decoder: Decoder) throws {
+extension UpdateWebhookResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        id = try container.sdkDecodeIfPresent(.id)
-        if let value = id {
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        if let value = self.id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-public extension UpdateWebhookResponse {
-    init(object: String? = nil, id: String? = nil) throws {
+extension UpdateWebhookResponse {
+    public init(object: String? = nil, id: String? = nil) throws {
         self.init()
         (self.object, self.id) = (object, id)
         if let value = self.id {
@@ -63,24 +63,24 @@ public struct UpdateWebhookRequest: Codable {
     }
 
     init() {
-        (endpoint, events, status) = (nil, nil, nil)
+        (self.endpoint, self.events, self.status) = (nil, nil, nil)
     }
 }
 
-public extension UpdateWebhookRequest {
-    init(from decoder: Decoder) throws {
+extension UpdateWebhookRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        endpoint = try container.sdkDecodeIfPresent(.endpoint)
-        events = try container.sdkDecodeIfPresent(.events)
-        status = try container.sdkDecodeIfPresent(.status)
-        if let value = events {
+        self.endpoint = try container.sdkDecodeIfPresent(.endpoint)
+        self.events = try container.sdkDecodeIfPresent(.events)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        if let value = self.events {
             try validateItems("events", value, min: 1, max: nil)
         }
     }
 }
 
-public extension UpdateWebhookRequest {
-    init(endpoint: String? = nil, events: [String]? = nil, status: UpdateWebhookRequestStatus? = nil) throws {
+extension UpdateWebhookRequest {
+    public init(endpoint: String? = nil, events: [String]? = nil, status: UpdateWebhookRequestStatus? = nil) throws {
         self.init()
         (self.endpoint, self.events) = (endpoint, events)
         self.status = status
@@ -94,16 +94,13 @@ public extension UpdateWebhookRequest {
 public struct UpdateWebhookRequestStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let enabled = UpdateWebhookRequestStatus(rawValue: "enabled")
     public static let disabled = UpdateWebhookRequestStatus(rawValue: "disabled")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

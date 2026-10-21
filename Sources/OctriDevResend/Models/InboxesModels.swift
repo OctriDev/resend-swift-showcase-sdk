@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Inboxes domain models
+// Inboxes domain models
 /// Typed representation of the `SearchInboxThreadsResponseSuccess` API schema.
 public struct SearchInboxThreadsResponseSuccess: Codable {
     /// Type of the response object.
@@ -21,43 +21,29 @@ public struct SearchInboxThreadsResponseSuccess: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension SearchInboxThreadsResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension SearchInboxThreadsResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.object) else {
-            throw SdkValidationError(
-                field: "object",
-                code: "required",
-                message: "Validation failed for 'object': value is required"
-            )
+            throw SdkValidationError(field: "object", code: "required", message: "Validation failed for 'object': value is required")
         }
         guard container.contains(.hasMore) else {
-            throw SdkValidationError(
-                field: "has_more",
-                code: "required",
-                message: "Validation failed for 'has_more': value is required"
-            )
+            throw SdkValidationError(field: "has_more", code: "required", message: "Validation failed for 'has_more': value is required")
         }
         guard container.contains(.data) else {
-            throw SdkValidationError(
-                field: "data",
-                code: "required",
-                message: "Validation failed for 'data': value is required"
-            )
+            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
         }
-        object = try container.sdkDecodeRequired(.object)
-        hasMore = try container.sdkDecodeRequired(.hasMore)
-        data = try container.sdkDecodeRequired(.data)
+        self.object = try container.sdkDecodeRequired(.object)
+        self.hasMore = try container.sdkDecodeRequired(.hasMore)
+        self.data = try container.sdkDecodeRequired(.data)
     }
 }
 
-public extension SearchInboxThreadsResponseSuccess {
-    init(object: String, hasMore: Bool, data: [InboxThreadSearchResult]) {
+extension SearchInboxThreadsResponseSuccess {
+    public init(object: String, hasMore: Bool, data: [InboxThreadSearchResult]) {
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
     }

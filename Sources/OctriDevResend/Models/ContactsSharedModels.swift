@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Contacts domain models
+// Contacts domain models
 /// Typed representation of the `ContactImport` API schema.
 public struct ContactImport: Codable {
     /// Type of the response object.
@@ -34,35 +34,28 @@ public struct ContactImport: Codable {
     }
 
     init() {
-        (object, id, status, createdAt, completedAt) = (nil, nil, nil, nil, nil)
-        counts = nil
+        (self.object, self.id, self.status, self.createdAt, self.completedAt) = (nil, nil, nil, nil, nil)
+        self.counts = nil
     }
 }
 
-public extension ContactImport {
-    init(from decoder: Decoder) throws {
+extension ContactImport {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        id = try container.sdkDecodeIfPresent(.id)
-        status = try container.sdkDecodeIfPresent(.status)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        counts = try container.sdkDecodeIfPresent(.counts)
-        if let value = id {
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        self.counts = try container.sdkDecodeIfPresent(.counts)
+        if let value = self.id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-public extension ContactImport {
-    init(
-        object: String? = nil,
-        id: String? = nil,
-        status: ContactImportStatus? = nil,
-        createdAt: String? = nil,
-        completedAt: String? = nil,
-        counts: ContactImportCounts? = nil
-    ) throws {
+extension ContactImport {
+    public init(object: String? = nil, id: String? = nil, status: ContactImportStatus? = nil, createdAt: String? = nil, completedAt: String? = nil, counts: ContactImportCounts? = nil) throws {
         self.init()
         (self.object, self.id) = (object, id)
         (self.status, self.createdAt) = (status, createdAt)
@@ -100,23 +93,23 @@ public struct ContactImportCounts: Codable {
     }
 
     init() {
-        (total, created, updated, skipped, failed) = (nil, nil, nil, nil, nil)
+        (self.total, self.created, self.updated, self.skipped, self.failed) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ContactImportCounts {
-    init(from decoder: Decoder) throws {
+extension ContactImportCounts {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        total = try container.sdkDecodeIfPresent(.total)
-        created = try container.sdkDecodeIfPresent(.created)
-        updated = try container.sdkDecodeIfPresent(.updated)
-        skipped = try container.sdkDecodeIfPresent(.skipped)
-        failed = try container.sdkDecodeIfPresent(.failed)
+        self.total = try container.sdkDecodeIfPresent(.total)
+        self.created = try container.sdkDecodeIfPresent(.created)
+        self.updated = try container.sdkDecodeIfPresent(.updated)
+        self.skipped = try container.sdkDecodeIfPresent(.skipped)
+        self.failed = try container.sdkDecodeIfPresent(.failed)
     }
 }
 
-public extension ContactImportCounts {
-    init(total: Int? = nil, created: Int? = nil, updated: Int? = nil, skipped: Int? = nil, failed: Int? = nil) {
+extension ContactImportCounts {
+    public init(total: Int? = nil, created: Int? = nil, updated: Int? = nil, skipped: Int? = nil, failed: Int? = nil) {
         self.init()
         (self.total, self.created) = (total, created)
         (self.updated, self.skipped) = (updated, skipped)
@@ -128,10 +121,7 @@ public extension ContactImportCounts {
 public struct ContactImportStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let queued = ContactImportStatus(rawValue: "queued")
     public static let inProgress = ContactImportStatus(rawValue: "in_progress")
     public static let completed = ContactImportStatus(rawValue: "completed")
@@ -139,7 +129,7 @@ public struct ContactImportStatus: RawRepresentable, Hashable, Codable, Sendable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

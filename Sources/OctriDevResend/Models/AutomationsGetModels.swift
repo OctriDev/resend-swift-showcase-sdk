@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Automations domain models
+// Automations domain models
 /// Typed representation of the `Automation` API schema.
 public struct Automation: Codable {
     /// Type of the response object.
@@ -38,36 +38,27 @@ public struct Automation: Codable {
     }
 
     init() {
-        (object, id, name, status, createdAt) = (nil, nil, nil, nil, nil)
-        (updatedAt, steps, connections) = (nil, nil, nil)
+        (self.object, self.id, self.name, self.status, self.createdAt) = (nil, nil, nil, nil, nil)
+        (self.updatedAt, self.steps, self.connections) = (nil, nil, nil)
     }
 }
 
-public extension Automation {
-    init(from decoder: Decoder) throws {
+extension Automation {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        status = try container.sdkDecodeIfPresent(.status)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        steps = try container.sdkDecodeIfPresent(.steps)
-        connections = try container.sdkDecodeIfPresent(.connections)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.steps = try container.sdkDecodeIfPresent(.steps)
+        self.connections = try container.sdkDecodeIfPresent(.connections)
     }
 }
 
-public extension Automation {
-    init(
-        object: String? = nil,
-        id: String? = nil,
-        name: String? = nil,
-        status: AutomationStatus? = nil,
-        createdAt: String? = nil,
-        updatedAt: String? = nil,
-        steps: [AutomationStepResponse]? = nil,
-        connections: [AutomationConnection]? = nil
-    ) {
+extension Automation {
+    public init(object: String? = nil, id: String? = nil, name: String? = nil, status: AutomationStatus? = nil, createdAt: String? = nil, updatedAt: String? = nil, steps: [AutomationStepResponse]? = nil, connections: [AutomationConnection]? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
         (self.name, self.status) = (name, status)
@@ -94,21 +85,21 @@ public struct AutomationStepResponse: Codable {
     }
 
     init() {
-        (key, type, config) = (nil, nil, nil)
+        (self.key, self.type, self.config) = (nil, nil, nil)
     }
 }
 
-public extension AutomationStepResponse {
-    init(from decoder: Decoder) throws {
+extension AutomationStepResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        key = try container.sdkDecodeIfPresent(.key)
-        type = try container.sdkDecodeIfPresent(.type)
-        config = try container.sdkDecodeIfPresent(.config)
+        self.key = try container.sdkDecodeIfPresent(.key)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.config = try container.sdkDecodeIfPresent(.config)
     }
 }
 
-public extension AutomationStepResponse {
-    init(key: String? = nil, type: AutomationStepResponseType? = nil, config: [String: JSONValue]? = nil) {
+extension AutomationStepResponse {
+    public init(key: String? = nil, type: AutomationStepResponseType? = nil, config: [String: JSONValue]? = nil) {
         self.init()
         (self.key, self.type) = (key, type)
         self.config = config
@@ -119,16 +110,13 @@ public extension AutomationStepResponse {
 public struct AutomationStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let enabled = AutomationStatus(rawValue: "enabled")
     public static let disabled = AutomationStatus(rawValue: "disabled")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -141,10 +129,7 @@ public struct AutomationStatus: RawRepresentable, Hashable, Codable, Sendable, S
 public struct AutomationStepResponseType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let trigger = AutomationStepResponseType(rawValue: "trigger")
     public static let sendEmail = AutomationStepResponseType(rawValue: "send_email")
     public static let delay = AutomationStepResponseType(rawValue: "delay")
@@ -156,7 +141,7 @@ public struct AutomationStepResponseType: RawRepresentable, Hashable, Codable, S
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

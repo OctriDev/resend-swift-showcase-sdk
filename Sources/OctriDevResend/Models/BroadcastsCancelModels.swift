@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Broadcasts domain models
+// Broadcasts domain models
 /// Typed representation of the `CancelBroadcastResponseSuccess` API schema.
 public struct CancelBroadcastResponseSuccess: Codable {
     /// The ID of the broadcast.
@@ -19,20 +19,20 @@ public struct CancelBroadcastResponseSuccess: Codable {
     }
 
     init() {
-        (id, object) = (nil, nil)
+        (self.id, self.object) = (nil, nil)
     }
 }
 
-public extension CancelBroadcastResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension CancelBroadcastResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.object = try container.sdkDecodeIfPresent(.object)
     }
 }
 
-public extension CancelBroadcastResponseSuccess {
-    init(id: String? = nil, object: String? = nil) {
+extension CancelBroadcastResponseSuccess {
+    public init(id: String? = nil, object: String? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
     }

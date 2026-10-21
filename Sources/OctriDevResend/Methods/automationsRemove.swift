@@ -6,26 +6,14 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AutomationsMethods {
-    /// Deletes an automation by its identifier. Use this operation to remove an automation you no longer need; the
-    /// response indicates whether deletion succeeded.
+extension AutomationsMethods {
+    /// Deletes an automation by its identifier. Use this operation to remove an automation you no longer need; the response indicates whether deletion succeeded.
     ///
     /// - Parameters:
     /// - automationId: The ID of the automation.
-    static func automationsRemove(
-        config: ClientConfig,
-        automationId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DeleteAutomationResponse {
+    public static func automationsRemove(config: ClientConfig, automationId: String, requestOptions: RequestOptions? = nil) async throws -> DeleteAutomationResponse {
         try sdkValidateUuid("automation_id", automationId)
 
-        return try await (sdkRequest(
-            "DELETE",
-            ["/automations/", sdkEncodePathSegment(sdkWireString(automationId))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "automationsRemove",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("DELETE", ["/automations/", sdkEncodePathSegment(sdkWireString(automationId))].joined(), config: config, decoder: .json, operationId: "automationsRemove", options: requestOptions)).data
     }
 }

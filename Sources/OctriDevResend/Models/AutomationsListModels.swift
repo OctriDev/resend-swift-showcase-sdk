@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Automations domain models
+// Automations domain models
 /// Typed representation of the `AutomationListItem` API schema.
 public struct AutomationListItem: Codable {
     /// The ID of the automation.
@@ -28,29 +28,23 @@ public struct AutomationListItem: Codable {
     }
 
     init() {
-        (id, name, status, createdAt, updatedAt) = (nil, nil, nil, nil, nil)
+        (self.id, self.name, self.status, self.createdAt, self.updatedAt) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension AutomationListItem {
-    init(from decoder: Decoder) throws {
+extension AutomationListItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        status = try container.sdkDecodeIfPresent(.status)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
     }
 }
 
-public extension AutomationListItem {
-    init(
-        id: String? = nil,
-        name: String? = nil,
-        status: AutomationListItemStatus? = nil,
-        createdAt: String? = nil,
-        updatedAt: String? = nil
-    ) {
+extension AutomationListItem {
+    public init(id: String? = nil, name: String? = nil, status: AutomationListItemStatus? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
         self.init()
         (self.id, self.name) = (id, name)
         (self.status, self.createdAt) = (status, createdAt)
@@ -75,21 +69,21 @@ public struct ListAutomationsResponse: Codable {
     }
 
     init() {
-        (object, hasMore, data) = (nil, nil, nil)
+        (self.object, self.hasMore, self.data) = (nil, nil, nil)
     }
 }
 
-public extension ListAutomationsResponse {
-    init(from decoder: Decoder) throws {
+extension ListAutomationsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension ListAutomationsResponse {
-    init(object: String? = nil, hasMore: Bool? = nil, data: [AutomationListItem]? = nil) {
+extension ListAutomationsResponse {
+    public init(object: String? = nil, hasMore: Bool? = nil, data: [AutomationListItem]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -100,16 +94,13 @@ public extension ListAutomationsResponse {
 public struct AutomationListItemStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let enabled = AutomationListItemStatus(rawValue: "enabled")
     public static let disabled = AutomationListItemStatus(rawValue: "disabled")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

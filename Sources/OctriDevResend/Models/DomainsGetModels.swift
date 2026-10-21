@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Domains domain models
+// Domains domain models
 /// Typed representation of the `Domain` API schema.
 public struct Domain: Codable {
     /// The type of object.
@@ -50,43 +50,31 @@ public struct Domain: Codable {
     }
 
     init() {
-        (object, id, name, status, createdAt) = (nil, nil, nil, nil, nil)
-        (region, openTracking, clickTracking, trackingSubdomain, capabilities) = (nil, nil, nil, nil, nil)
-        records = nil
+        (self.object, self.id, self.name, self.status, self.createdAt) = (nil, nil, nil, nil, nil)
+        (self.region, self.openTracking, self.clickTracking, self.trackingSubdomain, self.capabilities) = (nil, nil, nil, nil, nil)
+        self.records = nil
     }
 }
 
-public extension Domain {
-    init(from decoder: Decoder) throws {
+extension Domain {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        status = try container.sdkDecodeIfPresent(.status)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        region = try container.sdkDecodeIfPresent(.region)
-        openTracking = try container.sdkDecodeIfPresent(.openTracking)
-        clickTracking = try container.sdkDecodeIfPresent(.clickTracking)
-        trackingSubdomain = try container.sdkDecodeIfPresent(.trackingSubdomain)
-        capabilities = try container.sdkDecodeIfPresent(.capabilities)
-        records = try container.sdkDecodeIfPresent(.records)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.openTracking = try container.sdkDecodeIfPresent(.openTracking)
+        self.clickTracking = try container.sdkDecodeIfPresent(.clickTracking)
+        self.trackingSubdomain = try container.sdkDecodeIfPresent(.trackingSubdomain)
+        self.capabilities = try container.sdkDecodeIfPresent(.capabilities)
+        self.records = try container.sdkDecodeIfPresent(.records)
     }
 }
 
-public extension Domain {
-    init(
-        object: String? = nil,
-        id: String? = nil,
-        name: String? = nil,
-        status: DomainStatus? = nil,
-        createdAt: String? = nil,
-        region: String? = nil,
-        openTracking: Bool? = nil,
-        clickTracking: Bool? = nil,
-        trackingSubdomain: String? = nil,
-        capabilities: DomainCapabilities? = nil,
-        records: [DomainRecord]? = nil
-    ) {
+extension Domain {
+    public init(object: String? = nil, id: String? = nil, name: String? = nil, status: DomainStatus? = nil, createdAt: String? = nil, region: String? = nil, openTracking: Bool? = nil, clickTracking: Bool? = nil, trackingSubdomain: String? = nil, capabilities: DomainCapabilities? = nil, records: [DomainRecord]? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
         (self.name, self.status) = (name, status)
@@ -101,10 +89,7 @@ public extension Domain {
 public struct DomainStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let pending = DomainStatus(rawValue: "pending")
     public static let verified = DomainStatus(rawValue: "verified")
     public static let failed = DomainStatus(rawValue: "failed")
@@ -114,7 +99,7 @@ public struct DomainStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWi
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

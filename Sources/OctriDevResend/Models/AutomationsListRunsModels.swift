@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Automations domain models
+// Automations domain models
 /// Typed representation of the `AutomationRunListItem` API schema.
 public struct AutomationRunListItem: Codable {
     /// The ID of the automation run.
@@ -29,29 +29,23 @@ public struct AutomationRunListItem: Codable {
     }
 
     init() {
-        (id, status, startedAt, completedAt, createdAt) = (nil, nil, nil, nil, nil)
+        (self.id, self.status, self.startedAt, self.completedAt, self.createdAt) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension AutomationRunListItem {
-    init(from decoder: Decoder) throws {
+extension AutomationRunListItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        status = try container.sdkDecodeIfPresent(.status)
-        startedAt = try container.sdkDecodeIfPresent(.startedAt)
-        completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.startedAt = try container.sdkDecodeIfPresent(.startedAt)
+        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
     }
 }
 
-public extension AutomationRunListItem {
-    init(
-        id: String? = nil,
-        status: AutomationRunListItemStatus? = nil,
-        startedAt: String? = nil,
-        completedAt: String? = nil,
-        createdAt: String? = nil
-    ) {
+extension AutomationRunListItem {
+    public init(id: String? = nil, status: AutomationRunListItemStatus? = nil, startedAt: String? = nil, completedAt: String? = nil, createdAt: String? = nil) {
         self.init()
         (self.id, self.status) = (id, status)
         (self.startedAt, self.completedAt) = (startedAt, completedAt)
@@ -76,21 +70,21 @@ public struct ListAutomationRunsResponse: Codable {
     }
 
     init() {
-        (object, hasMore, data) = (nil, nil, nil)
+        (self.object, self.hasMore, self.data) = (nil, nil, nil)
     }
 }
 
-public extension ListAutomationRunsResponse {
-    init(from decoder: Decoder) throws {
+extension ListAutomationRunsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension ListAutomationRunsResponse {
-    init(object: String? = nil, hasMore: Bool? = nil, data: [AutomationRunListItem]? = nil) {
+extension ListAutomationRunsResponse {
+    public init(object: String? = nil, hasMore: Bool? = nil, data: [AutomationRunListItem]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -101,10 +95,7 @@ public extension ListAutomationRunsResponse {
 public struct AutomationRunListItemStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let running = AutomationRunListItemStatus(rawValue: "running")
     public static let completed = AutomationRunListItemStatus(rawValue: "completed")
     public static let failed = AutomationRunListItemStatus(rawValue: "failed")
@@ -112,7 +103,7 @@ public struct AutomationRunListItemStatus: RawRepresentable, Hashable, Codable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

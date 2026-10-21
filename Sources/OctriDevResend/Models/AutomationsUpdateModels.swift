@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Automations domain models
+// Automations domain models
 /// Typed representation of the `PatchAutomationResponse` API schema.
 public struct PatchAutomationResponse: Codable {
     /// Type of the response object.
@@ -18,20 +18,20 @@ public struct PatchAutomationResponse: Codable {
     }
 
     init() {
-        (object, id) = (nil, nil)
+        (self.object, self.id) = (nil, nil)
     }
 }
 
-public extension PatchAutomationResponse {
-    init(from decoder: Decoder) throws {
+extension PatchAutomationResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        id = try container.sdkDecodeIfPresent(.id)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-public extension PatchAutomationResponse {
-    init(object: String? = nil, id: String? = nil) {
+extension PatchAutomationResponse {
+    public init(object: String? = nil, id: String? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
     }
@@ -57,33 +57,28 @@ public struct PatchAutomationRequest: Codable {
     }
 
     init() {
-        (name, status, steps, connections) = (nil, nil, nil, nil)
+        (self.name, self.status, self.steps, self.connections) = (nil, nil, nil, nil)
     }
 }
 
-public extension PatchAutomationRequest {
-    init(from decoder: Decoder) throws {
+extension PatchAutomationRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        status = try container.sdkDecodeIfPresent(.status)
-        steps = try container.sdkDecodeIfPresent(.steps)
-        connections = try container.sdkDecodeIfPresent(.connections)
-        if let value = name {
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.steps = try container.sdkDecodeIfPresent(.steps)
+        self.connections = try container.sdkDecodeIfPresent(.connections)
+        if let value = self.name {
             try validateLength("name", value, min: 1, max: nil)
         }
-        if let value = steps {
+        if let value = self.steps {
             try validateItems("steps", value, min: 1, max: 150)
         }
     }
 }
 
-public extension PatchAutomationRequest {
-    init(
-        name: String? = nil,
-        status: PatchAutomationRequestStatus? = nil,
-        steps: [AutomationStep]? = nil,
-        connections: [AutomationConnection]? = nil
-    ) throws {
+extension PatchAutomationRequest {
+    public init(name: String? = nil, status: PatchAutomationRequestStatus? = nil, steps: [AutomationStep]? = nil, connections: [AutomationConnection]? = nil) throws {
         self.init()
         (self.name, self.status) = (name, status)
         (self.steps, self.connections) = (steps, connections)
@@ -100,16 +95,13 @@ public extension PatchAutomationRequest {
 public struct PatchAutomationRequestStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let enabled = PatchAutomationRequestStatus(rawValue: "enabled")
     public static let disabled = PatchAutomationRequestStatus(rawValue: "disabled")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

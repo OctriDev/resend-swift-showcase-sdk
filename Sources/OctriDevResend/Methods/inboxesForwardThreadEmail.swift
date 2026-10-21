@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension InboxesMethods {
-    struct InboxesForwardThreadEmailOptions: Codable {
+extension InboxesMethods {
+    public struct InboxesForwardThreadEmailOptions: Codable {
         public var inboxId: String
         public var threadId: String
         public var emailId: String
@@ -29,15 +29,9 @@ public extension InboxesMethods {
         }
     }
 
-    /// Submits a forward of a message from the inbox address directly, without storing a draft. Supply `to` recipients
-    /// and optionally add a note with `html` or `text`; the original message is quoted and its attachments are
-    /// included. Added attachments share the original message's limit of 10 files and 25 MB of content.
+    /// Submits a forward of a message from the inbox address directly, without storing a draft. Supply `to` recipients and optionally add a note with `html` or `text`; the original message is quoted and its attachments are included. Added attachments share the original message's limit of 10 files and 25 MB of content.
     ///
-    /// Forwards a message from the inbox address right away, with no stored draft. The original message is quoted under
-    /// a forwarded-message banner, below the optional `html` or `text` note. The attachments of the original message
-    /// are sent with the forward, together with any `attachments` you add. The request fails when they exceed 10 files
-    /// or 25 MB of `content` in total. An original attachment that was sent from a URL (`path`) cannot be forwarded,
-    /// and the request returns a 422. The whole email, encoded, can be at most 40 MB, or the request returns a 422.
+    /// Forwards a message from the inbox address right away, with no stored draft. The original message is quoted under a forwarded-message banner, below the optional `html` or `text` note. The attachments of the original message are sent with the forward, together with any `attachments` you add. The request fails when they exceed 10 files or 25 MB of `content` in total. An original attachment that was sent from a URL (`path`) cannot be forwarded, and the request returns a 422. The whole email, encoded, can be at most 40 MB, or the request returns a 422.
     ///
     /// - Parameters:
     /// - inboxId: The Inbox ID. An email address is not accepted.
@@ -82,11 +76,7 @@ public extension InboxesMethods {
     ///   here. Sending one of them, in any letter case, returns a 422. Header names
     ///   cannot be empty, and names and values cannot contain line breaks or null
     ///   characters, or the request returns a 422. `null` means no custom headers.
-    static func inboxesForwardThreadEmail(
-        config: ClientConfig,
-        options: InboxesForwardThreadEmailOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ForwardInboxThreadEmailResponseSuccess {
+    public static func inboxesForwardThreadEmail(config: ClientConfig, options: InboxesForwardThreadEmailOptions, requestOptions: RequestOptions? = nil) async throws -> ForwardInboxThreadEmailResponseSuccess {
         try sdkValidateUuid("inbox_id", options.inboxId)
 
         try sdkValidateUuid("thread_id", options.threadId)
@@ -103,25 +93,8 @@ public extension InboxesMethods {
 
         let requestBody = InboxesForwardThreadEmailRequestBody(options: options)
 
-        return try await (sdkRequest(
-            "POST",
-            [
-                "/inboxes/",
-                sdkEncodePathSegment(sdkWireString(options.inboxId)),
-                "/threads/",
-                sdkEncodePathSegment(sdkWireString(options.threadId)),
-                "/emails/",
-                sdkEncodePathSegment(sdkWireString(options.emailId)),
-                "/forward",
-            ].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "inboxesForwardThreadEmail",
-            extraHeaders: sdkHeaders([
-                ("Idempotency-Key", sdkHeaderValue(options.idempotencyKey)),
-            ]),
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("POST", ["/inboxes/", sdkEncodePathSegment(sdkWireString(options.inboxId)), "/threads/", sdkEncodePathSegment(sdkWireString(options.threadId)), "/emails/", sdkEncodePathSegment(sdkWireString(options.emailId)), "/forward"].joined(), config: config, body: requestBody, decoder: .json, operationId: "inboxesForwardThreadEmail", extraHeaders: sdkHeaders([
+            ("Idempotency-Key", sdkHeaderValue(options.idempotencyKey)),
+        ]), options: requestOptions)).data
     }
 }

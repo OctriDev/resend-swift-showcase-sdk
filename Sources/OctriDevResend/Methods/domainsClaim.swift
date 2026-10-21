@@ -6,10 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DomainsMethods {
-    /// Start a claim for a domain that another Resend account has already verified. The domain is recreated under your
-    /// account with fresh DKIM keys, so the previous account's DNS records cannot be reused. Returns a TXT record to
-    /// add to your DNS to prove ownership. Uses the same request body as creating a domain.
+extension DomainsMethods {
+    /// Start a claim for a domain that another Resend account has already verified. The domain is recreated under your account with fresh DKIM keys, so the previous account's DNS records cannot be reused. Returns a TXT record to add to your DNS to prove ownership. Uses the same request body as creating a domain.
     ///
     /// - Parameters:
     /// - name: The name of the domain you want to claim.
@@ -20,55 +18,19 @@ public extension DomainsMethods {
     /// - openTracking: Track the open rate of each email.
     /// - clickTracking: Track clicks within the body of each HTML email.
     /// - trackingSubdomain: The subdomain to use for click and open tracking.
-    static func domainsCreateClaim(
-        config: ClientConfig,
-        name: String,
-        region: CreateDomainClaimRequestRegion? = nil,
-        customReturnPath: String? = nil,
-        openTracking: Bool? = nil,
-        clickTracking: Bool? = nil,
-        trackingSubdomain: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DomainClaim {
-        let requestBody = DomainsCreateClaimRequestBody(
-            name: name,
-            region: region,
-            customReturnPath: customReturnPath,
-            openTracking: openTracking,
-            clickTracking: clickTracking,
-            trackingSubdomain: trackingSubdomain
-        )
+    public static func domainsCreateClaim(config: ClientConfig, name: String, region: CreateDomainClaimRequestRegion? = nil, customReturnPath: String? = nil, openTracking: Bool? = nil, clickTracking: Bool? = nil, trackingSubdomain: String? = nil, requestOptions: RequestOptions? = nil) async throws -> DomainClaim {
+        let requestBody = DomainsCreateClaimRequestBody(name: name, region: region, customReturnPath: customReturnPath, openTracking: openTracking, clickTracking: clickTracking, trackingSubdomain: trackingSubdomain)
 
-        return try await (sdkRequest(
-            "POST",
-            "/domains/claim",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "domainsCreateClaim",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("POST", "/domains/claim", config: config, body: requestBody, decoder: .json, operationId: "domainsCreateClaim", options: requestOptions)).data
     }
 
-    /// Retrieves the latest claim for the placeholder domain created by a domain claim. Use the claim status and TXT
-    /// `record` details to track verification and prove ownership of the claimed domain.
+    /// Retrieves the latest claim for the placeholder domain created by a domain claim. Use the claim status and TXT `record` details to track verification and prove ownership of the claimed domain.
     ///
     /// Retrieve the latest claim for the placeholder domain created by the claim.
     ///
     /// - Parameters:
     /// - domainId: The ID of the placeholder domain created by the claim.
-    static func domainsGetClaim(
-        config: ClientConfig,
-        domainId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DomainClaim {
-        try await (sdkRequest(
-            "GET",
-            ["/domains/", sdkEncodePathSegment(sdkWireString(domainId)), "/claim"].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "domainsGetClaim",
-            options: requestOptions
-        )).data
+    public static func domainsGetClaim(config: ClientConfig, domainId: String, requestOptions: RequestOptions? = nil) async throws -> DomainClaim {
+        return try (await sdkRequest("GET", ["/domains/", sdkEncodePathSegment(sdkWireString(domainId)), "/claim"].joined(), config: config, decoder: .json, operationId: "domainsGetClaim", options: requestOptions)).data
     }
 }

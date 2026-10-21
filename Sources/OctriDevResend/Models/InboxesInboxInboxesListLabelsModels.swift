@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// InboxesInbox domain models
+// InboxesInbox domain models
 /// Typed representation of the `InboxLabel` API schema.
 public struct InboxLabel: Codable {
     /// The ID of the label.
@@ -26,58 +26,40 @@ public struct InboxLabel: Codable {
         case createdAt = "created_at"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension InboxLabel {
-    init(from decoder: Decoder) throws {
+extension InboxLabel {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.color) else {
-            throw SdkValidationError(
-                field: "color",
-                code: "required",
-                message: "Validation failed for 'color': value is required"
-            )
+            throw SdkValidationError(field: "color", code: "required", message: "Validation failed for 'color': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        name = try container.sdkDecodeRequired(.name)
-        color = try container.sdkDecodeRequired(.color)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        try sdkValidateUuid("id", id)
-        try sdkValidatePattern("color", color, sdkPatternf01b4765958d)
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        self.id = try container.sdkDecodeRequired(.id)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.color = try container.sdkDecodeRequired(.color)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+            try sdkValidateUuid("id", self.id)
+            try sdkValidatePattern("color", self.color, sdkPatternf01b4765958d)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
-public extension InboxLabel {
-    init(id: String, name: String, color: String, createdAt: Date) throws {
+extension InboxLabel {
+    public init(id: String, name: String, color: String, createdAt: Date) throws {
         (self.id, self.name) = (id, name)
         (self.color, self.createdAt) = (color, createdAt)
-        try sdkValidateUuid("id", self.id)
-        try sdkValidatePattern("color", self.color, sdkPatternf01b4765958d)
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateUuid("id", self.id)
+            try sdkValidatePattern("color", self.color, sdkPatternf01b4765958d)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }

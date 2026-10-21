@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Webhooks domain models
+// Webhooks domain models
 /// Typed representation of the `GetWebhookResponse` API schema.
 public struct GetWebhookResponse: Codable {
     /// The type of object.
@@ -39,37 +39,29 @@ public struct GetWebhookResponse: Codable {
     }
 
     init() {
-        (object, id, endpoint, events, status) = (nil, nil, nil, nil, nil)
-        (createdAt, signingSecret) = (nil, nil)
+        (self.object, self.id, self.endpoint, self.events, self.status) = (nil, nil, nil, nil, nil)
+        (self.createdAt, self.signingSecret) = (nil, nil)
     }
 }
 
-public extension GetWebhookResponse {
-    init(from decoder: Decoder) throws {
+extension GetWebhookResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        id = try container.sdkDecodeIfPresent(.id)
-        endpoint = try container.sdkDecodeIfPresent(.endpoint)
-        events = try container.sdkDecodeIfPresent(.events)
-        status = try container.sdkDecodeIfPresent(.status)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        signingSecret = try container.sdkDecodeIfPresent(.signingSecret)
-        if let value = id {
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.endpoint = try container.sdkDecodeIfPresent(.endpoint)
+        self.events = try container.sdkDecodeIfPresent(.events)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.signingSecret = try container.sdkDecodeIfPresent(.signingSecret)
+        if let value = self.id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-public extension GetWebhookResponse {
-    init(
-        object: String? = nil,
-        id: String? = nil,
-        endpoint: String? = nil,
-        events: [String]? = nil,
-        status: String? = nil,
-        createdAt: String? = nil,
-        signingSecret: String? = nil
-    ) throws {
+extension GetWebhookResponse {
+    public init(object: String? = nil, id: String? = nil, endpoint: String? = nil, events: [String]? = nil, status: String? = nil, createdAt: String? = nil, signingSecret: String? = nil) throws {
         self.init()
         (self.object, self.id) = (object, id)
         (self.endpoint, self.events) = (endpoint, events)

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Webhooks domain models
+// Webhooks domain models
 /// Required object value serialized in the `data[]` wire field.
 public struct ListWebhookEventsResponseDataItem: Codable {
     /// The ID of the webhook event.
@@ -27,30 +27,25 @@ public struct ListWebhookEventsResponseDataItem: Codable {
     }
 
     init() {
-        (id, type, createdAt, status) = (nil, nil, nil, nil)
+        (self.id, self.type, self.createdAt, self.status) = (nil, nil, nil, nil)
     }
 }
 
-public extension ListWebhookEventsResponseDataItem {
-    init(from decoder: Decoder) throws {
+extension ListWebhookEventsResponseDataItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        type = try container.sdkDecodeIfPresent(.type)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        status = try container.sdkDecodeIfPresent(.status)
-        if let value = createdAt {
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-public extension ListWebhookEventsResponseDataItem {
-    init(
-        id: String? = nil,
-        type: String? = nil,
-        createdAt: Date? = nil,
-        status: ListWebhookEventsResponseDataItemStatus? = nil
-    ) throws {
+extension ListWebhookEventsResponseDataItem {
+    public init(id: String? = nil, type: String? = nil, createdAt: Date? = nil, status: ListWebhookEventsResponseDataItemStatus? = nil) throws {
         self.init()
         (self.id, self.type) = (id, type)
         (self.createdAt, self.status) = (createdAt, status)
@@ -77,21 +72,21 @@ public struct ListWebhookEventsResponse: Codable {
     }
 
     init() {
-        (object, hasMore, data) = (nil, nil, nil)
+        (self.object, self.hasMore, self.data) = (nil, nil, nil)
     }
 }
 
-public extension ListWebhookEventsResponse {
-    init(from decoder: Decoder) throws {
+extension ListWebhookEventsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension ListWebhookEventsResponse {
-    init(object: String? = nil, hasMore: Bool? = nil, data: [ListWebhookEventsResponseDataItem]? = nil) {
+extension ListWebhookEventsResponse {
+    public init(object: String? = nil, hasMore: Bool? = nil, data: [ListWebhookEventsResponseDataItem]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -99,14 +94,10 @@ public extension ListWebhookEventsResponse {
 }
 
 /// The delivery status of the event for this webhook.
-public struct ListWebhookEventsResponseDataItemStatus: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct ListWebhookEventsResponseDataItemStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let pending = ListWebhookEventsResponseDataItemStatus(rawValue: "pending")
     public static let attempting = ListWebhookEventsResponseDataItemStatus(rawValue: "attempting")
     public static let success = ListWebhookEventsResponseDataItemStatus(rawValue: "success")
@@ -114,7 +105,7 @@ public struct ListWebhookEventsResponseDataItemStatus: RawRepresentable, Hashabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

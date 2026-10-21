@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Domain domain models
+// Domain domain models
 /// Typed representation of the `DomainEventData` API schema.
 public struct DomainEventData: Codable {
     /// Unique identifier for the domain.
@@ -29,79 +29,46 @@ public struct DomainEventData: Codable {
         case records
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DomainEventData {
-    init(from decoder: Decoder) throws {
+extension DomainEventData {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.status) else {
-            throw SdkValidationError(
-                field: "status",
-                code: "required",
-                message: "Validation failed for 'status': value is required"
-            )
+            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
         guard container.contains(.region) else {
-            throw SdkValidationError(
-                field: "region",
-                code: "required",
-                message: "Validation failed for 'region': value is required"
-            )
+            throw SdkValidationError(field: "region", code: "required", message: "Validation failed for 'region': value is required")
         }
         guard container.contains(.records) else {
-            throw SdkValidationError(
-                field: "records",
-                code: "required",
-                message: "Validation failed for 'records': value is required"
-            )
+            throw SdkValidationError(field: "records", code: "required", message: "Validation failed for 'records': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        name = try container.sdkDecodeRequired(.name)
-        status = try container.sdkDecodeRequired(.status)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        region = try container.sdkDecodeRequired(.region)
-        records = try container.sdkDecodeRequired(.records)
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        self.id = try container.sdkDecodeRequired(.id)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.status = try container.sdkDecodeRequired(.status)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.region = try container.sdkDecodeRequired(.region)
+        self.records = try container.sdkDecodeRequired(.records)
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
-public extension DomainEventData {
-    init(
-        id: String,
-        name: String,
-        status: DomainEventDataStatus,
-        createdAt: Date,
-        region: DomainEventDataRegion,
-        records: [WebhookDomainRecord]
-    ) throws {
+extension DomainEventData {
+    public init(id: String, name: String, status: DomainEventDataStatus, createdAt: Date, region: DomainEventDataRegion, records: [WebhookDomainRecord]) throws {
         (self.id, self.name) = (id, name)
         (self.status, self.createdAt) = (status, createdAt)
         (self.region, self.records) = (region, records)
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
@@ -121,49 +88,35 @@ public struct DomainDeletedEvent: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DomainDeletedEvent {
-    init(from decoder: Decoder) throws {
+extension DomainDeletedEvent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
         guard container.contains(.data) else {
-            throw SdkValidationError(
-                field: "data",
-                code: "required",
-                message: "Validation failed for 'data': value is required"
-            )
+            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        data = try container.sdkDecodeRequired(.data)
-        try sdkValidateRawEnum("type", type, DomainDeletedEventType.allCases.map(\.rawValue))
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        self.type = try container.sdkDecodeRequired(.type)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.data = try container.sdkDecodeRequired(.data)
+            try sdkValidateRawEnum("type", self.type, DomainDeletedEventType.allCases.map(\.rawValue))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
-public extension DomainDeletedEvent {
-    init(type: DomainDeletedEventType, createdAt: Date, data: DomainEventData) throws {
+extension DomainDeletedEvent {
+    public init(type: DomainDeletedEventType, createdAt: Date, data: DomainEventData) throws {
         (self.type, self.createdAt) = (type, createdAt)
         self.data = data
-        try sdkValidateRawEnum("type", self.type, DomainDeletedEventType.allCases.map(\.rawValue))
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateRawEnum("type", self.type, DomainDeletedEventType.allCases.map(\.rawValue))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
@@ -183,49 +136,35 @@ public struct DomainUpdatedEvent: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DomainUpdatedEvent {
-    init(from decoder: Decoder) throws {
+extension DomainUpdatedEvent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
         guard container.contains(.data) else {
-            throw SdkValidationError(
-                field: "data",
-                code: "required",
-                message: "Validation failed for 'data': value is required"
-            )
+            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        data = try container.sdkDecodeRequired(.data)
-        try sdkValidateRawEnum("type", type, DomainUpdatedEventType.allCases.map(\.rawValue))
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        self.type = try container.sdkDecodeRequired(.type)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.data = try container.sdkDecodeRequired(.data)
+            try sdkValidateRawEnum("type", self.type, DomainUpdatedEventType.allCases.map(\.rawValue))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
-public extension DomainUpdatedEvent {
-    init(type: DomainUpdatedEventType, createdAt: Date, data: DomainEventData) throws {
+extension DomainUpdatedEvent {
+    public init(type: DomainUpdatedEventType, createdAt: Date, data: DomainEventData) throws {
         (self.type, self.createdAt) = (type, createdAt)
         self.data = data
-        try sdkValidateRawEnum("type", self.type, DomainUpdatedEventType.allCases.map(\.rawValue))
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateRawEnum("type", self.type, DomainUpdatedEventType.allCases.map(\.rawValue))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
@@ -245,49 +184,35 @@ public struct DomainCreatedEvent: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DomainCreatedEvent {
-    init(from decoder: Decoder) throws {
+extension DomainCreatedEvent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
         guard container.contains(.data) else {
-            throw SdkValidationError(
-                field: "data",
-                code: "required",
-                message: "Validation failed for 'data': value is required"
-            )
+            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        data = try container.sdkDecodeRequired(.data)
-        try sdkValidateRawEnum("type", type, DomainCreatedEventType.allCases.map(\.rawValue))
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+        self.type = try container.sdkDecodeRequired(.type)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.data = try container.sdkDecodeRequired(.data)
+            try sdkValidateRawEnum("type", self.type, DomainCreatedEventType.allCases.map(\.rawValue))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
-public extension DomainCreatedEvent {
-    init(type: DomainCreatedEventType, createdAt: Date, data: DomainEventData) throws {
+extension DomainCreatedEvent {
+    public init(type: DomainCreatedEventType, createdAt: Date, data: DomainEventData) throws {
         (self.type, self.createdAt) = (type, createdAt)
         self.data = data
-        try sdkValidateRawEnum("type", self.type, DomainCreatedEventType.allCases.map(\.rawValue))
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateRawEnum("type", self.type, DomainCreatedEventType.allCases.map(\.rawValue))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
@@ -295,10 +220,7 @@ public extension DomainCreatedEvent {
 public struct DomainEventDataStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let verified = DomainEventDataStatus(rawValue: "verified")
     public static let partiallyVerified = DomainEventDataStatus(rawValue: "partially_verified")
     public static let partiallyFailed = DomainEventDataStatus(rawValue: "partially_failed")
@@ -308,7 +230,7 @@ public struct DomainEventDataStatus: RawRepresentable, Hashable, Codable, Sendab
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -339,10 +261,7 @@ public enum DomainUpdatedEventType: String, CaseIterable, Codable {
 public struct DomainEventDataRegion: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let usEast1 = DomainEventDataRegion(rawValue: "us-east-1")
     public static let euWest1 = DomainEventDataRegion(rawValue: "eu-west-1")
     public static let saEast1 = DomainEventDataRegion(rawValue: "sa-east-1")
@@ -350,7 +269,7 @@ public struct DomainEventDataRegion: RawRepresentable, Hashable, Codable, Sendab
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

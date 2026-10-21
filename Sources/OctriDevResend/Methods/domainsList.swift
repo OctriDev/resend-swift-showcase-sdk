@@ -6,49 +6,30 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DomainsMethods {
-    /// Lists domains in the account. Use `limit` to control the number of results and `after` or `before` to navigate
-    /// the cursor-based list.
+extension DomainsMethods {
+    /// Lists domains in the account. Use `limit` to control the number of results and `after` or `before` to navigate the cursor-based list.
     ///
     /// - Parameters:
     /// - limit: Number of items to return.
     /// - after: Return items after this cursor.
     /// - before: Return items before this cursor.
-    static func domainsList(
-        config: ClientConfig,
-        limit: Int? = nil,
-        after: String? = nil,
-        before: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ListDomainsResponse {
-        if let limit {
+    public static func domainsList(config: ClientConfig, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListDomainsResponse {
+        if let limit = limit {
             try validateRange("limit", Double(limit), min: 1, max: 100)
         }
 
-        return try await (sdkRequest("GET", "/domains", config: config, query: [
+        return try (await sdkRequest("GET", "/domains", config: config, query: [
             SdkQueryParameter("limit", value: limit),
             SdkQueryParameter("after", value: after),
             SdkQueryParameter("before", value: before),
         ], decoder: .json, operationId: "domainsList", options: requestOptions)).data
     }
 
-    /// Retrieves a domain by its identifier. Use `domain_id` to select the domain and view its status, configuration,
-    /// capabilities, and DNS records.
+    /// Retrieves a domain by its identifier. Use `domain_id` to select the domain and view its status, configuration, capabilities, and DNS records.
     ///
     /// - Parameters:
     /// - domainId: The ID of the domain.
-    static func domainsGet(
-        config: ClientConfig,
-        domainId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Domain {
-        try await (sdkRequest(
-            "GET",
-            ["/domains/", sdkEncodePathSegment(sdkWireString(domainId))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "domainsGet",
-            options: requestOptions
-        )).data
+    public static func domainsGet(config: ClientConfig, domainId: String, requestOptions: RequestOptions? = nil) async throws -> Domain {
+        return try (await sdkRequest("GET", ["/domains/", sdkEncodePathSegment(sdkWireString(domainId))].joined(), config: config, decoder: .json, operationId: "domainsGet", options: requestOptions)).data
     }
 }

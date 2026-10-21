@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// InboxesInbox domain models
+// InboxesInbox domain models
 /// Required object value serialized in the `data[]` wire field.
 public struct InboxThreadSearchResultVariant1: Codable {
     /// Identifies the email in the thread that matched the search. When `query` has words or phrases, it is the
@@ -22,38 +22,28 @@ public struct InboxThreadSearchResultVariant1: Codable {
         case highlights
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension InboxThreadSearchResultVariant1 {
-    init(from decoder: Decoder) throws {
+extension InboxThreadSearchResultVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.matchedEmailId) else {
-            throw SdkValidationError(
-                field: "matched_email_id",
-                code: "required",
-                message: "Validation failed for 'matched_email_id': value is required"
-            )
+            throw SdkValidationError(field: "matched_email_id", code: "required", message: "Validation failed for 'matched_email_id': value is required")
         }
         guard container.contains(.highlights) else {
-            throw SdkValidationError(
-                field: "highlights",
-                code: "required",
-                message: "Validation failed for 'highlights': value is required"
-            )
+            throw SdkValidationError(field: "highlights", code: "required", message: "Validation failed for 'highlights': value is required")
         }
-        matchedEmailId = try container.sdkDecodeNullable(.matchedEmailId)
-        highlights = try container.sdkDecodeRequired(.highlights)
-        if let value = matchedEmailId {
+        self.matchedEmailId = try container.sdkDecodeNullable(.matchedEmailId)
+        self.highlights = try container.sdkDecodeRequired(.highlights)
+        if let value = self.matchedEmailId {
             try sdkValidateUuid("matched_email_id", value)
         }
     }
 }
 
-public extension InboxThreadSearchResultVariant1 {
-    init(matchedEmailId: String?, highlights: InboxThreadSearchResultVariant1Highlights) throws {
+extension InboxThreadSearchResultVariant1 {
+    public init(matchedEmailId: String?, highlights: InboxThreadSearchResultVariant1Highlights) throws {
         (self.matchedEmailId, self.highlights) = (matchedEmailId, highlights)
         if let value = self.matchedEmailId {
             try sdkValidateUuid("matched_email_id", value)
@@ -131,55 +121,37 @@ public struct InboxThreadSearchResult: Codable {
         case highlights
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension InboxThreadSearchResult {
-    init(from decoder: Decoder) throws {
+extension InboxThreadSearchResult {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeRequired(.id)
-        subject = try container.sdkDecodeNullable(.subject)
-        from = try container.sdkDecodeNullable(.from)
-        to = try container.sdkDecodeRequired(.to)
-        cc = try container.sdkDecodeRequired(.cc)
-        bcc = try container.sdkDecodeRequired(.bcc)
-        labels = try container.sdkDecodeRequired(.labels)
-        emailCount = try container.sdkDecodeRequired(.emailCount)
-        hasAttachment = try container.sdkDecodeRequired(.hasAttachment)
-        hasDraft = try container.sdkDecodeRequired(.hasDraft)
-        read = try container.sdkDecodeRequired(.read)
-        receivedAt = try container.sdkDecodeRequired(.receivedAt)
-        folder = try container.sdkDecodeRequired(.folder)
-        matchedEmailId = try container.sdkDecodeNullable(.matchedEmailId)
-        highlights = try container.sdkDecodeRequired(.highlights)
-        try sdkValidateUuid("id", id)
-        try sdkValidateDateTime("received_at", sdkWireString(receivedAt))
-        if let value = matchedEmailId {
+        self.id = try container.sdkDecodeRequired(.id)
+        self.subject = try container.sdkDecodeNullable(.subject)
+        self.from = try container.sdkDecodeNullable(.from)
+        self.to = try container.sdkDecodeRequired(.to)
+        self.cc = try container.sdkDecodeRequired(.cc)
+        self.bcc = try container.sdkDecodeRequired(.bcc)
+        self.labels = try container.sdkDecodeRequired(.labels)
+        self.emailCount = try container.sdkDecodeRequired(.emailCount)
+        self.hasAttachment = try container.sdkDecodeRequired(.hasAttachment)
+        self.hasDraft = try container.sdkDecodeRequired(.hasDraft)
+        self.read = try container.sdkDecodeRequired(.read)
+        self.receivedAt = try container.sdkDecodeRequired(.receivedAt)
+        self.folder = try container.sdkDecodeRequired(.folder)
+        self.matchedEmailId = try container.sdkDecodeNullable(.matchedEmailId)
+        self.highlights = try container.sdkDecodeRequired(.highlights)
+            try sdkValidateUuid("id", self.id)
+            try sdkValidateDateTime("received_at", sdkWireString(self.receivedAt))
+        if let value = self.matchedEmailId {
             try sdkValidateUuid("matched_email_id", value)
         }
     }
 }
 
-public extension InboxThreadSearchResult {
-    init(
-        id: String,
-        subject: String?,
-        from: String?,
-        to: [String],
-        cc: [String],
-        bcc: [String],
-        labels: [InboxThreadLabel],
-        emailCount: Int,
-        hasAttachment: Bool,
-        hasDraft: Bool,
-        read: Bool,
-        receivedAt: Date,
-        folder: InboxThreadFolder,
-        matchedEmailId: String?,
-        highlights: InboxThreadSearchResultVariant1Highlights
-    ) throws {
+extension InboxThreadSearchResult {
+    public init(id: String, subject: String?, from: String?, to: [String], cc: [String], bcc: [String], labels: [InboxThreadLabel], emailCount: Int, hasAttachment: Bool, hasDraft: Bool, read: Bool, receivedAt: Date, folder: InboxThreadFolder, matchedEmailId: String?, highlights: InboxThreadSearchResultVariant1Highlights) throws {
         (self.id, self.subject) = (id, subject)
         (self.from, self.to) = (from, to)
         (self.cc, self.bcc) = (cc, bcc)
@@ -188,8 +160,8 @@ public extension InboxThreadSearchResult {
         (self.read, self.receivedAt) = (read, receivedAt)
         (self.folder, self.matchedEmailId) = (folder, matchedEmailId)
         self.highlights = highlights
-        try sdkValidateUuid("id", self.id)
-        try sdkValidateDateTime("received_at", sdkWireString(self.receivedAt))
+            try sdkValidateUuid("id", self.id)
+            try sdkValidateDateTime("received_at", sdkWireString(self.receivedAt))
         if let value = self.matchedEmailId {
             try sdkValidateUuid("matched_email_id", value)
         }
@@ -225,34 +197,26 @@ public struct InboxThreadSearchResultVariant1Highlights: Codable {
     }
 
     init() {
-        (subject, body, from, to, cc) = (nil, nil, nil, nil, nil)
-        (bcc, attachments) = (nil, nil)
+        (self.subject, self.body, self.from, self.to, self.cc) = (nil, nil, nil, nil, nil)
+        (self.bcc, self.attachments) = (nil, nil)
     }
 }
 
-public extension InboxThreadSearchResultVariant1Highlights {
-    init(from decoder: Decoder) throws {
+extension InboxThreadSearchResultVariant1Highlights {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        subject = try container.sdkDecodeIfPresent(.subject)
-        body = try container.sdkDecodeIfPresent(.body)
-        from = try container.sdkDecodeIfPresent(.from)
-        to = try container.sdkDecodeIfPresent(.to)
-        cc = try container.sdkDecodeIfPresent(.cc)
-        bcc = try container.sdkDecodeIfPresent(.bcc)
-        attachments = try container.sdkDecodeIfPresent(.attachments)
+        self.subject = try container.sdkDecodeIfPresent(.subject)
+        self.body = try container.sdkDecodeIfPresent(.body)
+        self.from = try container.sdkDecodeIfPresent(.from)
+        self.to = try container.sdkDecodeIfPresent(.to)
+        self.cc = try container.sdkDecodeIfPresent(.cc)
+        self.bcc = try container.sdkDecodeIfPresent(.bcc)
+        self.attachments = try container.sdkDecodeIfPresent(.attachments)
     }
 }
 
-public extension InboxThreadSearchResultVariant1Highlights {
-    init(
-        subject: [String]? = nil,
-        body: [String]? = nil,
-        from: [String]? = nil,
-        to: [String]? = nil,
-        cc: [String]? = nil,
-        bcc: [String]? = nil,
-        attachments: [String]? = nil
-    ) {
+extension InboxThreadSearchResultVariant1Highlights {
+    public init(subject: [String]? = nil, body: [String]? = nil, from: [String]? = nil, to: [String]? = nil, cc: [String]? = nil, bcc: [String]? = nil, attachments: [String]? = nil) {
         self.init()
         (self.subject, self.body) = (subject, body)
         (self.from, self.to) = (from, to)

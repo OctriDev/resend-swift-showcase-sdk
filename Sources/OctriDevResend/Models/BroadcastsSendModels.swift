@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Broadcasts domain models
+// Broadcasts domain models
 /// Typed representation of the `SendBroadcastResponseSuccess` API schema.
 public struct SendBroadcastResponseSuccess: Codable {
     /// The ID of the broadcast.
@@ -15,19 +15,19 @@ public struct SendBroadcastResponseSuccess: Codable {
     }
 
     init() {
-        id = nil
+        self.id = nil
     }
 }
 
-public extension SendBroadcastResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension SendBroadcastResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
+        self.id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-public extension SendBroadcastResponseSuccess {
-    init(id: String? = nil) {
+extension SendBroadcastResponseSuccess {
+    public init(id: String? = nil) {
         self.init()
         self.id = id
     }
@@ -43,19 +43,19 @@ public struct SendBroadcastOptions: Codable {
     }
 
     init() {
-        scheduledAt = nil
+        self.scheduledAt = nil
     }
 }
 
-public extension SendBroadcastOptions {
-    init(from decoder: Decoder) throws {
+extension SendBroadcastOptions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        scheduledAt = try container.sdkDecodeIfPresent(.scheduledAt)
+        self.scheduledAt = try container.sdkDecodeIfPresent(.scheduledAt)
     }
 }
 
-public extension SendBroadcastOptions {
-    init(scheduledAt: String? = nil) {
+extension SendBroadcastOptions {
+    public init(scheduledAt: String? = nil) {
         self.init()
         self.scheduledAt = scheduledAt
     }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Emails domain models
+// Emails domain models
 /// Typed representation of the `CreateBatchEmailsResponse` API schema.
 public struct CreateBatchEmailsResponse: Codable {
     /// Optional array value serialized in the `data` wire field.
@@ -14,19 +14,19 @@ public struct CreateBatchEmailsResponse: Codable {
     }
 
     init() {
-        data = nil
+        self.data = nil
     }
 }
 
-public extension CreateBatchEmailsResponse {
-    init(from decoder: Decoder) throws {
+extension CreateBatchEmailsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension CreateBatchEmailsResponse {
-    init(data: [CreateBatchEmailsResponseDataItem]? = nil) {
+extension CreateBatchEmailsResponse {
+    public init(data: [CreateBatchEmailsResponseDataItem]? = nil) {
         self.init()
         self.data = data
     }
@@ -42,19 +42,19 @@ public struct CreateBatchEmailsResponseDataItem: Codable {
     }
 
     init() {
-        id = nil
+        self.id = nil
     }
 }
 
-public extension CreateBatchEmailsResponseDataItem {
-    init(from decoder: Decoder) throws {
+extension CreateBatchEmailsResponseDataItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
+        self.id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-public extension CreateBatchEmailsResponseDataItem {
-    init(id: String? = nil) {
+extension CreateBatchEmailsResponseDataItem {
+    public init(id: String? = nil) {
         self.init()
         self.id = id
     }

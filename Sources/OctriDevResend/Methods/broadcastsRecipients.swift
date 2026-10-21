@@ -6,10 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension BroadcastsMethods {
-    /// Lists recipients of a broadcast filtered by recipient event type, such as opened, clicked, or bounced. Use
-    /// `type` to select the event and optionally use `email`, `bounce_type`, or cursor parameters to narrow the
-    /// results.
+extension BroadcastsMethods {
+    /// Lists recipients of a broadcast filtered by recipient event type, such as opened, clicked, or bounced. Use `type` to select the event and optionally use `email`, `bounce_type`, or cursor parameters to narrow the results.
     ///
     /// Retrieve the recipients of a broadcast for a given event type, such as who opened, clicked, or bounced.
     ///
@@ -22,38 +20,20 @@ public extension BroadcastsMethods {
     /// - limit: Number of items to return.
     /// - after: Return items after this cursor.
     /// - before: Return items before this cursor.
-    static func listRecipients(
-        config: ClientConfig,
-        id: String,
-        type: ListRecipientsParameter,
-        email: String? = nil,
-        bounceType: ListRecipientsParameterX6e79327b? = nil,
-        limit: Int? = nil,
-        after: String? = nil,
-        before: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ListBroadcastRecipientsResponseSuccess {
+    public static func listRecipients(config: ClientConfig, id: String, type: ListRecipientsParameter, email: String? = nil, bounceType: ListRecipientsParameterX6e79327b? = nil, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListBroadcastRecipientsResponseSuccess {
         try sdkValidateUuid("id", id)
 
-        if let limit {
+        if let limit = limit {
             try validateRange("limit", Double(limit), min: 1, max: 100)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            ["/broadcasts/", sdkEncodePathSegment(sdkWireString(id)), "/recipients"].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("type", value: type),
-                SdkQueryParameter("email", value: email),
-                SdkQueryParameter("bounce_type", value: bounceType),
-                SdkQueryParameter("limit", value: limit),
-                SdkQueryParameter("after", value: after),
-                SdkQueryParameter("before", value: before),
-            ],
-            decoder: .json,
-            operationId: "listRecipients",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("GET", ["/broadcasts/", sdkEncodePathSegment(sdkWireString(id)), "/recipients"].joined(), config: config, query: [
+            SdkQueryParameter("type", value: type),
+            SdkQueryParameter("email", value: email),
+            SdkQueryParameter("bounce_type", value: bounceType),
+            SdkQueryParameter("limit", value: limit),
+            SdkQueryParameter("after", value: after),
+            SdkQueryParameter("before", value: before),
+        ], decoder: .json, operationId: "listRecipients", options: requestOptions)).data
     }
 }

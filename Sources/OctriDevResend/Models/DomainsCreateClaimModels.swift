@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Domains domain models
+// Domains domain models
 /// Typed representation of the `CreateDomainClaimRequest` API schema.
 public struct CreateDomainClaimRequest: Codable {
     /// The name of the domain you want to claim.
@@ -30,39 +30,26 @@ public struct CreateDomainClaimRequest: Codable {
         case trackingSubdomain = "tracking_subdomain"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateDomainClaimRequest {
-    init(from decoder: Decoder) throws {
+extension CreateDomainClaimRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        region = try container.sdkDecodeIfPresent(.region)
-        customReturnPath = try container.sdkDecodeIfPresent(.customReturnPath)
-        openTracking = try container.sdkDecodeIfPresent(.openTracking)
-        clickTracking = try container.sdkDecodeIfPresent(.clickTracking)
-        trackingSubdomain = try container.sdkDecodeIfPresent(.trackingSubdomain)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.customReturnPath = try container.sdkDecodeIfPresent(.customReturnPath)
+        self.openTracking = try container.sdkDecodeIfPresent(.openTracking)
+        self.clickTracking = try container.sdkDecodeIfPresent(.clickTracking)
+        self.trackingSubdomain = try container.sdkDecodeIfPresent(.trackingSubdomain)
     }
 }
 
-public extension CreateDomainClaimRequest {
-    init(
-        name: String,
-        region: CreateDomainClaimRequestRegion? = nil,
-        customReturnPath: String? = nil,
-        openTracking: Bool? = nil,
-        clickTracking: Bool? = nil,
-        trackingSubdomain: String? = nil
-    ) {
+extension CreateDomainClaimRequest {
+    public init(name: String, region: CreateDomainClaimRequestRegion? = nil, customReturnPath: String? = nil, openTracking: Bool? = nil, clickTracking: Bool? = nil, trackingSubdomain: String? = nil) {
         (self.name, self.region) = (name, region)
         (self.customReturnPath, self.openTracking) = (customReturnPath, openTracking)
         (self.clickTracking, self.trackingSubdomain) = (clickTracking, trackingSubdomain)
@@ -74,10 +61,7 @@ public extension CreateDomainClaimRequest {
 public struct CreateDomainClaimRequestRegion: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let usEast1 = CreateDomainClaimRequestRegion(rawValue: "us-east-1")
     public static let euWest1 = CreateDomainClaimRequestRegion(rawValue: "eu-west-1")
     public static let saEast1 = CreateDomainClaimRequestRegion(rawValue: "sa-east-1")
@@ -85,7 +69,7 @@ public struct CreateDomainClaimRequestRegion: RawRepresentable, Hashable, Codabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

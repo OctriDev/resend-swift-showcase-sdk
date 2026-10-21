@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// InboxesInbox domain models
+// InboxesInbox domain models
 /// Typed representation of the `Inbox` API schema.
 public struct Inbox: Codable {
     /// The object type. Always `inbox`.
@@ -54,59 +54,45 @@ public struct Inbox: Codable {
         case createdAt = "created_at"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension Inbox {
-    init(from decoder: Decoder) throws {
+extension Inbox {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeRequired(.object)
-        id = try container.sdkDecodeRequired(.id)
-        name = try container.sdkDecodeRequired(.name)
-        emailAddress = try container.sdkDecodeRequired(.emailAddress)
-        domainId = try container.sdkDecodeRequired(.domainId)
-        receivingAddress = try container.sdkDecodeNullable(.receivingAddress)
-        fromName = try container.sdkDecodeNullable(.fromName)
-        unread = try container.sdkDecodeRequired(.unread)
-        drafts = try container.sdkDecodeRequired(.drafts)
-        lastReceived = try container.sdkDecodeNullable(.lastReceived)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        try sdkValidateUuid("id", id)
-        try sdkValidateUuid("domain_id", domainId)
-        if let value = lastReceived {
+        self.object = try container.sdkDecodeRequired(.object)
+        self.id = try container.sdkDecodeRequired(.id)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.emailAddress = try container.sdkDecodeRequired(.emailAddress)
+        self.domainId = try container.sdkDecodeRequired(.domainId)
+        self.receivingAddress = try container.sdkDecodeNullable(.receivingAddress)
+        self.fromName = try container.sdkDecodeNullable(.fromName)
+        self.unread = try container.sdkDecodeRequired(.unread)
+        self.drafts = try container.sdkDecodeRequired(.drafts)
+        self.lastReceived = try container.sdkDecodeNullable(.lastReceived)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+            try sdkValidateUuid("id", self.id)
+            try sdkValidateUuid("domain_id", self.domainId)
+        if let value = self.lastReceived {
             try sdkValidateDateTime("last_received", sdkWireString(value))
         }
-        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
-public extension Inbox {
-    init(
-        object: String,
-        id: String,
-        name: String,
-        emailAddress: String,
-        domainId: String,
-        receivingAddress: String?,
-        fromName: String?,
-        unread: Int,
-        drafts: Int,
-        lastReceived: Date?,
-        createdAt: Date
-    ) throws {
+extension Inbox {
+    public init(object: String, id: String, name: String, emailAddress: String, domainId: String, receivingAddress: String?, fromName: String?, unread: Int, drafts: Int, lastReceived: Date?, createdAt: Date) throws {
         (self.object, self.id) = (object, id)
         (self.name, self.emailAddress) = (name, emailAddress)
         (self.domainId, self.receivingAddress) = (domainId, receivingAddress)
         (self.fromName, self.unread) = (fromName, unread)
         (self.drafts, self.lastReceived) = (drafts, lastReceived)
         self.createdAt = createdAt
-        try sdkValidateUuid("id", self.id)
-        try sdkValidateUuid("domain_id", self.domainId)
+            try sdkValidateUuid("id", self.id)
+            try sdkValidateUuid("domain_id", self.domainId)
         if let value = self.lastReceived {
             try sdkValidateDateTime("last_received", sdkWireString(value))
         }
-        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }

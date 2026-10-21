@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Domains domain models
+// Domains domain models
 /// Typed representation of the `ListDomainsResponse` API schema.
 public struct ListDomainsResponse: Codable {
     /// Type of the response object.
@@ -21,21 +21,21 @@ public struct ListDomainsResponse: Codable {
     }
 
     init() {
-        (object, hasMore, data) = (nil, nil, nil)
+        (self.object, self.hasMore, self.data) = (nil, nil, nil)
     }
 }
 
-public extension ListDomainsResponse {
-    init(from decoder: Decoder) throws {
+extension ListDomainsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension ListDomainsResponse {
-    init(object: String? = nil, hasMore: Bool? = nil, data: [ListDomainsItem]? = nil) {
+extension ListDomainsResponse {
+    public init(object: String? = nil, hasMore: Bool? = nil, data: [ListDomainsItem]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -78,36 +78,27 @@ public struct ListDomainsItem: Codable {
     }
 
     init() {
-        (id, name, status, createdAt, region) = (nil, nil, nil, nil, nil)
-        (openTracking, clickTracking, capabilities) = (nil, nil, nil)
+        (self.id, self.name, self.status, self.createdAt, self.region) = (nil, nil, nil, nil, nil)
+        (self.openTracking, self.clickTracking, self.capabilities) = (nil, nil, nil)
     }
 }
 
-public extension ListDomainsItem {
-    init(from decoder: Decoder) throws {
+extension ListDomainsItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        status = try container.sdkDecodeIfPresent(.status)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        region = try container.sdkDecodeIfPresent(.region)
-        openTracking = try container.sdkDecodeIfPresent(.openTracking)
-        clickTracking = try container.sdkDecodeIfPresent(.clickTracking)
-        capabilities = try container.sdkDecodeIfPresent(.capabilities)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.openTracking = try container.sdkDecodeIfPresent(.openTracking)
+        self.clickTracking = try container.sdkDecodeIfPresent(.clickTracking)
+        self.capabilities = try container.sdkDecodeIfPresent(.capabilities)
     }
 }
 
-public extension ListDomainsItem {
-    init(
-        id: String? = nil,
-        name: String? = nil,
-        status: ListDomainsItemStatus? = nil,
-        createdAt: String? = nil,
-        region: String? = nil,
-        openTracking: Bool? = nil,
-        clickTracking: Bool? = nil,
-        capabilities: DomainCapabilities? = nil
-    ) {
+extension ListDomainsItem {
+    public init(id: String? = nil, name: String? = nil, status: ListDomainsItemStatus? = nil, createdAt: String? = nil, region: String? = nil, openTracking: Bool? = nil, clickTracking: Bool? = nil, capabilities: DomainCapabilities? = nil) {
         self.init()
         (self.id, self.name) = (id, name)
         (self.status, self.createdAt) = (status, createdAt)
@@ -120,10 +111,7 @@ public extension ListDomainsItem {
 public struct ListDomainsItemStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let pending = ListDomainsItemStatus(rawValue: "pending")
     public static let verified = ListDomainsItemStatus(rawValue: "verified")
     public static let failed = ListDomainsItemStatus(rawValue: "failed")
@@ -133,7 +121,7 @@ public struct ListDomainsItemStatus: RawRepresentable, Hashable, Codable, Sendab
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

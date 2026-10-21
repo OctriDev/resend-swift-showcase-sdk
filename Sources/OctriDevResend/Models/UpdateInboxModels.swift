@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// UpdateInbox domain models
+// UpdateInbox domain models
 public typealias UpdateInboxDraftResponseSuccess = InboxDraft
 
 public typealias UpdateInboxThreadResponseSuccess = InboxThreadSummary

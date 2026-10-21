@@ -8,9 +8,8 @@ import Foundation
 #endif
 public enum ReceivingEmailsMethods {}
 
-public extension ReceivingEmailsMethods {
-    /// Lists received emails with cursor-based pagination. Use `limit` to control the number of results and `after` or
-    /// `before` to select a pagination cursor; the cursor parameters cannot be used together.
+extension ReceivingEmailsMethods {
+    /// Lists received emails with cursor-based pagination. Use `limit` to control the number of results and `after` or `before` to select a pagination cursor; the cursor parameters cannot be used together.
     ///
     /// - Parameters:
     /// - limit: Maximum number of received emails to return.
@@ -18,47 +17,29 @@ public extension ReceivingEmailsMethods {
     ///   used with 'before'.
     /// - before: Pagination cursor to fetch results before this email ID. Cannot be
     ///   used with 'after'.
-    static func list(
-        config: ClientConfig,
-        limit: Int? = nil,
-        after: String? = nil,
-        before: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ListReceivedEmailsResponse {
-        if let after {
+    public static func list(config: ClientConfig, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListReceivedEmailsResponse {
+        if let after = after {
             try sdkValidateUuid("after", after)
         }
 
-        if let before {
+        if let before = before {
             try sdkValidateUuid("before", before)
         }
 
-        return try await (sdkRequest("GET", "/emails/receiving", config: config, query: [
+        return try (await sdkRequest("GET", "/emails/receiving", config: config, query: [
             SdkQueryParameter("limit", value: limit),
             SdkQueryParameter("after", value: after),
             SdkQueryParameter("before", value: before),
         ], decoder: .json, operationId: "list", options: requestOptions)).data
     }
 
-    /// Retrieves a received email by its identifier. Use `email_id` to select the email; the response includes its
-    /// message content, headers, recipients, receipt time, and attachments.
+    /// Retrieves a received email by its identifier. Use `email_id` to select the email; the response includes its message content, headers, recipients, receipt time, and attachments.
     ///
     /// - Parameters:
     /// - emailId: The ID of the received email.
-    static func get(
-        config: ClientConfig,
-        emailId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> GetReceivedEmailResponse {
+    public static func get(config: ClientConfig, emailId: String, requestOptions: RequestOptions? = nil) async throws -> GetReceivedEmailResponse {
         try sdkValidateUuid("email_id", emailId)
 
-        return try await (sdkRequest(
-            "GET",
-            ["/emails/receiving/", sdkEncodePathSegment(sdkWireString(emailId))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "get",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("GET", ["/emails/receiving/", sdkEncodePathSegment(sdkWireString(emailId))].joined(), config: config, decoder: .json, operationId: "get", options: requestOptions)).data
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// WebhookEventAttachment domain models
+// WebhookEventAttachment domain models
 /// Typed representation of the `WebhookEventAttachment` API schema.
 public struct WebhookEventAttachment: Codable {
     /// Unique identifier for the attachment.
@@ -25,37 +25,25 @@ public struct WebhookEventAttachment: Codable {
         case contentId = "content_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension WebhookEventAttachment {
-    init(from decoder: Decoder) throws {
+extension WebhookEventAttachment {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        filename = try container.sdkDecodeIfPresent(.filename)
-        contentType = try container.sdkDecodeIfPresent(.contentType)
-        contentDisposition = try container.sdkDecodeIfPresent(.contentDisposition)
-        contentId = try container.sdkDecodeIfPresent(.contentId)
+        self.id = try container.sdkDecodeRequired(.id)
+        self.filename = try container.sdkDecodeIfPresent(.filename)
+        self.contentType = try container.sdkDecodeIfPresent(.contentType)
+        self.contentDisposition = try container.sdkDecodeIfPresent(.contentDisposition)
+        self.contentId = try container.sdkDecodeIfPresent(.contentId)
     }
 }
 
-public extension WebhookEventAttachment {
-    init(
-        id: String,
-        filename: String? = nil,
-        contentType: String? = nil,
-        contentDisposition: String? = nil,
-        contentId: String? = nil
-    ) {
+extension WebhookEventAttachment {
+    public init(id: String, filename: String? = nil, contentType: String? = nil, contentDisposition: String? = nil, contentId: String? = nil) {
         (self.id, self.filename) = (id, filename)
         (self.contentType, self.contentDisposition) = (contentType, contentDisposition)
         self.contentId = contentId

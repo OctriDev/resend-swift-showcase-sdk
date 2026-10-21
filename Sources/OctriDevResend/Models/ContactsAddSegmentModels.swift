@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Contacts domain models
+// Contacts domain models
 /// Typed representation of the `AddContactToSegmentResponseSuccess` API schema.
 public struct AddContactToSegmentResponseSuccess: Codable {
     /// The object type.
@@ -21,21 +21,21 @@ public struct AddContactToSegmentResponseSuccess: Codable {
     }
 
     init() {
-        (object, contactId, segmentId) = (nil, nil, nil)
+        (self.object, self.contactId, self.segmentId) = (nil, nil, nil)
     }
 }
 
-public extension AddContactToSegmentResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension AddContactToSegmentResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        contactId = try container.sdkDecodeIfPresent(.contactId)
-        segmentId = try container.sdkDecodeIfPresent(.segmentId)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.contactId = try container.sdkDecodeIfPresent(.contactId)
+        self.segmentId = try container.sdkDecodeIfPresent(.segmentId)
     }
 }
 
-public extension AddContactToSegmentResponseSuccess {
-    init(object: String? = nil, contactId: String? = nil, segmentId: String? = nil) {
+extension AddContactToSegmentResponseSuccess {
+    public init(object: String? = nil, contactId: String? = nil, segmentId: String? = nil) {
         self.init()
         (self.object, self.contactId) = (object, contactId)
         self.segmentId = segmentId

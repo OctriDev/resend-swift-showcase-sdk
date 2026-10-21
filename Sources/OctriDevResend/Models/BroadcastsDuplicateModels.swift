@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Broadcasts domain models
+// Broadcasts domain models
 /// Typed representation of the `DuplicateBroadcastResponseSuccess` API schema.
 public struct DuplicateBroadcastResponseSuccess: Codable {
     /// The ID of the duplicated broadcast.
@@ -19,20 +19,20 @@ public struct DuplicateBroadcastResponseSuccess: Codable {
     }
 
     init() {
-        (id, object) = (nil, nil)
+        (self.id, self.object) = (nil, nil)
     }
 }
 
-public extension DuplicateBroadcastResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension DuplicateBroadcastResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.object = try container.sdkDecodeIfPresent(.object)
     }
 }
 
-public extension DuplicateBroadcastResponseSuccess {
-    init(id: String? = nil, object: String? = nil) {
+extension DuplicateBroadcastResponseSuccess {
+    public init(id: String? = nil, object: String? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
     }

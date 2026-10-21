@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// InboxesUpdate domain models
+// InboxesUpdate domain models
 /// Typed representation of the `UpdateInboxAgentResponseSuccess` API schema.
 public struct UpdateInboxAgentResponseSuccess: Codable {
     /// The object type. Always `inbox_agent`.
@@ -18,38 +18,28 @@ public struct UpdateInboxAgentResponseSuccess: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension UpdateInboxAgentResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension UpdateInboxAgentResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.object) else {
-            throw SdkValidationError(
-                field: "object",
-                code: "required",
-                message: "Validation failed for 'object': value is required"
-            )
+            throw SdkValidationError(field: "object", code: "required", message: "Validation failed for 'object': value is required")
         }
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
-        object = try container.sdkDecodeRequired(.object)
-        id = try container.sdkDecodeRequired(.id)
-        try sdkValidateUuid("id", id)
+        self.object = try container.sdkDecodeRequired(.object)
+        self.id = try container.sdkDecodeRequired(.id)
+            try sdkValidateUuid("id", self.id)
     }
 }
 
-public extension UpdateInboxAgentResponseSuccess {
-    init(object: String, id: String) throws {
+extension UpdateInboxAgentResponseSuccess {
+    public init(object: String, id: String) throws {
         (self.object, self.id) = (object, id)
-        try sdkValidateUuid("id", self.id)
+            try sdkValidateUuid("id", self.id)
     }
 }
 
@@ -76,28 +66,24 @@ public struct UpdateInboxAgentOptions: Codable {
     }
 
     init() {
-        (instructions, tone, enabledActions) = (nil, nil, nil)
+        (self.instructions, self.tone, self.enabledActions) = (nil, nil, nil)
     }
 }
 
-public extension UpdateInboxAgentOptions {
-    init(from decoder: Decoder) throws {
+extension UpdateInboxAgentOptions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        instructions = try container.sdkDecodeIfPresent(.instructions)
-        tone = try container.sdkDecodeIfPresent(.tone)
-        enabledActions = try container.sdkDecodeIfPresent(.enabledActions)
-        if let value = instructions {
+        self.instructions = try container.sdkDecodeIfPresent(.instructions)
+        self.tone = try container.sdkDecodeIfPresent(.tone)
+        self.enabledActions = try container.sdkDecodeIfPresent(.enabledActions)
+        if let value = self.instructions {
             try validateLength("instructions", value, min: 1, max: 4000)
         }
     }
 }
 
-public extension UpdateInboxAgentOptions {
-    init(
-        instructions: String? = nil,
-        tone: UpdateInboxAgentOptionsTone? = nil,
-        enabledActions: [UpdateInboxAgentOptionsEnabledActionsItem]? = nil
-    ) throws {
+extension UpdateInboxAgentOptions {
+    public init(instructions: String? = nil, tone: UpdateInboxAgentOptionsTone? = nil, enabledActions: [UpdateInboxAgentOptionsEnabledActionsItem]? = nil) throws {
         self.init()
         (self.instructions, self.tone) = (instructions, tone)
         self.enabledActions = enabledActions
@@ -111,10 +97,7 @@ public extension UpdateInboxAgentOptions {
 public struct UpdateInboxAgentOptionsTone: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let conciseProfessional = UpdateInboxAgentOptionsTone(rawValue: "concise_professional")
     public static let conciseCasual = UpdateInboxAgentOptionsTone(rawValue: "concise_casual")
     public static let expandedProfessional = UpdateInboxAgentOptionsTone(rawValue: "expanded_professional")
@@ -122,7 +105,7 @@ public struct UpdateInboxAgentOptionsTone: RawRepresentable, Hashable, Codable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -132,14 +115,10 @@ public struct UpdateInboxAgentOptionsTone: RawRepresentable, Hashable, Codable, 
 }
 
 /// Required enumerated value serialized in the `enabled_actions[]` wire field.
-public struct UpdateInboxAgentOptionsEnabledActionsItem: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct UpdateInboxAgentOptionsEnabledActionsItem: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let draftReply = UpdateInboxAgentOptionsEnabledActionsItem(rawValue: "draft_reply")
     public static let forwardThread = UpdateInboxAgentOptionsEnabledActionsItem(rawValue: "forward_thread")
     public static let addLabels = UpdateInboxAgentOptionsEnabledActionsItem(rawValue: "add_labels")
@@ -150,7 +129,7 @@ public struct UpdateInboxAgentOptionsEnabledActionsItem: RawRepresentable, Hasha
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

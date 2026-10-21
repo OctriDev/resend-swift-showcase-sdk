@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Automations domain models
+// Automations domain models
 /// Typed representation of the `CreateAutomationResponse` API schema.
 public struct CreateAutomationResponse: Codable {
     /// Type of the response object.
@@ -18,20 +18,20 @@ public struct CreateAutomationResponse: Codable {
     }
 
     init() {
-        (object, id) = (nil, nil)
+        (self.object, self.id) = (nil, nil)
     }
 }
 
-public extension CreateAutomationResponse {
-    init(from decoder: Decoder) throws {
+extension CreateAutomationResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        id = try container.sdkDecodeIfPresent(.id)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-public extension CreateAutomationResponse {
-    init(object: String? = nil, id: String? = nil) {
+extension CreateAutomationResponse {
+    public init(object: String? = nil, id: String? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
     }
@@ -55,55 +55,36 @@ public struct CreateAutomationRequest: Codable {
         case status
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateAutomationRequest {
-    init(from decoder: Decoder) throws {
+extension CreateAutomationRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.steps) else {
-            throw SdkValidationError(
-                field: "steps",
-                code: "required",
-                message: "Validation failed for 'steps': value is required"
-            )
+            throw SdkValidationError(field: "steps", code: "required", message: "Validation failed for 'steps': value is required")
         }
         guard container.contains(.connections) else {
-            throw SdkValidationError(
-                field: "connections",
-                code: "required",
-                message: "Validation failed for 'connections': value is required"
-            )
+            throw SdkValidationError(field: "connections", code: "required", message: "Validation failed for 'connections': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        steps = try container.sdkDecodeRequired(.steps)
-        connections = try container.sdkDecodeRequired(.connections)
-        status = try container.sdkDecodeIfPresent(.status)
-        try validateLength("name", name, min: 1, max: nil)
-        try validateItems("steps", steps, min: 1, max: 150)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.steps = try container.sdkDecodeRequired(.steps)
+        self.connections = try container.sdkDecodeRequired(.connections)
+        self.status = try container.sdkDecodeIfPresent(.status)
+            try validateLength("name", self.name, min: 1, max: nil)
+            try validateItems("steps", self.steps, min: 1, max: 150)
     }
 }
 
-public extension CreateAutomationRequest {
-    init(
-        name: String,
-        steps: [AutomationStep],
-        connections: [AutomationConnection],
-        status: CreateAutomationRequestStatus? = nil
-    ) throws {
+extension CreateAutomationRequest {
+    public init(name: String, steps: [AutomationStep], connections: [AutomationConnection], status: CreateAutomationRequestStatus? = nil) throws {
         (self.name, self.steps) = (name, steps)
         (self.connections, self.status) = (connections, status)
-        try validateLength("name", self.name, min: 1, max: nil)
-        try validateItems("steps", self.steps, min: 1, max: 150)
+            try validateLength("name", self.name, min: 1, max: nil)
+            try validateItems("steps", self.steps, min: 1, max: 150)
     }
 }
 
@@ -111,16 +92,13 @@ public extension CreateAutomationRequest {
 public struct CreateAutomationRequestStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let enabled = CreateAutomationRequestStatus(rawValue: "enabled")
     public static let disabled = CreateAutomationRequestStatus(rawValue: "disabled")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

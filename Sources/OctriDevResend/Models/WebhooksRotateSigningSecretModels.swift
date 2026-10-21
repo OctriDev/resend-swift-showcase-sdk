@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Webhooks domain models
+// Webhooks domain models
 /// Typed representation of the `RotateWebhookSigningSecretResponse` API schema.
 public struct RotateWebhookSigningSecretResponse: Codable {
     /// The type of object.
@@ -23,24 +23,24 @@ public struct RotateWebhookSigningSecretResponse: Codable {
     }
 
     init() {
-        (object, id, signingSecret) = (nil, nil, nil)
+        (self.object, self.id, self.signingSecret) = (nil, nil, nil)
     }
 }
 
-public extension RotateWebhookSigningSecretResponse {
-    init(from decoder: Decoder) throws {
+extension RotateWebhookSigningSecretResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        id = try container.sdkDecodeIfPresent(.id)
-        signingSecret = try container.sdkDecodeIfPresent(.signingSecret)
-        if let value = id {
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.signingSecret = try container.sdkDecodeIfPresent(.signingSecret)
+        if let value = self.id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-public extension RotateWebhookSigningSecretResponse {
-    init(object: String? = nil, id: String? = nil, signingSecret: String? = nil) throws {
+extension RotateWebhookSigningSecretResponse {
+    public init(object: String? = nil, id: String? = nil, signingSecret: String? = nil) throws {
         self.init()
         (self.object, self.id) = (object, id)
         self.signingSecret = signingSecret

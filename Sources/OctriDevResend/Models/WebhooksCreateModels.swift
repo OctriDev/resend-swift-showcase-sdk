@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Webhooks domain models
+// Webhooks domain models
 /// Typed representation of the `CreateWebhookRequest` API schema.
 public struct CreateWebhookRequest: Codable {
     /// The URL where webhook events will be sent.
@@ -18,38 +18,28 @@ public struct CreateWebhookRequest: Codable {
         case events
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateWebhookRequest {
-    init(from decoder: Decoder) throws {
+extension CreateWebhookRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.endpoint) else {
-            throw SdkValidationError(
-                field: "endpoint",
-                code: "required",
-                message: "Validation failed for 'endpoint': value is required"
-            )
+            throw SdkValidationError(field: "endpoint", code: "required", message: "Validation failed for 'endpoint': value is required")
         }
         guard container.contains(.events) else {
-            throw SdkValidationError(
-                field: "events",
-                code: "required",
-                message: "Validation failed for 'events': value is required"
-            )
+            throw SdkValidationError(field: "events", code: "required", message: "Validation failed for 'events': value is required")
         }
-        endpoint = try container.sdkDecodeRequired(.endpoint)
-        events = try container.sdkDecodeRequired(.events)
-        try validateItems("events", events, min: 1, max: nil)
+        self.endpoint = try container.sdkDecodeRequired(.endpoint)
+        self.events = try container.sdkDecodeRequired(.events)
+            try validateItems("events", self.events, min: 1, max: nil)
     }
 }
 
-public extension CreateWebhookRequest {
-    init(endpoint: String, events: [String]) throws {
+extension CreateWebhookRequest {
+    public init(endpoint: String, events: [String]) throws {
         (self.endpoint, self.events) = (endpoint, events)
-        try validateItems("events", self.events, min: 1, max: nil)
+            try validateItems("events", self.events, min: 1, max: nil)
     }
 }
 
@@ -72,24 +62,24 @@ public struct CreateWebhookResponse: Codable {
     }
 
     init() {
-        (object, id, signingSecret) = (nil, nil, nil)
+        (self.object, self.id, self.signingSecret) = (nil, nil, nil)
     }
 }
 
-public extension CreateWebhookResponse {
-    init(from decoder: Decoder) throws {
+extension CreateWebhookResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        id = try container.sdkDecodeIfPresent(.id)
-        signingSecret = try container.sdkDecodeIfPresent(.signingSecret)
-        if let value = id {
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.signingSecret = try container.sdkDecodeIfPresent(.signingSecret)
+        if let value = self.id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-public extension CreateWebhookResponse {
-    init(object: String? = nil, id: String? = nil, signingSecret: String? = nil) throws {
+extension CreateWebhookResponse {
+    public init(object: String? = nil, id: String? = nil, signingSecret: String? = nil) throws {
         self.init()
         (self.object, self.id) = (object, id)
         self.signingSecret = signingSecret

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Templates domain models
+// Templates domain models
 /// Typed representation of the `TemplateListItem` API schema.
 public struct TemplateListItem: Codable {
     /// The ID of the template.
@@ -35,34 +35,26 @@ public struct TemplateListItem: Codable {
     }
 
     init() {
-        (id, name, status, publishedAt, createdAt) = (nil, nil, nil, nil, nil)
-        (updatedAt, alias) = (nil, nil)
+        (self.id, self.name, self.status, self.publishedAt, self.createdAt) = (nil, nil, nil, nil, nil)
+        (self.updatedAt, self.alias) = (nil, nil)
     }
 }
 
-public extension TemplateListItem {
-    init(from decoder: Decoder) throws {
+extension TemplateListItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        status = try container.sdkDecodeIfPresent(.status)
-        publishedAt = try container.sdkDecodeIfPresent(.publishedAt)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        alias = try container.sdkDecodeIfPresent(.alias)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.publishedAt = try container.sdkDecodeIfPresent(.publishedAt)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.alias = try container.sdkDecodeIfPresent(.alias)
     }
 }
 
-public extension TemplateListItem {
-    init(
-        id: String? = nil,
-        name: String? = nil,
-        status: TemplateListItemStatus? = nil,
-        publishedAt: String? = nil,
-        createdAt: String? = nil,
-        updatedAt: String? = nil,
-        alias: String? = nil
-    ) {
+extension TemplateListItem {
+    public init(id: String? = nil, name: String? = nil, status: TemplateListItemStatus? = nil, publishedAt: String? = nil, createdAt: String? = nil, updatedAt: String? = nil, alias: String? = nil) {
         self.init()
         (self.id, self.name) = (id, name)
         (self.status, self.publishedAt) = (status, publishedAt)
@@ -88,21 +80,21 @@ public struct ListTemplatesResponseSuccess: Codable {
     }
 
     init() {
-        (object, data, hasMore) = (nil, nil, nil)
+        (self.object, self.data, self.hasMore) = (nil, nil, nil)
     }
 }
 
-public extension ListTemplatesResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension ListTemplatesResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        data = try container.sdkDecodeIfPresent(.data)
-        hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.data = try container.sdkDecodeIfPresent(.data)
+        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
     }
 }
 
-public extension ListTemplatesResponseSuccess {
-    init(object: String? = nil, data: [TemplateListItem]? = nil, hasMore: Bool? = nil) {
+extension ListTemplatesResponseSuccess {
+    public init(object: String? = nil, data: [TemplateListItem]? = nil, hasMore: Bool? = nil) {
         self.init()
         (self.object, self.data) = (object, data)
         self.hasMore = hasMore
@@ -113,16 +105,13 @@ public extension ListTemplatesResponseSuccess {
 public struct TemplateListItemStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let draft = TemplateListItemStatus(rawValue: "draft")
     public static let published = TemplateListItemStatus(rawValue: "published")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

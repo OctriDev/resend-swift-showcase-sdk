@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Domains domain models
+// Domains domain models
 /// Typed representation of the `VerifyDomainResponse` API schema.
 public struct VerifyDomainResponse: Codable {
     /// The type of object.
@@ -19,20 +19,20 @@ public struct VerifyDomainResponse: Codable {
     }
 
     init() {
-        (object, id) = (nil, nil)
+        (self.object, self.id) = (nil, nil)
     }
 }
 
-public extension VerifyDomainResponse {
-    init(from decoder: Decoder) throws {
+extension VerifyDomainResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        id = try container.sdkDecodeIfPresent(.id)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-public extension VerifyDomainResponse {
-    init(object: String? = nil, id: String? = nil) {
+extension VerifyDomainResponse {
+    public init(object: String? = nil, id: String? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
     }

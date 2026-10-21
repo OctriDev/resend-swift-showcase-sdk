@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Contacts domain models
+// Contacts domain models
 /// Required object value serialized in the `segments[]` wire field.
 public struct CreateContactOptionsSegmentsItem: Codable {
     /// The segment ID
@@ -14,19 +14,19 @@ public struct CreateContactOptionsSegmentsItem: Codable {
     }
 
     init() {
-        id = nil
+        self.id = nil
     }
 }
 
-public extension CreateContactOptionsSegmentsItem {
-    init(from decoder: Decoder) throws {
+extension CreateContactOptionsSegmentsItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
+        self.id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-public extension CreateContactOptionsSegmentsItem {
-    init(id: String? = nil) {
+extension CreateContactOptionsSegmentsItem {
+    public init(id: String? = nil) {
         self.init()
         self.id = id
     }
@@ -47,20 +47,20 @@ public struct CreateContactResponseSuccess: Codable {
     }
 
     init() {
-        (object, id) = (nil, nil)
+        (self.object, self.id) = (nil, nil)
     }
 }
 
-public extension CreateContactResponseSuccess {
-    init(from decoder: Decoder) throws {
+extension CreateContactResponseSuccess {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        id = try container.sdkDecodeIfPresent(.id)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-public extension CreateContactResponseSuccess {
-    init(object: String? = nil, id: String? = nil) {
+extension CreateContactResponseSuccess {
+    public init(object: String? = nil, id: String? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
     }
@@ -79,20 +79,20 @@ public struct CreateContactOptionsTopicsItem: Codable {
     }
 
     init() {
-        (id, subscription) = (nil, nil)
+        (self.id, self.subscription) = (nil, nil)
     }
 }
 
-public extension CreateContactOptionsTopicsItem {
-    init(from decoder: Decoder) throws {
+extension CreateContactOptionsTopicsItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        subscription = try container.sdkDecodeIfPresent(.subscription)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.subscription = try container.sdkDecodeIfPresent(.subscription)
     }
 }
 
-public extension CreateContactOptionsTopicsItem {
-    init(id: String? = nil, subscription: CreateContactOptionsTopicsItemSubscription? = nil) {
+extension CreateContactOptionsTopicsItem {
+    public init(id: String? = nil, subscription: CreateContactOptionsTopicsItemSubscription? = nil) {
         self.init()
         (self.id, self.subscription) = (id, subscription)
     }
@@ -133,43 +133,28 @@ public struct CreateContactOptions: Codable {
         case audienceId = "audience_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateContactOptions {
-    init(from decoder: Decoder) throws {
+extension CreateContactOptions {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.email) else {
-            throw SdkValidationError(
-                field: "email",
-                code: "required",
-                message: "Validation failed for 'email': value is required"
-            )
+            throw SdkValidationError(field: "email", code: "required", message: "Validation failed for 'email': value is required")
         }
-        email = try container.sdkDecodeRequired(.email)
-        firstName = try container.sdkDecodeIfPresent(.firstName)
-        lastName = try container.sdkDecodeIfPresent(.lastName)
-        unsubscribed = try container.sdkDecodeIfPresent(.unsubscribed)
-        properties = try container.sdkDecodeIfPresent(.properties)
-        segments = try container.sdkDecodeIfPresent(.segments)
-        topics = try container.sdkDecodeIfPresent(.topics)
-        audienceId = try container.sdkDecodeIfPresent(.audienceId)
+        self.email = try container.sdkDecodeRequired(.email)
+        self.firstName = try container.sdkDecodeIfPresent(.firstName)
+        self.lastName = try container.sdkDecodeIfPresent(.lastName)
+        self.unsubscribed = try container.sdkDecodeIfPresent(.unsubscribed)
+        self.properties = try container.sdkDecodeIfPresent(.properties)
+        self.segments = try container.sdkDecodeIfPresent(.segments)
+        self.topics = try container.sdkDecodeIfPresent(.topics)
+        self.audienceId = try container.sdkDecodeIfPresent(.audienceId)
     }
 }
 
-public extension CreateContactOptions {
-    init(
-        email: String,
-        firstName: String? = nil,
-        lastName: String? = nil,
-        unsubscribed: Bool? = nil,
-        properties: [String: JSONValue?]? = nil,
-        segments: [CreateContactOptionsSegmentsItem]? = nil,
-        topics: [CreateContactOptionsTopicsItem]? = nil,
-        audienceId: String? = nil
-    ) {
+extension CreateContactOptions {
+    public init(email: String, firstName: String? = nil, lastName: String? = nil, unsubscribed: Bool? = nil, properties: [String: JSONValue?]? = nil, segments: [CreateContactOptionsSegmentsItem]? = nil, topics: [CreateContactOptionsTopicsItem]? = nil, audienceId: String? = nil) {
         (self.email, self.firstName) = (email, firstName)
         (self.lastName, self.unsubscribed) = (lastName, unsubscribed)
         (self.properties, self.segments) = (properties, segments)
@@ -178,20 +163,16 @@ public extension CreateContactOptions {
 }
 
 /// The subscription status for this topic.
-public struct CreateContactOptionsTopicsItemSubscription: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct CreateContactOptionsTopicsItemSubscription: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let optIn = CreateContactOptionsTopicsItemSubscription(rawValue: "opt_in")
     public static let optOut = CreateContactOptionsTopicsItemSubscription(rawValue: "opt_out")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

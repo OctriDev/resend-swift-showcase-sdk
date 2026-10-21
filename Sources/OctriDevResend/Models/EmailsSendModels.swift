@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Emails domain models
+// Emails domain models
 /// Typed representation of the `SendEmailResponse` API schema.
 public struct SendEmailResponse: Codable {
     /// The ID of the sent email.
@@ -14,19 +14,19 @@ public struct SendEmailResponse: Codable {
     }
 
     init() {
-        id = nil
+        self.id = nil
     }
 }
 
-public extension SendEmailResponse {
-    init(from decoder: Decoder) throws {
+extension SendEmailResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
+        self.id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-public extension SendEmailResponse {
-    init(id: String? = nil) {
+extension SendEmailResponse {
+    public init(id: String? = nil) {
         self.init()
         self.id = id
     }

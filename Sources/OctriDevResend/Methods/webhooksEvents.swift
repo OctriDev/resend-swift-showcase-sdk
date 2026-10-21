@@ -6,67 +6,34 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension WebhooksMethods {
-    /// Lists events associated with a webhook. Use `after` to continue from a cursor and `limit` to control the number
-    /// of results; the response indicates whether more results are available.
+extension WebhooksMethods {
+    /// Lists events associated with a webhook. Use `after` to continue from a cursor and `limit` to control the number of results; the response indicates whether more results are available.
     ///
     /// - Parameters:
     /// - webhookId: The Webhook ID.
     /// - limit: Number of items to return.
     /// - after: Return items after this cursor.
-    static func webhooksListEvents(
-        config: ClientConfig,
-        webhookId: String,
-        limit: Int? = nil,
-        after: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ListWebhookEventsResponse {
+    public static func webhooksListEvents(config: ClientConfig, webhookId: String, limit: Int? = nil, after: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListWebhookEventsResponse {
         try sdkValidateUuid("webhook_id", webhookId)
 
-        if let limit {
+        if let limit = limit {
             try validateRange("limit", Double(limit), min: 1, max: 100)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            ["/webhooks/", sdkEncodePathSegment(sdkWireString(webhookId)), "/events"].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("limit", value: limit),
-                SdkQueryParameter("after", value: after),
-            ],
-            decoder: .json,
-            operationId: "webhooksListEvents",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("GET", ["/webhooks/", sdkEncodePathSegment(sdkWireString(webhookId)), "/events"].joined(), config: config, query: [
+            SdkQueryParameter("limit", value: limit),
+            SdkQueryParameter("after", value: after),
+        ], decoder: .json, operationId: "webhooksListEvents", options: requestOptions)).data
     }
 
-    /// Retrieves a specific event associated with a webhook. Use the event details to inspect its delivery status,
-    /// payload, and any scheduled next delivery attempt.
+    /// Retrieves a specific event associated with a webhook. Use the event details to inspect its delivery status, payload, and any scheduled next delivery attempt.
     ///
     /// - Parameters:
     /// - webhookId: The Webhook ID.
     /// - eventId: The Webhook Event ID.
-    static func webhooksGetEvent(
-        config: ClientConfig,
-        webhookId: String,
-        eventId: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> GetWebhookEventResponse {
+    public static func webhooksGetEvent(config: ClientConfig, webhookId: String, eventId: String, requestOptions: RequestOptions? = nil) async throws -> GetWebhookEventResponse {
         try sdkValidateUuid("webhook_id", webhookId)
 
-        return try await (sdkRequest(
-            "GET",
-            [
-                "/webhooks/",
-                sdkEncodePathSegment(sdkWireString(webhookId)),
-                "/events/",
-                sdkEncodePathSegment(sdkWireString(eventId)),
-            ].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "webhooksGetEvent",
-            options: requestOptions
-        )).data
+        return try (await sdkRequest("GET", ["/webhooks/", sdkEncodePathSegment(sdkWireString(webhookId)), "/events/", sdkEncodePathSegment(sdkWireString(eventId))].joined(), config: config, decoder: .json, operationId: "webhooksGetEvent", options: requestOptions)).data
     }
 }
