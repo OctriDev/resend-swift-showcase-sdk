@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Broadcasts domain models
+/// Broadcasts domain models
 /// Typed representation of the `RemoveBroadcastResponseSuccess` API schema.
 public struct RemoveBroadcastResponseSuccess: Codable {
     /// The ID of the broadcast.
@@ -23,21 +23,21 @@ public struct RemoveBroadcastResponseSuccess: Codable {
     }
 
     init() {
-        (self.id, self.object, self.deleted) = (nil, nil, nil)
+        (id, object, deleted) = (nil, nil, nil)
     }
 }
 
-extension RemoveBroadcastResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension RemoveBroadcastResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.deleted = try container.sdkDecodeIfPresent(.deleted)
+        id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
+        deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-extension RemoveBroadcastResponseSuccess {
-    public init(id: String? = nil, object: String? = nil, deleted: Bool? = nil) {
+public extension RemoveBroadcastResponseSuccess {
+    init(id: String? = nil, object: String? = nil, deleted: Bool? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
         self.deleted = deleted

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Emails domain models
+/// Emails domain models
 /// Typed representation of the `GetEmailsMetricsResponse` API schema.
 public struct GetEmailsMetricsResponse: Codable {
     /// Type of the response object.
@@ -38,27 +38,36 @@ public struct GetEmailsMetricsResponse: Codable {
     }
 
     init() {
-        (self.object, self.startDate, self.endDate, self.metrics, self.dimensions) = (nil, nil, nil, nil, nil)
-        (self.granularity, self.totals, self.data) = (nil, nil, nil)
+        (object, startDate, endDate, metrics, dimensions) = (nil, nil, nil, nil, nil)
+        (granularity, totals, data) = (nil, nil, nil)
     }
 }
 
-extension GetEmailsMetricsResponse {
-    public init(from decoder: Decoder) throws {
+public extension GetEmailsMetricsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.startDate = try container.sdkDecodeIfPresent(.startDate)
-        self.endDate = try container.sdkDecodeIfPresent(.endDate)
-        self.metrics = try container.sdkDecodeIfPresent(.metrics)
-        self.dimensions = try container.sdkDecodeIfPresent(.dimensions)
-        self.granularity = try container.sdkDecodeIfPresent(.granularity)
-        self.totals = try container.sdkDecodeIfPresent(.totals)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        object = try container.sdkDecodeIfPresent(.object)
+        startDate = try container.sdkDecodeIfPresent(.startDate)
+        endDate = try container.sdkDecodeIfPresent(.endDate)
+        metrics = try container.sdkDecodeIfPresent(.metrics)
+        dimensions = try container.sdkDecodeIfPresent(.dimensions)
+        granularity = try container.sdkDecodeIfPresent(.granularity)
+        totals = try container.sdkDecodeIfPresent(.totals)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension GetEmailsMetricsResponse {
-    public init(object: String? = nil, startDate: String? = nil, endDate: String? = nil, metrics: [String]? = nil, dimensions: [GetEmailsMetricsResponseDimensionsItem]? = nil, granularity: GetEmailsMetricsResponseGranularity? = nil, totals: [String: Double]? = nil, data: [EmailMetricsDataRow]? = nil) {
+public extension GetEmailsMetricsResponse {
+    init(
+        object: String? = nil,
+        startDate: String? = nil,
+        endDate: String? = nil,
+        metrics: [String]? = nil,
+        dimensions: [GetEmailsMetricsResponseDimensionsItem]? = nil,
+        granularity: GetEmailsMetricsResponseGranularity? = nil,
+        totals: [String: Double]? = nil,
+        data: [EmailMetricsDataRow]? = nil
+    ) {
         self.init()
         (self.object, self.startDate) = (object, startDate)
         (self.endDate, self.metrics) = (endDate, metrics)
@@ -95,35 +104,42 @@ public struct EmailMetricsDataRow: Codable {
     }
 
     init() {
-        (self.period, self.domainId, self.domainName, self.emailId, self.broadcastId) = (nil, nil, nil, nil, nil)
-        self.broadcastName = nil
+        (period, domainId, domainName, emailId, broadcastId) = (nil, nil, nil, nil, nil)
+        broadcastName = nil
     }
 }
 
-extension EmailMetricsDataRow {
-    public init(from decoder: Decoder) throws {
+public extension EmailMetricsDataRow {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.period = try container.sdkDecodeIfPresent(.period)
-        self.domainId = try container.sdkDecodeIfPresent(.domainId)
-        self.domainName = try container.sdkDecodeIfPresent(.domainName)
-        self.emailId = try container.sdkDecodeIfPresent(.emailId)
-        self.broadcastId = try container.sdkDecodeIfPresent(.broadcastId)
-        self.broadcastName = try container.sdkDecodeIfPresent(.broadcastName)
+        period = try container.sdkDecodeIfPresent(.period)
+        domainId = try container.sdkDecodeIfPresent(.domainId)
+        domainName = try container.sdkDecodeIfPresent(.domainName)
+        emailId = try container.sdkDecodeIfPresent(.emailId)
+        broadcastId = try container.sdkDecodeIfPresent(.broadcastId)
+        broadcastName = try container.sdkDecodeIfPresent(.broadcastName)
         additionalProperties = try decoder.sdkAdditionalProperties(besides: CodingKeys.self)
-        if let value = self.domainId {
+        if let value = domainId {
             try sdkValidateUuid("domain_id", value)
         }
-        if let value = self.emailId {
+        if let value = emailId {
             try sdkValidateUuid("email_id", value)
         }
-        if let value = self.broadcastId {
+        if let value = broadcastId {
             try sdkValidateUuid("broadcast_id", value)
         }
     }
 }
 
-extension EmailMetricsDataRow {
-    public init(period: String? = nil, domainId: String? = nil, domainName: String? = nil, emailId: String? = nil, broadcastId: String? = nil, broadcastName: String? = nil) throws {
+public extension EmailMetricsDataRow {
+    init(
+        period: String? = nil,
+        domainId: String? = nil,
+        domainName: String? = nil,
+        emailId: String? = nil,
+        broadcastId: String? = nil,
+        broadcastName: String? = nil
+    ) throws {
         self.init()
         (self.period, self.domainId) = (period, domainId)
         (self.domainName, self.emailId) = (domainName, emailId)
@@ -140,8 +156,8 @@ extension EmailMetricsDataRow {
     }
 }
 
-extension EmailMetricsDataRow {
-    public func encode(to encoder: Encoder) throws {
+public extension EmailMetricsDataRow {
+    func encode(to encoder: Encoder) throws {
         try encoder.sdkEncodeAdditionalProperties(additionalProperties)
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(period, forKey: .period)
@@ -154,10 +170,14 @@ extension EmailMetricsDataRow {
 }
 
 /// Required enumerated value serialized in the `dimensions[]` wire field.
-public struct GetEmailsMetricsResponseDimensionsItem: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct GetEmailsMetricsResponseDimensionsItem: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let period = GetEmailsMetricsResponseDimensionsItem(rawValue: "period")
     public static let domain = GetEmailsMetricsResponseDimensionsItem(rawValue: "domain")
     public static let email = GetEmailsMetricsResponseDimensionsItem(rawValue: "email")
@@ -165,7 +185,7 @@ public struct GetEmailsMetricsResponseDimensionsItem: RawRepresentable, Hashable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -178,7 +198,10 @@ public struct GetEmailsMetricsResponseDimensionsItem: RawRepresentable, Hashable
 public struct GetEmailsMetricsResponseGranularity: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let hourly = GetEmailsMetricsResponseGranularity(rawValue: "hourly")
     public static let daily = GetEmailsMetricsResponseGranularity(rawValue: "daily")
     public static let weekly = GetEmailsMetricsResponseGranularity(rawValue: "weekly")
@@ -186,7 +209,7 @@ public struct GetEmailsMetricsResponseGranularity: RawRepresentable, Hashable, C
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

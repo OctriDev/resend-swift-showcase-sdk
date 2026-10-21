@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Contacts domain models
+/// Contacts domain models
 /// Typed representation of the `CreateContactImportResponseSuccess` API schema.
 public struct CreateContactImportResponseSuccess: Codable {
     /// Type of the response object.
@@ -19,23 +19,23 @@ public struct CreateContactImportResponseSuccess: Codable {
     }
 
     init() {
-        (self.object, self.id) = (nil, nil)
+        (object, id) = (nil, nil)
     }
 }
 
-extension CreateContactImportResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension CreateContactImportResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        if let value = self.id {
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-extension CreateContactImportResponseSuccess {
-    public init(object: String? = nil, id: String? = nil) throws {
+public extension CreateContactImportResponseSuccess {
+    init(object: String? = nil, id: String? = nil) throws {
         self.init()
         (self.object, self.id) = (object, id)
         if let value = self.id {
@@ -74,25 +74,37 @@ public struct CreateContactImportOptions: Codable {
         case topics
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateContactImportOptions {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.file) else {
-            throw SdkValidationError(field: "file", code: "required", message: "Validation failed for 'file': value is required")
-        }
-        self.file = try container.sdkDecodeRequired(.file)
-        self.columnMap = try container.sdkDecodeIfPresent(.columnMap)
-        self.onConflict = try container.sdkDecodeIfPresent(.onConflict)
-        self.segments = try container.sdkDecodeIfPresent(.segments)
-        self.topics = try container.sdkDecodeIfPresent(.topics)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateContactImportOptions {
-    public init(file: Data, columnMap: String? = nil, onConflict: CreateContactImportOptionsOnConflict? = nil, segments: String? = nil, topics: String? = nil) {
+public extension CreateContactImportOptions {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.file) else {
+            throw SdkValidationError(
+                field: "file",
+                code: "required",
+                message: "Validation failed for 'file': value is required"
+            )
+        }
+        file = try container.sdkDecodeRequired(.file)
+        columnMap = try container.sdkDecodeIfPresent(.columnMap)
+        onConflict = try container.sdkDecodeIfPresent(.onConflict)
+        segments = try container.sdkDecodeIfPresent(.segments)
+        topics = try container.sdkDecodeIfPresent(.topics)
+    }
+}
+
+public extension CreateContactImportOptions {
+    init(
+        file: Data,
+        columnMap: String? = nil,
+        onConflict: CreateContactImportOptionsOnConflict? = nil,
+        segments: String? = nil,
+        topics: String? = nil
+    ) {
         (self.file, self.columnMap) = (file, columnMap)
         (self.onConflict, self.segments) = (onConflict, segments)
         self.topics = topics
@@ -103,13 +115,16 @@ extension CreateContactImportOptions {
 public struct CreateContactImportOptionsOnConflict: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let upsert = CreateContactImportOptionsOnConflict(rawValue: "upsert")
     public static let skip = CreateContactImportOptionsOnConflict(rawValue: "skip")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

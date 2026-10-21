@@ -6,8 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension EventsMethods {
-    /// Sends an event and associates it with a contact or an email address. Supply the required `event` name and exactly one of `contact_id` or `email`; include `payload` to attach additional key/value data.
+public extension EventsMethods {
+    /// Sends an event and associates it with a contact or an email address. Supply the required `event` name and
+    /// exactly one of `contact_id` or `email`; include `payload` to attach additional key/value data.
     ///
     /// - Parameters:
     /// - event: The name of the event to send.
@@ -16,17 +17,32 @@ extension EventsMethods {
     /// - email: The email address to associate with this event. Exactly one of
     ///   `contact_id` or `email` must be provided.
     /// - payload: An optional payload of key/value pairs to include with the event.
-    public static func eventsSend(config: ClientConfig, event: String, contactId: String? = nil, email: String? = nil, payload: [String: JSONValue]? = nil, requestOptions: RequestOptions? = nil) async throws -> SendEventResponse {
-        if let contactId = contactId {
+    static func eventsSend(
+        config: ClientConfig,
+        event: String,
+        contactId: String? = nil,
+        email: String? = nil,
+        payload: [String: JSONValue]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SendEventResponse {
+        if let contactId {
             try sdkValidateUuid("contact_id", contactId)
         }
 
-        if let email = email {
+        if let email {
             try sdkValidateEmail("email", email)
         }
 
         let requestBody = EventsSendRequestBody(event: event, contactId: contactId, email: email, payload: payload)
 
-        return try (await sdkRequest("POST", "/events/send", config: config, body: requestBody, decoder: .json, operationId: "eventsSend", options: requestOptions)).data
+        return try await (sdkRequest(
+            "POST",
+            "/events/send",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "eventsSend",
+            options: requestOptions
+        )).data
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Contacts domain models
+/// Contacts domain models
 /// Typed representation of the `UpdateContactResponseSuccess` API schema.
 public struct UpdateContactResponseSuccess: Codable {
     /// Type of the response object.
@@ -19,20 +19,20 @@ public struct UpdateContactResponseSuccess: Codable {
     }
 
     init() {
-        (self.object, self.id) = (nil, nil)
+        (object, id) = (nil, nil)
     }
 }
 
-extension UpdateContactResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension UpdateContactResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-extension UpdateContactResponseSuccess {
-    public init(object: String? = nil, id: String? = nil) {
+public extension UpdateContactResponseSuccess {
+    init(object: String? = nil, id: String? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
     }
@@ -64,23 +64,29 @@ public struct UpdateContactOptions: Codable {
     }
 
     init() {
-        (self.email, self.firstName, self.lastName, self.unsubscribed, self.properties) = (nil, nil, nil, nil, nil)
+        (email, firstName, lastName, unsubscribed, properties) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension UpdateContactOptions {
-    public init(from decoder: Decoder) throws {
+public extension UpdateContactOptions {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.email = try container.sdkDecodeIfPresent(.email)
-        self.firstName = try container.sdkDecodeIfPresent(.firstName)
-        self.lastName = try container.sdkDecodeIfPresent(.lastName)
-        self.unsubscribed = try container.sdkDecodeIfPresent(.unsubscribed)
-        self.properties = try container.sdkDecodeIfPresent(.properties)
+        email = try container.sdkDecodeIfPresent(.email)
+        firstName = try container.sdkDecodeIfPresent(.firstName)
+        lastName = try container.sdkDecodeIfPresent(.lastName)
+        unsubscribed = try container.sdkDecodeIfPresent(.unsubscribed)
+        properties = try container.sdkDecodeIfPresent(.properties)
     }
 }
 
-extension UpdateContactOptions {
-    public init(email: String? = nil, firstName: String? = nil, lastName: String? = nil, unsubscribed: Bool? = nil, properties: [String: JSONValue?]? = nil) {
+public extension UpdateContactOptions {
+    init(
+        email: String? = nil,
+        firstName: String? = nil,
+        lastName: String? = nil,
+        unsubscribed: Bool? = nil,
+        properties: [String: JSONValue?]? = nil
+    ) {
         self.init()
         (self.email, self.firstName) = (email, firstName)
         (self.lastName, self.unsubscribed) = (lastName, unsubscribed)

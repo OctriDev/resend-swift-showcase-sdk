@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Webhooks domain models
+/// Webhooks domain models
 /// Required object value serialized in the `data[]` wire field.
 public struct ListWebhooksResponseDataItem: Codable {
     /// The ID of the webhook.
@@ -31,26 +31,32 @@ public struct ListWebhooksResponseDataItem: Codable {
     }
 
     init() {
-        (self.id, self.endpoint, self.events, self.status, self.createdAt) = (nil, nil, nil, nil, nil)
+        (id, endpoint, events, status, createdAt) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension ListWebhooksResponseDataItem {
-    public init(from decoder: Decoder) throws {
+public extension ListWebhooksResponseDataItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.endpoint = try container.sdkDecodeIfPresent(.endpoint)
-        self.events = try container.sdkDecodeIfPresent(.events)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        if let value = self.id {
+        id = try container.sdkDecodeIfPresent(.id)
+        endpoint = try container.sdkDecodeIfPresent(.endpoint)
+        events = try container.sdkDecodeIfPresent(.events)
+        status = try container.sdkDecodeIfPresent(.status)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        if let value = id {
             try sdkValidateUuid("id", value)
         }
     }
 }
 
-extension ListWebhooksResponseDataItem {
-    public init(id: String? = nil, endpoint: String? = nil, events: [String]? = nil, status: String? = nil, createdAt: String? = nil) throws {
+public extension ListWebhooksResponseDataItem {
+    init(
+        id: String? = nil,
+        endpoint: String? = nil,
+        events: [String]? = nil,
+        status: String? = nil,
+        createdAt: String? = nil
+    ) throws {
         self.init()
         (self.id, self.endpoint) = (id, endpoint)
         (self.events, self.status) = (events, status)
@@ -78,21 +84,21 @@ public struct ListWebhooksResponse: Codable {
     }
 
     init() {
-        (self.object, self.hasMore, self.data) = (nil, nil, nil)
+        (object, hasMore, data) = (nil, nil, nil)
     }
 }
 
-extension ListWebhooksResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListWebhooksResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        object = try container.sdkDecodeIfPresent(.object)
+        hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension ListWebhooksResponse {
-    public init(object: String? = nil, hasMore: Bool? = nil, data: [ListWebhooksResponseDataItem]? = nil) {
+public extension ListWebhooksResponse {
+    init(object: String? = nil, hasMore: Bool? = nil, data: [ListWebhooksResponseDataItem]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data

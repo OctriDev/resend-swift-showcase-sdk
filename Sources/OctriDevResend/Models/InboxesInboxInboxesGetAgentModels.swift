@@ -3,7 +3,7 @@
 
 import Foundation
 
-// InboxesInbox domain models
+/// InboxesInbox domain models
 /// Typed representation of the `InboxAgent` API schema.
 public struct InboxAgent: Codable {
     /// The object type. Always `inbox_agent`.
@@ -26,33 +26,51 @@ public struct InboxAgent: Codable {
         case enabledActions = "enabled_actions"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension InboxAgent {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.object) else {
-            throw SdkValidationError(field: "object", code: "required", message: "Validation failed for 'object': value is required")
-        }
-        guard container.contains(.instructions) else {
-            throw SdkValidationError(field: "instructions", code: "required", message: "Validation failed for 'instructions': value is required")
-        }
-        guard container.contains(.tone) else {
-            throw SdkValidationError(field: "tone", code: "required", message: "Validation failed for 'tone': value is required")
-        }
-        guard container.contains(.enabledActions) else {
-            throw SdkValidationError(field: "enabled_actions", code: "required", message: "Validation failed for 'enabled_actions': value is required")
-        }
-        self.object = try container.sdkDecodeRequired(.object)
-        self.instructions = try container.sdkDecodeNullable(.instructions)
-        self.tone = try container.sdkDecodeNullable(.tone)
-        self.enabledActions = try container.sdkDecodeRequired(.enabledActions)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension InboxAgent {
-    public init(object: String, instructions: String?, tone: InboxAgentTone?, enabledActions: [InboxAgentEnabledActionsItem]) {
+public extension InboxAgent {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.object) else {
+            throw SdkValidationError(
+                field: "object",
+                code: "required",
+                message: "Validation failed for 'object': value is required"
+            )
+        }
+        guard container.contains(.instructions) else {
+            throw SdkValidationError(
+                field: "instructions",
+                code: "required",
+                message: "Validation failed for 'instructions': value is required"
+            )
+        }
+        guard container.contains(.tone) else {
+            throw SdkValidationError(
+                field: "tone",
+                code: "required",
+                message: "Validation failed for 'tone': value is required"
+            )
+        }
+        guard container.contains(.enabledActions) else {
+            throw SdkValidationError(
+                field: "enabled_actions",
+                code: "required",
+                message: "Validation failed for 'enabled_actions': value is required"
+            )
+        }
+        object = try container.sdkDecodeRequired(.object)
+        instructions = try container.sdkDecodeNullable(.instructions)
+        tone = try container.sdkDecodeNullable(.tone)
+        enabledActions = try container.sdkDecodeRequired(.enabledActions)
+    }
+}
+
+public extension InboxAgent {
+    init(object: String, instructions: String?, tone: InboxAgentTone?, enabledActions: [InboxAgentEnabledActionsItem]) {
         (self.object, self.instructions) = (object, instructions)
         (self.tone, self.enabledActions) = (tone, enabledActions)
     }
@@ -62,7 +80,10 @@ extension InboxAgent {
 public struct InboxAgentEnabledActionsItem: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let draftReply = InboxAgentEnabledActionsItem(rawValue: "draft_reply")
     public static let forwardThread = InboxAgentEnabledActionsItem(rawValue: "forward_thread")
     public static let addLabels = InboxAgentEnabledActionsItem(rawValue: "add_labels")
@@ -73,7 +94,7 @@ public struct InboxAgentEnabledActionsItem: RawRepresentable, Hashable, Codable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -86,7 +107,10 @@ public struct InboxAgentEnabledActionsItem: RawRepresentable, Hashable, Codable,
 public struct InboxAgentTone: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let conciseProfessional = InboxAgentTone(rawValue: "concise_professional")
     public static let conciseCasual = InboxAgentTone(rawValue: "concise_casual")
     public static let expandedProfessional = InboxAgentTone(rawValue: "expanded_professional")
@@ -94,7 +118,7 @@ public struct InboxAgentTone: RawRepresentable, Hashable, Codable, Sendable, Sdk
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Templates domain models
+/// Templates domain models
 /// Typed representation of the `CreateTemplateRequest` API schema.
 public struct CreateTemplateRequest: Codable {
     /// The name of the template.
@@ -34,31 +34,50 @@ public struct CreateTemplateRequest: Codable {
         case variables
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateTemplateRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        guard container.contains(.html) else {
-            throw SdkValidationError(field: "html", code: "required", message: "Validation failed for 'html': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.html = try container.sdkDecodeRequired(.html)
-        self.alias = try container.sdkDecodeIfPresent(.alias)
-        self.from = try container.sdkDecodeIfPresent(.from)
-        self.subject = try container.sdkDecodeIfPresent(.subject)
-        self.replyTo = try container.sdkDecodeIfPresent(.replyTo)
-        self.text = try container.sdkDecodeIfPresent(.text)
-        self.variables = try container.sdkDecodeIfPresent(.variables)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateTemplateRequest {
-    public init(name: String, html: String, alias: String? = nil, from: String? = nil, subject: String? = nil, replyTo: [String]? = nil, text: String? = nil, variables: [TemplateVariableInput]? = nil) {
+public extension CreateTemplateRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        guard container.contains(.html) else {
+            throw SdkValidationError(
+                field: "html",
+                code: "required",
+                message: "Validation failed for 'html': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        html = try container.sdkDecodeRequired(.html)
+        alias = try container.sdkDecodeIfPresent(.alias)
+        from = try container.sdkDecodeIfPresent(.from)
+        subject = try container.sdkDecodeIfPresent(.subject)
+        replyTo = try container.sdkDecodeIfPresent(.replyTo)
+        text = try container.sdkDecodeIfPresent(.text)
+        variables = try container.sdkDecodeIfPresent(.variables)
+    }
+}
+
+public extension CreateTemplateRequest {
+    init(
+        name: String,
+        html: String,
+        alias: String? = nil,
+        from: String? = nil,
+        subject: String? = nil,
+        replyTo: [String]? = nil,
+        text: String? = nil,
+        variables: [TemplateVariableInput]? = nil
+    ) {
         (self.name, self.html) = (name, html)
         (self.alias, self.from) = (alias, from)
         (self.subject, self.replyTo) = (subject, replyTo)
@@ -80,20 +99,20 @@ public struct CreateTemplateResponseSuccess: Codable {
     }
 
     init() {
-        (self.id, self.object) = (nil, nil)
+        (id, object) = (nil, nil)
     }
 }
 
-extension CreateTemplateResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension CreateTemplateResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
     }
 }
 
-extension CreateTemplateResponseSuccess {
-    public init(id: String? = nil, object: String? = nil) {
+public extension CreateTemplateResponseSuccess {
+    init(id: String? = nil, object: String? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
     }

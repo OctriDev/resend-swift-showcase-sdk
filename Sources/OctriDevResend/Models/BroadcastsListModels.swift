@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Broadcasts domain models
+/// Broadcasts domain models
 /// Typed representation of the `ListBroadcastsResponseSuccess` API schema.
 public struct ListBroadcastsResponseSuccess: Codable {
     /// Type of the response object.
@@ -21,21 +21,21 @@ public struct ListBroadcastsResponseSuccess: Codable {
     }
 
     init() {
-        (self.object, self.hasMore, self.data) = (nil, nil, nil)
+        (object, hasMore, data) = (nil, nil, nil)
     }
 }
 
-extension ListBroadcastsResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension ListBroadcastsResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        object = try container.sdkDecodeIfPresent(.object)
+        hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension ListBroadcastsResponseSuccess {
-    public init(object: String? = nil, hasMore: Bool? = nil, data: [ListBroadcastsResponseSuccessDataItem]? = nil) {
+public extension ListBroadcastsResponseSuccess {
+    init(object: String? = nil, hasMore: Bool? = nil, data: [ListBroadcastsResponseSuccessDataItem]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -85,28 +85,38 @@ public struct ListBroadcastsResponseSuccessDataItem: Codable {
     }
 
     init() {
-        (self.id, self.name, self.audienceId, self.segmentId, self.status) = (nil, nil, nil, nil, nil)
-        (self.createdAt, self.scheduledAt, self.sentAt, self.topicId) = (nil, nil, nil, nil)
+        (id, name, audienceId, segmentId, status) = (nil, nil, nil, nil, nil)
+        (createdAt, scheduledAt, sentAt, topicId) = (nil, nil, nil, nil)
     }
 }
 
-extension ListBroadcastsResponseSuccessDataItem {
-    public init(from decoder: Decoder) throws {
+public extension ListBroadcastsResponseSuccessDataItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.audienceId = try container.sdkDecodeIfPresent(.audienceId)
-        self.segmentId = try container.sdkDecodeIfPresent(.segmentId)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.scheduledAt = try container.sdkDecodeIfPresent(.scheduledAt)
-        self.sentAt = try container.sdkDecodeIfPresent(.sentAt)
-        self.topicId = try container.sdkDecodeIfPresent(.topicId)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        audienceId = try container.sdkDecodeIfPresent(.audienceId)
+        segmentId = try container.sdkDecodeIfPresent(.segmentId)
+        status = try container.sdkDecodeIfPresent(.status)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        scheduledAt = try container.sdkDecodeIfPresent(.scheduledAt)
+        sentAt = try container.sdkDecodeIfPresent(.sentAt)
+        topicId = try container.sdkDecodeIfPresent(.topicId)
     }
 }
 
-extension ListBroadcastsResponseSuccessDataItem {
-    public init(id: String? = nil, name: String? = nil, audienceId: String? = nil, segmentId: String? = nil, status: String? = nil, createdAt: String? = nil, scheduledAt: String? = nil, sentAt: String? = nil, topicId: String? = nil) {
+public extension ListBroadcastsResponseSuccessDataItem {
+    init(
+        id: String? = nil,
+        name: String? = nil,
+        audienceId: String? = nil,
+        segmentId: String? = nil,
+        status: String? = nil,
+        createdAt: String? = nil,
+        scheduledAt: String? = nil,
+        sentAt: String? = nil,
+        topicId: String? = nil
+    ) {
         self.init()
         (self.id, self.name) = (id, name)
         (self.audienceId, self.segmentId) = (audienceId, segmentId)

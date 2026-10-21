@@ -6,14 +6,26 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AutomationsMethods {
-    /// Stops an automation by its identifier. Use this operation when you want the automation to stop running; the response includes its status after stopping.
+public extension AutomationsMethods {
+    /// Stops an automation by its identifier. Use this operation when you want the automation to stop running; the
+    /// response includes its status after stopping.
     ///
     /// - Parameters:
     /// - automationId: The ID of the automation.
-    public static func automationsStop(config: ClientConfig, automationId: String, requestOptions: RequestOptions? = nil) async throws -> StopAutomationResponse {
+    static func automationsStop(
+        config: ClientConfig,
+        automationId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> StopAutomationResponse {
         try sdkValidateUuid("automation_id", automationId)
 
-        return try (await sdkRequest("POST", ["/automations/", sdkEncodePathSegment(sdkWireString(automationId)), "/stop"].joined(), config: config, decoder: .json, operationId: "automationsStop", options: requestOptions)).data
+        return try await (sdkRequest(
+            "POST",
+            ["/automations/", sdkEncodePathSegment(sdkWireString(automationId)), "/stop"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "automationsStop",
+            options: requestOptions
+        )).data
     }
 }

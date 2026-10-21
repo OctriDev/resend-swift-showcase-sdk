@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Emails domain models
+/// Emails domain models
 /// Typed representation of the `ListEmailsResponse` API schema.
 public struct ListEmailsResponse: Codable {
     /// Type of the response object.
@@ -21,21 +21,21 @@ public struct ListEmailsResponse: Codable {
     }
 
     init() {
-        (self.object, self.hasMore, self.data) = (nil, nil, nil)
+        (object, hasMore, data) = (nil, nil, nil)
     }
 }
 
-extension ListEmailsResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListEmailsResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        object = try container.sdkDecodeIfPresent(.object)
+        hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension ListEmailsResponse {
-    public init(object: String? = nil, hasMore: Bool? = nil, data: [Email]? = nil) {
+public extension ListEmailsResponse {
+    init(object: String? = nil, hasMore: Bool? = nil, data: [Email]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data

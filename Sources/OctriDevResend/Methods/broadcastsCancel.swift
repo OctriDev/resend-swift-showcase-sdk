@@ -6,16 +6,29 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension BroadcastsMethods {
-    /// Cancels a queued or scheduled broadcast. Cancelling a queued broadcast stops further delivery, but does not affect emails that have already been sent.
+public extension BroadcastsMethods {
+    /// Cancels a queued or scheduled broadcast. Cancelling a queued broadcast stops further delivery, but does not
+    /// affect emails that have already been sent.
     ///
-    /// Cancels a broadcast that is queued or scheduled. Canceling a queued broadcast stops it mid-send; emails already sent are not affected, but no further emails will go out.
+    /// Cancels a broadcast that is queued or scheduled. Canceling a queued broadcast stops it mid-send; emails already
+    /// sent are not affected, but no further emails will go out.
     ///
     /// - Parameters:
     /// - id: The Broadcast ID.
-    public static func broadcastsCancel(config: ClientConfig, id: String, requestOptions: RequestOptions? = nil) async throws -> CancelBroadcastResponseSuccess {
+    static func broadcastsCancel(
+        config: ClientConfig,
+        id: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CancelBroadcastResponseSuccess {
         try sdkValidateUuid("id", id)
 
-        return try (await sdkRequest("POST", ["/broadcasts/", sdkEncodePathSegment(sdkWireString(id)), "/cancel"].joined(), config: config, decoder: .json, operationId: "broadcastsCancel", options: requestOptions)).data
+        return try await (sdkRequest(
+            "POST",
+            ["/broadcasts/", sdkEncodePathSegment(sdkWireString(id)), "/cancel"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "broadcastsCancel",
+            options: requestOptions
+        )).data
     }
 }

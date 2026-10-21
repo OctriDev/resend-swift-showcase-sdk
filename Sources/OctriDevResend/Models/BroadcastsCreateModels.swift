@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Broadcasts domain models
+/// Broadcasts domain models
 /// Typed representation of the `CreateBroadcastOptions` API schema.
 public struct CreateBroadcastOptions: Codable {
     /// Unique identifier of the segment this broadcast will be sent to.
@@ -47,38 +47,65 @@ public struct CreateBroadcastOptions: Codable {
         case scheduledAt = "scheduled_at"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateBroadcastOptions {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.segmentId) else {
-            throw SdkValidationError(field: "segment_id", code: "required", message: "Validation failed for 'segment_id': value is required")
-        }
-        guard container.contains(.from) else {
-            throw SdkValidationError(field: "from", code: "required", message: "Validation failed for 'from': value is required")
-        }
-        guard container.contains(.subject) else {
-            throw SdkValidationError(field: "subject", code: "required", message: "Validation failed for 'subject': value is required")
-        }
-        self.segmentId = try container.sdkDecodeRequired(.segmentId)
-        self.from = try container.sdkDecodeRequired(.from)
-        self.subject = try container.sdkDecodeRequired(.subject)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.audienceId = try container.sdkDecodeIfPresent(.audienceId)
-        self.replyTo = try container.sdkDecodeIfPresent(.replyTo)
-        self.previewText = try container.sdkDecodeIfPresent(.previewText)
-        self.html = try container.sdkDecodeIfPresent(.html)
-        self.text = try container.sdkDecodeIfPresent(.text)
-        self.topicId = try container.sdkDecodeIfPresent(.topicId)
-        self.send = try container.sdkDecodeIfPresent(.send)
-        self.scheduledAt = try container.sdkDecodeIfPresent(.scheduledAt)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateBroadcastOptions {
-    public init(segmentId: String, from: String, subject: String, name: String? = nil, audienceId: String? = nil, replyTo: [String]? = nil, previewText: String? = nil, html: String? = nil, text: String? = nil, topicId: String? = nil, send: Bool? = nil, scheduledAt: String? = nil) {
+public extension CreateBroadcastOptions {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.segmentId) else {
+            throw SdkValidationError(
+                field: "segment_id",
+                code: "required",
+                message: "Validation failed for 'segment_id': value is required"
+            )
+        }
+        guard container.contains(.from) else {
+            throw SdkValidationError(
+                field: "from",
+                code: "required",
+                message: "Validation failed for 'from': value is required"
+            )
+        }
+        guard container.contains(.subject) else {
+            throw SdkValidationError(
+                field: "subject",
+                code: "required",
+                message: "Validation failed for 'subject': value is required"
+            )
+        }
+        segmentId = try container.sdkDecodeRequired(.segmentId)
+        from = try container.sdkDecodeRequired(.from)
+        subject = try container.sdkDecodeRequired(.subject)
+        name = try container.sdkDecodeIfPresent(.name)
+        audienceId = try container.sdkDecodeIfPresent(.audienceId)
+        replyTo = try container.sdkDecodeIfPresent(.replyTo)
+        previewText = try container.sdkDecodeIfPresent(.previewText)
+        html = try container.sdkDecodeIfPresent(.html)
+        text = try container.sdkDecodeIfPresent(.text)
+        topicId = try container.sdkDecodeIfPresent(.topicId)
+        send = try container.sdkDecodeIfPresent(.send)
+        scheduledAt = try container.sdkDecodeIfPresent(.scheduledAt)
+    }
+}
+
+public extension CreateBroadcastOptions {
+    init(
+        segmentId: String,
+        from: String,
+        subject: String,
+        name: String? = nil,
+        audienceId: String? = nil,
+        replyTo: [String]? = nil,
+        previewText: String? = nil,
+        html: String? = nil,
+        text: String? = nil,
+        topicId: String? = nil,
+        send: Bool? = nil,
+        scheduledAt: String? = nil
+    ) {
         (self.segmentId, self.from) = (segmentId, from)
         (self.subject, self.name) = (subject, name)
         (self.audienceId, self.replyTo) = (audienceId, replyTo)
@@ -103,20 +130,20 @@ public struct CreateBroadcastResponseSuccess: Codable {
     }
 
     init() {
-        (self.id, self.object) = (nil, nil)
+        (id, object) = (nil, nil)
     }
 }
 
-extension CreateBroadcastResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension CreateBroadcastResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
     }
 }
 
-extension CreateBroadcastResponseSuccess {
-    public init(id: String? = nil, object: String? = nil) {
+public extension CreateBroadcastResponseSuccess {
+    init(id: String? = nil, object: String? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
     }

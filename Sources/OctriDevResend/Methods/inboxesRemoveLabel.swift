@@ -6,19 +6,37 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension InboxesMethods {
-    /// Deletes a label from an inbox and removes it from every thread that carries it. Use this endpoint when you want to remove the label itself as well as its associations with threads.
+public extension InboxesMethods {
+    /// Deletes a label from an inbox and removes it from every thread that carries it. Use this endpoint when you want
+    /// to remove the label itself as well as its associations with threads.
     ///
     /// Deletes the label and removes it from every thread that carries it.
     ///
     /// - Parameters:
     /// - inboxId: The Inbox ID. An email address is not accepted.
     /// - labelId: The Label ID.
-    public static func inboxesRemoveLabel(config: ClientConfig, inboxId: String, labelId: String, requestOptions: RequestOptions? = nil) async throws -> RemoveInboxLabelResponseSuccess {
+    static func inboxesRemoveLabel(
+        config: ClientConfig,
+        inboxId: String,
+        labelId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> RemoveInboxLabelResponseSuccess {
         try sdkValidateUuid("inbox_id", inboxId)
 
         try sdkValidateUuid("label_id", labelId)
 
-        return try (await sdkRequest("DELETE", ["/inboxes/", sdkEncodePathSegment(sdkWireString(inboxId)), "/labels/", sdkEncodePathSegment(sdkWireString(labelId))].joined(), config: config, decoder: .json, operationId: "inboxesRemoveLabel", options: requestOptions)).data
+        return try await (sdkRequest(
+            "DELETE",
+            [
+                "/inboxes/",
+                sdkEncodePathSegment(sdkWireString(inboxId)),
+                "/labels/",
+                sdkEncodePathSegment(sdkWireString(labelId)),
+            ].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "inboxesRemoveLabel",
+            options: requestOptions
+        )).data
     }
 }

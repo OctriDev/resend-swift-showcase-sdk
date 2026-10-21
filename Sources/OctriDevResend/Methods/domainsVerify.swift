@@ -6,14 +6,28 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DomainsMethods {
-    /// Triggers verification of a domain's DNS records, including DKIM, SPF, and the tracking CNAME when a tracking subdomain is configured. Use this operation after adding the required DNS records to check the domain's verification status.
+public extension DomainsMethods {
+    /// Triggers verification of a domain's DNS records, including DKIM, SPF, and the tracking CNAME when a tracking
+    /// subdomain is configured. Use this operation after adding the required DNS records to check the domain's
+    /// verification status.
     ///
-    /// Triggers verification of the domain's DNS records including DKIM, SPF, and the tracking CNAME (if a tracking subdomain is configured).
+    /// Triggers verification of the domain's DNS records including DKIM, SPF, and the tracking CNAME (if a tracking
+    /// subdomain is configured).
     ///
     /// - Parameters:
     /// - domainId: The ID of the domain.
-    public static func domainsVerify(config: ClientConfig, domainId: String, requestOptions: RequestOptions? = nil) async throws -> VerifyDomainResponse {
-        return try (await sdkRequest("POST", ["/domains/", sdkEncodePathSegment(sdkWireString(domainId)), "/verify"].joined(), config: config, decoder: .json, operationId: "domainsVerify", options: requestOptions)).data
+    static func domainsVerify(
+        config: ClientConfig,
+        domainId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> VerifyDomainResponse {
+        try await (sdkRequest(
+            "POST",
+            ["/domains/", sdkEncodePathSegment(sdkWireString(domainId)), "/verify"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "domainsVerify",
+            options: requestOptions
+        )).data
     }
 }

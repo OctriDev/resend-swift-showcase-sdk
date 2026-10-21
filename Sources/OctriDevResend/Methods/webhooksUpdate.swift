@@ -6,33 +6,61 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension WebhooksMethods {
-    /// Updates the endpoint URL, subscribed event types, or status of a webhook. Supply only the fields you want to change; `status` must be enabled or disabled, and `events` must contain at least one event type.
+public extension WebhooksMethods {
+    /// Updates the endpoint URL, subscribed event types, or status of a webhook. Supply only the fields you want to
+    /// change; `status` must be enabled or disabled, and `events` must contain at least one event type.
     ///
     /// - Parameters:
     /// - webhookId: The Webhook ID.
     /// - endpoint: The URL where webhook events will be sent.
     /// - events: Array of event types to subscribe to.
     /// - status: The status of the webhook.
-    public static func webhooksUpdate(config: ClientConfig, webhookId: String, endpoint: String? = nil, events: [String]? = nil, status: UpdateWebhookRequestStatus? = nil, requestOptions: RequestOptions? = nil) async throws -> UpdateWebhookResponse {
+    static func webhooksUpdate(
+        config: ClientConfig,
+        webhookId: String,
+        endpoint: String? = nil,
+        events: [String]? = nil,
+        status: UpdateWebhookRequestStatus? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> UpdateWebhookResponse {
         try sdkValidateUuid("webhook_id", webhookId)
 
-        if let events = events {
+        if let events {
             try validateItems("events", events, min: 1)
         }
 
         let requestBody = WebhooksUpdateRequestBody(endpoint: endpoint, events: events, status: status)
 
-        return try (await sdkRequest("PATCH", ["/webhooks/", sdkEncodePathSegment(sdkWireString(webhookId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "webhooksUpdate", options: requestOptions)).data
+        return try await (sdkRequest(
+            "PATCH",
+            ["/webhooks/", sdkEncodePathSegment(sdkWireString(webhookId))].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "webhooksUpdate",
+            options: requestOptions
+        )).data
     }
 
-    /// Deletes a webhook. Use this endpoint when you no longer want the webhook to receive event deliveries; the response indicates whether deletion succeeded.
+    /// Deletes a webhook. Use this endpoint when you no longer want the webhook to receive event deliveries; the
+    /// response indicates whether deletion succeeded.
     ///
     /// - Parameters:
     /// - webhookId: The Webhook ID.
-    public static func webhooksRemove(config: ClientConfig, webhookId: String, requestOptions: RequestOptions? = nil) async throws -> DeleteWebhookResponse {
+    static func webhooksRemove(
+        config: ClientConfig,
+        webhookId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DeleteWebhookResponse {
         try sdkValidateUuid("webhook_id", webhookId)
 
-        return try (await sdkRequest("DELETE", ["/webhooks/", sdkEncodePathSegment(sdkWireString(webhookId))].joined(), config: config, decoder: .json, operationId: "webhooksRemove", options: requestOptions)).data
+        return try await (sdkRequest(
+            "DELETE",
+            ["/webhooks/", sdkEncodePathSegment(sdkWireString(webhookId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "webhooksRemove",
+            options: requestOptions
+        )).data
     }
 }

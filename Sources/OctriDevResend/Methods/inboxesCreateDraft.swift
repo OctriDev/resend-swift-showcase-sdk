@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension InboxesMethods {
-    public struct InboxesCreateDraftOptions: Codable {
+public extension InboxesMethods {
+    struct InboxesCreateDraftOptions: Codable {
         public var inboxId: String
         public var idempotencyKey: String?
         public var to: SdkOptional<CreateInboxDraftOptionsTo>?
@@ -25,9 +25,22 @@ extension InboxesMethods {
         }
     }
 
-    /// Creates an unsent draft in an inbox, either as a new thread or as a reply in an existing thread. Supply at least one non-empty recipient, subject, body, or attachment field; reply drafts require both `thread_id` and `reply_to_email_id`. If a reply draft already exists for the target email, the response returns its ID and only a supplied `attachments` value is applied.
+    /// Creates an unsent draft in an inbox, either as a new thread or as a reply in an existing thread. Supply at least
+    /// one non-empty recipient, subject, body, or attachment field; reply drafts require both `thread_id` and
+    /// `reply_to_email_id`. If a reply draft already exists for the target email, the response returns its ID and only
+    /// a supplied `attachments` value is applied.
     ///
-    /// Creates an unsent draft on the inbox. Omit `thread_id` and `reply_to_email_id` for a draft that starts a new thread. Pass both together for a reply draft in an existing thread. A reply draft without `to` is addressed to the sender of the email it replies to, or to its Reply-To when set. For an email the inbox sent, it defaults to that email's `to` recipients. Send `to: []` to leave it empty. At least one of `to`, `cc`, `bcc`, `subject`, `text`, `html` or `attachments` must be non-empty. The combined recipients of `to`, `cc` and `bcc` cannot exceed 50. Attachments are stored on the draft, so each one needs `content`, `filename` and `content_type`. Returns 201 for a new draft. Only one unsent reply draft can target an email, so a reply draft request for an email that already has one returns 200 with the ID of the existing draft. An unknown `thread_id`, or a `reply_to_email_id` that is not in that thread, returns a 404. That request ignores every other field, except `attachments`, which replaces the attachments of the existing draft when sent. A reply draft created without `subject` stores an empty subject and gets no `Re:` prefix, so set one before you send it.
+    /// Creates an unsent draft on the inbox. Omit `thread_id` and `reply_to_email_id` for a draft that starts a new
+    /// thread. Pass both together for a reply draft in an existing thread. A reply draft without `to` is addressed to
+    /// the sender of the email it replies to, or to its Reply-To when set. For an email the inbox sent, it defaults to
+    /// that email's `to` recipients. Send `to: []` to leave it empty. At least one of `to`, `cc`, `bcc`, `subject`,
+    /// `text`, `html` or `attachments` must be non-empty. The combined recipients of `to`, `cc` and `bcc` cannot exceed
+    /// 50. Attachments are stored on the draft, so each one needs `content`, `filename` and `content_type`. Returns 201
+    /// for a new draft. Only one unsent reply draft can target an email, so a reply draft request for an email that
+    /// already has one returns 200 with the ID of the existing draft. An unknown `thread_id`, or a `reply_to_email_id`
+    /// that is not in that thread, returns a 404. That request ignores every other field, except `attachments`, which
+    /// replaces the attachments of the existing draft when sent. A reply draft created without `subject` stores an
+    /// empty subject and gets no `Re:` prefix, so set one before you send it.
     ///
     /// - Parameters:
     /// - inboxId: The Inbox ID. An email address is not accepted.
@@ -62,7 +75,11 @@ extension InboxesMethods {
     ///   `reply_to_email_id`.
     /// - replyToEmailId: The Email ID to reply to, as returned in `data[].id` by
     ///   the list thread emails endpoint. Must be sent with `thread_id`.
-    public static func inboxesCreateDraft(config: ClientConfig, options: InboxesCreateDraftOptions, requestOptions: RequestOptions? = nil) async throws -> CreateInboxDraftResponseSuccess {
+    static func inboxesCreateDraft(
+        config: ClientConfig,
+        options: InboxesCreateDraftOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateInboxDraftResponseSuccess {
         try sdkValidateUuid("inbox_id", options.inboxId)
 
         if let idempotencyKey = options.idempotencyKey {
@@ -83,8 +100,17 @@ extension InboxesMethods {
 
         let requestBody = InboxesCreateDraftRequestBody(options: options)
 
-        return try (await sdkRequest("POST", ["/inboxes/", sdkEncodePathSegment(sdkWireString(options.inboxId)), "/drafts"].joined(), config: config, body: requestBody, decoder: .json, operationId: "inboxesCreateDraft", extraHeaders: sdkHeaders([
-            ("Idempotency-Key", sdkHeaderValue(options.idempotencyKey)),
-        ]), options: requestOptions)).data
+        return try await (sdkRequest(
+            "POST",
+            ["/inboxes/", sdkEncodePathSegment(sdkWireString(options.inboxId)), "/drafts"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "inboxesCreateDraft",
+            extraHeaders: sdkHeaders([
+                ("Idempotency-Key", sdkHeaderValue(options.idempotencyKey)),
+            ]),
+            options: requestOptions
+        )).data
     }
 }

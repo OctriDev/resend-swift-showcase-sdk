@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Domains domain models
+/// Domains domain models
 /// Typed representation of the `UpdateDomainResponseSuccess` API schema.
 public struct UpdateDomainResponseSuccess: Codable {
     /// The ID of the updated domain.
@@ -19,20 +19,20 @@ public struct UpdateDomainResponseSuccess: Codable {
     }
 
     init() {
-        (self.id, self.object) = (nil, nil)
+        (id, object) = (nil, nil)
     }
 }
 
-extension UpdateDomainResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension UpdateDomainResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
     }
 }
 
-extension UpdateDomainResponseSuccess {
-    public init(id: String? = nil, object: String? = nil) {
+public extension UpdateDomainResponseSuccess {
+    init(id: String? = nil, object: String? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
     }
@@ -60,23 +60,29 @@ public struct UpdateDomainOptions: Codable {
     }
 
     init() {
-        (self.openTracking, self.clickTracking, self.tls, self.capabilities, self.trackingSubdomain) = (nil, nil, nil, nil, nil)
+        (openTracking, clickTracking, tls, capabilities, trackingSubdomain) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension UpdateDomainOptions {
-    public init(from decoder: Decoder) throws {
+public extension UpdateDomainOptions {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.openTracking = try container.sdkDecodeIfPresent(.openTracking)
-        self.clickTracking = try container.sdkDecodeIfPresent(.clickTracking)
-        self.tls = try container.sdkDecodeIfPresent(.tls)
-        self.capabilities = try container.sdkDecodeIfPresent(.capabilities)
-        self.trackingSubdomain = try container.sdkDecodeIfPresent(.trackingSubdomain)
+        openTracking = try container.sdkDecodeIfPresent(.openTracking)
+        clickTracking = try container.sdkDecodeIfPresent(.clickTracking)
+        tls = try container.sdkDecodeIfPresent(.tls)
+        capabilities = try container.sdkDecodeIfPresent(.capabilities)
+        trackingSubdomain = try container.sdkDecodeIfPresent(.trackingSubdomain)
     }
 }
 
-extension UpdateDomainOptions {
-    public init(openTracking: Bool? = nil, clickTracking: Bool? = nil, tls: UpdateDomainOptionsTls? = nil, capabilities: DomainCapabilities? = nil, trackingSubdomain: String? = nil) {
+public extension UpdateDomainOptions {
+    init(
+        openTracking: Bool? = nil,
+        clickTracking: Bool? = nil,
+        tls: UpdateDomainOptionsTls? = nil,
+        capabilities: DomainCapabilities? = nil,
+        trackingSubdomain: String? = nil
+    ) {
         self.init()
         (self.openTracking, self.clickTracking) = (openTracking, clickTracking)
         (self.tls, self.capabilities) = (tls, capabilities)
@@ -88,13 +94,16 @@ extension UpdateDomainOptions {
 public struct UpdateDomainOptionsTls: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let opportunistic = UpdateDomainOptionsTls(rawValue: "opportunistic")
     public static let enforced = UpdateDomainOptionsTls(rawValue: "enforced")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

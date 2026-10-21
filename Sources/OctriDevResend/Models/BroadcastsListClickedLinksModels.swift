@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Broadcasts domain models
+/// Broadcasts domain models
 /// Typed representation of the `ListBroadcastClickedLinksResponseSuccess` API schema.
 public struct ListBroadcastClickedLinksResponseSuccess: Codable {
     /// Type of the response object.
@@ -21,21 +21,21 @@ public struct ListBroadcastClickedLinksResponseSuccess: Codable {
     }
 
     init() {
-        (self.object, self.hasMore, self.data) = (nil, nil, nil)
+        (object, hasMore, data) = (nil, nil, nil)
     }
 }
 
-extension ListBroadcastClickedLinksResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension ListBroadcastClickedLinksResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        object = try container.sdkDecodeIfPresent(.object)
+        hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension ListBroadcastClickedLinksResponseSuccess {
-    public init(object: String? = nil, hasMore: Bool? = nil, data: [ListBroadcastClickedLinksResponseSuccessDataItem]? = nil) {
+public extension ListBroadcastClickedLinksResponseSuccess {
+    init(object: String? = nil, hasMore: Bool? = nil, data: [ListBroadcastClickedLinksResponseSuccessDataItem]? = nil) {
         self.init()
         (self.object, self.hasMore) = (object, hasMore)
         self.data = data
@@ -65,22 +65,22 @@ public struct ListBroadcastClickedLinksResponseSuccessDataItem: Codable {
     }
 
     init() {
-        (self.id, self.url, self.clicks, self.uniqueClicks) = (nil, nil, nil, nil)
+        (id, url, clicks, uniqueClicks) = (nil, nil, nil, nil)
     }
 }
 
-extension ListBroadcastClickedLinksResponseSuccessDataItem {
-    public init(from decoder: Decoder) throws {
+public extension ListBroadcastClickedLinksResponseSuccessDataItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.url = try container.sdkDecodeIfPresent(.url)
-        self.clicks = try container.sdkDecodeIfPresent(.clicks)
-        self.uniqueClicks = try container.sdkDecodeIfPresent(.uniqueClicks)
+        id = try container.sdkDecodeIfPresent(.id)
+        url = try container.sdkDecodeIfPresent(.url)
+        clicks = try container.sdkDecodeIfPresent(.clicks)
+        uniqueClicks = try container.sdkDecodeIfPresent(.uniqueClicks)
     }
 }
 
-extension ListBroadcastClickedLinksResponseSuccessDataItem {
-    public init(id: String? = nil, url: String? = nil, clicks: Int? = nil, uniqueClicks: Int? = nil) {
+public extension ListBroadcastClickedLinksResponseSuccessDataItem {
+    init(id: String? = nil, url: String? = nil, clicks: Int? = nil, uniqueClicks: Int? = nil) {
         self.init()
         (self.id, self.url) = (id, url)
         (self.clicks, self.uniqueClicks) = (clicks, uniqueClicks)

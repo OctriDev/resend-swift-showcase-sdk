@@ -6,23 +6,47 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension SegmentsMethods {
+public extension SegmentsMethods {
     /// Updates the name of an existing segment. Supply `name` in the request body to set the segment's name.
     ///
     /// - Parameters:
     /// - id: The Segment ID.
     /// - name: The name of the segment.
-    public static func segmentsUpdate(config: ClientConfig, id: String, name: String, requestOptions: RequestOptions? = nil) async throws -> UpdateSegmentResponseSuccess {
+    static func segmentsUpdate(
+        config: ClientConfig,
+        id: String,
+        name: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> UpdateSegmentResponseSuccess {
         let requestBody = SegmentsUpdateRequestBody(name: name)
 
-        return try (await sdkRequest("PATCH", ["/segments/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, body: requestBody, decoder: .json, operationId: "segmentsUpdate", options: requestOptions)).data
+        return try await (sdkRequest(
+            "PATCH",
+            ["/segments/", sdkEncodePathSegment(sdkWireString(id))].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "segmentsUpdate",
+            options: requestOptions
+        )).data
     }
 
     /// Deletes an existing segment. Use the segment ID to select the segment to remove.
     ///
     /// - Parameters:
     /// - id: The Segment ID.
-    public static func segmentsRemove(config: ClientConfig, id: String, requestOptions: RequestOptions? = nil) async throws -> RemoveSegmentResponseSuccess {
-        return try (await sdkRequest("DELETE", ["/segments/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "segmentsRemove", options: requestOptions)).data
+    static func segmentsRemove(
+        config: ClientConfig,
+        id: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> RemoveSegmentResponseSuccess {
+        try await (sdkRequest(
+            "DELETE",
+            ["/segments/", sdkEncodePathSegment(sdkWireString(id))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "segmentsRemove",
+            options: requestOptions
+        )).data
     }
 }

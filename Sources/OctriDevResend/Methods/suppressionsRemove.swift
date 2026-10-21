@@ -6,12 +6,24 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension SuppressionsMethods {
-    /// Deletes a single suppression by its identifier or email address. Use `suppression` to select the suppression to remove.
+public extension SuppressionsMethods {
+    /// Deletes a single suppression by its identifier or email address. Use `suppression` to select the suppression to
+    /// remove.
     ///
     /// - Parameters:
     /// - suppression: The Suppression ID or email address.
-    public static func suppressionsRemove(config: ClientConfig, suppression: String, requestOptions: RequestOptions? = nil) async throws -> RemoveSuppressionResponseSuccess {
-        return try (await sdkRequest("DELETE", ["/suppressions/", sdkEncodePathSegment(sdkWireString(suppression))].joined(), config: config, decoder: .json, operationId: "suppressionsRemove", options: requestOptions)).data
+    static func suppressionsRemove(
+        config: ClientConfig,
+        suppression: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> RemoveSuppressionResponseSuccess {
+        try await (sdkRequest(
+            "DELETE",
+            ["/suppressions/", sdkEncodePathSegment(sdkWireString(suppression))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "suppressionsRemove",
+            options: requestOptions
+        )).data
     }
 }

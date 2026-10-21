@@ -6,14 +6,26 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AutomationsMethods {
-    /// Duplicates an existing automation to create a separate automation. Supply the source automation's identifier to create the duplicate, then use the returned identifier to access it.
+public extension AutomationsMethods {
+    /// Duplicates an existing automation to create a separate automation. Supply the source automation's identifier to
+    /// create the duplicate, then use the returned identifier to access it.
     ///
     /// - Parameters:
     /// - automationId: The ID of the automation.
-    public static func automationsDuplicate(config: ClientConfig, automationId: String, requestOptions: RequestOptions? = nil) async throws -> DuplicateAutomationResponse {
+    static func automationsDuplicate(
+        config: ClientConfig,
+        automationId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DuplicateAutomationResponse {
         try sdkValidateUuid("automation_id", automationId)
 
-        return try (await sdkRequest("POST", ["/automations/", sdkEncodePathSegment(sdkWireString(automationId)), "/duplicate"].joined(), config: config, decoder: .json, operationId: "automationsDuplicate", options: requestOptions)).data
+        return try await (sdkRequest(
+            "POST",
+            ["/automations/", sdkEncodePathSegment(sdkWireString(automationId)), "/duplicate"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "automationsDuplicate",
+            options: requestOptions
+        )).data
     }
 }

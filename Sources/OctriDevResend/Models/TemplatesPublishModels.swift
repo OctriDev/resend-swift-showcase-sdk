@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Templates domain models
+/// Templates domain models
 /// Typed representation of the `PublishTemplateResponseSuccess` API schema.
 public struct PublishTemplateResponseSuccess: Codable {
     /// The ID of the template.
@@ -18,20 +18,20 @@ public struct PublishTemplateResponseSuccess: Codable {
     }
 
     init() {
-        (self.id, self.object) = (nil, nil)
+        (id, object) = (nil, nil)
     }
 }
 
-extension PublishTemplateResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension PublishTemplateResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
     }
 }
 
-extension PublishTemplateResponseSuccess {
-    public init(id: String? = nil, object: String? = nil) {
+public extension PublishTemplateResponseSuccess {
+    init(id: String? = nil, object: String? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
     }

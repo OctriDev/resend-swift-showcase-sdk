@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Contacts domain models
+/// Contacts domain models
 /// Typed representation of the `RemoveContactFromSegmentResponseSuccess` API schema.
 public struct RemoveContactFromSegmentResponseSuccess: Codable {
     /// The object type.
@@ -25,22 +25,22 @@ public struct RemoveContactFromSegmentResponseSuccess: Codable {
     }
 
     init() {
-        (self.object, self.contactId, self.segmentId, self.deleted) = (nil, nil, nil, nil)
+        (object, contactId, segmentId, deleted) = (nil, nil, nil, nil)
     }
 }
 
-extension RemoveContactFromSegmentResponseSuccess {
-    public init(from decoder: Decoder) throws {
+public extension RemoveContactFromSegmentResponseSuccess {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.contactId = try container.sdkDecodeIfPresent(.contactId)
-        self.segmentId = try container.sdkDecodeIfPresent(.segmentId)
-        self.deleted = try container.sdkDecodeIfPresent(.deleted)
+        object = try container.sdkDecodeIfPresent(.object)
+        contactId = try container.sdkDecodeIfPresent(.contactId)
+        segmentId = try container.sdkDecodeIfPresent(.segmentId)
+        deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-extension RemoveContactFromSegmentResponseSuccess {
-    public init(object: String? = nil, contactId: String? = nil, segmentId: String? = nil, deleted: Bool? = nil) {
+public extension RemoveContactFromSegmentResponseSuccess {
+    init(object: String? = nil, contactId: String? = nil, segmentId: String? = nil, deleted: Bool? = nil) {
         self.init()
         (self.object, self.contactId) = (object, contactId)
         (self.segmentId, self.deleted) = (segmentId, deleted)
