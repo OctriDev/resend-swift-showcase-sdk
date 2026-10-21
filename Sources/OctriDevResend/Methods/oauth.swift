@@ -37,7 +37,7 @@ public enum OauthMethods {
     ///
     /// - Parameters:
     /// - oauthGrantId: The OAuth grant ID.
-    public static func revokeGrant(
+    public static func revokeOauthGrant(
         config: ClientConfig,
         oauthGrantId: String,
         requestOptions: RequestOptions? = nil
@@ -47,7 +47,7 @@ public enum OauthMethods {
             ["/oauth/grants/", sdkEncodePathSegment(sdkWireString(oauthGrantId))].joined(),
             config: config,
             decoder: .json,
-            operationId: "revokeGrant",
+            operationId: "revokeOauthGrant",
             options: requestOptions
         )).data
     }

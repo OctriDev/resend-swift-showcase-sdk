@@ -7,3 +7,77 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum EventsMethods {}
+
+public extension EventsMethods {
+    /// Creates a new event with a name and an optional payload schema. The `name` cannot start with the reserved
+    /// `resend:` prefix, and schema fields support the types `string`, `number`, `boolean`, and `date`.
+    ///
+    /// - Parameters:
+    /// - name: The name of the event. Cannot start with the reserved `resend:`
+    ///   prefix.
+    /// - schema: An optional flat key/type map defining the event payload schema.
+    ///   Supported types are `string`, `number`, `boolean`, and `date`.
+    static func eventsCreate(
+        config: ClientConfig,
+        name: String,
+        schema: SdkOptional<[String: JSONValue]>? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateEventResponse {
+        let requestBody = EventsCreateRequestBody(name: name, schema: schema)
+
+        return try await (sdkRequest(
+            "POST",
+            "/events",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "eventsCreate",
+            options: requestOptions
+        )).data
+    }
+
+    /// Lists events available to your account. Use `after` or `before` to navigate results, and `limit` to control the
+    /// number of items returned per request.
+    ///
+    /// - Parameters:
+    /// - limit: Number of items to return.
+    /// - after: Return items after this cursor.
+    /// - before: Return items before this cursor.
+    static func eventsList(
+        config: ClientConfig,
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListEventsResponse {
+        if let limit {
+            try validateRange("limit", Double(limit), min: 1, max: 100)
+        }
+
+        return try await (sdkRequest("GET", "/events", config: config, query: [
+            SdkQueryParameter("limit", value: limit),
+            SdkQueryParameter("after", value: after),
+            SdkQueryParameter("before", value: before),
+        ], decoder: .json, operationId: "eventsList", options: requestOptions)).data
+    }
+
+    /// Retrieves an event by its UUID or event name. Use the `identifier` path parameter to select the event whose
+    /// name, payload schema, and timestamps you need.
+    ///
+    /// - Parameters:
+    /// - identifier: The event ID (UUID) or event name.
+    static func eventsGet(
+        config: ClientConfig,
+        identifier: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Event {
+        try await (sdkRequest(
+            "GET",
+            ["/events/", sdkEncodePathSegment(sdkWireString(identifier))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "eventsGet",
+            options: requestOptions
+        )).data
+    }
+}

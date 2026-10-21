@@ -451,7 +451,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testRevokeGrantRevokeGrantReachesMockAndDecodesResponse() async throws {
+    func testRevokeOauthGrantRevokeOauthGrantReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }

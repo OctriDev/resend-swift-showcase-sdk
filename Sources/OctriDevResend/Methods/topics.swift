@@ -7,3 +7,73 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum TopicsMethods {}
+
+public extension TopicsMethods {
+    /// Creates a topic for organizing contact subscriptions. Supply `name` and `default_subscription`, and optionally
+    /// set a description and visibility; visibility defaults to private when omitted.
+    ///
+    /// - Parameters:
+    /// - name: The name of the topic. Max 50 characters.
+    /// - defaultSubscription: The default subscription status for the topic. Cannot
+    ///   be changed after creation.
+    /// - description: A description of the topic. Max 200 characters.
+    /// - visibility: The visibility of the topic. Public topics are visible to all
+    ///   contacts on the unsubscribe page. Private topics are only visible to
+    ///   opted-in contacts.
+    static func topicsCreate(
+        config: ClientConfig,
+        name: String,
+        defaultSubscription: CreateTopicOptionsDefaultSubscription,
+        description: String? = nil,
+        visibility: CreateTopicOptionsVisibility? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateTopicResponseSuccess {
+        try validateLength("name", name, max: 50)
+
+        if let description {
+            try validateLength("description", description, max: 200)
+        }
+
+        let requestBody = TopicsCreateRequestBody(
+            name: name,
+            defaultSubscription: defaultSubscription,
+            description: description,
+            visibility: visibility
+        )
+
+        return try await (sdkRequest(
+            "POST",
+            "/topics",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "topicsCreate",
+            options: requestOptions
+        )).data
+    }
+
+    /// Lists topics with cursor-based pagination. Use `after` or `before` to navigate results and `limit` to control
+    /// the number of topics returned.
+    ///
+    /// - Parameters:
+    /// - limit: Number of items to return.
+    /// - after: Return items after this cursor.
+    /// - before: Return items before this cursor.
+    static func topicsList(
+        config: ClientConfig,
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListTopicsResponseSuccess {
+        if let limit {
+            try validateRange("limit", Double(limit), min: 1, max: 100)
+        }
+
+        return try await (sdkRequest("GET", "/topics", config: config, query: [
+            SdkQueryParameter("limit", value: limit),
+            SdkQueryParameter("after", value: after),
+            SdkQueryParameter("before", value: before),
+        ], decoder: .json, operationId: "topicsList", options: requestOptions)).data
+    }
+}

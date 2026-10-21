@@ -408,6 +408,10 @@ public class OauthNamespace {
         oauthGrantId: String,
         requestOptions: RequestOptions? = nil
     ) async throws -> RevokeOAuthGrantResponse {
-        try await OauthMethods.revokeGrant(config: config, oauthGrantId: oauthGrantId, requestOptions: requestOptions)
+        try await OauthMethods.revokeOauthGrant(
+            config: config,
+            oauthGrantId: oauthGrantId,
+            requestOptions: requestOptions
+        )
     }
 }
