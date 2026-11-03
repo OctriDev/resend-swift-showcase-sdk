@@ -7,26 +7,31 @@ import Foundation
     import FoundationNetworking
 #endif
 
-internal func shouldRetry(method: String, statusCode: Int, retryOn: [Int]) -> Bool {
-    guard retryOn.contains(statusCode) else { return false }
-    if idempotentMethods.contains(method) { return true }
+func shouldRetry(method: String, statusCode: Int, retryOn: [Int]) -> Bool {
+    guard retryOn.contains(statusCode) else {
+        return false
+    }
+    if idempotentMethods.contains(method) {
+        return true
+    }
     return alwaysRetryableStatuses.contains(statusCode)
 }
 
 /// An attempt that produced no response may already have been applied, so a
 /// non-idempotent method is repeated only with a key sent to an operation
 /// that declares the server deduplicates on it.
-internal func mayRepeatRequest(_ method: String, _ operationId: String, _ idempotencyKey: String?) -> Bool {
-    if idempotentMethods.contains(method) { return true }
+func mayRepeatRequest(_ method: String, _ operationId: String, _ idempotencyKey: String?) -> Bool {
+    if idempotentMethods.contains(method) {
+        return true
+    }
     return idempotencyKey != nil && idempotencyKeyOperations.contains(operationId)
 }
 
-internal func sleepBackoff(retry: RetryConfig, attempt: Int, retryAfter: String?) async throws {
+func sleepBackoff(retry: RetryConfig, attempt: Int, retryAfter: String?) async throws {
     var delay: TimeInterval
 
     if let retryAfter, let seconds = Double(retryAfter.trimmingCharacters(in: .whitespaces)),
-        seconds > 0
-    {
+       seconds > 0 {
         delay = min(seconds, retry.maxBackoff)
     } else {
         let exp = retry.backoff * pow(2.0, Double(attempt - 1))
@@ -60,12 +65,12 @@ public struct SdkStreamEvent: Sendable {
 /// Opens an SSE connection and returns an AsyncThrowingStream of parsed
 /// events. Bypasses the retry loop and idempotency layer — streaming
 /// connections are long-lived; reconnect is the caller's responsibility.
-public func sdkStream<B: Encodable>(
+public func sdkStream(
     _ method: String,
     _ path: String,
     config: ClientConfig? = nil,
     query: [SdkQueryParameter] = [],
-    body: B? = Optional<EmptyBody>.none,
+    body: (some Encodable)? = EmptyBody?.none,
     rawBody: Data? = nil,
     contentType: String = "application/json",
     operationId: String = "",
@@ -97,9 +102,15 @@ public func sdkStream<B: Encodable>(
     if let rawBody {
         request.httpBody = try sdkWithStreamSelector(rawBody, operationId: operationId, contentType: contentType)
     } else if let body {
-        request.httpBody = try sdkWithStreamSelector(sdkEncodeBody(body, contentType: contentType), operationId: operationId, contentType: contentType)
+        request.httpBody = try sdkWithStreamSelector(
+            sdkEncodeBody(body, contentType: contentType),
+            operationId: operationId,
+            contentType: contentType
+        )
     }
-    if request.httpBody != nil { request.setValue(contentType, forHTTPHeaderField: "Content-Type") }
+    if request.httpBody != nil {
+        request.setValue(contentType, forHTTPHeaderField: "Content-Type")
+    }
     for (key, value) in Array(extraHeaders) + Array(options?.headers ?? [:]) {
         sdkSetHeader(&request, key, value)
     }
@@ -158,14 +169,15 @@ public func sdkStream<B: Encodable>(
 
 /// Fails an event stream answered with plain JSON, as by a server that ignored
 /// the stream flag: its parser would yield no events at all.
-internal func sdkRefuseJsonAnswer(
+func sdkRefuseJsonAnswer(
     _ response: HTTPURLResponse,
     headers: [String: String],
     requestId: String,
     byteStream: AsyncThrowingStream<Data, Swift.Error>
 ) async throws {
     let contentType = headers["content-type"] ?? ""
-    let mediaType = contentType.split(separator: ";").first.map { $0.trimmingCharacters(in: .whitespaces).lowercased() } ?? ""
+    let mediaType = contentType.split(separator: ";").first
+        .map { $0.trimmingCharacters(in: .whitespaces).lowercased() } ?? ""
     guard mediaType == "application/json" || mediaType.hasSuffix("+json") else {
         return
     }
@@ -182,7 +194,7 @@ internal func sdkRefuseJsonAnswer(
     )
 }
 
-internal func sdkChunkStream(
+func sdkChunkStream(
     _ byteStream: AsyncThrowingStream<Data, Swift.Error>,
     chunkDomain: String
 ) -> AsyncThrowingStream<SdkStreamEvent, Swift.Error> {
@@ -204,9 +216,9 @@ internal func sdkChunkStream(
 
 /// What surrounds an NDJSON record: whitespace, and the RS a JSON text sequence
 /// record starts with.
-internal let sdkJsonRecordPadding = CharacterSet.whitespacesAndNewlines.union(CharacterSet(charactersIn: "\u{1E}"))
+let sdkJsonRecordPadding = CharacterSet.whitespacesAndNewlines.union(CharacterSet(charactersIn: "\u{1E}"))
 
-internal func sdkNdjsonStream(
+func sdkNdjsonStream(
     _ byteStream: AsyncThrowingStream<Data, Swift.Error>
 ) -> AsyncThrowingStream<SdkStreamEvent, Swift.Error> {
     AsyncThrowingStream { continuation in
@@ -245,13 +257,13 @@ internal func sdkNdjsonStream(
 /// name, so a data-less `event: ping` never renames the next event. The id and
 /// retry persist across events.
 struct SseParser {
-    internal var line: [UInt8] = []
-    internal var started = false
-    internal var skipLf = false
-    internal var eventName: String?
-    internal var eventId: String?
-    internal var eventRetry: Int?
-    internal var dataLines: [String] = []
+    var line: [UInt8] = []
+    var started = false
+    var skipLf = false
+    var eventName: String?
+    var eventId: String?
+    var eventRetry: Int?
+    var dataLines: [String] = []
 
     /// Consumes one chunk and returns the events it completes.
     mutating func push(_ chunk: Data) throws -> [SdkStreamEvent] {
@@ -259,9 +271,13 @@ struct SseParser {
         for byte in chunk {
             let followsCarriageReturn = skipLf
             skipLf = byte == 0x0D
-            if followsCarriageReturn, byte == 0x0A { continue }
+            if followsCarriageReturn, byte == 0x0A {
+                continue
+            }
             if byte == 0x0D || byte == 0x0A {
-                if let event = try takeLine() { events.append(event) }
+                if let event = try takeLine() {
+                    events.append(event)
+                }
             } else {
                 line.append(byte)
             }
@@ -273,39 +289,51 @@ struct SseParser {
     /// it leaves pending is dispatched.
     mutating func finish() throws -> [SdkStreamEvent] {
         var events: [SdkStreamEvent] = []
-        if !line.isEmpty, let event = try takeLine() { events.append(event) }
-        if let event = dispatch() { events.append(event) }
+        if !line.isEmpty, let event = try takeLine() {
+            events.append(event)
+        }
+        if let event = dispatch() {
+            events.append(event)
+        }
         return events
     }
 
-    internal mutating func takeLine() throws -> SdkStreamEvent? {
+    mutating func takeLine() throws -> SdkStreamEvent? {
         var bytes = line
         line.removeAll(keepingCapacity: true)
         if !started {
             started = true
-            if bytes.starts(with: [0xEF, 0xBB, 0xBF]) { bytes.removeFirst(3) }
+            if bytes.starts(with: [0xEF, 0xBB, 0xBF]) {
+                bytes.removeFirst(3)
+            }
         }
         let text = try decodeStreamLine(bytes)
-        if text.isEmpty { return dispatch() }
-        if text.hasPrefix(":") { return nil }
+        if text.isEmpty {
+            return dispatch()
+        }
+        if text.hasPrefix(":") {
+            return nil
+        }
         let (field, value) = splitSseLine(text)
         switch field {
         case "event": eventName = value
         case "data": dataLines.append(value)
         case "id" where !value.contains("\0"): eventId = value
-        case "retry" where !value.isEmpty && value.utf8.allSatisfy({ (0x30 ... 0x39).contains($0) }):
+        case "retry" where !value.isEmpty && value.utf8.allSatisfy { (0x30 ... 0x39).contains($0) }:
             eventRetry = Int(value) ?? eventRetry
         default: break
         }
         return nil
     }
 
-    internal mutating func dispatch() -> SdkStreamEvent? {
+    mutating func dispatch() -> SdkStreamEvent? {
         defer {
             eventName = nil
             dataLines = []
         }
-        guard !dataLines.isEmpty else { return nil }
+        guard !dataLines.isEmpty else {
+            return nil
+        }
         return SdkStreamEvent(
             event: eventName ?? "message",
             data: dataLines.joined(separator: "\n"),
@@ -315,17 +343,19 @@ struct SseParser {
     }
 }
 
-internal func splitSseLine(_ line: String) -> (String, String) {
+func splitSseLine(_ line: String) -> (String, String) {
     if let colon = line.firstIndex(of: ":") {
         let field = String(line[line.startIndex ..< colon])
         var value = String(line[line.index(after: colon)...])
-        if value.hasPrefix(" ") { value.removeFirst() }
+        if value.hasPrefix(" ") {
+            value.removeFirst()
+        }
         return (field, value)
     }
     return (line, "")
 }
 
-internal func decodeStreamLine(_ bytes: [UInt8]) throws -> String {
+func decodeStreamLine(_ bytes: [UInt8]) throws -> String {
     guard let line = String(bytes: bytes, encoding: .utf8) else {
         throw SdkNetworkError(cause: NSError(
             domain: "SdkStream",

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// WebhookEventBounce domain models
+/// WebhookEventBounce domain models
 /// Typed representation of the `WebhookEventBounce` API schema.
 public struct WebhookEventBounce: Codable {
     /// Array of SMTP diagnostic responses from the receiving server, one entry per recipient (e.g., `smtp; 550
@@ -23,33 +23,51 @@ public struct WebhookEventBounce: Codable {
         case type
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension WebhookEventBounce {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.diagnosticCode) else {
-            throw SdkValidationError(field: "diagnosticCode", code: "required", message: "Validation failed for 'diagnosticCode': value is required")
-        }
-        guard container.contains(.message) else {
-            throw SdkValidationError(field: "message", code: "required", message: "Validation failed for 'message': value is required")
-        }
-        guard container.contains(.subType) else {
-            throw SdkValidationError(field: "subType", code: "required", message: "Validation failed for 'subType': value is required")
-        }
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        self.diagnosticCode = try container.sdkDecodeRequired(.diagnosticCode)
-        self.message = try container.sdkDecodeRequired(.message)
-        self.subType = try container.sdkDecodeRequired(.subType)
-        self.type = try container.sdkDecodeRequired(.type)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension WebhookEventBounce {
-    public init(diagnosticCode: [String], message: String, subType: WebhookEventBounceSubType, type: WebhookEventBounceType) {
+public extension WebhookEventBounce {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.diagnosticCode) else {
+            throw SdkValidationError(
+                field: "diagnosticCode",
+                code: "required",
+                message: "Validation failed for 'diagnosticCode': value is required"
+            )
+        }
+        guard container.contains(.message) else {
+            throw SdkValidationError(
+                field: "message",
+                code: "required",
+                message: "Validation failed for 'message': value is required"
+            )
+        }
+        guard container.contains(.subType) else {
+            throw SdkValidationError(
+                field: "subType",
+                code: "required",
+                message: "Validation failed for 'subType': value is required"
+            )
+        }
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        diagnosticCode = try container.sdkDecodeRequired(.diagnosticCode)
+        message = try container.sdkDecodeRequired(.message)
+        subType = try container.sdkDecodeRequired(.subType)
+        type = try container.sdkDecodeRequired(.type)
+    }
+}
+
+public extension WebhookEventBounce {
+    init(diagnosticCode: [String], message: String, subType: WebhookEventBounceSubType, type: WebhookEventBounceType) {
         (self.diagnosticCode, self.message) = (diagnosticCode, message)
         (self.subType, self.type) = (subType, type)
     }
@@ -59,7 +77,10 @@ extension WebhookEventBounce {
 public struct WebhookEventBounceSubType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let undetermined = WebhookEventBounceSubType(rawValue: "Undetermined")
     public static let general = WebhookEventBounceSubType(rawValue: "General")
     public static let noEmail = WebhookEventBounceSubType(rawValue: "NoEmail")
@@ -70,7 +91,7 @@ public struct WebhookEventBounceSubType: RawRepresentable, Hashable, Codable, Se
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -83,14 +104,17 @@ public struct WebhookEventBounceSubType: RawRepresentable, Hashable, Codable, Se
 public struct WebhookEventBounceType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let undetermined = WebhookEventBounceType(rawValue: "Undetermined")
     public static let transient = WebhookEventBounceType(rawValue: "Transient")
     public static let permanent = WebhookEventBounceType(rawValue: "Permanent")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

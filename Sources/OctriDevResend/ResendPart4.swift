@@ -9,51 +9,152 @@ public class AutomationsNamespace {
         self.config = config
     }
 
-/// Creates an automation workflow from its name, steps, and connections. Supply at least one step, including a `trigger` step, and configure each step with its key, type, and configuration. A 201 response returns the new automation's identifier.
-    public func create(name: String, steps: [AutomationStep], connections: [AutomationConnection], status: CreateAutomationRequestStatus? = nil, requestOptions: RequestOptions? = nil) async throws -> CreateAutomationResponse {
-        return try await AutomationsMethods.automationsCreate(config: config, name: name, steps: steps, connections: connections, status: status, requestOptions: requestOptions)
+    /// Creates an automation workflow from its name, steps, and connections. Supply at least one step, including a
+    /// `trigger` step, and configure each step with its key, type, and configuration. A 201 response returns the new
+    /// automation's identifier.
+    public func create(
+        name: String,
+        steps: [AutomationStep],
+        connections: [AutomationConnection],
+        status: CreateAutomationRequestStatus? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateAutomationResponse {
+        try await AutomationsMethods.automationsCreate(
+            config: config,
+            name: name,
+            steps: steps,
+            connections: connections,
+            status: status,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists automations, with optional filtering by status and cursor-based pagination. Use `status` to select enabled or disabled automations, and use `after` or `before` to navigate results.
-    public func list(status: AutomationsListParameter? = nil, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListAutomationsResponse {
-        return try await AutomationsMethods.automationsList(config: config, status: status, limit: limit, after: after, before: before, requestOptions: requestOptions)
+    /// Lists automations, with optional filtering by status and cursor-based pagination. Use `status` to select enabled
+    /// or disabled automations, and use `after` or `before` to navigate results.
+    public func list(
+        status: AutomationsListParameter? = nil,
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListAutomationsResponse {
+        try await AutomationsMethods.automationsList(
+            config: config,
+            status: status,
+            limit: limit,
+            after: after,
+            before: before,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieves a single automation and its active workflow version. Use the automation details to inspect its status, timestamps, steps, and connections.
+    /// Retrieves a single automation and its active workflow version. Use the automation details to inspect its status,
+    /// timestamps, steps, and connections.
     public func get(automationId: String, requestOptions: RequestOptions? = nil) async throws -> Automation {
-        return try await AutomationsMethods.automationsGet(config: config, automationId: automationId, requestOptions: requestOptions)
+        try await AutomationsMethods.automationsGet(
+            config: config,
+            automationId: automationId,
+            requestOptions: requestOptions
+        )
     }
 
-/// Updates an automation's name, status, or workflow graph. Supply at least one of `name`, `status`, or both `steps` and `connections`; workflow graph updates require both arrays together. Provide between 1 and 150 steps when updating the graph.
-    public func update(automationId: String, name: String? = nil, status: PatchAutomationRequestStatus? = nil, steps: [AutomationStep]? = nil, connections: [AutomationConnection]? = nil, requestOptions: RequestOptions? = nil) async throws -> PatchAutomationResponse {
-        return try await AutomationsMethods.automationsUpdate(config: config, automationId: automationId, name: name, status: status, steps: steps, connections: connections, requestOptions: requestOptions)
+    /// Updates an automation's name, status, or workflow graph. Supply at least one of `name`, `status`, or both
+    /// `steps` and `connections`; workflow graph updates require both arrays together. Provide between 1 and 150 steps
+    /// when updating the graph.
+    public func update(
+        automationId: String,
+        name: String? = nil,
+        status: PatchAutomationRequestStatus? = nil,
+        steps: [AutomationStep]? = nil,
+        connections: [AutomationConnection]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> PatchAutomationResponse {
+        try await AutomationsMethods.automationsUpdate(
+            config: config,
+            automationId: automationId,
+            name: name,
+            status: status,
+            steps: steps,
+            connections: connections,
+            requestOptions: requestOptions
+        )
     }
 
-/// Deletes an automation by its identifier. Use this operation to remove an automation you no longer need; the response indicates whether deletion succeeded.
-    public func remove(automationId: String, requestOptions: RequestOptions? = nil) async throws -> DeleteAutomationResponse {
-        return try await AutomationsMethods.automationsRemove(config: config, automationId: automationId, requestOptions: requestOptions)
+    /// Deletes an automation by its identifier. Use this operation to remove an automation you no longer need; the
+    /// response indicates whether deletion succeeded.
+    public func remove(
+        automationId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DeleteAutomationResponse {
+        try await AutomationsMethods.automationsRemove(
+            config: config,
+            automationId: automationId,
+            requestOptions: requestOptions
+        )
     }
 
-/// Duplicates an existing automation to create a separate automation. Supply the source automation's identifier to create the duplicate, then use the returned identifier to access it.
-    public func duplicate(automationId: String, requestOptions: RequestOptions? = nil) async throws -> DuplicateAutomationResponse {
-        return try await AutomationsMethods.automationsDuplicate(config: config, automationId: automationId, requestOptions: requestOptions)
+    /// Duplicates an existing automation to create a separate automation. Supply the source automation's identifier to
+    /// create the duplicate, then use the returned identifier to access it.
+    public func duplicate(
+        automationId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DuplicateAutomationResponse {
+        try await AutomationsMethods.automationsDuplicate(
+            config: config,
+            automationId: automationId,
+            requestOptions: requestOptions
+        )
     }
 
-/// Stops an automation by its identifier. Use this operation when you want the automation to stop running; the response includes its status after stopping.
-    public func stop(automationId: String, requestOptions: RequestOptions? = nil) async throws -> StopAutomationResponse {
-        return try await AutomationsMethods.automationsStop(config: config, automationId: automationId, requestOptions: requestOptions)
+    /// Stops an automation by its identifier. Use this operation when you want the automation to stop running; the
+    /// response includes its status after stopping.
+    public func stop(
+        automationId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> StopAutomationResponse {
+        try await AutomationsMethods.automationsStop(
+            config: config,
+            automationId: automationId,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists runs for a specific automation, with optional filtering by run status and cursor-based pagination. Use `status` to filter by run state, and use `after` or `before` to navigate the results.
-    public func listRuns(automationId: String, status: String? = nil, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListAutomationRunsResponse {
-        return try await AutomationsMethods.automationsListRuns(config: config, automationId: automationId, status: status, limit: limit, after: after, before: before, requestOptions: requestOptions)
+    /// Lists runs for a specific automation, with optional filtering by run status and cursor-based pagination. Use
+    /// `status` to filter by run state, and use `after` or `before` to navigate the results.
+    public func listRuns(
+        automationId: String,
+        status: String? = nil,
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListAutomationRunsResponse {
+        try await AutomationsMethods.automationsListRuns(
+            config: config,
+            automationId: automationId,
+            status: status,
+            limit: limit,
+            after: after,
+            before: before,
+            requestOptions: requestOptions
+        )
     }
 }
 
-extension AutomationsNamespace {
-/// Retrieves a single run for a specific automation. Use the run details to inspect its status, timestamps, and step executions, which are returned in workflow graph order.
-    public func getRun(automationId: String, runId: String, requestOptions: RequestOptions? = nil) async throws -> AutomationRun {
-        return try await AutomationsMethods.automationsGetRun(config: config, automationId: automationId, runId: runId, requestOptions: requestOptions)
+public extension AutomationsNamespace {
+    /// Retrieves a single run for a specific automation. Use the run details to inspect its status, timestamps, and
+    /// step executions, which are returned in workflow graph order.
+    func getRun(
+        automationId: String,
+        runId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AutomationRun {
+        try await AutomationsMethods.automationsGetRun(
+            config: config,
+            automationId: automationId,
+            runId: runId,
+            requestOptions: requestOptions
+        )
     }
 }
 
@@ -63,34 +164,77 @@ public class EventsNamespace {
         self.config = config
     }
 
-/// Creates a new event with a name and an optional payload schema. The `name` cannot start with the reserved `resend:` prefix, and schema fields support the types `string`, `number`, `boolean`, and `date`.
-    public func create(name: String, schema: SdkOptional<[String: JSONValue]>? = nil, requestOptions: RequestOptions? = nil) async throws -> CreateEventResponse {
-        return try await EventsMethods.eventsCreate(config: config, name: name, schema: schema, requestOptions: requestOptions)
+    /// Creates a new event with a name and an optional payload schema. The `name` cannot start with the reserved
+    /// `resend:` prefix, and schema fields support the types `string`, `number`, `boolean`, and `date`.
+    public func create(
+        name: String,
+        schema: SdkOptional<[String: JSONValue]>? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateEventResponse {
+        try await EventsMethods.eventsCreate(config: config, name: name, schema: schema, requestOptions: requestOptions)
     }
 
-/// Lists events available to your account. Use `after` or `before` to navigate results, and `limit` to control the number of items returned per request.
-    public func list(limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListEventsResponse {
-        return try await EventsMethods.eventsList(config: config, limit: limit, after: after, before: before, requestOptions: requestOptions)
+    /// Lists events available to your account. Use `after` or `before` to navigate results, and `limit` to control the
+    /// number of items returned per request.
+    public func list(
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListEventsResponse {
+        try await EventsMethods.eventsList(
+            config: config,
+            limit: limit,
+            after: after,
+            before: before,
+            requestOptions: requestOptions
+        )
     }
 
-/// Sends an event and associates it with a contact or an email address. Supply the required `event` name and exactly one of `contact_id` or `email`; include `payload` to attach additional key/value data.
-    public func send(event: String, contactId: String? = nil, email: String? = nil, payload: [String: JSONValue]? = nil, requestOptions: RequestOptions? = nil) async throws -> SendEventResponse {
-        return try await EventsMethods.eventsSend(config: config, event: event, contactId: contactId, email: email, payload: payload, requestOptions: requestOptions)
+    /// Sends an event and associates it with a contact or an email address. Supply the required `event` name and
+    /// exactly one of `contact_id` or `email`; include `payload` to attach additional key/value data.
+    public func send(
+        event: String,
+        contactId: String? = nil,
+        email: String? = nil,
+        payload: [String: JSONValue]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SendEventResponse {
+        try await EventsMethods.eventsSend(
+            config: config,
+            event: event,
+            contactId: contactId,
+            email: email,
+            payload: payload,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieves an event by its UUID or event name. Use the `identifier` path parameter to select the event whose name, payload schema, and timestamps you need.
+    /// Retrieves an event by its UUID or event name. Use the `identifier` path parameter to select the event whose
+    /// name, payload schema, and timestamps you need.
     public func get(identifier: String, requestOptions: RequestOptions? = nil) async throws -> Event {
-        return try await EventsMethods.eventsGet(config: config, identifier: identifier, requestOptions: requestOptions)
+        try await EventsMethods.eventsGet(config: config, identifier: identifier, requestOptions: requestOptions)
     }
 
-/// Updates the payload schema for an existing event. Supply `schema` as a flat key/type map using `string`, `number`, `boolean`, or `date`, or set it to `null` to clear the schema.
-    public func update(identifier: String, schema: [String: JSONValue]?, requestOptions: RequestOptions? = nil) async throws -> UpdateEventResponse {
-        return try await EventsMethods.eventsUpdate(config: config, identifier: identifier, schema: schema, requestOptions: requestOptions)
+    /// Updates the payload schema for an existing event. Supply `schema` as a flat key/type map using `string`,
+    /// `number`, `boolean`, or `date`, or set it to `null` to clear the schema.
+    public func update(
+        identifier: String,
+        schema: [String: JSONValue]?,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> UpdateEventResponse {
+        try await EventsMethods.eventsUpdate(
+            config: config,
+            identifier: identifier,
+            schema: schema,
+            requestOptions: requestOptions
+        )
     }
 
-/// Deletes an event identified by its UUID or name. Use the `identifier` path parameter to specify which event to remove; the response indicates whether the event was deleted.
+    /// Deletes an event identified by its UUID or name. Use the `identifier` path parameter to specify which event to
+    /// remove; the response indicates whether the event was deleted.
     public func remove(identifier: String, requestOptions: RequestOptions? = nil) async throws -> RemoveEventResponse {
-        return try await EventsMethods.eventsRemove(config: config, identifier: identifier, requestOptions: requestOptions)
+        try await EventsMethods.eventsRemove(config: config, identifier: identifier, requestOptions: requestOptions)
     }
 }
 
@@ -100,34 +244,86 @@ public class SuppressionsNamespace {
         self.config = config
     }
 
-/// Creates a suppression for an email address. Supply the required `email` value to add that address to the suppression list.
-    public func add(email: String, requestOptions: RequestOptions? = nil) async throws -> CreateSuppressionResponseSuccess {
-        return try await SuppressionsMethods.suppressionsAdd(config: config, email: email, requestOptions: requestOptions)
+    /// Creates a suppression for an email address. Supply the required `email` value to add that address to the
+    /// suppression list.
+    public func add(
+        email: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateSuppressionResponseSuccess {
+        try await SuppressionsMethods.suppressionsAdd(config: config, email: email, requestOptions: requestOptions)
     }
 
-/// Lists suppressions, with an optional filter for their origin. Use `after` or `before` to navigate results and `limit` to control the number of suppressions returned per request.
-    public func list(origin: SuppressionsListParameter? = nil, limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListSuppressionsResponseSuccess {
-        return try await SuppressionsMethods.suppressionsList(config: config, origin: origin, limit: limit, after: after, before: before, requestOptions: requestOptions)
+    /// Lists suppressions, with an optional filter for their origin. Use `after` or `before` to navigate results and
+    /// `limit` to control the number of suppressions returned per request.
+    public func list(
+        origin: SuppressionsListParameter? = nil,
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListSuppressionsResponseSuccess {
+        try await SuppressionsMethods.suppressionsList(
+            config: config,
+            origin: origin,
+            limit: limit,
+            after: after,
+            before: before,
+            requestOptions: requestOptions
+        )
     }
 
-/// Adds multiple email addresses to the suppression list in one request. Supply an `emails` array containing between 1 and 100 addresses.
-    public func batchAdd(emails: [String], requestOptions: RequestOptions? = nil) async throws -> BatchAddSuppressionsResponseSuccess {
-        return try await SuppressionsMethods.suppressionsBatchAdd(config: config, emails: emails, requestOptions: requestOptions)
+    /// Adds multiple email addresses to the suppression list in one request. Supply an `emails` array containing
+    /// between 1 and 100 addresses.
+    public func batchAdd(
+        emails: [String],
+        requestOptions: RequestOptions? = nil
+    ) async throws -> BatchAddSuppressionsResponseSuccess {
+        try await SuppressionsMethods.suppressionsBatchAdd(
+            config: config,
+            emails: emails,
+            requestOptions: requestOptions
+        )
     }
 
-/// Removes multiple suppressions from the suppression list in one request. Provide either an `emails` array or an `ids` array, but not both, with between 1 and 100 values in the selected array.
-    public func batchRemove(emails: [String]? = nil, ids: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> BatchRemoveSuppressionsResponseSuccess {
-        return try await SuppressionsMethods.suppressionsBatchRemove(config: config, emails: emails, ids: ids, requestOptions: requestOptions)
+    /// Removes multiple suppressions from the suppression list in one request. Provide either an `emails` array or an
+    /// `ids` array, but not both, with between 1 and 100 values in the selected array.
+    public func batchRemove(
+        emails: [String]? = nil,
+        ids: [String]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> BatchRemoveSuppressionsResponseSuccess {
+        try await SuppressionsMethods.suppressionsBatchRemove(
+            config: config,
+            emails: emails,
+            ids: ids,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieves a single suppression by its identifier or email address. Use `suppression` to look up the matching suppression record.
-    public func get(suppression: String, requestOptions: RequestOptions? = nil) async throws -> GetSuppressionResponseSuccess {
-        return try await SuppressionsMethods.suppressionsGet(config: config, suppression: suppression, requestOptions: requestOptions)
+    /// Retrieves a single suppression by its identifier or email address. Use `suppression` to look up the matching
+    /// suppression record.
+    public func get(
+        suppression: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GetSuppressionResponseSuccess {
+        try await SuppressionsMethods.suppressionsGet(
+            config: config,
+            suppression: suppression,
+            requestOptions: requestOptions
+        )
     }
 
-/// Deletes a single suppression by its identifier or email address. Use `suppression` to select the suppression to remove.
-    public func remove(suppression: String, requestOptions: RequestOptions? = nil) async throws -> RemoveSuppressionResponseSuccess {
-        return try await SuppressionsMethods.suppressionsRemove(config: config, suppression: suppression, requestOptions: requestOptions)
+    /// Deletes a single suppression by its identifier or email address. Use `suppression` to select the suppression to
+    /// remove.
+    public func remove(
+        suppression: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> RemoveSuppressionResponseSuccess {
+        try await SuppressionsMethods.suppressionsRemove(
+            config: config,
+            suppression: suppression,
+            requestOptions: requestOptions
+        )
     }
 }
 
@@ -137,11 +333,12 @@ public class UsageNamespace {
         self.config = config
     }
 
-/// Retrieves current account usage and plan limits. Use the response to review consumption and limits across email, contacts, segments, broadcasts, AI credits, automation runs, domains, and rate limits.
+    /// Retrieves current account usage and plan limits. Use the response to review consumption and limits across email,
+    /// contacts, segments, broadcasts, AI credits, automation runs, domains, and rate limits.
     ///
     /// Retrieve your account's current usage and plan limits.
     public func get(requestOptions: RequestOptions? = nil) async throws -> GetUsageResponseSuccess {
-        return try await UsageMethods.usageGet(config: config, requestOptions: requestOptions)
+        try await UsageMethods.usageGet(config: config, requestOptions: requestOptions)
     }
 }
 
@@ -151,57 +348,130 @@ public class InboxesNamespace {
         self.config = config
     }
 
-/// Creates an inbox that sends and receives email at an address on one of the team's domains. Supply `email_address` and choose whether to enable `forwarding`; the domain's verification requirements depend on that setting.
+    /// Creates an inbox that sends and receives email at an address on one of the team's domains. Supply
+    /// `email_address` and choose whether to enable `forwarding`; the domain's verification requirements depend on that
+    /// setting.
     ///
-    /// Creates an inbox that sends and receives email at an address on one of your domains. The domain must belong to the team. Without `forwarding`, the domain must have receiving enabled, with DKIM and SPF verified and the inbound MX record verified or pending. With `forwarding` set to `true`, the domain only needs DKIM and SPF verified for sending, and Resend generates a `receiving_address` on the team inbound domain, and a team without an inbound domain gets a 422. A domain that does not meet these rules returns a 422 validation_error. An address or receiving address that is already in use returns a 409. A team that has reached the inbox limit of its plan returns a 403 validation_error. A blocked account returns a 451.
-    public func create(emailAddress: String, name: String? = nil, fromName: String? = nil, forwarding: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> CreateInboxResponseSuccess {
-        return try await InboxesMethods.inboxesCreate(config: config, emailAddress: emailAddress, name: name, fromName: fromName, forwarding: forwarding, requestOptions: requestOptions)
+    /// Creates an inbox that sends and receives email at an address on one of your domains. The domain must belong to
+    /// the team. Without `forwarding`, the domain must have receiving enabled, with DKIM and SPF verified and the
+    /// inbound MX record verified or pending. With `forwarding` set to `true`, the domain only needs DKIM and SPF
+    /// verified for sending, and Resend generates a `receiving_address` on the team inbound domain, and a team without
+    /// an inbound domain gets a 422. A domain that does not meet these rules returns a 422 validation_error. An address
+    /// or receiving address that is already in use returns a 409. A team that has reached the inbox limit of its plan
+    /// returns a 403 validation_error. A blocked account returns a 451.
+    public func create(
+        emailAddress: String,
+        name: String? = nil,
+        fromName: String? = nil,
+        forwarding: Bool? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateInboxResponseSuccess {
+        try await InboxesMethods.inboxesCreate(
+            config: config,
+            emailAddress: emailAddress,
+            name: name,
+            fromName: fromName,
+            forwarding: forwarding,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists the team's inboxes, ordered from newest to oldest. Use `after` or `before` with an inbox ID to navigate the results; list items include fewer fields than an individual inbox record.
+    /// Lists the team's inboxes, ordered from newest to oldest. Use `after` or `before` with an inbox ID to navigate
+    /// the results; list items include fewer fields than an individual inbox record.
     ///
-    /// Returns the inboxes of the team, newest first. The list items carry fewer fields than a single inbox. Retrieve an inbox to get all its fields. The `after` and `before` cursors take an inbox ID, and only one of them can be passed, or the request returns a 422. A value that is not a UUID returns a 422, and an unknown ID returns a 404.
-    public func list(limit: Int? = nil, after: String? = nil, before: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListInboxesResponseSuccess {
-        return try await InboxesMethods.inboxesList(config: config, limit: limit, after: after, before: before, requestOptions: requestOptions)
+    /// Returns the inboxes of the team, newest first. The list items carry fewer fields than a single inbox. Retrieve
+    /// an inbox to get all its fields. The `after` and `before` cursors take an inbox ID, and only one of them can be
+    /// passed, or the request returns a 422. A value that is not a UUID returns a 422, and an unknown ID returns a 404.
+    public func list(
+        limit: Int? = nil,
+        after: String? = nil,
+        before: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListInboxesResponseSuccess {
+        try await InboxesMethods.inboxesList(
+            config: config,
+            limit: limit,
+            after: after,
+            before: before,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieves a single inbox by its ID or email address. Use an email address for a case-insensitive address lookup, or a UUID to look up the inbox by ID.
+    /// Retrieves a single inbox by its ID or email address. Use an email address for a case-insensitive address lookup,
+    /// or a UUID to look up the inbox by ID.
     public func get(inboxId: String, requestOptions: RequestOptions? = nil) async throws -> Inbox {
-        return try await InboxesMethods.inboxesGet(config: config, inboxId: inboxId, requestOptions: requestOptions)
+        try await InboxesMethods.inboxesGet(config: config, inboxId: inboxId, requestOptions: requestOptions)
     }
 
-/// Updates an inbox's internal name or the sender name recipients see. Provide at least one of `name` or `from_name`; omitted values remain unchanged.
+    /// Updates an inbox's internal name or the sender name recipients see. Provide at least one of `name` or
+    /// `from_name`; omitted values remain unchanged.
     ///
-    /// Updates the internal name of the inbox or the name recipients see when mail is sent from it. At least one of `name` or `from_name` is required.
-    public func update(inboxId: String, name: String? = nil, fromName: String? = nil, requestOptions: RequestOptions? = nil) async throws -> UpdateInboxResponseSuccess {
-        return try await InboxesMethods.inboxesUpdate(config: config, inboxId: inboxId, name: name, fromName: fromName, requestOptions: requestOptions)
+    /// Updates the internal name of the inbox or the name recipients see when mail is sent from it. At least one of
+    /// `name` or `from_name` is required.
+    public func update(
+        inboxId: String,
+        name: String? = nil,
+        fromName: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> UpdateInboxResponseSuccess {
+        try await InboxesMethods.inboxesUpdate(
+            config: config,
+            inboxId: inboxId,
+            name: name,
+            fromName: fromName,
+            requestOptions: requestOptions
+        )
     }
 
-/// Deletes an existing inbox. Use its UUID as `inbox_id`; an email address is not accepted for this operation.
+    /// Deletes an existing inbox. Use its UUID as `inbox_id`; an email address is not accepted for this operation.
     ///
     /// Removes the inbox. An inbox that does not exist or was already removed returns a 404 not_found.
-    public func remove(inboxId: String, requestOptions: RequestOptions? = nil) async throws -> RemoveInboxResponseSuccess {
-        return try await InboxesMethods.inboxesRemove(config: config, inboxId: inboxId, requestOptions: requestOptions)
+    public func remove(
+        inboxId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> RemoveInboxResponseSuccess {
+        try await InboxesMethods.inboxesRemove(config: config, inboxId: inboxId, requestOptions: requestOptions)
     }
 
-/// Retrieves the agent settings for an inbox. An inbox without a configured agent has null `instructions` and `tone` values and an empty `enabled_actions` array.
+    /// Retrieves the agent settings for an inbox. An inbox without a configured agent has null `instructions` and
+    /// `tone` values and an empty `enabled_actions` array.
     ///
-    /// Returns the agent settings of the inbox. An inbox without a configured agent returns empty settings: `instructions` and `tone` are null and `enabled_actions` is an empty array.
+    /// Returns the agent settings of the inbox. An inbox without a configured agent returns empty settings:
+    /// `instructions` and `tone` are null and `enabled_actions` is an empty array.
     public func getAgent(inboxId: String, requestOptions: RequestOptions? = nil) async throws -> InboxAgent {
-        return try await InboxesMethods.inboxesGetAgent(config: config, inboxId: inboxId, requestOptions: requestOptions)
+        try await InboxesMethods.inboxesGetAgent(config: config, inboxId: inboxId, requestOptions: requestOptions)
     }
 
-/// Updates the agent settings for an inbox, creating an agent if one is not configured. Provide at least one of `instructions`, `tone`, or `enabled_actions`; omitted fields keep their current values.
+    /// Updates the agent settings for an inbox, creating an agent if one is not configured. Provide at least one of
+    /// `instructions`, `tone`, or `enabled_actions`; omitted fields keep their current values.
     ///
-    /// Updates the agent settings of the inbox. The agent is created when the inbox has none. Omitted fields keep their current value.
-    public func updateAgent(inboxId: String, instructions: SdkOptional<String>? = nil, tone: SdkOptional<UpdateInboxAgentOptionsTone>? = nil, enabledActions: [UpdateInboxAgentOptionsEnabledActionsItem]? = nil, requestOptions: RequestOptions? = nil) async throws -> UpdateInboxAgentResponseSuccess {
-        return try await InboxesMethods.inboxesUpdateAgent(config: config, inboxId: inboxId, instructions: instructions, tone: tone, enabledActions: enabledActions, requestOptions: requestOptions)
+    /// Updates the agent settings of the inbox. The agent is created when the inbox has none. Omitted fields keep their
+    /// current value.
+    public func updateAgent(
+        inboxId: String,
+        instructions: SdkOptional<String>? = nil,
+        tone: SdkOptional<UpdateInboxAgentOptionsTone>? = nil,
+        enabledActions: [UpdateInboxAgentOptionsEnabledActionsItem]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> UpdateInboxAgentResponseSuccess {
+        try await InboxesMethods.inboxesUpdateAgent(
+            config: config,
+            inboxId: inboxId,
+            instructions: instructions,
+            tone: tone,
+            enabledActions: enabledActions,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists the labels attached to an inbox, ordered from oldest to newest. Use this endpoint to retrieve the inbox’s labels; the complete list is returned without pagination.
+    /// Lists the labels attached to an inbox, ordered from oldest to newest. Use this endpoint to retrieve the inbox’s
+    /// labels; the complete list is returned without pagination.
     ///
     /// Returns every label on the inbox, oldest first. The list is not paginated.
-    public func listLabels(inboxId: String, requestOptions: RequestOptions? = nil) async throws -> ListInboxLabelsResponseSuccess {
-        return try await InboxesMethods.inboxesListLabels(config: config, inboxId: inboxId, requestOptions: requestOptions)
+    public func listLabels(
+        inboxId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListInboxLabelsResponseSuccess {
+        try await InboxesMethods.inboxesListLabels(config: config, inboxId: inboxId, requestOptions: requestOptions)
     }
 }

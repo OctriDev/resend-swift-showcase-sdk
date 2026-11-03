@@ -3,7 +3,7 @@
 
 import Foundation
 
-// EmailBouncedEvent domain models
+/// EmailBouncedEvent domain models
 /// Required object value serialized in the `data` wire field.
 public struct EmailBouncedEventDataVariant1: Codable {
     /// Required object value serialized in the `bounce` wire field.
@@ -13,21 +13,27 @@ public struct EmailBouncedEventDataVariant1: Codable {
         case bounce
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension EmailBouncedEventDataVariant1 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.bounce) else {
-            throw SdkValidationError(field: "bounce", code: "required", message: "Validation failed for 'bounce': value is required")
-        }
-        self.bounce = try container.sdkDecodeRequired(.bounce)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension EmailBouncedEventDataVariant1 {
-    public init(bounce: WebhookEventBounce) {
+public extension EmailBouncedEventDataVariant1 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.bounce) else {
+            throw SdkValidationError(
+                field: "bounce",
+                code: "required",
+                message: "Validation failed for 'bounce': value is required"
+            )
+        }
+        bounce = try container.sdkDecodeRequired(.bounce)
+    }
+}
+
+public extension EmailBouncedEventDataVariant1 {
+    init(bounce: WebhookEventBounce) {
         self.bounce = bounce
     }
 }
@@ -48,35 +54,49 @@ public struct EmailBouncedEvent: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension EmailBouncedEvent {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.createdAt) else {
-            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
-        }
-        guard container.contains(.data) else {
-            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.createdAt = try container.sdkDecodeRequired(.createdAt)
-        self.data = try container.sdkDecodeRequired(.data)
-            try sdkValidateRawEnum("type", self.type, EmailBouncedEventType.allCases.map(\.rawValue))
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension EmailBouncedEvent {
-    public init(type: EmailBouncedEventType, createdAt: Date, data: EmailBouncedEventData) throws {
+public extension EmailBouncedEvent {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.createdAt) else {
+            throw SdkValidationError(
+                field: "created_at",
+                code: "required",
+                message: "Validation failed for 'created_at': value is required"
+            )
+        }
+        guard container.contains(.data) else {
+            throw SdkValidationError(
+                field: "data",
+                code: "required",
+                message: "Validation failed for 'data': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        createdAt = try container.sdkDecodeRequired(.createdAt)
+        data = try container.sdkDecodeRequired(.data)
+        try sdkValidateRawEnum("type", type, EmailBouncedEventType.allCases.map(\.rawValue))
+        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+    }
+}
+
+public extension EmailBouncedEvent {
+    init(type: EmailBouncedEventType, createdAt: Date, data: EmailBouncedEventData) throws {
         (self.type, self.createdAt) = (type, createdAt)
         self.data = data
-            try sdkValidateRawEnum("type", self.type, EmailBouncedEventType.allCases.map(\.rawValue))
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+        try sdkValidateRawEnum("type", self.type, EmailBouncedEventType.allCases.map(\.rawValue))
+        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
@@ -117,52 +137,89 @@ public struct EmailBouncedEventData: Codable {
         case headers
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension EmailBouncedEventData {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.emailId) else {
-            throw SdkValidationError(field: "email_id", code: "required", message: "Validation failed for 'email_id': value is required")
-        }
-        guard container.contains(.createdAt) else {
-            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
-        }
-        guard container.contains(.from) else {
-            throw SdkValidationError(field: "from", code: "required", message: "Validation failed for 'from': value is required")
-        }
-        guard container.contains(.to) else {
-            throw SdkValidationError(field: "to", code: "required", message: "Validation failed for 'to': value is required")
-        }
-        guard container.contains(.subject) else {
-            throw SdkValidationError(field: "subject", code: "required", message: "Validation failed for 'subject': value is required")
-        }
-        guard container.contains(.bounce) else {
-            throw SdkValidationError(field: "bounce", code: "required", message: "Validation failed for 'bounce': value is required")
-        }
-        self.emailId = try container.sdkDecodeRequired(.emailId)
-        self.createdAt = try container.sdkDecodeRequired(.createdAt)
-        self.from = try container.sdkDecodeRequired(.from)
-        self.to = try container.sdkDecodeRequired(.to)
-        self.subject = try container.sdkDecodeRequired(.subject)
-        self.bounce = try container.sdkDecodeRequired(.bounce)
-        self.broadcastId = try container.sdkDecodeIfPresent(.broadcastId)
-        self.templateId = try container.sdkDecodeIfPresent(.templateId)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.headers = try container.sdkDecodeIfPresent(.headers)
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension EmailBouncedEventData {
-    public init(emailId: String, createdAt: Date, from: String, to: [String], subject: String, bounce: WebhookEventBounce, broadcastId: String? = nil, templateId: String? = nil, tags: [String: String]? = nil, headers: [OutboundEmailEventDataHeadersItem]? = nil) throws {
+public extension EmailBouncedEventData {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.emailId) else {
+            throw SdkValidationError(
+                field: "email_id",
+                code: "required",
+                message: "Validation failed for 'email_id': value is required"
+            )
+        }
+        guard container.contains(.createdAt) else {
+            throw SdkValidationError(
+                field: "created_at",
+                code: "required",
+                message: "Validation failed for 'created_at': value is required"
+            )
+        }
+        guard container.contains(.from) else {
+            throw SdkValidationError(
+                field: "from",
+                code: "required",
+                message: "Validation failed for 'from': value is required"
+            )
+        }
+        guard container.contains(.to) else {
+            throw SdkValidationError(
+                field: "to",
+                code: "required",
+                message: "Validation failed for 'to': value is required"
+            )
+        }
+        guard container.contains(.subject) else {
+            throw SdkValidationError(
+                field: "subject",
+                code: "required",
+                message: "Validation failed for 'subject': value is required"
+            )
+        }
+        guard container.contains(.bounce) else {
+            throw SdkValidationError(
+                field: "bounce",
+                code: "required",
+                message: "Validation failed for 'bounce': value is required"
+            )
+        }
+        emailId = try container.sdkDecodeRequired(.emailId)
+        createdAt = try container.sdkDecodeRequired(.createdAt)
+        from = try container.sdkDecodeRequired(.from)
+        to = try container.sdkDecodeRequired(.to)
+        subject = try container.sdkDecodeRequired(.subject)
+        bounce = try container.sdkDecodeRequired(.bounce)
+        broadcastId = try container.sdkDecodeIfPresent(.broadcastId)
+        templateId = try container.sdkDecodeIfPresent(.templateId)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        headers = try container.sdkDecodeIfPresent(.headers)
+        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+    }
+}
+
+public extension EmailBouncedEventData {
+    init(
+        emailId: String,
+        createdAt: Date,
+        from: String,
+        to: [String],
+        subject: String,
+        bounce: WebhookEventBounce,
+        broadcastId: String? = nil,
+        templateId: String? = nil,
+        tags: [String: String]? = nil,
+        headers: [OutboundEmailEventDataHeadersItem]? = nil
+    ) throws {
         (self.emailId, self.createdAt) = (emailId, createdAt)
         (self.from, self.to) = (from, to)
         (self.subject, self.bounce) = (subject, bounce)
         (self.broadcastId, self.templateId) = (broadcastId, templateId)
         (self.tags, self.headers) = (tags, headers)
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 

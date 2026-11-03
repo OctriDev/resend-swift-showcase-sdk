@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Webhooks domain models
+/// Webhooks domain models
 /// Typed representation of the `ReplayWebhookEventResponse` API schema.
 public struct ReplayWebhookEventResponse: Codable, SdkResource {
     /// The type of object.
@@ -20,20 +20,20 @@ public struct ReplayWebhookEventResponse: Codable, SdkResource {
     }
 
     init() {
-        (self.object, self.id) = (nil, nil)
+        (object, id) = (nil, nil)
     }
 }
 
-extension ReplayWebhookEventResponse {
-    public init(from decoder: Decoder) throws {
+public extension ReplayWebhookEventResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
+        id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-extension ReplayWebhookEventResponse {
-    public init(object: String? = nil, id: String? = nil) {
+public extension ReplayWebhookEventResponse {
+    init(object: String? = nil, id: String? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
     }

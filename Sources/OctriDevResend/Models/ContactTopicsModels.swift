@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ContactTopics domain models
+/// ContactTopics domain models
 /// Typed representation of the `ContactTopicsEventData` API schema.
 public struct ContactTopicsEventData: Codable {
     /// Contact's email address.
@@ -16,25 +16,35 @@ public struct ContactTopicsEventData: Codable {
         case topics
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ContactTopicsEventData {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.email) else {
-            throw SdkValidationError(field: "email", code: "required", message: "Validation failed for 'email': value is required")
-        }
-        guard container.contains(.topics) else {
-            throw SdkValidationError(field: "topics", code: "required", message: "Validation failed for 'topics': value is required")
-        }
-        self.email = try container.sdkDecodeRequired(.email)
-        self.topics = try container.sdkDecodeRequired(.topics)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ContactTopicsEventData {
-    public init(email: String, topics: [ContactTopicsEventDataTopicsItem]) {
+public extension ContactTopicsEventData {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.email) else {
+            throw SdkValidationError(
+                field: "email",
+                code: "required",
+                message: "Validation failed for 'email': value is required"
+            )
+        }
+        guard container.contains(.topics) else {
+            throw SdkValidationError(
+                field: "topics",
+                code: "required",
+                message: "Validation failed for 'topics': value is required"
+            )
+        }
+        email = try container.sdkDecodeRequired(.email)
+        topics = try container.sdkDecodeRequired(.topics)
+    }
+}
+
+public extension ContactTopicsEventData {
+    init(email: String, topics: [ContactTopicsEventDataTopicsItem]) {
         (self.email, self.topics) = (email, topics)
     }
 }
@@ -55,35 +65,49 @@ public struct ContactTopicsUpdatedEvent: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ContactTopicsUpdatedEvent {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.createdAt) else {
-            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
-        }
-        guard container.contains(.data) else {
-            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.createdAt = try container.sdkDecodeRequired(.createdAt)
-        self.data = try container.sdkDecodeRequired(.data)
-            try sdkValidateRawEnum("type", self.type, ContactTopicsUpdatedEventType.allCases.map(\.rawValue))
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ContactTopicsUpdatedEvent {
-    public init(type: ContactTopicsUpdatedEventType, createdAt: Date, data: ContactTopicsEventData) throws {
+public extension ContactTopicsUpdatedEvent {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.createdAt) else {
+            throw SdkValidationError(
+                field: "created_at",
+                code: "required",
+                message: "Validation failed for 'created_at': value is required"
+            )
+        }
+        guard container.contains(.data) else {
+            throw SdkValidationError(
+                field: "data",
+                code: "required",
+                message: "Validation failed for 'data': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        createdAt = try container.sdkDecodeRequired(.createdAt)
+        data = try container.sdkDecodeRequired(.data)
+        try sdkValidateRawEnum("type", type, ContactTopicsUpdatedEventType.allCases.map(\.rawValue))
+        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+    }
+}
+
+public extension ContactTopicsUpdatedEvent {
+    init(type: ContactTopicsUpdatedEventType, createdAt: Date, data: ContactTopicsEventData) throws {
         (self.type, self.createdAt) = (type, createdAt)
         self.data = data
-            try sdkValidateRawEnum("type", self.type, ContactTopicsUpdatedEventType.allCases.map(\.rawValue))
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+        try sdkValidateRawEnum("type", self.type, ContactTopicsUpdatedEventType.allCases.map(\.rawValue))
+        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
@@ -99,25 +123,35 @@ public struct ContactTopicsEventDataTopicsItem: Codable {
         case subscription
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ContactTopicsEventDataTopicsItem {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
-        }
-        guard container.contains(.subscription) else {
-            throw SdkValidationError(field: "subscription", code: "required", message: "Validation failed for 'subscription': value is required")
-        }
-        self.id = try container.sdkDecodeRequired(.id)
-        self.subscription = try container.sdkDecodeRequired(.subscription)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ContactTopicsEventDataTopicsItem {
-    public init(id: String, subscription: ContactTopicsEventDataTopicsItemSubscription) {
+public extension ContactTopicsEventDataTopicsItem {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.id) else {
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
+        }
+        guard container.contains(.subscription) else {
+            throw SdkValidationError(
+                field: "subscription",
+                code: "required",
+                message: "Validation failed for 'subscription': value is required"
+            )
+        }
+        id = try container.sdkDecodeRequired(.id)
+        subscription = try container.sdkDecodeRequired(.subscription)
+    }
+}
+
+public extension ContactTopicsEventDataTopicsItem {
+    init(id: String, subscription: ContactTopicsEventDataTopicsItemSubscription) {
         (self.id, self.subscription) = (id, subscription)
     }
 }
@@ -141,16 +175,20 @@ public enum ContactTopicsUpdatedEventType: String, CaseIterable, Codable {
 }
 
 /// The new subscription status for this topic.
-public struct ContactTopicsEventDataTopicsItemSubscription: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct ContactTopicsEventDataTopicsItemSubscription: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let optIn = ContactTopicsEventDataTopicsItemSubscription(rawValue: "opt_in")
     public static let optOut = ContactTopicsEventDataTopicsItemSubscription(rawValue: "opt_out")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

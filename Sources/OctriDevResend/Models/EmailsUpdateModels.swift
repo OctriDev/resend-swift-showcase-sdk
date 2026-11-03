@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Emails domain models
+/// Emails domain models
 /// Typed representation of the `UpdateEmailOptions` API schema.
 public struct UpdateEmailOptions: Codable, SdkResource {
     /// Schedule email to be sent later. The date should be in ISO 8601 format.
@@ -15,19 +15,19 @@ public struct UpdateEmailOptions: Codable, SdkResource {
     }
 
     init() {
-        self.scheduledAt = nil
+        scheduledAt = nil
     }
 }
 
-extension UpdateEmailOptions {
-    public init(from decoder: Decoder) throws {
+public extension UpdateEmailOptions {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.scheduledAt = try container.sdkDecodeIfPresent(.scheduledAt)
+        scheduledAt = try container.sdkDecodeIfPresent(.scheduledAt)
     }
 }
 
-extension UpdateEmailOptions {
-    public init(scheduledAt: String? = nil) {
+public extension UpdateEmailOptions {
+    init(scheduledAt: String? = nil) {
         self.init()
         self.scheduledAt = scheduledAt
     }

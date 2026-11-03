@@ -3,7 +3,7 @@
 
 import Foundation
 
-// InboxThread domain models
+/// InboxThread domain models
 /// Typed representation of the `InboxThreadFolderUpdatedEvent` API schema.
 public struct InboxThreadFolderUpdatedEvent: Codable {
     /// The event type.
@@ -20,35 +20,49 @@ public struct InboxThreadFolderUpdatedEvent: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension InboxThreadFolderUpdatedEvent {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.createdAt) else {
-            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
-        }
-        guard container.contains(.data) else {
-            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.createdAt = try container.sdkDecodeRequired(.createdAt)
-        self.data = try container.sdkDecodeRequired(.data)
-            try sdkValidateRawEnum("type", self.type, InboxThreadFolderUpdatedEventType.allCases.map(\.rawValue))
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension InboxThreadFolderUpdatedEvent {
-    public init(type: InboxThreadFolderUpdatedEventType, createdAt: Date, data: InboxThreadFolderUpdatedEventData) throws {
+public extension InboxThreadFolderUpdatedEvent {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.createdAt) else {
+            throw SdkValidationError(
+                field: "created_at",
+                code: "required",
+                message: "Validation failed for 'created_at': value is required"
+            )
+        }
+        guard container.contains(.data) else {
+            throw SdkValidationError(
+                field: "data",
+                code: "required",
+                message: "Validation failed for 'data': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        createdAt = try container.sdkDecodeRequired(.createdAt)
+        data = try container.sdkDecodeRequired(.data)
+        try sdkValidateRawEnum("type", type, InboxThreadFolderUpdatedEventType.allCases.map(\.rawValue))
+        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+    }
+}
+
+public extension InboxThreadFolderUpdatedEvent {
+    init(type: InboxThreadFolderUpdatedEventType, createdAt: Date, data: InboxThreadFolderUpdatedEventData) throws {
         (self.type, self.createdAt) = (type, createdAt)
         self.data = data
-            try sdkValidateRawEnum("type", self.type, InboxThreadFolderUpdatedEventType.allCases.map(\.rawValue))
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+        try sdkValidateRawEnum("type", self.type, InboxThreadFolderUpdatedEventType.allCases.map(\.rawValue))
+        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
@@ -68,35 +82,49 @@ public struct InboxThreadAssignedEvent: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension InboxThreadAssignedEvent {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.createdAt) else {
-            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
-        }
-        guard container.contains(.data) else {
-            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.createdAt = try container.sdkDecodeRequired(.createdAt)
-        self.data = try container.sdkDecodeRequired(.data)
-            try sdkValidateRawEnum("type", self.type, InboxThreadAssignedEventType.allCases.map(\.rawValue))
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension InboxThreadAssignedEvent {
-    public init(type: InboxThreadAssignedEventType, createdAt: Date, data: InboxThreadAssignedEventData) throws {
+public extension InboxThreadAssignedEvent {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.createdAt) else {
+            throw SdkValidationError(
+                field: "created_at",
+                code: "required",
+                message: "Validation failed for 'created_at': value is required"
+            )
+        }
+        guard container.contains(.data) else {
+            throw SdkValidationError(
+                field: "data",
+                code: "required",
+                message: "Validation failed for 'data': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        createdAt = try container.sdkDecodeRequired(.createdAt)
+        data = try container.sdkDecodeRequired(.data)
+        try sdkValidateRawEnum("type", type, InboxThreadAssignedEventType.allCases.map(\.rawValue))
+        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+    }
+}
+
+public extension InboxThreadAssignedEvent {
+    init(type: InboxThreadAssignedEventType, createdAt: Date, data: InboxThreadAssignedEventData) throws {
         (self.type, self.createdAt) = (type, createdAt)
         self.data = data
-            try sdkValidateRawEnum("type", self.type, InboxThreadAssignedEventType.allCases.map(\.rawValue))
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+        try sdkValidateRawEnum("type", self.type, InboxThreadAssignedEventType.allCases.map(\.rawValue))
+        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
@@ -116,35 +144,49 @@ public struct InboxThreadUnassignedEvent: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension InboxThreadUnassignedEvent {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.createdAt) else {
-            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
-        }
-        guard container.contains(.data) else {
-            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.createdAt = try container.sdkDecodeRequired(.createdAt)
-        self.data = try container.sdkDecodeRequired(.data)
-            try sdkValidateRawEnum("type", self.type, InboxThreadUnassignedEventType.allCases.map(\.rawValue))
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension InboxThreadUnassignedEvent {
-    public init(type: InboxThreadUnassignedEventType, createdAt: Date, data: InboxThreadUnassignedEventData) throws {
+public extension InboxThreadUnassignedEvent {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.createdAt) else {
+            throw SdkValidationError(
+                field: "created_at",
+                code: "required",
+                message: "Validation failed for 'created_at': value is required"
+            )
+        }
+        guard container.contains(.data) else {
+            throw SdkValidationError(
+                field: "data",
+                code: "required",
+                message: "Validation failed for 'data': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        createdAt = try container.sdkDecodeRequired(.createdAt)
+        data = try container.sdkDecodeRequired(.data)
+        try sdkValidateRawEnum("type", type, InboxThreadUnassignedEventType.allCases.map(\.rawValue))
+        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+    }
+}
+
+public extension InboxThreadUnassignedEvent {
+    init(type: InboxThreadUnassignedEventType, createdAt: Date, data: InboxThreadUnassignedEventData) throws {
         (self.type, self.createdAt) = (type, createdAt)
         self.data = data
-            try sdkValidateRawEnum("type", self.type, InboxThreadUnassignedEventType.allCases.map(\.rawValue))
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+        try sdkValidateRawEnum("type", self.type, InboxThreadUnassignedEventType.allCases.map(\.rawValue))
+        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
@@ -170,7 +212,10 @@ public enum InboxThreadCreatedEventType: String, CaseIterable, Codable {
 public struct InboxThreadFolderUpdatedEventDataTo: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let inbox = InboxThreadFolderUpdatedEventDataTo(rawValue: "inbox")
     public static let archive = InboxThreadFolderUpdatedEventDataTo(rawValue: "archive")
     public static let spam = InboxThreadFolderUpdatedEventDataTo(rawValue: "spam")
@@ -178,7 +223,7 @@ public struct InboxThreadFolderUpdatedEventDataTo: RawRepresentable, Hashable, C
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -245,7 +290,10 @@ public enum InboxThreadUnassignedEventType: String, CaseIterable, Codable {
 public struct InboxThreadFolderUpdatedEventDataFrom: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let inbox = InboxThreadFolderUpdatedEventDataFrom(rawValue: "inbox")
     public static let archive = InboxThreadFolderUpdatedEventDataFrom(rawValue: "archive")
     public static let spam = InboxThreadFolderUpdatedEventDataFrom(rawValue: "spam")
@@ -253,7 +301,7 @@ public struct InboxThreadFolderUpdatedEventDataFrom: RawRepresentable, Hashable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

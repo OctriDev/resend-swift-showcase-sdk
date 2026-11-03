@@ -3,7 +3,7 @@
 
 import Foundation
 
-// InboxesUpdate domain models
+/// InboxesUpdate domain models
 /// At least one of `read`, `folder`, `add_label_ids`, or `remove_label_ids` is required. A label ID cannot be both
 /// added and removed in the same request.
 public struct UpdateInboxThreadOptions: Codable {
@@ -30,28 +30,33 @@ public struct UpdateInboxThreadOptions: Codable {
     }
 
     init() {
-        (self.read, self.folder, self.addLabelIds, self.removeLabelIds) = (nil, nil, nil, nil)
+        (read, folder, addLabelIds, removeLabelIds) = (nil, nil, nil, nil)
     }
 }
 
-extension UpdateInboxThreadOptions {
-    public init(from decoder: Decoder) throws {
+public extension UpdateInboxThreadOptions {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.read = try container.sdkDecodeIfPresent(.read)
-        self.folder = try container.sdkDecodeIfPresent(.folder)
-        self.addLabelIds = try container.sdkDecodeIfPresent(.addLabelIds)
-        self.removeLabelIds = try container.sdkDecodeIfPresent(.removeLabelIds)
-        if let value = self.addLabelIds {
+        read = try container.sdkDecodeIfPresent(.read)
+        folder = try container.sdkDecodeIfPresent(.folder)
+        addLabelIds = try container.sdkDecodeIfPresent(.addLabelIds)
+        removeLabelIds = try container.sdkDecodeIfPresent(.removeLabelIds)
+        if let value = addLabelIds {
             try validateItems("add_label_ids", value, min: 1, max: 10)
         }
-        if let value = self.removeLabelIds {
+        if let value = removeLabelIds {
             try validateItems("remove_label_ids", value, min: 1, max: 10)
         }
     }
 }
 
-extension UpdateInboxThreadOptions {
-    public init(read: Bool? = nil, folder: UpdateInboxThreadOptionsFolder? = nil, addLabelIds: [String]? = nil, removeLabelIds: [String]? = nil) throws {
+public extension UpdateInboxThreadOptions {
+    init(
+        read: Bool? = nil,
+        folder: UpdateInboxThreadOptionsFolder? = nil,
+        addLabelIds: [String]? = nil,
+        removeLabelIds: [String]? = nil
+    ) throws {
         self.init()
         (self.read, self.folder) = (read, folder)
         (self.addLabelIds, self.removeLabelIds) = (addLabelIds, removeLabelIds)
@@ -68,7 +73,10 @@ extension UpdateInboxThreadOptions {
 public struct UpdateInboxThreadOptionsFolder: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let inbox = UpdateInboxThreadOptionsFolder(rawValue: "inbox")
     public static let archive = UpdateInboxThreadOptionsFolder(rawValue: "archive")
     public static let spam = UpdateInboxThreadOptionsFolder(rawValue: "spam")
@@ -76,7 +84,7 @@ public struct UpdateInboxThreadOptionsFolder: RawRepresentable, Hashable, Codabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

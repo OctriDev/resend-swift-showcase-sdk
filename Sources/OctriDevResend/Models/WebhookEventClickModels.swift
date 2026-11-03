@@ -3,7 +3,7 @@
 
 import Foundation
 
-// WebhookEventClick domain models
+/// WebhookEventClick domain models
 /// Typed representation of the `WebhookEventClick` API schema.
 public struct WebhookEventClick: Codable {
     /// IP address of the user who clicked the link.
@@ -23,36 +23,54 @@ public struct WebhookEventClick: Codable {
         case userAgent
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension WebhookEventClick {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.ipAddress) else {
-            throw SdkValidationError(field: "ipAddress", code: "required", message: "Validation failed for 'ipAddress': value is required")
-        }
-        guard container.contains(.link) else {
-            throw SdkValidationError(field: "link", code: "required", message: "Validation failed for 'link': value is required")
-        }
-        guard container.contains(.timestamp) else {
-            throw SdkValidationError(field: "timestamp", code: "required", message: "Validation failed for 'timestamp': value is required")
-        }
-        guard container.contains(.userAgent) else {
-            throw SdkValidationError(field: "userAgent", code: "required", message: "Validation failed for 'userAgent': value is required")
-        }
-        self.ipAddress = try container.sdkDecodeRequired(.ipAddress)
-        self.link = try container.sdkDecodeRequired(.link)
-        self.timestamp = try container.sdkDecodeRequired(.timestamp)
-        self.userAgent = try container.sdkDecodeRequired(.userAgent)
-            try sdkValidateDateTime("timestamp", sdkWireString(self.timestamp))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension WebhookEventClick {
-    public init(ipAddress: String, link: String, timestamp: Date, userAgent: String) throws {
+public extension WebhookEventClick {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.ipAddress) else {
+            throw SdkValidationError(
+                field: "ipAddress",
+                code: "required",
+                message: "Validation failed for 'ipAddress': value is required"
+            )
+        }
+        guard container.contains(.link) else {
+            throw SdkValidationError(
+                field: "link",
+                code: "required",
+                message: "Validation failed for 'link': value is required"
+            )
+        }
+        guard container.contains(.timestamp) else {
+            throw SdkValidationError(
+                field: "timestamp",
+                code: "required",
+                message: "Validation failed for 'timestamp': value is required"
+            )
+        }
+        guard container.contains(.userAgent) else {
+            throw SdkValidationError(
+                field: "userAgent",
+                code: "required",
+                message: "Validation failed for 'userAgent': value is required"
+            )
+        }
+        ipAddress = try container.sdkDecodeRequired(.ipAddress)
+        link = try container.sdkDecodeRequired(.link)
+        timestamp = try container.sdkDecodeRequired(.timestamp)
+        userAgent = try container.sdkDecodeRequired(.userAgent)
+        try sdkValidateDateTime("timestamp", sdkWireString(timestamp))
+    }
+}
+
+public extension WebhookEventClick {
+    init(ipAddress: String, link: String, timestamp: Date, userAgent: String) throws {
         (self.ipAddress, self.link) = (ipAddress, link)
         (self.timestamp, self.userAgent) = (timestamp, userAgent)
-            try sdkValidateDateTime("timestamp", sdkWireString(self.timestamp))
+        try sdkValidateDateTime("timestamp", sdkWireString(self.timestamp))
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// EmailReceivedEvent domain models
+/// EmailReceivedEvent domain models
 /// Typed representation of the `EmailReceivedEvent` API schema.
 public struct EmailReceivedEvent: Codable {
     /// The event type.
@@ -20,35 +20,49 @@ public struct EmailReceivedEvent: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension EmailReceivedEvent {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.createdAt) else {
-            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
-        }
-        guard container.contains(.data) else {
-            throw SdkValidationError(field: "data", code: "required", message: "Validation failed for 'data': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.createdAt = try container.sdkDecodeRequired(.createdAt)
-        self.data = try container.sdkDecodeRequired(.data)
-            try sdkValidateRawEnum("type", self.type, EmailReceivedEventType.allCases.map(\.rawValue))
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension EmailReceivedEvent {
-    public init(type: EmailReceivedEventType, createdAt: Date, data: EmailReceivedEventData) throws {
+public extension EmailReceivedEvent {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.createdAt) else {
+            throw SdkValidationError(
+                field: "created_at",
+                code: "required",
+                message: "Validation failed for 'created_at': value is required"
+            )
+        }
+        guard container.contains(.data) else {
+            throw SdkValidationError(
+                field: "data",
+                code: "required",
+                message: "Validation failed for 'data': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        createdAt = try container.sdkDecodeRequired(.createdAt)
+        data = try container.sdkDecodeRequired(.data)
+        try sdkValidateRawEnum("type", type, EmailReceivedEventType.allCases.map(\.rawValue))
+        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+    }
+}
+
+public extension EmailReceivedEvent {
+    init(type: EmailReceivedEventType, createdAt: Date, data: EmailReceivedEventData) throws {
         (self.type, self.createdAt) = (type, createdAt)
         self.data = data
-            try sdkValidateRawEnum("type", self.type, EmailReceivedEventType.allCases.map(\.rawValue))
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+        try sdkValidateRawEnum("type", self.type, EmailReceivedEventType.allCases.map(\.rawValue))
+        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
@@ -91,34 +105,47 @@ public struct EmailReceivedEventData: Codable {
         case receivedFor = "received_for"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension EmailReceivedEventData {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.emailId = try container.sdkDecodeRequired(.emailId)
-        self.createdAt = try container.sdkDecodeRequired(.createdAt)
-        self.from = try container.sdkDecodeRequired(.from)
-        self.to = try container.sdkDecodeRequired(.to)
-        self.subject = try container.sdkDecodeRequired(.subject)
-        self.messageId = try container.sdkDecodeRequired(.messageId)
-        self.bcc = try container.sdkDecodeRequired(.bcc)
-        self.cc = try container.sdkDecodeRequired(.cc)
-        self.attachments = try container.sdkDecodeRequired(.attachments)
-        self.receivedFor = try container.sdkDecodeIfPresent(.receivedFor)
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension EmailReceivedEventData {
-    public init(emailId: String, createdAt: Date, from: String, to: [String], subject: String, messageId: String, bcc: [String], cc: [String], attachments: [WebhookEventAttachment], receivedFor: [String]? = nil) throws {
+public extension EmailReceivedEventData {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        emailId = try container.sdkDecodeRequired(.emailId)
+        createdAt = try container.sdkDecodeRequired(.createdAt)
+        from = try container.sdkDecodeRequired(.from)
+        to = try container.sdkDecodeRequired(.to)
+        subject = try container.sdkDecodeRequired(.subject)
+        messageId = try container.sdkDecodeRequired(.messageId)
+        bcc = try container.sdkDecodeRequired(.bcc)
+        cc = try container.sdkDecodeRequired(.cc)
+        attachments = try container.sdkDecodeRequired(.attachments)
+        receivedFor = try container.sdkDecodeIfPresent(.receivedFor)
+        try sdkValidateDateTime("created_at", sdkWireString(createdAt))
+    }
+}
+
+public extension EmailReceivedEventData {
+    init(
+        emailId: String,
+        createdAt: Date,
+        from: String,
+        to: [String],
+        subject: String,
+        messageId: String,
+        bcc: [String],
+        cc: [String],
+        attachments: [WebhookEventAttachment],
+        receivedFor: [String]? = nil
+    ) throws {
         (self.emailId, self.createdAt) = (emailId, createdAt)
         (self.from, self.to) = (from, to)
         (self.subject, self.messageId) = (subject, messageId)
         (self.bcc, self.cc) = (bcc, cc)
         (self.attachments, self.receivedFor) = (attachments, receivedFor)
-            try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
+        try sdkValidateDateTime("created_at", sdkWireString(self.createdAt))
     }
 }
 
